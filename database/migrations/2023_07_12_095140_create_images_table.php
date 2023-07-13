@@ -15,10 +15,9 @@ class CreateImagesTable extends Migration
     {
         Schema::create('images', function (Blueprint $table) {
             $table->id();
-            $table->integer('id_foreign')->comment('dùng chung cho bảng user và product => khi get ra thì cần phải check điều kiện id_foreign này và type thì mới get nhá ');
             $table->string('link');
             $table->string('description')->nullable();
-            $table->integer('type')->default(1)->comment('1 là product, 2 là user');
+            $table->integer('type')->nullable()->comment('1 là ưu tiên hiển thị, còn null hoặc bằng 0');
             $table->timestamps();
         });
     }
