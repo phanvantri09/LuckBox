@@ -25,7 +25,7 @@ class CreateRequestUser extends FormRequest
     {
         return [
             'email' => 'required|unique:users',
-            'password' => 'required',
+            'password' => 'required|min:8',
         ];
     }
     public function messages()
@@ -34,6 +34,7 @@ class CreateRequestUser extends FormRequest
             'email.required' => 'Không để trống',
             'email.unique' => 'Đã tồn tại',
             'password.required' => 'Không để trống',
+            'password.min' => 'Phải nhiều hơn 8 ký tự',
         ];
     }
 }

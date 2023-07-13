@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-
+use Illuminate\Support\Facades\Auth;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -13,22 +13,24 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('admin.user.add');
-});
-
-// Route::get('/login', 'LoginController')->name('login');
-// Route::post('/login', 'LoginController')->name('login');
-// Route::get('/register', 'LoginController')->name('register');
-// Route::post('/register', 'LoginController')->name('register')
-
 // trang chủ ở đây
-Route::group(['prefix' => '/',  'middleware' => ''], function () {
+Route::group(['prefix' => '/'], function () {
+    Route::controller(HomeController::class)->group(function () {
+        Route::get('/','index')->name('home');
+    });
+    Route::controller(AuthController::class)->group(function () {
+        Route::get('/login','showLoginForm')->name('login');
+        Route::post('/login','login')->name('login');
+        Route::get('/logout', 'logout')->name('logout');
 
-
+        Route::get('/register', 'showRegistrationForm')->name('register');
+        Route::post('/register', 'register');
+    });
 });
-Route::group(['prefix' => 'admin'], function () {
-    // Route::get('/login', 'AdminController')->name('AdminController.login');
+Route::group(['prefix' => 'admin', 'middleware'=>['CheckAdmin']], function () {
+    Route::controller(AdminController::class)->group(function () {
+        Route::get('/','index')->name('admin');
+    });
     Route::group(['prefix' => 'user', 'as' =>'user.'], function () {
         Route::controller(UserController::class)->group(function () {
             // danh sách

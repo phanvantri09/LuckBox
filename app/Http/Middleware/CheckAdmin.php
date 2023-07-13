@@ -17,7 +17,7 @@ class CheckAdmin
      */
     public function handle(Request $request, Closure $next)
     {
-        if (Auth::user()->type == 222 || Auth::user()->type == 333) {
+        if (Auth::user()->type != 111) {
             return $next($request);
         } else {
             return redirect()->back();
