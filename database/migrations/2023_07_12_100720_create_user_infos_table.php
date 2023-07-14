@@ -25,7 +25,7 @@ class CreateUserInfosTable extends Migration
             $table->string('neighborhood_village')->nullable()->comment('phường- xã');
             $table->string('district')->nullable()->comment('quận - huyện');
             $table->string('province_city')->nullable()->comment('tỉnh - Thành phố');
-            $table->string('country')->nullable()->comment('Thành phố');
+            $table->string('country')->nullable()->comment('Đất Nước');
             $table->string('link_image')->nullable()->comment('link hình ảnh trong storage');
             $table->timestamps();
         });

@@ -18,9 +18,8 @@ class CreateBoxProductsTable extends Migration
             $table->integer('id_user_create');
             $table->integer('id_user_update');
             $table->integer('id_box');
-            $table->integer('id_box_item');
-            $table->integer('order_number')->nullable();
-            $table->integer('status');
+            $table->integer('id_product');
+            $table->integer('status')->default('2')->comment('2 trạng thái: 1 được chọn hiển thị và 2 là không hiển thị');
             $table->timestamps();
         });
     }

@@ -20,8 +20,8 @@ class CreateBoxEventsTable extends Migration
             $table->integer('status')->default(1)->comment('1 là hoạt động, 2 là ngừng hoạt động');
             $table->string('title');
             $table->string('description');
-            $table->integer('price');
-            $table->integer('amount_box');
+            // $table->integer('price');
+            // $table->integer('amount_box');
             $table->string('link_image');
             $table->string('time_start');
             $table->string('time_end');
