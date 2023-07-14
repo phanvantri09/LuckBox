@@ -14,5 +14,6 @@ class Image extends Model
         'link_image',
         'description',
         'type',
+        'is_slide',
     ];
 }

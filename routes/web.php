@@ -44,33 +44,13 @@ Route::group(['prefix' => 'admin', 'middleware'=>['CheckAdmin']], function () {
             Route::get('edit/{id}','edit')->name('edit');
             Route::post('edit/{id}','update')->name('editPost');
             // xóa
-            Route::get('/delete/{id}', 'destroy')->name('Delete');
+            Route::get('/delete/{id}', 'destroy')->name('delete');
 
             // hiển thị tất cả
             Route::get('/show/{id}', 'show')->name('show');
         });
     });
-    Route::group(['prefix' => 'category', 'as' =>'category.'], function () {
-        Route::controller(UserController::class)->group(function () {
-            // danh sách
-            Route::get('/','index')->name('index');
-
-            // thêm
-            Route::get('/add', 'create')->name('add');
-            Route::post('/add', 'store')->name('addPost');
-
-            //sửa
-            Route::get('edit/{id}','edit')->name('edit');
-            Route::post('edit/{id}','update')->name('editPost');
-            // xóa
-            Route::get('/delete/{id}', 'destroy')->name('Delete');
-
-            // hiển thị tất cả
-            Route::get('/show/{id}', 'show')->name('show');
-        });
-    });
-
-    Route::group(['prefix' => 'category', 'as' =>'category.'], function () {
+    Route::group(['prefix' => 'product', 'as' =>'product.'], function () {
         Route::controller(ProductController::class)->group(function () {
             // danh sách
             Route::get('/','index')->name('index');
@@ -83,7 +63,27 @@ Route::group(['prefix' => 'admin', 'middleware'=>['CheckAdmin']], function () {
             Route::get('edit/{id}','edit')->name('edit');
             Route::post('edit/{id}','update')->name('editPost');
             // xóa
-            Route::get('/delete/{id}', 'destroy')->name('Delete');
+            Route::get('/delete/{id}', 'destroy')->name('delete');
+
+            // hiển thị tất cả
+            Route::get('/show/{id}', 'show')->name('show');
+        });
+    });
+
+    Route::group(['prefix' => 'category', 'as' =>'category.'], function () {
+        Route::controller(CategoryController::class)->group(function () {
+            // danh sách
+            Route::get('/','index')->name('index');
+
+            // thêm
+            Route::get('/add', 'create')->name('add');
+            Route::post('/add', 'store')->name('addPost');
+
+            //sửa
+            Route::get('edit/{id}','edit')->name('edit');
+            Route::post('edit/{id}','update')->name('editPost');
+            // xóa
+            Route::get('/delete/{id}', 'destroy')->name('delete');
 
             // hiển thị tất cả
             Route::get('/show/{id}', 'show')->name('show');

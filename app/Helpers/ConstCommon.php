@@ -12,7 +12,9 @@ class ConstCommon {
      const TypeAdmin = 222;
      const TypeSuperAdmin = 333;
      const ListTypeCatogory = ['product'=>1, 'box' =>2, 'event'=>3];
-     
+    public static function getnameByTypeCategory($key){
+        return array_search($key, ConstCommon::ListTypeCatogory);
+    }
      public static function getAllCategory(){
           return Category::all();
      }

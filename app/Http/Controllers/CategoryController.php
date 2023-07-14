@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Category;
 use Illuminate\Http\Request;
 use App\Repositories\CategoryRepositoryInterface;
+use App\Http\Requests\Category\CreateRequestCategory;
+use App\Http\Requests\Category\UpdateRequestCategory;
 
 class CategoryController extends Controller
 {
@@ -17,38 +19,39 @@ class CategoryController extends Controller
 
     public function index()
     {
-        $users = $this->categoryRepository->all();
-        return view('category.index', compact('users'));
+        $data = $this->categoryRepository->all();
+        return view('admin.category.list', compact('data'));
     }
 
     public function create()
     {
-        return view('category.create');
+        return view('admin.category.add');
     }
 
-    public function store(Request $request)
+    public function store(CreateRequestCategory $request)
     {
+
         $data = $request->all();
         $this->categoryRepository->create($data);
-        return redirect()->route('category.index')->with('success', 'User created successfully');
+        return redirect()->route('category.index')->with('success', 'data created successfully');
     }
 
     public function edit($id)
     {
-        $user = $this->categoryRepository->show($id);
-        return view('category.edit', compact('user'));
+        $data = $this->categoryRepository->show($id);
+        return view('admin.category.edit', compact('data'));
     }
 
-    public function update(Request $request, $id)
+    public function update(UpdateRequestCategory $request, $id)
     {
         $data = $request->all();
         $this->categoryRepository->update($data, $id);
-        return redirect()->route('category.index')->with('success', 'User updated successfully');
+        return redirect()->route('category.index')->with('success', 'data updated successfully');
     }
 
     public function destroy($id)
     {
         $this->categoryRepository->delete($id);
-        return redirect()->route('category.index')->with('success', 'User deleted successfully');
+        return redirect()->route('category.index')->with('success', 'data deleted successfully');
     }
 }

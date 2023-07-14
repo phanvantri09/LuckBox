@@ -18,6 +18,7 @@ class CreateImagesTable extends Migration
             $table->string('link_image');
             $table->string('description')->nullable();
             $table->integer('type')->nullable()->comment('1 là ưu tiên hiển thị, còn null hoặc bằng 0');
+            $table->integer('is_slide')->nullable()->comment('nó là ảnh slide của sản phẩm, gia trị của nó sẽ là 1 ');
             $table->timestamps();
         });
     }
