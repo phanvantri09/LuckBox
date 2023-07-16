@@ -67,6 +67,9 @@ Route::group(['prefix' => 'admin', 'middleware'=>['CheckAdmin']], function () {
 
             // hiển thị tất cả
             Route::get('/show/{id}', 'show')->name('show');
+            Route::get('/addImage/{id}', 'addImage')->name('addImage');
+            Route::post('/addImagePost', 'addImagePost')->name('addImagePost');
+
         });
     });
 

@@ -32,4 +32,7 @@ class CategoryRepository implements CategoryRepositoryInterface
     {
         return Category::findOrFail($id);
     }
+    public function getAllByType($type){
+        return Category::where('type', $type)->get();
+    }
 }
