@@ -7,7 +7,7 @@ class ImageRepository implements ImageRepositoryInterface
 {
     public function all()
     {
-        return Image::with('category')->get();
+        return Image::all();
     }
 
     public function create(array $data)
@@ -31,5 +31,17 @@ class ImageRepository implements ImageRepositoryInterface
     public function show($id)
     {
         return Image::findOrFail($id);
+    }
+    public function getAllByIDProductItem($id_product)
+    {
+        return Image::where('id_product', $id_product)->whereNull('type')->whereNull('is_slide')->get();
+    }
+    public function getAllByIDProductMain($id_product)
+    {
+        return Image::where('id_product', $id_product)->where('type', 1)->first();
+    }
+    public function getAllByIDProductSlide($id_product)
+    {
+        return Image::where('id_product', $id_product)->whereNull('type')->where('is_slide', 1)->first();
     }
 }

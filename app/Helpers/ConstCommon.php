@@ -20,7 +20,7 @@ class ConstCommon {
           return Category::all();
      }
      public static function addImageToStorage($file, $name ){
-          $file->storeAs('images', $filename, 'public');
+          $file->storeAs('images', $name, 'public');
      }
      public static function getLinkImageToStorage($name){
           return url('storage/images/'.$name);

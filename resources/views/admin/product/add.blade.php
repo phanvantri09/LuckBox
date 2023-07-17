@@ -23,7 +23,8 @@
                                 <!-- text input -->
                                 <div class="form-group">
                                     <label>Tiêu đề</label>
-                                    <input type="text" name="title" class="form-control" placeholder="Enter ..." value="{{old('title')}}">
+                                    <input type="text" name="title" class="form-control" placeholder="Enter ..."
+                                        value="{{ old('title') }}">
                                     @error('title')
                                         <div class="alert alert-danger">{{ $errors->first('title') }}</div>
                                     @enderror
@@ -32,9 +33,8 @@
                             <div class="col-sm-12">
                                 <div class="form-group">
                                     <label>Nội dung</label>
-                                    <textarea class="form-control" name="description" rows="3" placeholder="Enter ..." >
-                                        {{empty(old('description')) ? '' : old('description')}}
-                                    </textarea>
+                                    <textarea name="description" rows="3" id="summernote">
+                                      </textarea>
                                     @error('description')
                                         <div class="alert alert-danger">{{ $errors->first('description') }}</div>
                                     @enderror
@@ -44,7 +44,8 @@
                                 <!-- text input -->
                                 <div class="form-group">
                                     <label>Số lượng</label>
-                                    <input type="number" name="amount" class="form-control" placeholder="Enter ..." value="{{old('title')}}">
+                                    <input type="number" name="amount" class="form-control" placeholder="Enter ..."
+                                        value="{{ old('title') }}">
                                     @error('amount')
                                         <div class="alert alert-danger">{{ $errors->first('amount') }}</div>
                                     @enderror
@@ -53,8 +54,9 @@
                             <div class="col-sm-6">
                                 <!-- text input -->
                                 <div class="form-group">
-                                    <label>Tiêu đề</label>
-                                    <input type="number" name="price" class="form-control" placeholder="Enter ..." value="{{old('title')}}">
+                                    <label>Giá tiền | VNĐ</label>
+                                    <input type="number" name="price" class="form-control" placeholder="Enter ..."
+                                        value="{{ old('title') }}">
                                     @error('price')
                                         <div class="alert alert-danger">{{ $errors->first('price') }}</div>
                                     @enderror
@@ -86,4 +88,20 @@
     </div>
 @endsection
 @section('scripts')
+    <script src="../../plugins/codemirror/codemirror.js"></script>
+    <script src="../../plugins/codemirror/mode/css/css.js"></script>
+    <script src="../../plugins/codemirror/mode/xml/xml.js"></script>
+    <script src="../../plugins/codemirror/mode/htmlmixed/htmlmixed.js"></script>
+    <script>
+        $(function() {
+            // Summernote
+            $('#summernote').summernote()
+
+            // CodeMirror
+            CodeMirror.fromTextArea(document.getElementById("codeMirrorDemo"), {
+                mode: "htmlmixed",
+                theme: "monokai"
+            });
+        })
+    </script>
 @endsection

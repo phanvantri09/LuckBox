@@ -15,6 +15,7 @@ class CreateImagesTable extends Migration
     {
         Schema::create('images', function (Blueprint $table) {
             $table->id();
+            $table->integer('id_product');
             $table->string('link_image');
             $table->string('description')->nullable();
             $table->integer('type')->nullable()->comment('1 là ưu tiên hiển thị, còn null hoặc bằng 0');

@@ -37,7 +37,7 @@
                                 <tr>
                                     <td>{{ $key + 1 }}</td>
                                     <td>{{$item->title}}</td>
-                                    <td>{{$item->description}}</td>
+                                    <td>{!! $item->description !!}</td>
                                     <td>{{$item->category->title}}</td>
                                     <td>{{number_format($item->price) }} vnđ</td>
                                     <td>{{number_format($item->amount)}}</td>

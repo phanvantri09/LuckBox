@@ -15,6 +15,7 @@ use App\Http\Requests\Product\UpdateRequestProduct;
 
 use Illuminate\Support\Facades\Auth;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\DB;
 
 class ProductController extends Controller
 {
@@ -78,18 +79,39 @@ class ProductController extends Controller
     public function addImage($id){
         $data = $this->productRepository->show($id);
         $category = ConstCommon::TypeImgae;
-
-        return view('admin.product.addImage', compact([ 'data', 'category']));
+        $getAllByIDProductItem = $this->imageRepository->getAllByIDProductItem($id);
+        $getAllByIDProductMain = $this->imageRepository->getAllByIDProductMain($id);
+        $getAllByIDProductSlide = $this->imageRepository->getAllByIDProductSlide($id);
+        // dd($getAllByIDProductItem, $getAllByIDProductItem , $getAllByIDProductSlide, $getAllByIDProductMain->link_image);
+        return view('admin.product.addImage', compact([ 'data', 'category', 'getAllByIDProductItem','getAllByIDProductMain', 'getAllByIDProductSlide']));
         // $imageRepository->create($data);
     }
     public function addImagePost(Request $request){
-        // 'link_image',
-        // 'description',
-        // 'type',
-        // 'is_slide',
-        // ConstCommon::getCurrentTime();
-        $data = $this->productRepository->show($request->id_product);
-        // $imageRepository->create($data);
-        return view('admin.product.addImage', compact('data'));
+        $requestData = $request->except(['_token']);
+        $dataImage = [];
+        foreach ($requestData as $key => $value) {
+            if (!empty($value)) {
+                DB::beginTransaction();
+                try {
+                    $index = 0;
+                    $nameImage = 'Product-'.$key.'-'.ConstCommon::getCurrentTime().'.'.$value->extension();
+                    ConstCommon::addImageToStorage($value, $nameImage );
+                    if ($key == 'imageMain') {
+                        $this->imageRepository->create(['id_product' => $request->id, 'link_image'=> $nameImage, 'description' => null, 'type' => 1, 'is_slide' => null]);
+                    } elseif ($key == 'imageSlide') {
+                        $this->imageRepository->create(['id_product' => $request->id, 'link_image'=> $nameImage, 'description' => null, 'type' => null, 'is_slide' => 1]);
+                    } else {
+                        $this->imageRepository->create(['id_product' => $request->id, 'link_image'=> $nameImage, 'description' => null, 'type' => null, 'is_slide' => null]);
+                    }
+                    $index++;
+                    DB::commit();
+                } catch (\Throwable $th) {
+                    DB::rollback();
+                    report($e);
+                    return redirect()->back()->withInput();
+                }
+            }
+        }
+        return redirect()->route('product.index');
     }
 }
