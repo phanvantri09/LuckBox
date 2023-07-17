@@ -7,7 +7,7 @@ class ProductRepository implements ProductRepositoryInterface
 {
     public function all()
     {
-        return Product::all();
+        return Product::with('category')->get();
     }
 
     public function create(array $data)
