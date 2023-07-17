@@ -2,8 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\User\InfoUserRequest;
 use App\Models\UserInfo;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use App\Repositories\UserRepositoryInterface;
+use Illuminate\Support\Facades\Storage;
+use App\Helpers\ConstCommon;
 
 class UserInfoController extends Controller
 {
@@ -12,6 +17,14 @@ class UserInfoController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    protected $userInfoRepository;
+
+    public function __construct(UserRepositoryInterface $userInfoRepository)
+    {
+        
+        $this->userInfoRepository = $userInfoRepository;
+
+    }
     public function index()
     {
         //
@@ -24,7 +37,77 @@ class UserInfoController extends Controller
      */
     public function create()
     {
-        //
+        $idUser = Auth::user()->id;
+        $getInfoUser = $this->userInfoRepository->checkInfoUser($idUser);
+        
+        
+        return view('user.InfoUser.add', compact('getInfoUser'));
+    }
+
+    public function createPost(InfoUserRequest $request)
+    {
+        
+        $idUser = Auth::user()->id;
+        $checkInfoUser = $this->userInfoRepository->checkInfoUser($idUser);
+        
+        if(empty($checkInfoUser)){
+            if($request->link_image){
+                //thời gian upload
+                $current_time = time();
+                $time_string = date('d-m-Y-H-i-s', $current_time);
+                $file = $request->link_image ;
+                // lấy tên đuôi của file
+                $ext = $file->extension();
+                //tên đường dẫn được lưa vào folder và database
+                $imageName =  'AVT'.'_user'.'-'.$idUser.'-'. $time_string.'.'.$ext;
+                ConstCommon::addImageToStorage($file,$imageName);
+                    
+            }
+            $data = [
+                'id_user' => $idUser,
+                'name' => $request->name,
+                'content' => $request->content,
+                'birthdate' => $request->birthdate,
+                'number_phone' => $request->number_phone,
+                'house_number_street' => $request->house_number_street,
+                'neighborhood_village' => $request->neighborhood_village,
+                'district' => $request->district,
+                'province_city' => $request->province_city,
+                'country' => $request->country,
+                'link_image' => $imageName,
+            ];
+            
+            $this->userInfoRepository->createInfo($data);
+            return back()->with('success', 'Cập nhập thông tin thành công');
+        }else{
+            if($request->link_image){
+                //thời gian upload
+                $current_time = time();
+                $time_string = date('d-m-Y-H-i-s', $current_time);
+                $file = $request->link_image ;
+                // lấy tên đuôi của file
+                $ext = $file->extension();
+                //tên đường dẫn được lưa vào folder và database
+                $imageName =  'AVT'.'_user'.'-'.$idUser.'-'. $time_string.'.'.$ext;
+                ConstCommon::addImageToStorage($file,$imageName);
+                $data = ['link_image' => $imageName];
+                $this->userInfoRepository->updateInfoUser($data, $idUser);    
+            }
+            $data = [
+                'name' => $request->name,
+                'content' => $request->content,
+                'birthdate' => $request->birthdate,
+                'number_phone' => $request->number_phone,
+                'house_number_street' => $request->house_number_street,
+                'neighborhood_village' => $request->neighborhood_village,
+                'district' => $request->district,
+                'province_city' => $request->province_city,
+                'country' => $request->country,
+            ]; 
+            $this->userInfoRepository->updateInfoUser($data, $idUser);
+            return back()->with('success', 'Cập nhập thông tin thành công');
+        }
+        
     }
 
     /**

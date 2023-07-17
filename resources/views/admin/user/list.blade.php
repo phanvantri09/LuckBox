@@ -23,91 +23,52 @@
                     <table id="example1" class="table table-bordered table-striped">
                         <thead>
                             <tr>
-                                <th>Cột 1</th>
-                                <th>Cột 2</th>
-                                <th>Cột(s)</th>
-                                <th>Cột </th>
-                                <th>Cột </th>
+                                <th>STT</th>
+                                <th>Email</th>
+                                <th>Tên</th>
+                                <th>Số điện thoại </th>
+                                <th>Ngày tạo </th>
                                 <th></th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td>Misc</td>
-                                <td>NetFront 3.4</td>
-                                <td>Embedded devices</td>
-                                <td>-</td>
-                                <td>A</td>
-                                <td>
-                                    <a class="btn btn-app">
-                                        <i class="fas fa-book-open"></i> Xem
-                                    </a>
-                                    <a class="btn btn-app">
-                                        <i class="fas fa-edit"></i> Sửa
-                                    </a>
-                                    <a class="btn btn-app">
-                                        <i class="fas fa-trash-alt"></i>Xóa
-                                    </a>
+                            @php
+                                $i = 0;
+                            @endphp
+                            @foreach ($users as $item)
+                                @php
+                                    $i = $i + 1;
+                                @endphp
+                                <tr>
+                                    <td>{{ $i }}</td>
+                                    <td>{{ $item->email }}</td>
+                                    <td>{{ $item->name }}</td>
+                                    <td>{{ $item->number_phone }}</td>
+                                    <td>{{ $item->created_at }}</td>
+                                    <td>
+                                        @if (!empty($item->id_info_users))
+                                            <a href="{{ route('user.show', ['id' => $item->id_info_users]) }}"
+                                                class="btn btn-app">
+                                                <i class="fas fa-book-open"></i> Xem
+                                            </a>
+                                        @else
+                                            <a onclick="return alert('User này chưa cập nhật đầy đủ thông tin')"
+                                                class="btn btn-app">
+                                                <i class="fas fa-book-open"></i> Xem
+                                            </a>
+                                        @endif
 
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>Misc</td>
-                                <td>Dillo 0.8</td>
-                                <td>Embedded devices</td>
-                                <td>-</td>
-                                <td>X</td>
-                                <td>
-                                    <a class="btn btn-app">
-                                        <i class="fas fa-book-open"></i> Xem
-                                    </a>
-                                    <a class="btn btn-app">
-                                        <i class="fas fa-edit"></i> Sửa
-                                    </a>
-                                    <a class="btn btn-app">
-                                        <i class="fas fa-trash-alt"></i>Xóa
-                                    </a>
+                                        <a href="{{ route('user.edit', ['id' => $item->id]) }}" class="btn btn-app">
+                                            <i class="fas fa-edit"></i> Sửa
+                                        </a>
+                                        <a href="{{ route('user.delete', ['id' => $item->id]) }}"
+                                            onclick="return confirm('Bạn có chắc chắn xóa không?')" class="btn btn-app">
+                                            <i class="fas fa-trash-alt"></i>Xóa
+                                        </a>
 
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>Misc</td>
-                                <td>Links</td>
-                                <td>Text only</td>
-                                <td>-</td>
-                                <td>X</td>
-                                <td>
-                                    <a class="btn btn-app">
-                                        <i class="fas fa-book-open"></i> Xem
-                                    </a>
-                                    <a class="btn btn-app">
-                                        <i class="fas fa-edit"></i> Sửa
-                                    </a>
-                                    <a class="btn btn-app">
-                                        <i class="fas fa-trash-alt"></i>Xóa
-                                    </a>
-
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>Misc</td>
-                                <td>Lynx</td>
-                                <td>Text only</td>
-                                <td>-</td>
-                                <td>X</td>
-                                <td>
-                                    <a class="btn btn-app">
-                                        <i class="fas fa-book-open"></i> Xem
-                                    </a>
-                                    <a class="btn btn-app">
-                                        <i class="fas fa-edit"></i> Sửa
-                                    </a>
-                                    <a class="btn btn-app">
-                                        <i class="fas fa-trash-alt"></i>Xóa
-                                    </a>
-
-                                </td>
-                            </tr>
+                                    </td>
+                                </tr>
+                            @endforeach
                         </tbody>
                         {{-- <tfoot>
                             <tr>

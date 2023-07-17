@@ -1,5 +1,6 @@
 <?php
 
+
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 /*
@@ -26,6 +27,11 @@ Route::group(['prefix' => '/'], function () {
         Route::get('/register', 'showRegistrationForm')->name('register');
         Route::post('/register', 'register');
     });
+    Route::controller(UserInfoController::class)->group(function () {
+        Route::get('/add','create')->name('add');
+        Route::post('/add','createPost')->name('addPost');
+        
+    });
 });
 Route::group(['prefix' => 'admin', 'middleware'=>['CheckAdmin']], function () {
     Route::controller(AdminController::class)->group(function () {
@@ -35,7 +41,7 @@ Route::group(['prefix' => 'admin', 'middleware'=>['CheckAdmin']], function () {
         Route::controller(UserController::class)->group(function () {
             // danh sách
             Route::get('/','index')->name('index');
-
+            Route::get('/list/{type}','list')->name('list');
             // thêm
             Route::get('/add', 'create')->name('add');
             Route::post('/add', 'store')->name('addPost');
