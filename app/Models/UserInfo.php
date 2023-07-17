@@ -23,4 +23,7 @@ class UserInfo extends Model
         'country',
         'link_image',
     ];
+    public function User(){
+        return $this->belongsTo(User::class);
+    }
 }

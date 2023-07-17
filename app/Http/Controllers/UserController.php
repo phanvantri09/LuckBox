@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Repositories\UserRepositoryInterface;
 use App\Http\Requests\User\CreateRequestUser;
 use Illuminate\Support\Facades\Hash;
+use App\Helpers\ConstCommon;
 
 class UserController extends Controller
 {
@@ -13,17 +14,16 @@ class UserController extends Controller
 
     public function __construct(UserRepositoryInterface $userRepository)
     {
+        
         $this->userRepository = $userRepository;
+
     }
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
+    
+    public function list($type)
     {
-        $users = $this->userRepository->all();
-        return view('user.list', compact('users'));
+        $users = $this->userRepository->getUserByType($type);
+        //dd($users);
+        return view('admin.user.list',compact('users'));
     }
     
     /**
@@ -33,7 +33,7 @@ class UserController extends Controller
      */
     public function create()
     {
-        return view('user.add');
+        return view('admin.user.add');
     }
     /**
      * Store a newly created resource in storage.
@@ -55,23 +55,17 @@ class UserController extends Controller
      * @param  \App\Models\UserInfo  $userInfo
      * @return \Illuminate\Http\Response
      */
-    public function show(UserInfo $userInfo)
+    public function show($id)
     {
         $user = $this->userRepository->show($id);
-        return view('user.show', compact('user'));
+        return view('admin.user.show', compact('user'));
     }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\UserInfo  $userInfo
-     * @return \Illuminate\Http\Response
-     */
 
     public function edit($id)
     {
-        $user = $this->userRepository->show($id);
-        return view('user.edit', compact('user'));
+        
+        $user = $this->userRepository->edit($id);
+        return view('admin.user.edit', compact('user'));
     }
 
     /**
@@ -83,9 +77,21 @@ class UserController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $data = $request->all();
+        if(empty($request->password)){
+            $data = [
+                'email' => $request->email,
+                'type' => $request->type
+            ];
+        }else{
+            $data = [
+                'email' => $request->email,
+                'password' =>  Hash::make($request->password),
+                'type' => $request->type
+            ];
+        }
+        
         $this->userRepository->update($data, $id);
-        return redirect()->route('user.index')->with('success', 'Thành công');
+        return back()->with('success', 'Thành công');
     }
 
     /**
@@ -99,4 +105,5 @@ class UserController extends Controller
         $this->userRepository->delete($id);
         return redirect()->route('user.index')->with('success', 'Thành công');
     }
+    
 }

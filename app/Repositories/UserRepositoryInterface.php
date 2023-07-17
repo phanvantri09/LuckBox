@@ -5,8 +5,13 @@ interface UserRepositoryInterface
 {
      public function all();
      public function create(array $data);
+     public function createInfo(array $data);
      public function update(array $data, $id);
      public function delete($id);
      public function show($id);
+     public function edit($id);
+     public function getUserByType(int $type);
+     public function checkInfoUser($id);
+     public function updateInfoUser(array $data, $id);
 }
 

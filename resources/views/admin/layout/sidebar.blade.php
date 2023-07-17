@@ -216,10 +216,24 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="{{ route('user.index') }}" class="nav-link">
+                            <a href="#" class="nav-link">
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>Danh sách</p>
                             </a>
+                            <ul>
+                                <a href="{{ route('user.list', ['type' => \App\Helpers\ConstCommon::TypeUser]) }}"
+                                    class="nav-link">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>User</p>
+                                </a>
+                            </ul>
+                            <ul>
+                                <a href="{{ route('user.list', ['type' => \App\Helpers\ConstCommon::TypeAdmin]) }}"
+                                    class="nav-link">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>Admin</p>
+                                </a>
+                            </ul>
                         </li>
                     </ul>
                 </li>

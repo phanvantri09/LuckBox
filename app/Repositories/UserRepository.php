@@ -2,7 +2,8 @@
 namespace App\Repositories;
 
 use App\Models\User;
-
+use App\Models\UserInfo;
+use Illuminate\Support\Facades\DB;
 
 class UserRepository implements UserRepositoryInterface
 {
@@ -29,8 +30,34 @@ class UserRepository implements UserRepositoryInterface
         $user->delete();
     }
 
-    public function show($id)
+    public function edit($id)
     {
         return User::findOrFail($id);
+    }
+
+    public function show($id)
+    {
+        return UserInfo::findOrFail($id);
+    }
+    public function getUserByType($type)
+    {
+        return User::leftjoin('user_infos', 'users.id', '=', 'user_infos.id_user')
+        ->select('user_infos.*','users.*','user_infos.id as id_info_users' )
+        ->where('users.type', $type)
+        ->orderByDesc('users.id')
+        ->get();
+    }
+    public function checkInfoUser($id){
+        return UserInfo::where('id_user', $id)->first();
+    }
+    public function createInfo($data)
+    {
+        return UserInfo::create($data);
+    }
+    public function updateInfoUser($data, $id){
+        $infoUser = UserInfo::where('id_user', $id)->first();
+        
+        $infoUser->update($data);
+        return $infoUser;
     }
 }
