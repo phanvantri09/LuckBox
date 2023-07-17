@@ -16,8 +16,15 @@ use Illuminate\Support\Facades\Auth;
 
 // trang chủ ở đây
 Route::group(['prefix' => '/'], function () {
+    Route::controller(MessagesController::class)->group(function () {
+        Route::post('/sendMessage','index');
+        Route::get('/listChat','getChat');
+        Route::get('/listChatAdmin/{id}','getChatAdmin');
+        Route::post('/sendMessageAdmin','sendMessageAdmin');
+    });
     Route::controller(HomeController::class)->group(function () {
         Route::get('/','index')->name('home');
+        Route::get('/chatbox','chatbox');
     });
     Route::controller(AuthController::class)->group(function () {
         Route::get('/login','showLoginForm')->name('login');
@@ -36,6 +43,13 @@ Route::group(['prefix' => '/'], function () {
 Route::group(['prefix' => 'admin', 'middleware'=>['CheckAdmin']], function () {
     Route::controller(AdminController::class)->group(function () {
         Route::get('/','index')->name('admin');
+    });
+    Route::group(['prefix' => 'chat', 'as' =>'chat.'], function () {
+        Route::controller(MessagesController::class)->group(function () {
+            Route::get('/','indexAdmin')->name('index');
+            Route::get('/getUser','getUser');
+            Route::put('/updateRead','updateReadMessage');
+        });
     });
     Route::group(['prefix' => 'user', 'as' =>'user.'], function () {
         Route::controller(UserController::class)->group(function () {

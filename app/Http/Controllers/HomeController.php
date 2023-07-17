@@ -23,4 +23,10 @@ class HomeController extends Controller
 
         return view('user.layout.index', compact([]));
     }
+
+    public function chatbox()
+    {
+
+        return view('user.layout.chatbox', compact([]));
+    }
 }
