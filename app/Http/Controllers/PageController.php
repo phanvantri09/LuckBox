@@ -1,0 +1,34 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use Illuminate\Http\Request;
+
+class PageController extends Controller
+{
+    public function __construct()
+    {
+    }
+
+    public function boxInfo()
+    {
+        return view('user.page.box.info');
+    }
+    public function boxList()
+    {
+        return view('user.page.box.list');
+    }
+    public function treeData()
+    {
+        return view('user.page.box.treedata');
+    }
+    public function cart()
+    {
+        return view('user.page.cart');
+    }
+    public function chekout()
+    {
+
+        return view('user.page.checkout');
+    }
+}

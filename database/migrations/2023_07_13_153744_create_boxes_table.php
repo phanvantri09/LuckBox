@@ -18,9 +18,10 @@ class CreateBoxesTable extends Migration
             $table->integer('id_category');
             $table->integer('id_user_create');
             $table->integer('id_user_update');
-            $table->integer('id_category')->nullable();
             $table->string('title');
             $table->string('link_image');
+            $table->integer('amount')->comment('số lượng');
+            $table->integer('price')->comment('số tiền của 1 box');
             $table->string('description')->nullable();
             $table->timestamps();
         });

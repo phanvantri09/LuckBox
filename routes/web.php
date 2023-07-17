@@ -35,10 +35,19 @@ Route::group(['prefix' => '/'], function () {
         Route::post('/register', 'register');
     });
     Route::controller(UserInfoController::class)->group(function () {
-        Route::get('/add','create')->name('add');
-        Route::post('/add','createPost')->name('addPost');
-        
+        Route::get('/thong-tin-ca-nhan','create')->name('add');
+        Route::post('/thong-tin-ca-nhan','createPost')->name('addPost');
+
     });
+
+    Route::controller(PageController::class)->group(function () {
+        Route::get('/thong-tin-box','boxInfo')->name('boxInfo');
+        Route::get('/danh-sach-box','boxList')->name('boxList');
+        Route::get('/thong-tin-du-lieu-box','treeData')->name('treeData');
+        Route::get('/gio-hang','cart')->name('cart');
+        Route::get('/thanh-toan','chekout')->name('chekout');
+    });
+
 });
 Route::group(['prefix' => 'admin', 'middleware'=>['CheckAdmin']], function () {
     Route::controller(AdminController::class)->group(function () {
@@ -110,6 +119,89 @@ Route::group(['prefix' => 'admin', 'middleware'=>['CheckAdmin']], function () {
 
             // hiển thị tất cả
             Route::get('/show/{id}', 'show')->name('show');
+        });
+    });
+    Route::group(['prefix' => 'box', 'as' =>'box.'], function () {
+        Route::controller(BoxController::class)->group(function () {
+            // danh sách
+            Route::get('/','index')->name('index');
+
+            // thêm
+            Route::get('/add', 'create')->name('add');
+            Route::post('/add', 'store')->name('addPost');
+
+            //sửa
+            Route::get('edit/{id}','edit')->name('edit');
+            Route::post('edit/{id}','update')->name('editPost');
+            // xóa
+            Route::get('/delete/{id}', 'destroy')->name('delete');
+
+            // hiển thị thông tin của box và số sản phẩm mà đã thêm vào box
+            Route::get('/show/{id}', 'show')->name('show');
+        });
+        Route::group(['prefix' => 'box_product', 'as' =>'box_product.'], function () {
+            Route::controller(BoxProductController::class)->group(function () {
+                // thêm
+                Route::get('/add/{id_box}', 'create')->name('add');
+                Route::post('/add/{id_box}', 'store')->name('addPost');
+
+                //sửa
+                Route::get('edit/{id}','edit')->name('edit');
+                Route::post('edit/{id}','update')->name('editPost');
+
+                // đổi trạng thái
+                Route::get('change_status/{id}','changeStatus')->name('changeStatus');
+
+                // xóa
+                Route::get('/delete/{id}', 'destroy')->name('delete');
+
+                // hiển thị tất cả
+                // Route::get('/show/{id}', 'show')->name('show');
+            });
+        });
+        Route::group(['prefix' => 'box_event', 'as' =>'box_event.'], function () {
+            Route::controller(BoxEventController::class)->group(function () {
+                // danh sách
+                Route::get('/','index')->name('index');
+
+                // thêm
+                Route::get('/add', 'create')->name('add');
+                Route::post('/add', 'store')->name('addPost');
+
+                // chức năng tạo mới 1 event từ event đã được tạo trước đó trong form chỉ cần thây đổi thời gian bắt đầu và kết thúc
+                // nhớ clone mới tất cả box_items của nó lun nha.
+                // chức năng này để qua ngày 23 rồi hẳn làm nha.
+                Route::get('/add-new-event-by-event/{id}', 'newEventByEvent')->name('newEventByEvent');
+                Route::post('/add-new-event-by-event/{id}', 'newEventByEventPost')->name('newEventByEvent');
+
+                //sửa
+                Route::get('edit/{id}','edit')->name('edit');
+                Route::post('edit/{id}','update')->name('editPost');
+                // xóa
+                Route::get('/delete/{id}', 'destroy')->name('delete');
+
+                // hiển thị tất cả hiển thị thông tin và danh sách các box được thêm vào event này. Chức năng này đợi cho box và box_products xong thì làm hoặc tạ trước data để code nha
+                Route::get('/show/{id}', 'show')->name('show');
+            });
+            Route::group(['prefix' => 'box_item', 'as' =>'box_item.'], function () {
+                Route::controller(BoxItemController::class)->group(function () {
+
+                    // thêm
+                    // id_box thì làm select option search nha
+                    Route::get('/add/{id_box_event}', 'create')->name('add');
+                    Route::post('/add/{id_box_event}', 'store')->name('addPost');
+
+                    //sửa
+                    Route::get('edit/{id}','edit')->name('edit');
+                    Route::post('edit/{id}','update')->name('editPost');
+                    // xóa
+                    Route::get('/delete/{id}', 'destroy')->name('delete');
+
+                    // hiển thị tất cả
+                    Route::get('/show/{id}', 'show')->name('show');
+                });
+            });
+
         });
     });
 });
