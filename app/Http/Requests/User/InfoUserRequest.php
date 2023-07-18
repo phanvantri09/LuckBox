@@ -24,13 +24,14 @@ class InfoUserRequest extends FormRequest
     public function rules()
     {
         return [
-            'link_image' =>'required|mimes:jpg,png|max:5120'
+            // 'link_image' =>'required|mimes:jpg,png|max:5120'
+            'link_image' =>'mimes:jpg,png|max:5120'
         ];
     }
 
     public function messages(){
         return [
-            'link_image.required' => 'Không được để trống',
+            // 'link_image.required' => 'Không được để trống',
             'link_image.mimes' => 'Định dạng ảnh phải là JPG, PNG' ,
             'link_image.max' => 'Vui lòng chọn ảnh có dung lượng < 5 MB',
         ];

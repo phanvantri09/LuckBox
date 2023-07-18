@@ -20,7 +20,7 @@ class CheckAdmin
         if (Auth::user()->type != 111) {
             return $next($request);
         } else {
-            return redirect()->back();
+            return redirect()->route('home')->with('warning', 'Bạn không thể truy cập trang web này');
         }
     }
 }

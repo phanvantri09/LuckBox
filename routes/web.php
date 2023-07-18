@@ -35,8 +35,8 @@ Route::group(['prefix' => '/'], function () {
         Route::post('/register', 'register');
     });
     Route::controller(UserInfoController::class)->group(function () {
-        Route::get('/thong-tin-ca-nhan','create')->name('add');
-        Route::post('/thong-tin-ca-nhan','createPost')->name('addPost');
+        Route::get('/thong-tin-ca-nhan','create')->name('updateInfo');
+        Route::post('/thong-tin-ca-nhan','createPost')->name('updateInfoPost');
 
     });
 

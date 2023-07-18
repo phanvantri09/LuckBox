@@ -24,13 +24,13 @@
                 <div class="col-md-8 col-12">
                     <div class="bg-white rounded py-4 px-4">
                         <h4 class="text-center">Cập nhật thông tin cá nhân</h4>
-                        <form action="{{ route('addPost') }}" method="POST" enctype="multipart/form-data">
+                        <form action="{{ route('updateInfoPost') }}" method="POST" enctype="multipart/form-data">
                             @csrf
                             <div class="form-group">
                                 <div class="form-group">
                                     <label for="exampleFormControlInput1">Họ và tên</label>
-                                    <input type="text" name="name" class="form-control"
-                                        id="exampleFormControlInput1" placeholder="Nguyễn Văn A"
+                                    <input type="text" name="name" class="form-control" id="exampleFormControlInput1"
+                                        placeholder="Nguyễn Văn A"
                                         value="{{ empty($getInfoUser->name) ? '' : $getInfoUser->name }}">
                                 </div>
                             </div>
@@ -109,11 +109,20 @@
 
         </div>
     </div>
-    @endsection
-    @section('scripts')
-
+@endsection
+@section('script')
     <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"></script>
     <script>
+        var citySelectCurrent = districtSelectCurrent = neighborhood_villageSelectCurrent = null;
+        @if (!empty($getInfoUser->province_city))
+            citySelectCurrent = "{{ $getInfoUser->province_city }}";
+        @endif
+        @if (!empty($getInfoUser->province_city))
+            districtSelectCurrent = "{{ $getInfoUser->district }}";
+        @endif
+        @if (!empty($getInfoUser->province_city))
+            neighborhood_villageSelectCurrent = "{{ $getInfoUser->neighborhood_village }}";
+        @endif
         var citis = document.getElementById("city");
         var districts = document.getElementById("district");
         var wards = document.getElementById("ward");
@@ -123,34 +132,58 @@
             responseType: "application/json",
         };
         var promise = axios(Parameter);
+
         promise.then(function(result) {
             renderCity(result.data);
         });
 
         function renderCity(data) {
             for (const x of data) {
-                citis.options[citis.options.length] = new Option(x.Name, x.Id);
+                if (x.Id == citySelectCurrent) {
+                    citis.options[citis.options.length] = new Option(x.Name, x.Id, false, true)
+                    // console.log(data[25].Districts);
+                } else {
+                    citis.options[citis.options.length] = new Option(x.Name, x.Id);
+                }
+            }
+            if (citySelectCurrent !== null) {
+                (function() {
+                    for (const k of data[citySelectCurrent].Districts) {
+                        if (k.Id == districtSelectCurrent) {
+                            district.options[district.options.length] = new Option(k.Name, k.Id, false, true);
+                        } else {
+                            district.options[district.options.length] = new Option(k.Name, k.Id);
+                        }
+                    }
+                })();
+            }
+            if (neighborhood_villageSelectCurrent !== null) {
+                (function() {
+                    const dataaaa = data[citySelectCurrent].Districts.find(n => n.Id == districtSelectCurrent);
+                    for (const w of dataaaa.Wards) {
+                        if (w.Id == neighborhood_villageSelectCurrent) {
+                            wards.options[wards.options.length] = new Option(w.Name, w.Id, false, true);
+                        } else {
+                            wards.options[wards.options.length] = new Option(w.Name, w.Id);
+                        }
+                    }
+                })();
             }
             citis.onchange = function() {
                 district.length = 1;
                 ward.length = 1;
                 if (this.value != "") {
                     const result = data.filter(n => n.Id === this.value);
-
                     for (const k of result[0].Districts) {
                         district.options[district.options.length] = new Option(k.Name, k.Id);
                     }
                 }
-                @if (!empty($getInfoUser->province_city))
-                    citySelect.value = "{{ $getInfoUser->province_city }}";
-                @endif
             };
             district.onchange = function() {
                 ward.length = 1;
                 const dataCity = data.filter((n) => n.Id === citis.value);
                 if (this.value != "") {
                     const dataWards = dataCity[0].Districts.filter(n => n.Id === this.value)[0].Wards;
-
                     for (const w of dataWards) {
                         wards.options[wards.options.length] = new Option(w.Name, w.Id);
                     }
