@@ -17,6 +17,7 @@ class CreateBoxEventsTable extends Migration
             $table->id();
             $table->integer('id_user_create');
             $table->integer('id_user_update');
+            $table->integer('id_category');
             $table->integer('status')->default(1)->comment('1 là hoạt động, 2 là ngừng hoạt động');
             $table->string('title');
             $table->string('description');
