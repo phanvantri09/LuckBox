@@ -1,6 +1,7 @@
 <?php
 
 
+
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 /*
@@ -162,11 +163,15 @@ Route::group(['prefix' => 'admin', 'middleware'=>['CheckAdmin']], function () {
         Route::group(['prefix' => 'box_event', 'as' =>'box_event.'], function () {
             Route::controller(BoxEventController::class)->group(function () {
                 // danh sách
-                Route::get('/','index')->name('index');
+                Route::get('/','list')->name('index');
+
+                //update status
+                Route::post('change_status/{id}','changeStatus')->name('changeStatus');
 
                 // thêm
                 Route::get('/add', 'create')->name('add');
-                Route::post('/add', 'store')->name('addPost');
+                Route::post('/add', 'createPost')->name('addPost');
+                
 
                 // chức năng tạo mới 1 event từ event đã được tạo trước đó trong form chỉ cần thây đổi thời gian bắt đầu và kết thúc
                 // nhớ clone mới tất cả box_items của nó lun nha.

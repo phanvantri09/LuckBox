@@ -10,8 +10,8 @@ use App\Repositories\CategoryRepository;
 use App\Repositories\CategoryRepositoryInterface;
 use App\Repositories\ImageRepository;
 use App\Repositories\ImageRepositoryInterface;
-// use App\Repositories\ProductRepository;
-// use App\Repositories\ProductRepositoryInterface;
+use App\Repositories\BoxEventRepository;
+use App\Repositories\BoxEventRepositoryInterface;
 // use App\Repositories\ProductRepository;
 // use App\Repositories\ProductRepositoryInterface;
 // use App\Repositories\ProductRepository;
@@ -30,6 +30,7 @@ class RepositoryServiceProvider extends ServiceProvider
         $this->app->bind(ProductRepositoryInterface::class, ProductRepository::class);
         $this->app->bind(CategoryRepositoryInterface::class, CategoryRepository::class);
         $this->app->bind(ImageRepositoryInterface::class, ImageRepository::class);
+        $this->app->bind(BoxEventRepositoryInterface::class, BoxEventRepository::class);
         // $this->app->bind(ProductRepositoryInterface::class, ProductRepository::class);
         // $this->app->bind(ProductRepositoryInterface::class, ProductRepository::class);
         // $this->app->bind(ProductRepositoryInterface::class, ProductRepository::class);
