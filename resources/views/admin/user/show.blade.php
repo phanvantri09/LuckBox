@@ -17,7 +17,10 @@
 
                     <p class="text-muted text-center">{{$user->birthdate}}</p>
 
+                    <p class="text-muted text-center">Số dư tài khoản: {{ number_format($user->blance).' VNĐ' }}</p>
+
                     <p class="text-muted text-center">Ngày tạo tài khoản:{{ date('d/m/Y', strtotime($user->created_at)) }}</p>
+                    
 
                 </div>
                 <!-- /.card-body -->
