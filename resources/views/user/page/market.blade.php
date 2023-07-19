@@ -4,7 +4,7 @@
 @section('content')
     <div class="bg-white text-orange title-page">
         <div class="container">
-            <p>LuckyBox | Giỏ hàng</p>
+            <p>LuckyBox | Chợ</p>
         </div>
     </div>
     <div class="content-container py-4">
@@ -51,7 +51,7 @@
                         <h5>Tổng tiền: <br><span class="font-weight-bold text-danger">4.000.000 VNĐ</span></h5>
                     </div>
                     <a href="checkout.html" class="w-100 col-lg-1 px-lg-0">
-                        <button class="btn bg-orange text-white">Thanh toán</button>
+                        <button class="btn bg-orange text-white">Mua ngay</button>
                     </a>
                 </div>
                 <div class="row align-items-center bg-orange-white py-2 rounded mb-2 px-2">
@@ -94,7 +94,7 @@
                         <h5>Tổng tiền: <br><span class="font-weight-bold text-danger">4.000.000 VNĐ</span></h5>
                     </div>
                     <a href="checkout.html" class="w-100 col-lg-1 px-lg-0">
-                        <button class="btn bg-orange text-white">Thanh toán</button>
+                        <button class="btn bg-orange text-white">Mua ngay</button>
                     </a>
                 </div>
                 <div class="row align-items-center bg-orange-white py-2 rounded mb-2 px-2">
@@ -112,21 +112,22 @@
                     </div>
                     <div class="col-lg-2 input-group py-2">
                         <span class="input-group-btn">
-                            <button type="button" class="quantity-left-minus btn btn-danger btn-number" data-type="minus"
-                                data-field="">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                                    class="bi bi-dash" viewBox="0 0 16 16">
+                            <button type="button" class="quantity-left-minus btn btn-danger btn-number"
+                                data-type="minus" data-field="">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                    fill="currentColor" class="bi bi-dash" viewBox="0 0 16 16">
                                     <path d="M4 8a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7A.5.5 0 0 1 4 8z" />
                                 </svg>
                             </button>
                         </span>
-                        <input type="number" id="quantity" name="quantity" class="form-control input-number text-center"
-                            value="1" min="2" max="100" />
+                        <input type="number" id="quantity" name="quantity"
+                            class="form-control input-number text-center" value="1" min="2"
+                            max="100" />
                         <span class="input-group-btn">
-                            <button type="button" class="quantity-right-plus btn btn-success btn-number" data-type="plus"
-                                data-field="">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                                    class="bi bi-plus" viewBox="0 0 16 16">
+                            <button type="button" class="quantity-right-plus btn btn-success btn-number"
+                                data-type="plus" data-field="">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                    fill="currentColor" class="bi bi-plus" viewBox="0 0 16 16">
                                     <path
                                         d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z" />
                                 </svg>
@@ -137,7 +138,7 @@
                         <h5>Tổng tiền: <br><span class="font-weight-bold text-danger">4.000.000 VNĐ</span></h5>
                     </div>
                     <a href="checkout.html" class="w-100 col-lg-1 px-lg-0">
-                        <button class="btn bg-orange text-white">Thanh toán</button>
+                        <button class="btn bg-orange text-white">Mua ngay</button>
                     </a>
                 </div>
                 <div class="row align-items-center bg-orange-white py-2 rounded mb-2 px-2">
@@ -155,21 +156,22 @@
                     </div>
                     <div class="col-lg-2 input-group py-2">
                         <span class="input-group-btn">
-                            <button type="button" class="quantity-left-minus btn btn-danger btn-number" data-type="minus"
-                                data-field="">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                                    class="bi bi-dash" viewBox="0 0 16 16">
+                            <button type="button" class="quantity-left-minus btn btn-danger btn-number"
+                                data-type="minus" data-field="">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                    fill="currentColor" class="bi bi-dash" viewBox="0 0 16 16">
                                     <path d="M4 8a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7A.5.5 0 0 1 4 8z" />
                                 </svg>
                             </button>
                         </span>
-                        <input type="number" id="quantity" name="quantity" class="form-control input-number text-center"
-                            value="1" min="2" max="100" />
+                        <input type="number" id="quantity" name="quantity"
+                            class="form-control input-number text-center" value="1" min="2"
+                            max="100" />
                         <span class="input-group-btn">
-                            <button type="button" class="quantity-right-plus btn btn-success btn-number" data-type="plus"
-                                data-field="">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                                    class="bi bi-plus" viewBox="0 0 16 16">
+                            <button type="button" class="quantity-right-plus btn btn-success btn-number"
+                                data-type="plus" data-field="">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                    fill="currentColor" class="bi bi-plus" viewBox="0 0 16 16">
                                     <path
                                         d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z" />
                                 </svg>
@@ -180,7 +182,7 @@
                         <h5>Tổng tiền: <br><span class="font-weight-bold text-danger">4.000.000 VNĐ</span></h5>
                     </div>
                     <a href="checkout.html" class="w-100 col-lg-1 px-lg-0">
-                        <button class="btn bg-orange text-white">Thanh toán</button>
+                        <button class="btn bg-orange text-white">Mua ngay</button>
                     </a>
                 </div>
                 <div class="row align-items-center bg-orange-white py-2 rounded mb-2 px-2">
@@ -198,21 +200,22 @@
                     </div>
                     <div class="col-lg-2 input-group py-2">
                         <span class="input-group-btn">
-                            <button type="button" class="quantity-left-minus btn btn-danger btn-number" data-type="minus"
-                                data-field="">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                                    class="bi bi-dash" viewBox="0 0 16 16">
+                            <button type="button" class="quantity-left-minus btn btn-danger btn-number"
+                                data-type="minus" data-field="">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                    fill="currentColor" class="bi bi-dash" viewBox="0 0 16 16">
                                     <path d="M4 8a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7A.5.5 0 0 1 4 8z" />
                                 </svg>
                             </button>
                         </span>
-                        <input type="number" id="quantity" name="quantity" class="form-control input-number text-center"
-                            value="1" min="2" max="100" />
+                        <input type="number" id="quantity" name="quantity"
+                            class="form-control input-number text-center" value="1" min="2"
+                            max="100" />
                         <span class="input-group-btn">
-                            <button type="button" class="quantity-right-plus btn btn-success btn-number" data-type="plus"
-                                data-field="">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                                    class="bi bi-plus" viewBox="0 0 16 16">
+                            <button type="button" class="quantity-right-plus btn btn-success btn-number"
+                                data-type="plus" data-field="">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                    fill="currentColor" class="bi bi-plus" viewBox="0 0 16 16">
                                     <path
                                         d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z" />
                                 </svg>
@@ -223,7 +226,7 @@
                         <h5>Tổng tiền: <br><span class="font-weight-bold text-danger">4.000.000 VNĐ</span></h5>
                     </div>
                     <a href="checkout.html" class="w-100 col-lg-1 px-lg-0">
-                        <button class="btn bg-orange text-white">Thanh toán</button>
+                        <button class="btn bg-orange text-white">Mua ngay</button>
                     </a>
                 </div>
             </div>
@@ -267,7 +270,7 @@
                         </div>
                         <p class="mb-0">Tổng tiền: <span class="text-danger">4.000.000 VNĐ</span></p>
                         <a href="checkout.html" class="w-100 px-lg-0">
-                            <button class="btn bg-orange text-white">Thanh toán</button>
+                            <button class="btn bg-orange text-white">Mua ngay</button>
                         </a>
                     </div>
                 </div>
@@ -308,7 +311,7 @@
                         </div>
                         <p class="mb-0">Tổng tiền: <span class="text-danger">4.000.000 VNĐ</span></p>
                         <a href="checkout.html" class="w-100 px-lg-0">
-                            <button class="btn bg-orange text-white">Thanh toán</button>
+                            <button class="btn bg-orange text-white">Mua ngay</button>
                         </a>
                     </div>
                 </div>
@@ -349,7 +352,7 @@
                         </div>
                         <p class="mb-0">Tổng tiền: <span class="text-danger">4.000.000 VNĐ</span></p>
                         <a href="checkout.html" class="w-100 px-lg-0">
-                            <button class="btn bg-orange text-white">Thanh toán</button>
+                            <button class="btn bg-orange text-white">Mua ngay</button>
                         </a>
                     </div>
                 </div>
@@ -390,7 +393,7 @@
                         </div>
                         <p class="mb-0">Tổng tiền: <span class="text-danger">4.000.000 VNĐ</span></p>
                         <a href="checkout.html" class="w-100 px-lg-0">
-                            <button class="btn bg-orange text-white">Thanh toán</button>
+                            <button class="btn bg-orange text-white">Mua ngay</button>
                         </a>
                     </div>
                 </div>
@@ -431,17 +434,12 @@
                         </div>
                         <p class="mb-0">Tổng tiền: <span class="text-danger">4.000.000 VNĐ</span></p>
                         <a href="checkout.html" class="w-100 px-lg-0">
-                            <button class="btn bg-orange text-white">Thanh toán</button>
+                            <button class="btn bg-orange text-white">Mua ngay</button>
                         </a>
                     </div>
                 </div>
             </div>
             <!-- end mobile -->
-            <div class="row bg-white py-4 rounded justify-content-end px-2">
-                <a href="checkout.html">
-                    <button class="btn bg-orange text-white py-2 font-weight-bold">Thanh toán tất cả</button>
-                </a>
-            </div>
         </div>
     </div>
 @endsection
