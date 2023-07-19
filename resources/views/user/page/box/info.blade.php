@@ -14,8 +14,9 @@
                     <a href="" class="d-flex flex-column align-items-center w-100 text-decoration-none">
                         <img src="https://vn-live-01.slatic.net/p/dbf45cda7d56f7641227a80a5957efdf.jpg" width="40%"
                             height="auto" />
-                        <h4 class="mt-1 text-dark">Event.....</h4>
+                        {{-- <h4 class="mt-1 text-dark">Event.....</h4> --}}
                     </a>
+                    <div id="countdown" class="bg-danger text-white px-1"></div>
                     <div class="input-group py-2 w-50">
                         <span class="input-group-btn">
                             <button type="button" class="quantity-left-minus btn btn-danger btn-number" data-type="minus"
@@ -50,6 +51,11 @@
                 </div>
                 <div class="col-sm-5 border border-right-0 font-weight-bold m-2">
                     <h3 class="text-danger text-center">LƯU Ý</h3>
+                    <div class="text-right font-weight-normal">Tổng bán: 50.000</div>
+                    <div class="rank-bar">
+                        <div class="rank-progress" style="width: 70%;"></div>
+                    </div>
+                    <div class="text-left font-weight-normal">Còn lại: 1.000</div>
                     <p>- Mở bán vào khung giờ 12h00 và 22h00 hằng ngày</p>
                     <p>- Số lượng: 50.000 hộp/phiên bản</p>
                     <p>

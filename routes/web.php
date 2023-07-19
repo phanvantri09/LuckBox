@@ -46,6 +46,9 @@ Route::group(['prefix' => '/'], function () {
         Route::get('/thong-tin-du-lieu-box','treeData')->name('treeData');
         Route::get('/gio-hang','cart')->name('cart');
         Route::get('/thanh-toan','chekout')->name('chekout');
+        Route::get('/purchase-order','purchaseOrder')->name('purchaseOrder');
+        Route::get('/market','market')->name('market');
+        Route::get('/resell','resell')->name('resell');
     });
 
 });

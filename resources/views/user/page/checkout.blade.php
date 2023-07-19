@@ -48,7 +48,7 @@
                             </div>
                             <div class="form-group">
                                 <label for="exampleFormControlInput2">Số điện thoại</label>
-                                <input type="text" class="form-control" id="exampleFormControlInput2"
+                                <input type="tel" class="form-control" id="exampleFormControlInput2"
                                     placeholder="Số điện thoại" required></input>
                             </div>
                             <div class="row">
