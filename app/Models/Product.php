@@ -30,4 +30,9 @@ class Product extends Model
     {
         return $this->hasMany(Product::class, 'id', 'id_product');
     }
+
+    public function boxProducts()
+    {
+        return $this->hasMany(Box_product::class, 'id_product');
+    }
 }

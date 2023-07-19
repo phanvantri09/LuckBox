@@ -15,7 +15,17 @@ class Box_product extends Model
         'id_box',
         'id_product',
         'status',
-        'time_start', 
+        'time_start',
         'time_end'
     ];
+
+    public function product()
+    {
+        return $this->belongsTo(Product::class, 'id_product');
+    }
+
+    public function box()
+    {
+        return $this->belongsTo(Box::class, 'id_box');
+    }
 }
