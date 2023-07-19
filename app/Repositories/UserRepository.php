@@ -37,7 +37,10 @@ class UserRepository implements UserRepositoryInterface
 
     public function show($id)
     {
-        return UserInfo::findOrFail($id);
+        return UserInfo::leftjoin('users','user_infos.id_user', '=','users.id' )
+        ->select('user_infos.*','users.*')
+        ->where('user_infos.id', $id)
+        ->first();
     }
     public function getUserByType($type)
     {
