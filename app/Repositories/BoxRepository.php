@@ -7,7 +7,7 @@ class BoxRepository implements BoxRepositoryInterface
 {
     public function all()
     {
-        return Box::all();
+        return Box::with('category')->get();
     }
 
     public function create(array $data)
@@ -30,7 +30,7 @@ class BoxRepository implements BoxRepositoryInterface
 
     public function show($id)
     {
-        return Box::findOrFail($id);
+        return Box::with('category', 'userCreated', 'userUpdated')->findOrFail($id);
     }
     public function getAllByType($type){
         return Box::where('type', $type)->get();

@@ -1,6 +1,10 @@
 <?php
 namespace App\Providers;
 
+use App\Repositories\BoxProductRepository;
+use App\Repositories\BoxProductRepositoryInterface;
+use App\Repositories\BoxRepository;
+use App\Repositories\BoxRepositoryInterface;
 use Illuminate\Support\ServiceProvider;
 use App\Repositories\UserRepository;
 use App\Repositories\UserRepositoryInterface;
@@ -30,6 +34,8 @@ class RepositoryServiceProvider extends ServiceProvider
         $this->app->bind(ProductRepositoryInterface::class, ProductRepository::class);
         $this->app->bind(CategoryRepositoryInterface::class, CategoryRepository::class);
         $this->app->bind(ImageRepositoryInterface::class, ImageRepository::class);
+        $this->app->bind(BoxRepositoryInterface::class, BoxRepository::class);
+        $this->app->bind(BoxProductRepositoryInterface::class, BoxProductRepository::class);
         // $this->app->bind(ProductRepositoryInterface::class, ProductRepository::class);
         // $this->app->bind(ProductRepositoryInterface::class, ProductRepository::class);
         // $this->app->bind(ProductRepositoryInterface::class, ProductRepository::class);

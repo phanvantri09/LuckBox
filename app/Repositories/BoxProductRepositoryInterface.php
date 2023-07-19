@@ -9,4 +9,7 @@ interface BoxProductRepositoryInterface
      public function delete($id);
      public function show($id);
      public function getAllByType($type);
+     public function getAllProduct($id_box);
+     public function getAllProductNotInBox($id_box);
+     public function getCountProductStatus($id_box);
 }
