@@ -31,4 +31,16 @@ class PageController extends Controller
 
         return view('user.page.checkout');
     }
+    public function purchaseOrder()
+    {
+        return view('user.page.box.purchaseOrder');
+    }
+    public function resell()
+    {
+        return view('user.page.resell');
+    }
+    public function market()
+    {
+        return view('user.page.market');
+    }
 }
