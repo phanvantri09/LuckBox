@@ -17,9 +17,9 @@ class BoxEventRepository implements BoxEventRepositoryInterface
 
     public function update(array $data, $id)
     {
-        $user = Box_event::findOrFail($id);
-        $user->update($data);
-        return $user;
+        $event = Box_event::findOrFail($id);
+        $event->update($data);
+        return $event;
     }
 
     public function delete($id)
@@ -34,5 +34,19 @@ class BoxEventRepository implements BoxEventRepositoryInterface
     }
     public function getAllByType($type){
         return Box_event::where('type', $type)->get();
+    }
+    public function changeStatus($status, $id){
+        $getEvent = Box_event::find($id);
+        
+        if ($status->input('status') == 1) {
+            $getEvent->status = $status->input('status');
+            $getEvent->save();
+
+            return response()->json(['status' => 1]);
+        } else {
+            $getEvent->status = $status->input('status');
+            $getEvent->save();
+            return response()->json(['status' => 2]);
+        }
     }
 }
