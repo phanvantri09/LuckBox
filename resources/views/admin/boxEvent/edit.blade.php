@@ -30,29 +30,25 @@
                     <div class="col-sm-6">
                         <div class="form-group">
                             <label for="timeStart">Ngày bắt đầu</label>
-                            <div class="input-group date" id="datetimepicker7" data-target-input="nearest">
-                                <input type="text" name="time_start" class="form-control datetimepicker-input"
-                                    data-target="#datetimepicker7" value="{{$getEvent->time_start}}" />
-                                <div class="input-group-append" data-target="#datetimepicker7" data-toggle="datetimepicker">
-                                    <div class="input-group-text"><i class="fa fa-calendar"></i></div>
-                                </div>
+                            <div class="input-group date"  data-target-input="nearest">
+                                <input type="datetime-local" name="time_start" class="form-control"
+                                    data-target="" value="{{$getEvent->time_start}}" />
+
                             </div>
                         </div>
-                    
+
                         <div class="form-group">
                             <label for="timeEnd">Ngày kết thúc</label>
-                            <div class="input-group date" id="datetimepicker8" data-target-input="nearest">
-                                <input type="text" name="time_end" class="form-control datetimepicker-input"
-                                    data-target="#datetimepicker8" value="{{$getEvent->time_end}}" />
-                                <div class="input-group-append" data-target="#datetimepicker8" data-toggle="datetimepicker">
-                                    <div class="input-group-text"><i class="fa fa-calendar"></i></div>
-                                </div>
+                            <div class="input-group date" id="" data-target-input="nearest">
+                                <input type="datetime-local" name="time_end" class="form-control "
+                                    data-target="" value="{{$getEvent->time_end}}" />
+
                             </div>
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-12">
-                            
+
                             <input type="submit" value="Lưu" class="btn btn-success float-right">
                     </div>
                 </form>
@@ -62,14 +58,14 @@
         <!-- /.card -->
     </div>
     </div>
-    
+
     @endsection
     @section('scripts')
         <script src="../../plugins/codemirror/codemirror.js"></script>
         <script src="../../plugins/codemirror/mode/css/css.js"></script>
         <script src="../../plugins/codemirror/mode/xml/xml.js"></script>
         <script src="../../plugins/codemirror/mode/htmlmixed/htmlmixed.js"></script>
-        <script>
+        {{-- <script>
             $(function() {
                 // Summernote
                 $('#summernote').summernote()
@@ -94,5 +90,5 @@
                     $('#datetimepicker7').datetimepicker('maxDate', e.date);
                 });
             });
-        </script>
+        </script> --}}
     @endsection

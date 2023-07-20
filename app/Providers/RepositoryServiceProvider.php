@@ -16,8 +16,8 @@ use App\Repositories\ImageRepository;
 use App\Repositories\ImageRepositoryInterface;
 use App\Repositories\BoxEventRepository;
 use App\Repositories\BoxEventRepositoryInterface;
-// use App\Repositories\ProductRepository;
-// use App\Repositories\ProductRepositoryInterface;
+use App\Repositories\BoxItemRepository;
+use App\Repositories\BoxItemRepositoryInterface;
 // use App\Repositories\ProductRepository;
 // use App\Repositories\ProductRepositoryInterface;
 
@@ -37,7 +37,7 @@ class RepositoryServiceProvider extends ServiceProvider
         $this->app->bind(BoxRepositoryInterface::class, BoxRepository::class);
         $this->app->bind(BoxProductRepositoryInterface::class, BoxProductRepository::class);
         $this->app->bind(BoxEventRepositoryInterface::class, BoxEventRepository::class);
-        // $this->app->bind(ProductRepositoryInterface::class, ProductRepository::class);
+        $this->app->bind(BoxItemRepositoryInterface::class, BoxItemRepository::class);
         // $this->app->bind(ProductRepositoryInterface::class, ProductRepository::class);
         // $this->app->bind(ProductRepositoryInterface::class, ProductRepository::class);
     }
