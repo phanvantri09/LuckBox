@@ -4,6 +4,7 @@ namespace App\Repositories;
 
 use App\Events\Chat;
 use App\Events\ChatRead;
+use App\Helpers\ConstCommon;
 use App\Models\Message;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
@@ -96,5 +97,10 @@ class MessageRepository implements MessageRepositoryInterface
             ->get();
 
         return $chats;
+    }
+
+    public function searchUser($search)
+    {
+        return User::where('email', 'like', "%$search%")->where('type', ConstCommon::TypeUser)->get();
     }
 }

@@ -2,6 +2,10 @@ import axios from "axios";
 import moment from "moment";
 
 // user
+const openChat = document.getElementById('openChat');
+const chatContent = document.getElementById('chatContent');
+const minimizeChat = document.getElementById('minimizeChat');
+
 const messageElement = document.getElementById('messageOutput');
 const userMessageInput = document.getElementById('message');
 const sendMessageForm = document.getElementById('chatForm');
@@ -11,6 +15,7 @@ const listUserChatAdmin = document.getElementById('listUserChat');
 const messageElementAdmin = document.getElementById('messageOutputAdmin');
 const userMessageInputAdmin = document.getElementById('messageAdmin');
 const sendMessageFormAdmin = document.getElementById('chatFormAdmin');
+const searchInput = document.getElementById('searchInput');
 
 let chats = [];
 let adminChats = [];
@@ -25,6 +30,13 @@ getChatData()
 echoUserReadNew()
 if (listUserChatAdmin != null) {
     getUserList()
+}
+
+if (searchInput != null) {
+    searchInput.addEventListener('keyup', function(event) {
+        const searchText = event.target.value;
+        getUserSearchList(searchText);
+    });
 }
 
 function echoData() {
@@ -121,6 +133,7 @@ if (sendMessageFormAdmin != null) {
         }
 
         userMessageInputAdmin.value = ''
+        searchInput.value = '';
     })
 }
 
@@ -226,3 +239,61 @@ function updateRead(id) {
         console.error('Error:', error);
     });
 }
+
+function getUserSearchList(searchText) {
+    if (searchText === '') {
+        getUserList()
+        return
+    }
+    axios.get('admin/chat/getUserSearch?q='+searchText)
+        .then(response => {
+            const data = response.data;
+            listUserChatAdmin.innerHTML = '';
+            data.forEach(user => {
+                const listItem = document.createElement('li');
+                listItem.className = 'btnOpenChat p-2 border-bottom';
+                listItem.setAttribute('data-user-id', user.id);
+
+                const listItemContent =
+                    '<a class="d-flex justify-content-between">\n' +
+                    '    <div class="d-flex flex-row">\n' +
+                    '        <div>\n' +
+                    '            <img\n' +
+                    '                src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava6-bg.webp"\n' +
+                    '                alt="avatar" class="d-flex align-self-center me-3" width="60">\n' +
+                    '            <span class="badge bg-success badge-dot"></span>\n' +
+                    '        </div>\n' +
+                    '        <div class="pt-1">\n' +
+                    '            <p class="fw-bold mb-0">'+ user.email +'</p>\n' +
+                    '        </div>\n' +
+                    '    </div>\n' +
+                    '</a>';
+
+                listItem.innerHTML += listItemContent;
+                listItem.addEventListener('click', function() {
+                    window.Echo.leave('laravelChat' + userId);
+                    window.Echo.channel('laravelChat' + userId).stopListening('.chatting');
+
+                    userId = this.getAttribute('data-user-id');
+                    echoData()
+                    getChatDataAdmin(userId)
+                });
+
+                listUserChatAdmin.appendChild(listItem);
+            });
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
+}
+
+openChat.addEventListener('click', function() {
+    chatContent.style.display = 'inline-block'
+    openChat.style.display = 'none'
+    messageElement.lastElementChild.scrollIntoView({behavior: "smooth"})
+});
+
+minimizeChat.addEventListener('click', function() {
+    chatContent.style.display = 'none'
+    openChat.style.display = 'inline-block'
+});

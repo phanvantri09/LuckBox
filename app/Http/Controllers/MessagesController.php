@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Repositories\MessageRepository;
+use App\Repositories\MessageRepositoryInterface;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -10,7 +10,7 @@ class MessagesController extends Controller
 {
     protected $messageRepository;
 
-    public function __construct(MessageRepository $messageRepository)
+    public function __construct(MessageRepositoryInterface $messageRepository)
     {
         $this->messageRepository = $messageRepository;
     }
@@ -64,5 +64,12 @@ class MessagesController extends Controller
         $chats = $this->messageRepository->getAdminChat($id);
 
         return response()->json($chats);
+    }
+
+    public function searchUser(Request $request)
+    {
+        $search = $request['q'] ?? '';
+        $users = $this->messageRepository->searchUser($search);
+        return response()->json($users);
     }
 }
