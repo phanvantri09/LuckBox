@@ -38,7 +38,7 @@ class BoxEventRepository implements BoxEventRepositoryInterface
     }
     public function changeStatus($status, $id){
         $getEvent = Box_event::find($id);
-        
+
         if ($status->input('status') == 1) {
             $getEvent->status = $status->input('status');
             $getEvent->save();
@@ -49,5 +49,8 @@ class BoxEventRepository implements BoxEventRepositoryInterface
             $getEvent->save();
             return response()->json(['status' => 2]);
         }
+    }
+    public function getInTime($time){
+        return Box_event::where('time_start', '<', $time)->where('time_end', '>', $time)->get();
     }
 }

@@ -107,8 +107,8 @@ class ProductController extends Controller
                     DB::commit();
                 } catch (\Throwable $th) {
                     DB::rollback();
-                    report($e);
-                    return redirect()->back()->withInput();
+                    report($th);
+                    return redirect()->back()->with('error', 'Đã xảy ra lỗi vui lòng nhập lại');
                 }
             }
         }

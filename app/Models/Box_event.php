@@ -4,7 +4,9 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-
+use App\Models\Category;
+use App\Models\Box_item;
+use App\Models\Product;
 class Box_event extends Model
 {
     use HasFactory;
@@ -16,12 +18,17 @@ class Box_event extends Model
         'description',
         'link_image',
         'status',
-        'time_start', 
+        'time_start',
         'time_end',
         'title',
     ];
 
-    public function boxItem(){
-        return $this->hasMany(Box_item::class,'id_box_event');
+    public function category()
+    {
+        return $this->hasOne(Category::class, 'id', 'id_category');
+    }
+    public function boxItem()
+    {
+        return $this->belongsTo(Box_item::class, 'id');
     }
 }
