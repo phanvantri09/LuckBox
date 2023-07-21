@@ -4,7 +4,7 @@
 @section('content')
     <div class="bg-white text-orange title-page">
         <div class="container">
-            <p>LuckyBox | Thông tin thanh toán</p>
+            <p>LuckyBox | Nạp tiền vào ví</p>
         </div>
     </div>
     <div class="content-container py-md-4 py-2">
@@ -70,7 +70,7 @@
                     <div class="row justify-content-between align-items-start pt-1">
                         <span class="col-5 text-secondary">Nội dung chuyển khoản đề xuất</span>
                         <div class="col-6 text-right" id="ndckdx">
-                            Chuyển khoản vui lòng ghi số lệnh. Chỉ nhận tài khoản chính chủ
+                            NAP TIEN VAO VI, id_user, email
                         </div>
                         <button class="border-0 bg-white col-1 px-0 clickcopy" onclick="copyText('#ndckdx')">
                             <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 448 512">
@@ -79,7 +79,7 @@
                             </svg>
                         </button>
                     </div>
-                    <div class="row justify-content-between align-items-start pt-1">
+                    {{-- <div class="row justify-content-between align-items-start pt-1">
                         <span class="col-5 text-secondary">Lưu ý</span>
                         <div class="col-6 text-right" id="luuy">
                             Không ghi chú giao dịch usdt, mua bán usdt
@@ -90,8 +90,8 @@
                                     d="M433.941 65.941l-51.882-51.882A48 48 0 0 0 348.118 0H176c-26.51 0-48 21.49-48 48v48H48c-26.51 0-48 21.49-48 48v320c0 26.51 21.49 48 48 48h224c26.51 0 48-21.49 48-48v-48h80c26.51 0 48-21.49 48-48V99.882a48 48 0 0 0-14.059-33.941zM266 464H54a6 6 0 0 1-6-6V150a6 6 0 0 1 6-6h74v224c0 26.51 21.49 48 48 48h96v42a6 6 0 0 1-6 6zm128-96H182a6 6 0 0 1-6-6V54a6 6 0 0 1 6-6h106v88c0 13.255 10.745 24 24 24h88v202a6 6 0 0 1-6 6zm6-256h-64V48h9.632c1.591 0 3.117.632 4.243 1.757l48.368 48.368a6 6 0 0 1 1.757 4.243V112z" />
                             </svg>
                         </button>
-                    </div>
-                    <div class="row justify-content-between align-items-start pt-1">
+                    </div> --}}
+                    {{-- <div class="row justify-content-between align-items-start pt-1">
                         <div class="col-5 text-secondary text-note d-flex">
                             <span>Nội dung chuyển khoản</span>
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
@@ -109,22 +109,53 @@
                                     d="M433.941 65.941l-51.882-51.882A48 48 0 0 0 348.118 0H176c-26.51 0-48 21.49-48 48v48H48c-26.51 0-48 21.49-48 48v320c0 26.51 21.49 48 48 48h224c26.51 0 48-21.49 48-48v-48h80c26.51 0 48-21.49 48-48V99.882a48 48 0 0 0-14.059-33.941zM266 464H54a6 6 0 0 1-6-6V150a6 6 0 0 1 6-6h74v224c0 26.51 21.49 48 48 48h96v42a6 6 0 0 1-6 6zm128-96H182a6 6 0 0 1-6-6V54a6 6 0 0 1 6-6h106v88c0 13.255 10.745 24 24 24h88v202a6 6 0 0 1-6 6zm6-256h-64V48h9.632c1.591 0 3.117.632 4.243 1.757l48.368 48.368a6 6 0 0 1 1.757 4.243V112z" />
                             </svg>
                         </button>
-                    </div>
+                    </div> --}}
                 </div>
                 <div class="d-flex">
                     <span class="bg-warning rounded-circle icon-stt">2</span>
                     <span class="pl-1">
-                        Sau khi chuyển, nhấp vào nút "Đã chuyển tiền, thông báo cho người bán" bên dưới.
+                        Sau khi chuyển, vui lòng nhập thông tin vào form bên dưới.
                     </span>
                 </div>
-                <div class="row align-items-center justify-content-between mt-2">
-                    <a href="checkout.html" class="col-4 pr-0">
-                        <button class="btn bg-info font-weight-bold content-bank">Trợ giúp</button>
-                    </a>
-                    <a href="checkout.html" class="col-8 text-right">
-                        <button class="btn bg-warning font-weight-bold content-bank">Đã chuyển tiền, thông báo cho người bán</button>
-                    </a>
-                </div>
+                <form action="">
+                    <div class="form-group">
+                        <div class="form-group">
+                            <label for="exampleFormControlInput1">Tên chủ tài khoản</label>
+                            <input type="text" name="name" class="form-control" id="exampleFormControlInput1"
+                                placeholder="Nguyễn Văn A">
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleFormControlInput2">Tên ngân hàng</label>
+                            <input type="text" name="tennganhang" class="form-control" id="exampleFormControlInput2"
+                                placeholder="Agribank">
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleFormControlInput3">Số tài khoản/Số thẻ</label>
+                            <input type="text" name="sothe" class="form-control" id="exampleFormControlInput3"
+                                placeholder="2356....">
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleFormControlInput4">Số tiền nạp vào ví</label>
+                            <input type="text" name="sotien" class="form-control" id="exampleFormControlInput4"
+                                placeholder="2.000.000">
+                        </div>
+                        <input type="hidden" name="name" class="form-control" id="exampleFormControlInput5" value="noidungck">
+                    </div>
+                    <div class="d-flex">
+                        <span class="bg-warning rounded-circle icon-stt">3</span>
+                        <span class="pl-1">
+                            Sau khi nhập đủ thông tin, nhấp vào nút "Đã chuyển tiền, thông báo cho người bán" bên dưới.
+                        </span>
+                    </div>
+                    <div class="row align-items-center justify-content-between mt-2">
+                        <a href="checkout.html" class="col-4 pr-0">
+                            <button class="btn bg-info font-weight-bold content-bank">Trợ giúp</button>
+                        </a>
+                        <a href="checkout.html" class="col-8 text-right">
+                            <button class="btn bg-warning font-weight-bold content-bank">Đã chuyển tiền, thông báo cho người bán</button>
+                        </a>
+                    </div>
+                </form>
             </div>
         </div>
     </div>

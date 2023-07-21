@@ -48,7 +48,7 @@
                             <div id="countdown" class="bg-danger text-white px-1"></div>
                             <div class="input-group py-2">
                                 <span class="input-group-btn">
-                                    <button type="button" class="quantity-left-minus btn btn-danger btn-number"
+                                    <button type="button" class="quantity-left-minus btn btn-warning btn-number"
                                         data-type="minus" data-field="">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
                                             fill="currentColor" class="bi bi-dash" viewBox="0 0 16 16">
@@ -60,7 +60,7 @@
                                     class="form-control input-number text-center" value="1" min="2"
                                     max="100" />
                                 <span class="input-group-btn">
-                                    <button type="button" class="quantity-right-plus btn btn-success btn-number"
+                                    <button type="button" class="quantity-right-plus btn btn-warning btn-number"
                                         data-type="plus" data-field="">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
                                             fill="currentColor" class="bi bi-plus" viewBox="0 0 16 16">

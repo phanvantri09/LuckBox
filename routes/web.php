@@ -50,9 +50,10 @@ Route::group(['prefix' => '/'], function () {
         Route::get('/purchase-order','purchaseOrder')->name('purchaseOrder');
         Route::get('/market','market')->name('market');
         Route::get('/resell','resell')->name('resell');
-        Route::get('/thong-tin-thanh-toan','infoCardPay')->name('infoCardPay');
+        Route::get('/nap-tien-vao-vi','infoCardPay')->name('infoCardPay');
         Route::get('/vi-cua-ban','walet')->name('walet');
         Route::get('/them-tai-khoan-ngan-hang','createCard')->name('createCard');
+        Route::get('/yeu-cau-rut-tien','cashOut')->name('cashOut');
     });
 
 });
