@@ -17,8 +17,6 @@ class Box_item extends Model
         'id_box',
         'link_image',
         'status',
-        'amount',
-        'price',
         'order_number',
         'time_start',
         'time_end'

@@ -7,11 +7,12 @@ class BoxEventRepository implements BoxEventRepositoryInterface
 {
     public function all()
     {
-        return Box_event::all();
+        return Box_event::with('boxItem')->get();
     }
 
     public function create(array $data)
     {
+        
         return Box_event::create($data);
     }
 

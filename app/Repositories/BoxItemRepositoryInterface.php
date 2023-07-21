@@ -10,4 +10,6 @@ interface BoxItemRepositoryInterface
      public function show($id);
      public function getAllByType($type);
      public function getByIDBoxEvent($id);
+     public function getAllByIdEvent($id);
+     public function changeStatus($id, $status);
 }

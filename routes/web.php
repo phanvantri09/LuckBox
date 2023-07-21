@@ -50,6 +50,9 @@ Route::group(['prefix' => '/'], function () {
         Route::get('/purchase-order','purchaseOrder')->name('purchaseOrder');
         Route::get('/market','market')->name('market');
         Route::get('/resell','resell')->name('resell');
+        Route::get('/thong-tin-thanh-toan','infoCardPay')->name('infoCardPay');
+        Route::get('/vi-cua-ban','walet')->name('walet');
+        Route::get('/them-tai-khoan-ngan-hang','createCard')->name('createCard');
     });
 
 });
@@ -62,6 +65,7 @@ Route::group(['prefix' => 'admin', 'middleware'=>['CheckAdmin']], function () {
             Route::get('/','indexAdmin')->name('index');
             Route::get('/getUser','getUser');
             Route::put('/updateRead','updateReadMessage');
+            Route::get('/getUserSearch','searchUser');
         });
     });
     Route::group(['prefix' => 'user', 'as' =>'user.'], function () {
@@ -174,7 +178,7 @@ Route::group(['prefix' => 'admin', 'middleware'=>['CheckAdmin']], function () {
                 // thêm
                 Route::get('/add', 'create')->name('add');
                 Route::post('/add', 'createPost')->name('addPost');
-                
+
 
                 // chức năng tạo mới 1 event từ event đã được tạo trước đó trong form chỉ cần thây đổi thời gian bắt đầu và kết thúc
                 // nhớ clone mới tất cả box_items của nó lun nha.
@@ -197,7 +201,7 @@ Route::group(['prefix' => 'admin', 'middleware'=>['CheckAdmin']], function () {
                     // thêm
                     // id_box thì làm select option search nha
                     Route::get('/add/{id_box_event}', 'create')->name('add');
-                    Route::post('/add/{id_box_event}', 'store')->name('addPost');
+                    Route::post('/add/{id_box_event}', 'createPost')->name('addPost');
 
                     //sửa
                     Route::get('edit/{id}','edit')->name('edit');
@@ -207,9 +211,37 @@ Route::group(['prefix' => 'admin', 'middleware'=>['CheckAdmin']], function () {
 
                     // hiển thị tất cả
                     Route::get('/show/{id}', 'show')->name('show');
+
+                    Route::post('change_status/{id}','changeStatus')->name('changeStatus');
                 });
             });
 
+        });
+    });
+
+    Route::group(['prefix' => 'card', 'as' =>'card.'], function () {
+        Route::controller(CardController::class)->group(function () {
+            // danh sách
+            Route::get('/','index')->name('index');
+            Route::get('/admin','indexAdmin')->name('indexAdmin');
+
+            // thêm
+            Route::get('/add', 'create')->name('add');
+            Route::post('/add', 'store')->name('addPost');
+            Route::get('/addAdmin', 'createAdmin')->name('addAdmin');
+            Route::post('/addAdmin', 'storeAdmin')->name('addPostAdmin');
+
+            //sửa
+            Route::get('edit/{id}','edit')->name('edit');
+            Route::post('edit/{id}','update')->name('editPost');
+            Route::get('editAdmin/{id}','editAdmin')->name('editAdmin');
+            Route::post('editAdmin/{id}','updateAdmin')->name('editPostAdmin');
+            // xóa
+            Route::get('/delete/{id}', 'destroy')->name('delete');
+            Route::get('/deleteAdmin/{id}', 'destroyAdmin')->name('deleteAdmin');
+
+            // hiển thị tất cả
+            Route::get('/show/{id}', 'show')->name('show');
         });
     });
 });

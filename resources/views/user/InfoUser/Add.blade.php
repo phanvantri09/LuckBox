@@ -23,7 +23,7 @@
                 </div>
                 <div class="col-md-8 col-12">
                     <div class="bg-white rounded py-4 px-4">
-                        <h4 class="text-center">Cập nhật thông tin cá nhân</h4>
+                        <h5 class="text-center">Cập nhật thông tin cá nhân</h5>
                         <form action="{{ route('updateInfoPost') }}" method="POST" enctype="multipart/form-data">
                             @csrf
                             <div class="form-group">
@@ -37,7 +37,7 @@
                             <div class="form-group">
                                 <div class="form-group">
                                     <label for="exampleFormControlInput2">Số điện thoại</label>
-                                    <input type="number" name="number_phone" class="form-control"
+                                    <input type="tel" name="number_phone" class="form-control"
                                         id="exampleFormControlInput2" placeholder="Số điện thoại"
                                         value="{{ empty($getInfoUser->number_phone) ? '' : $getInfoUser->number_phone }}">
                                 </div>
@@ -100,8 +100,7 @@
                                         value="{{ empty($getInfoUser->house_number_street) ? '' : $getInfoUser->house_number_street }}">
                                 </div>
                             </div>
-                            <button type="submit" style="background: black"
-                                class="btn bg-orange text-white font-weight-bold">Lưu</button>
+                            <button type="submit" class="btn bg-orange text-white font-weight-bold">Lưu</button>
                         </form>
                     </div>
                 </div>

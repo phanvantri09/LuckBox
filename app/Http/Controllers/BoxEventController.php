@@ -24,9 +24,11 @@ class BoxEventController extends Controller
     public function create(){
         $category = $this->categoryRepository->getAllByType(ConstCommon::ListTypeCatogory['event']);
         return view('admin.boxEvent.add', compact(['category']));
+
     }
     public function createPost(CreateBoxEvent $request){
         $idUser = Auth::user()->id;
+        //dd($request->all());
         if($request->link_image){
             //thời gian upload
             $current_time = time();
@@ -49,13 +51,16 @@ class BoxEventController extends Controller
         $data = [
             'id_user_create' => $idUser,
             'id_user_update' => $idUser,
+            'id_category' => $request->id_category,
             'title' => $request->title,
             // 2023-07-17 16:55:44
             'description' => $request->description,
+
             'time_start' => $carbon_start->format('Y-m-d H:i:s'),
             'time_end' => $carbon_end->format('Y-m-d H:i:s'),
             'link_image' => $imageName, 
             'id_category' => $request->id_category
+
         ];
 
         $this->boxEventRepository->create($data);
@@ -66,7 +71,6 @@ class BoxEventController extends Controller
     {
         $title = "Danh sách các sự kiện";
         $getEvent = $this->boxEventRepository->all();
-
         return view('admin.boxEvent.list',compact('getEvent','title'));
     }
 
@@ -129,7 +133,9 @@ class BoxEventController extends Controller
     public function show($id)
     {
         $showEvent = $this->boxEventRepository->show($id);
-        return view('admin.boxEvent.show',compact('showEvent'));
+        $getBoxItem = $showEvent->boxItem()->get();
+        
+        return view('admin.boxEvent.show',compact('showEvent','getBoxItem'));
     }
     public function destroy($id)
     {

@@ -23,53 +23,42 @@
                     <table id="example1" class="table table-bordered table-striped">
                         <thead>
                             <tr>
-                                <th>STT</th>
-                                <th>Tiêu đề</th>
-                                <th>Box</th>                             
-                                <th>Trạng thái </th>
+                                <th>stt</th>
+                                <th>QR code</th>
+                                <th>Tên người dùng</th>
+                                <th>Số tài khoản</th>
+                                <th>Chi nhánh</th>
+                                <th>Trạng thái</th>
+                                <th>Ngân hàng</th>
                                 <th></th>
                             </tr>
                         </thead>
                         <tbody>
-                            @php
-                                $i = 0;
-                            @endphp
-                            @foreach ($getEvent as $item)
-                                @php
-                                    $i = $i + 1;
-                                @endphp
+                            @foreach ($data as $key => $item)
                                 <tr>
-                                    <td>{{ $i }}</td>
-                                    <td>{{ $item->title }}</td>
-                                    <td>Đang có: {{count($item->boxItem).' box'}}</td>
-                                    
+                                    <td>{{ $key + 1 }}</td>
                                     <td>
-                                        <input type="checkbox" class="input-switch" name="status"
-                                            value="{{ $item->status }}" data-slide-id="{{ $item->id }}"
-                                            data-on-text="On" data-off-text="Off"
-                                            {{ $item->status == 1 ? 'checked' : '' }}>
+                                        @if($item->image_ql_code)
+                                        <img style="width: 150px;" src="{{\Illuminate\Support\Facades\Storage::url($item->image_ql_code)}}" alt="Cover Image">
+                                        @endif
                                     </td>
+                                    <td>{{$item->card_name}}</td>
+                                    <td>{{$item->card_number}}</td>
+                                    <td>{{$item->card_branch}}</td>
+                                    <td>{{ array_search($item->status, \App\Helpers\ConstCommon::TypeCard)}}</td>
+                                    <td>{{ \App\Helpers\ConstCommon::BankVN[$item->bank]['name'] }}</td>
                                     <td>
-                                        <a href="{{route('box.box_event.box_item.add', ['id_box_event' => $item->id])}}"
-                                            class="btn btn-app">
-                                            <i class="fas fa-book-open"></i> Thêm Box
-                                        </a>
-                                        <a href="{{route('box.box_event.show',['id' => $item->id])}}"
-                                            class="btn btn-app">
-                                            <i class="fas fa-book-open"></i> Xem
-                                        </a>
-
-                                        <a href="{{route('box.box_event.edit',['id' => $item->id])}}" class="btn btn-app">
+                                        <a  href="{{ route('card.editAdmin', ['id'=>$item->id]) }}" class="btn btn-app">
                                             <i class="fas fa-edit"></i> Sửa
                                         </a>
-                                        <a href="{{route('box.box_event.delete',['id' => $item->id])}}"
-                                            onclick="return confirm('Bạn có chắc chắn xóa không?')" class="btn btn-app">
+                                        <a href="{{ route('card.deleteAdmin', ['id'=>$item->id]) }}" class="btn btn-app">
                                             <i class="fas fa-trash-alt"></i>Xóa
                                         </a>
 
                                     </td>
                                 </tr>
                             @endforeach
+
                         </tbody>
                         {{-- <tfoot>
                             <tr>
@@ -89,10 +78,8 @@
         </div>
         <!-- /.col -->
     </div>
-    
 @endsection
 @section('scripts')
-
     <script src="../../plugins/datatables/jquery.dataTables.min.js"></script>
     <script src="../../plugins/datatables-bs4/js/dataTables.bootstrap4.min.js"></script>
     <script src="../../plugins/datatables-responsive/js/dataTables.responsive.min.js"></script>
@@ -105,7 +92,6 @@
     <script src="../../plugins/datatables-buttons/js/buttons.html5.min.js"></script>
     <script src="../../plugins/datatables-buttons/js/buttons.print.min.js"></script>
     <script src="../../plugins/datatables-buttons/js/buttons.colVis.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap-switch@3.3.4/dist/js/bootstrap-switch.min.js"></script>
     <script>
         $(function() {
             $("#example1").DataTable({
@@ -125,33 +111,4 @@
             });
         });
     </script>
-    <script>
-        $(document).ready(function() {
-            $('.input-switch').bootstrapSwitch();
-            $('.input-switch').on('switchChange.bootstrapSwitch', function(event, state) {
-                var status = state ? 1 : 2;
-                var slideId = $(this).data('slide-id'); // lấy giá trị slide_id từ thuộc tính data-slide-id
-                $.ajax({
-                    url: "{{ route('box.box_event.changeStatus', ['id' => ':slideId']) }}".replace(':slideId',
-                        slideId), // lấy giá trị thực tế của slideId gán vào id khi người dùng thực hiện yêu cầu ajax
-                    method: "POST",
-                    data: {
-                        _token: "{{ csrf_token() }}",
-                        status: status
-                    },
-                    success: function(response) {
-                        if (response.status == 1) {
-                            $(this).bootstrapSwitch('state', true);
-                        } else {
-                            $(this).bootstrapSwitch('state', false);
-                        }
-                    }.bind(this),
-                    error: function(xhr, status, error) {
-                        console.log(error);
-                    }
-                });
-            });
-        });
-    </script>
-    
 @endsection
