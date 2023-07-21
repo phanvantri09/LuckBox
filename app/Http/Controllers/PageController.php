@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-
+use App\Helpers\ConstCommon;
 class PageController extends Controller
 {
     public function __construct()
@@ -42,5 +42,18 @@ class PageController extends Controller
     public function market()
     {
         return view('user.page.market');
+    }
+    public function infoCardPay()
+    {
+        return view('user.page.infoCardPay');
+    }
+    public function createCard()
+    {
+        $dataBank = ConstCommon::BankVN;
+        return view('user.page.createCard', compact(['dataBank']));
+    }
+    public function walet()
+    {
+        return view('user.page.walet');
     }
 }

@@ -22,7 +22,7 @@
                                     <div class="p-3">
 
                                         <div class="input-group rounded mb-3">
-                                            <input type="search" class="form-control rounded" placeholder="Search" aria-label="Search"
+                                            <input id="searchInput" type="search" class="form-control rounded" placeholder="Tìm kiếm..." aria-label="Search"
                                                    aria-describedby="search-addon" />
                                             <span class="input-group-text border-0" id="search-addon">
                                               <i class="fas fa-search"></i>
