@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\Box\CreateBoxEvent;
 use Illuminate\Http\Request;
 use App\Repositories\BoxEventRepositoryInterface;
+use App\Repositories\CategoryRepositoryInterface;
 use Illuminate\Support\Facades\Auth;
 use App\Helpers\ConstCommon;
 
@@ -13,14 +14,16 @@ use Carbon\Carbon;
 class BoxEventController extends Controller
 {
     protected $boxEventRepository;
-
-    public function __construct(BoxEventRepositoryInterface $boxEventRepository)
+    protected $categoryRepository;
+    public function __construct(BoxEventRepositoryInterface $boxEventRepository, CategoryRepositoryInterface $categoryRepository)
     {
         $this->boxEventRepository = $boxEventRepository;
+        $this->categoryRepository = $categoryRepository;
     }
 
     public function create(){
-        return view('admin.boxEvent.add');
+        $category = $this->categoryRepository->getAllByType(ConstCommon::ListTypeCatogory['event']);
+        return view('admin.boxEvent.add', compact(['category']));
     }
     public function createPost(CreateBoxEvent $request){
         $idUser = Auth::user()->id;
@@ -51,7 +54,8 @@ class BoxEventController extends Controller
             'description' => $request->description,
             'time_start' => $carbon_start->format('Y-m-d H:i:s'),
             'time_end' => $carbon_end->format('Y-m-d H:i:s'),
-            'link_image' => $imageName
+            'link_image' => $imageName, 
+            'id_category' => $request->id_category
         ];
 
         $this->boxEventRepository->create($data);
@@ -73,7 +77,8 @@ class BoxEventController extends Controller
     public function edit($id)
     {
         $getEvent = $this->boxEventRepository->show($id);
-        return view('admin.boxEvent.edit', compact('getEvent'));
+        $category = $this->categoryRepository->getAllByType(ConstCommon::ListTypeCatogory['event']);
+        return view('admin.boxEvent.edit', compact(['category', 'getEvent']));
     }
     public function update(Request $request, $id){
         $idUser = Auth::user()->id;
@@ -101,7 +106,9 @@ class BoxEventController extends Controller
                 'description' => $request->description,
                 'time_start' => $carbon_start->format('Y-m-d H:i:s'),
                 'time_end' => $carbon_end->format('Y-m-d H:i:s'),
-                'link_image' => $imageName
+                'link_image' => $imageName, 
+                'id_category' => $request->id_category
+                
             ];
             $this->boxEventRepository->update($data, $id);
             return back()->with('success', 'Cập nhật thành công');
@@ -113,8 +120,8 @@ class BoxEventController extends Controller
             'title' => $request->title,
             'description' => $request->description,
             'time_start' => $carbon_start->format('Y-m-d H:i:s'),
-            'time_end' => $carbon_end->format('Y-m-d H:i:s'),
-
+            'time_end' => $carbon_end->format('Y-m-d H:i:s'), 
+            'id_category' => $request->id_category
         ];
         $this->boxEventRepository->update($data, $id);
         return back()->with('success', 'Cập nhật thành công');

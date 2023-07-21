@@ -46,6 +46,17 @@
                             </div>
                         </div>
                     </div>
+                    <div class="col-sm-6">
+                        <!-- select -->
+                        <div class="form-group">
+                            <label>Loại</label>
+                            <select name="id_category" class="form-control">
+                                @foreach ($category as $key => $item)
+                                    <option value="{{ $item->id }}" {{ $item->id == $getEvent->id_category ? "selected" : "" }}> {{ $item->title }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                    </div>
                     <div class="row">
                         <div class="col-12">
 

@@ -58,11 +58,13 @@ class BoxController extends Controller
         $currentUser = Auth::user();
 
         $file = $request->file('image');
-        $path = Storage::disk('public')->putFileAs('images', $file,$file->getClientOriginalName());
+        $nameImage = 'Box-'.ConstCommon::getCurrentTime().'.'.$request->image->extension();
+        ConstCommon::addImageToStorage($request->image, $nameImage );
+        // $path = Storage::disk('public')->putFileAs('images', $file,$file->getClientOriginalName());
 
         $id_user_create = $currentUser->id;
         $id_user_update = $currentUser->id;
-        $request->merge(["id_user_create"=>$id_user_create,"id_user_update"=>$id_user_update, 'link_image' => $path]);
+        $request->merge(["id_user_create"=>$id_user_create,"id_user_update"=>$id_user_update, 'link_image' => $nameImage]);
         $data = $request->all();
         $this->boxRepository->create($data);
         return redirect()->route('box.index')->with('success', 'data created successfully');

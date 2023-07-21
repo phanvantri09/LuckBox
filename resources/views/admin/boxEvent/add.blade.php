@@ -12,14 +12,15 @@
                     @csrf
                     <div class="form-group">
                         <label for="inputName">Tiêu đề</label>
-                        <input type="text" name="title" id="inputName" class="form-control" value="{{old('title')}}">
+                        <input type="text" name="title" id="inputName" class="form-control"
+                            value="{{ old('title') }}">
                         @error('title')
                             <div class="alert alert-danger">{{ $errors->first('title') }}</div>
                         @enderror
                     </div>
                     <div class="form-group">
                         <label for="inputDescription">Mô tả</label>
-                        <textarea id="summernote" name="description" class="form-control" rows="4">{{old('time_start')}}</textarea>
+                        <textarea id="summernote" name="description" class="form-control" rows="4">{{ old('time_start') }}</textarea>
                         @error('description')
                             <div class="alert alert-danger">{{ $errors->first('description') }}</div>
                         @enderror
@@ -40,23 +41,35 @@
                         <div class="form-group">
                             <label for="timeStart">Ngày bắt đầu</label>
                             <div class="input-group" id="" data-target-input="nearest">
-                                <input type="datetime-local" name="time_start" class="form-control " value="{{old('time_start')}}"
-                                    data-target="" />
+                                <input type="datetime-local" name="time_start" class="form-control "
+                                    value="{{ old('time_start') }}" data-target="" />
                                 @error('time_start')
                                     <div class="alert alert-danger">{{ $errors->first('time_start') }}</div>
                                 @enderror
                             </div>
                         </div>
-
+                    </div>
+                    <div class="col-sm-6">
                         <div class="form-group">
                             <label for="timeEnd">Ngày kết thúc</label>
                             <div class="input-group " id="" data-target-input="nearest">
-                                <input type="datetime-local" name="time_end" class="form-control" value="{{old('time_end')}}"
-                                    data-target="" />
+                                <input type="datetime-local" name="time_end" class="form-control"
+                                    value="{{ old('time_end') }}" data-target="" />
                                 @error('time_end')
                                     <div class="alert alert-danger">{{ $errors->first('time_end') }}</div>
                                 @enderror
                             </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <!-- select -->
+                        <div class="form-group">
+                            <label>Loại</label>
+                            <select name="id_category" class="form-control">
+                                @foreach ($category as $key => $item)
+                                    <option value="{{ $item->id }}"> {{ $item->title }}</option>
+                                @endforeach
+                            </select>
                         </div>
                     </div>
                     <div class="row">
@@ -77,29 +90,32 @@
     <script src="../../plugins/codemirror/mode/xml/xml.js"></script>
     <script src="../../plugins/codemirror/mode/htmlmixed/htmlmixed.js"></script>
     <script>
-    //     $(function() {
-    //         // Summernote
-    //         $('#summernote').summernote()
+        //     $(function() {
+        //         // Summernote
+        //         $('#summernote').summernote()
 
-    //         // CodeMirror
-    //         CodeMirror.fromTextArea(document.getElementById("codeMirrorDemo"), {
-    //             mode: "htmlmixed",
-    //             theme: "monokai"
-    //         });
-    //     })
-    // </script>
-    // <script type="text/javascript">
-    //     $(function() {
-    //         $('#datetimepicker7').datetimepicker();
-    //         $('#datetimepicker8').datetimepicker({
-    //             useCurrent: false
-    //         });
-    //         $("#datetimepicker7").on("change.datetimepicker", function(e) {
-    //             $('#datetimepicker8').datetimepicker('minDate', e.date);
-    //         });
-    //         $("#datetimepicker8").on("change.datetimepicker", function(e) {
-    //             $('#datetimepicker7').datetimepicker('maxDate', e.date);
-    //         });
-    //     });
-    // </script>
+        //         // CodeMirror
+        //         CodeMirror.fromTextArea(document.getElementById("codeMirrorDemo"), {
+        //             mode: "htmlmixed",
+        //             theme: "monokai"
+        //         });
+        //     })
+        // 
+    </script>
+    //
+    <script type="text/javascript">
+        //     $(function() {
+        //         $('#datetimepicker7').datetimepicker();
+        //         $('#datetimepicker8').datetimepicker({
+        //             useCurrent: false
+        //         });
+        //         $("#datetimepicker7").on("change.datetimepicker", function(e) {
+        //             $('#datetimepicker8').datetimepicker('minDate', e.date);
+        //         });
+        //         $("#datetimepicker8").on("change.datetimepicker", function(e) {
+        //             $('#datetimepicker7').datetimepicker('maxDate', e.date);
+        //         });
+        //     });
+        // 
+    </script>
 @endsection

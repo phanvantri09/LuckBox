@@ -29,6 +29,6 @@ class Box_event extends Model
     }
     public function boxItem()
     {
-        return $this->hasMany(Box_item::class, 'id_box_event', 'id');
+        return $this->belongsTo(Box_item::class, 'id');
     }
 }

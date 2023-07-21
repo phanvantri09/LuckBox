@@ -45,16 +45,18 @@ class HomeController extends Controller
     public function index()
     {
         $currentTime = Carbon::now('Asia/Ho_Chi_Minh');
-        $events = $this->boxEventRepository->getInTime($currentTime->format('Y/m/d H:i:s'));
+        $events = $this->boxEventRepository->getInTime($currentTime->format('Y-m-d H:i:s'));
+        $boxItem = [];
         foreach ($events as $key => $event) {
-            dd($event->boxItem());
+            // láy item trong thời gian đó
+            $cacheBoxItem = $this->boxItemRepository->getByIDBoxEvent($event->id);
+            $boxItem[$event->id] =  [$cacheBoxItem, empty($cacheBoxItem) ? null : $cacheBoxItem->box()];
         }
-        return view('user.page.home', compact(['events']));
+        return view('user.page.home', compact(['boxItem']));
     }
 
     public function chatbox()
     {
-
         return view('user.layout.chatbox', compact([]));
     }
 }

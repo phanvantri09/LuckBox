@@ -40,4 +40,8 @@ class Box extends Model
     {
         return $this->hasMany(Box_product::class, 'id_box');
     }
+    public function boxItem()
+    {
+        return $this->belongsTo(Box_item::class, 'id');
+    }
 }

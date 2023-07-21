@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Box_event;
+use App\Models\Box;
 class Box_item extends Model
 {
     use HasFactory;
@@ -24,6 +25,10 @@ class Box_item extends Model
     ];
     public function boxEvent()
     {
-        return $this->belongsTo(Box_event::class, 'id_box_event');
+        return $this->hasMany(Box_event::class, 'id', 'id_box_event');
+    }
+    public function box()
+    {
+        return $this->hasOne(Box::class, 'id', 'id_box');
     }
 }

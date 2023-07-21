@@ -50,6 +50,6 @@ class BoxEventRepository implements BoxEventRepositoryInterface
         }
     }
     public function getInTime($time){
-        return Box_event::where('time_end', '>=', $time)->get();
+        return Box_event::where('time_start', '<', $time)->where('time_end', '>', $time)->get();
     }
 }
