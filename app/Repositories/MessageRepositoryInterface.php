@@ -15,4 +15,6 @@ interface MessageRepositoryInterface
     public function getUserChat();
 
     public function getAdminChat($userId);
+
+    public function searchUser($search);
 }

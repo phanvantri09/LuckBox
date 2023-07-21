@@ -44,9 +44,10 @@ class UserController extends Controller
     public function store(CreateRequestUser $request)
     {
         $request->merge(['password' => Hash::make($request->password)]);
+        $type = $request->type;
         $data = $request->all();
         $this->userRepository->create($data);
-        return redirect()->route('user.index')->with('success', 'Thành công');
+        return redirect()->route('user.list', ['type' => $type])->with('success', 'Thành công');
     }
 
     /**
@@ -103,7 +104,7 @@ class UserController extends Controller
     public function destroy($id)
     {
         $this->userRepository->delete($id);
-        return redirect()->route('user.index')->with('success', 'Thành công');
+        return back()->with('success', 'Thành công');
     }
     
 }

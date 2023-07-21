@@ -19,6 +19,7 @@
         href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha512-SfTiTlX6kk+qitfevl/7LibUOeJWlt9rbyDn92a1DqWOw9vWG2MFoays0sgObmWazO5BQPiFucnnEAjpAB+/Sw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="./css/style.css" />
     <link href="css/app.css" rel="stylesheet">
     @yield('css')
@@ -32,10 +33,14 @@
     @include('user.layout.panel')
     @if (Auth::user() && Auth::user()->type == \App\Helpers\ConstCommon::TypeUser)
         <div class="floating-chat me-4 d-md-block d-none">
-            <div class="card">
+            <div id="openChat" class="p-3 bg-warning rounded-circle">
+                <i class="fa fa-commenting-o" aria-hidden="true" style="font-size: 30px; color: white"></i>
+            </div>
+            <div id="chatContent" class="card">
                 <div class="card-header d-flex justify-content-between align-items-center p-3"
                     style="border-top: 4px solid #ffa900;">
                     <h5 class="mb-0">Đoạn chat</h5>
+                    <i id="minimizeChat" class="fa fa-minus" aria-hidden="true"></i>
                 </div>
                 <div class="card-body" data-mdb-perfect-scrollbar="true"
                     style="position: relative; height: 400px; width: 350px">
@@ -62,7 +67,7 @@
                         <input id="message" type="text" class="form-control" placeholder="Nhập tin nhắn..."
                             aria-label="Recipient's username" aria-describedby="button-addon2" />
                         <button class="btn btn-warning" type="button submit" id="button-addon2"
-                            style="padding-top: .55rem;">
+                            style="padding-top: .55rem; color: white">
                             Gửi
                         </button>
                     </div>
@@ -73,7 +78,7 @@
     @endif
 </body>
 
-@yield('script')
+@yield('scripts')
 <script src="./js/quantity.js"></script>
 {{-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
     integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous">

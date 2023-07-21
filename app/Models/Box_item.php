@@ -12,10 +12,9 @@ class Box_item extends Model
     protected $fillable = [
         'id_user_create',
         'id_user_update',
-        'link_image',
+        'id_box_event',
+        'id_box',
         'status',
-        'amount',
-        'price',
         'order_number',
         'time_start', 
         'time_end'

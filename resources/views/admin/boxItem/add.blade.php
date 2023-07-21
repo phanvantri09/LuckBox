@@ -5,36 +5,21 @@
     <div class="col-md-12">
         <div class="card card-primary">
             <div class="card-header">
-                <h3 class="card-title">Event</h3>
+                <h3 class="card-title">Thêm Box Vào Event</h3>
             </div>
             <div class="card-body">
-                <form action="{{ route('box.box_event.addPost') }}" method="POST" enctype="multipart/form-data">
+                <form action="{{route('box.box_event.box_item.addPost',[ 'id_box_event' => $idEvent ])}}" method="POST" enctype="multipart/form-data">
                     @csrf
-                    <div class="form-group">
-                        <label for="inputName">Tiêu đề</label>
-                        <input type="text" name="title" id="inputName" class="form-control">
-                        @error('title')
-                            <div class="alert alert-danger">{{ $errors->first('title') }}</div>
-                        @enderror
-                    </div>
-                    <div class="form-group">
-                        <label for="inputDescription">Mô tả</label>
-                        <textarea id="summernote" name="description" class="form-control" rows="4"></textarea>
-                        @error('description')
-                            <div class="alert alert-danger">{{ $errors->first('description') }}</div>
-                        @enderror
-                    </div>
                     <div class="col-sm-6">
                         <div class="form-group">
-                            <label for="customFile">Image</label>
-                            <div class="custom-file">
-                                <input type="file" name="link_image" class="custom-file-input" id="customFile">
-                                <label class="custom-file-label" for="customFile">Chọn ảnh</label>
-                            </div>
-                            @error('link_image')
-                                <div class="alert alert-danger">{{ $errors->first('link_image') }}</div>
-                            @enderror
-                        </div>
+                            <label>Chọn Box</label>
+                            <select name="id_box" class="form-control select2" style="width: 100%;">
+                              <option selected="selected">Chọn Box cho Event này</option>
+                              @foreach ($getBox as $item)
+                                <option value="{{$item->id}}" >{{$item->title}}</option>
+                              @endforeach
+                            </select>
+                          </div>
                     </div>
                     <div class="col-sm-6">
                         <div class="form-group">
@@ -45,9 +30,9 @@
                                 <div class="input-group-append" data-target="#datetimepicker7" data-toggle="datetimepicker">
                                     <div class="input-group-text"><i class="fa fa-calendar"></i></div>
                                 </div>
-                                @error('time_start')
+                                {{-- @error('time_start')
                                     <div class="alert alert-danger">{{ $errors->first('time_start') }}</div>
-                                @enderror
+                                @enderror --}}
                             </div>
                         </div>
 
@@ -59,22 +44,9 @@
                                 <div class="input-group-append" data-target="#datetimepicker8" data-toggle="datetimepicker">
                                     <div class="input-group-text"><i class="fa fa-calendar"></i></div>
                                 </div>
-                                @error('time_end')
+                                {{-- @error('time_end')
                                     <div class="alert alert-danger">{{ $errors->first('time_end') }}</div>
-                                @enderror
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-sm-12">
-                            <!-- select -->
-                            <div class="form-group">
-                                <label>Loại</label>
-                                <select name="id_category" class="form-control">
-                                    @foreach ($getCategory as $item)
-                                        <option value="{{ $item->id }}"> {{ $item->title }}</option>
-                                    @endforeach
-                                </select>
+                                @enderror --}}
                             </div>
                         </div>
                     </div>
@@ -95,16 +67,19 @@
     <script src="../../plugins/codemirror/mode/css/css.js"></script>
     <script src="../../plugins/codemirror/mode/xml/xml.js"></script>
     <script src="../../plugins/codemirror/mode/htmlmixed/htmlmixed.js"></script>
+    <!-- Select2 -->
+    <script src="../../plugins/select2/js/select2.full.min.js"></script>
+
     <script>
         $(function() {
-            // Summernote
-            $('#summernote').summernote()
+            //Initialize Select2 Elements
+            $('.select2').select2()
 
-            // CodeMirror
-            CodeMirror.fromTextArea(document.getElementById("codeMirrorDemo"), {
-                mode: "htmlmixed",
-                theme: "monokai"
-            });
+            //Initialize Select2 Elements
+            $('.select2bs4').select2({
+                theme: 'bootstrap4'
+            })
+
         })
     </script>
     <script type="text/javascript">

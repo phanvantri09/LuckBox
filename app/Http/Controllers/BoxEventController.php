@@ -5,22 +5,30 @@ namespace App\Http\Controllers;
 use App\Http\Requests\Box\CreateBoxEvent;
 use Illuminate\Http\Request;
 use App\Repositories\BoxEventRepositoryInterface;
+use App\Repositories\CategoryRepositoryInterface;
 use Illuminate\Support\Facades\Auth;
 use App\Helpers\ConstCommon;
 class BoxEventController extends Controller
 {
     protected $boxEventRepository;
+    protected $categoryRepository;
 
-    public function __construct(BoxEventRepositoryInterface $boxEventRepository)
+    public function __construct(BoxEventRepositoryInterface $boxEventRepository, CategoryRepositoryInterface $categoryRepository)
     {
         $this->boxEventRepository = $boxEventRepository;
+        $this->categoryRepository = $categoryRepository;
     }
 
     public function create(){
-        return view('admin.boxEvent.add');
+
+        $getCategory = $this->categoryRepository->getAllByType(ConstCommon::ListTypeCatogory['event']);
+        
+        
+        return view('admin.boxEvent.add', compact('getCategory'));
     }
     public function createPost(CreateBoxEvent $request){
         $idUser = Auth::user()->id;
+        //dd($request->all());
         if($request->link_image){
             //thời gian upload
             $current_time = time();
@@ -36,11 +44,13 @@ class BoxEventController extends Controller
         $data = [
             'id_user_create' => $idUser,
             'id_user_update' => $idUser,
+            'id_category' => $request->id_category,
             'title' => $request->title,
             'description' => $request->description,
             'time_start' => $request->time_start,
             'time_end' => $request->time_end,
             'link_image' => $imageName
+            
         ];
         
         $this->boxEventRepository->create($data);
@@ -51,6 +61,9 @@ class BoxEventController extends Controller
     {
         $title = "Danh sách các sự kiện";
         $getEvent = $this->boxEventRepository->all();
+        
+        
+        
         
         return view('admin.boxEvent.list',compact('getEvent','title'));
     }
@@ -104,7 +117,9 @@ class BoxEventController extends Controller
     public function show($id)
     {
         $showEvent = $this->boxEventRepository->show($id);
-        return view('admin.boxEvent.show',compact('showEvent'));
+        $getBoxItem = $showEvent->boxItem()->get();
+        
+        return view('admin.boxEvent.show',compact('showEvent','getBoxItem'));
     }
     public function destroy($id)
     {
