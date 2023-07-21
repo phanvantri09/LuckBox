@@ -59,8 +59,6 @@ class BoxEventController extends Controller
             'time_start' => $carbon_start->format('Y-m-d H:i:s'),
             'time_end' => $carbon_end->format('Y-m-d H:i:s'),
             'link_image' => $imageName, 
-            'id_category' => $request->id_category
-
         ];
 
         $this->boxEventRepository->create($data);
@@ -134,8 +132,11 @@ class BoxEventController extends Controller
     {
         $showEvent = $this->boxEventRepository->show($id);
         $getBoxItem = $showEvent->boxItem()->get();
-        
-        return view('admin.boxEvent.show',compact('showEvent','getBoxItem'));
+        $dataMain = [];
+        foreach ($getBoxItem as $key => $boxItem) {
+            $dataMain[$key] = [$boxItem, $boxItem->box()->get()];
+        }
+        return view('admin.boxEvent.show',compact('showEvent','getBoxItem', 'dataMain'));
     }
     public function destroy($id)
     {

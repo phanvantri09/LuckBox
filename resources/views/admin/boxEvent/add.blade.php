@@ -72,19 +72,7 @@
                             </select>
                         </div>
                     </div>
-                    <div class="row">
-                        <div class="col-sm-12">
-                            <!-- select -->
-                            <div class="form-group">
-                                <label>Loại</label>
-                                <select name="id_category" class="form-control">
-                                    @foreach ($getCategory as $item)
-                                        <option value="{{ $item->id }}"> {{ $item->title }}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-                        </div>
-                    </div>
+                    
                     <div class="row">
                         <div class="col-12">
                             <input type="submit" value="Lưu" class="btn btn-success float-right">

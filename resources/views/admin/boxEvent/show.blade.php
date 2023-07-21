@@ -71,24 +71,24 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach ($getBoxItem as $item)
+                            @foreach ($dataMain as $item)
                                 <tr>
 
-                                    <td>{{ $item->id_box }}</td>
-                                    <td>{{ date('H:i - d/m/Y', strtotime($item->time_start)) }}</td>
-                                    <td>{{ date('H:i - d/m/Y', strtotime($item->time_end)) }}</td>
+                                    <td>{{ $item[1][0]->title }}</td>
+                                    <td>{{ date('H:i - d/m/Y', strtotime($item[0]->time_start)) }}</td>
+                                    <td>{{ date('H:i - d/m/Y', strtotime($item[0]->time_end)) }}</td>
                                     <td>
                                         <form class="status-form"
-                                            action="{{ route('box.box_event.box_item.changeStatus', ['id' => $item->id]) }}"
+                                            action="{{ route('box.box_event.box_item.changeStatus', ['id' => $item[0]->id]) }}"
                                             method="POST">
                                             @csrf
                                             <select class="status-select form-control" name="status">
-                                                @if ($item->status == 1)
+                                                @if ($item[0]->status == 1)
                                                     <option selected value="1">Đợi lên sàn để bán</option>
                                                     <option value="2">Hết hạng rồi</option>
                                                     <option value="3">User đã mở box</option>
                                                 @else
-                                                    @if ($item->status == 2)
+                                                    @if ($item[0]->status == 2)
                                                         <option value="1">Đợi lên sàn để bán</option>
                                                         <option selected value="2">Hết hạng rồi</option>
                                                         <option value="3">User đã mở box</option>
@@ -103,10 +103,10 @@
                                         </form>
                                     </td>
                                     <td>
-                                        <a href="{{ route('box.box_event.box_item.edit', ['id' => $item->id]) }}" class="btn btn-app">
+                                        <a href="{{ route('box.box_event.box_item.edit', ['id' => $item[0]->id]) }}" class="btn btn-app">
                                             <i class="fas fa-edit"></i> Sửa
                                         </a>
-                                        <a href="{{ route('box.box_event.box_item.delete', ['id' => $item->id]) }}" onclick="return confirm('Bạn có muốn xóa?')" class="btn btn-app">
+                                        <a href="{{ route('box.box_event.box_item.delete', ['id' => $item[0]->id]) }}" onclick="return confirm('Bạn có muốn xóa?')" class="btn btn-app">
                                             <i class="fas fa-trash-alt"></i> Xóa
                                         </a>
                                     </td>
