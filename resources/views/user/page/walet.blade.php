@@ -14,8 +14,12 @@
                 <div class="d-sm-flex align-items-center justify-content-between">
                     <p class="mb-0">Số dư: <span class="text-danger font-weight-bold">2.000.000</span></p>
                     <div class="d-flex d-sm-block justify-content-between py-sm-0 py-1">
-                        <button class="btn bg-success text-white">Nạp tiền</button>
-                        <button class="btn bg-warning text-white">Rút tiền</button>
+                        <a href="{{ route('infoCardPay') }}" class="text-decoration-none">
+                            <button class="btn bg-warning text-white">Nạp tiền</button>
+                        </a>
+                        <a href="{{ route('cashOut') }}" class="text-decoration-none">
+                            <button class="btn bg-success text-white">Rút tiền</button>
+                        </a>
                     </div>
                 </div>
                 <h5 class="text-center">Tài khoản thanh toán</h5>

@@ -170,11 +170,11 @@
   height: 12px;
   display: flex;
   align-items: center;
-  background-color: #cff7ea;
+  background-color: #ffb592;
 }
 .rank-progress {
   height: 100%;
-  background-color: #00ffaa;
+  background-color: #ff4800;
   border-radius: 5px;
 }
 .text-note{

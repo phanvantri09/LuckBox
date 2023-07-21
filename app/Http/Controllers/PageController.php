@@ -56,4 +56,8 @@ class PageController extends Controller
     {
         return view('user.page.walet');
     }
+    public function cashOut()
+    {
+        return view('user.page.cashOut');
+    }
 }
