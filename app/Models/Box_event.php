@@ -12,6 +12,7 @@ class Box_event extends Model
     protected $fillable = [
         'id_user_create',
         'id_user_update',
+        'id_category',
         'description',
         'link_image',
         'status',
@@ -19,4 +20,8 @@ class Box_event extends Model
         'time_end',
         'title',
     ];
+
+    public function boxItem(){
+        return $this->hasMany(Box_item::class,'id_box_event');
+    }
 }

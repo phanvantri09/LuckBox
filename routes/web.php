@@ -197,7 +197,7 @@ Route::group(['prefix' => 'admin', 'middleware'=>['CheckAdmin']], function () {
                     // thêm
                     // id_box thì làm select option search nha
                     Route::get('/add/{id_box_event}', 'create')->name('add');
-                    Route::post('/add/{id_box_event}', 'store')->name('addPost');
+                    Route::post('/add/{id_box_event}', 'createPost')->name('addPost');
 
                     //sửa
                     Route::get('edit/{id}','edit')->name('edit');
@@ -207,6 +207,8 @@ Route::group(['prefix' => 'admin', 'middleware'=>['CheckAdmin']], function () {
 
                     // hiển thị tất cả
                     Route::get('/show/{id}', 'show')->name('show');
+
+                    Route::post('change_status/{id}','changeStatus')->name('changeStatus');
                 });
             });
 
