@@ -23,7 +23,7 @@ class CreateBoxItemsTable extends Migration
             $table->integer('id_box');
             $table->integer('status')->default(1)->comment('1 là đợi và lên sàn để bán, 2 là hết hạng rồi, 3 là người dùng đã mở box và thanh toán');
             $table->integer('order_number')->nullable()->comment('số thứ tự nhưng chắc sẽ dùng time để xác định chứ k cần phải dùng order nên cứ để rỗng trước');
-            $table->integer('amount')->comment('số lượng cho phép bán đi của họp box trong thời gian event này, nhớ kiểm tra để so sánh với số lượng còn lại trong kho');
+            //$table->integer('amount')->comment('số lượng cho phép bán đi của họp box trong thời gian event này, nhớ kiểm tra để so sánh với số lượng còn lại trong kho');
             $table->string('time_start');
             $table->string('time_end');
             $table->timestamps();

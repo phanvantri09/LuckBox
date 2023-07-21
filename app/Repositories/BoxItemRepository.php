@@ -32,7 +32,21 @@ class BoxItemRepository implements BoxItemRepositoryInterface
     {
         return Box_item::findOrFail($id);
     }
-    public function getAllByType($type){
-        return Box_item::where('type', $type)->get();
+    public function getAllByIdEvent($id){
+        return Box_item::where('id_box_event', $id)->get();
+    }
+    public function changeStatus($id, $status ){
+        $boxItem = Box_item::findOrFail($id);
+        
+        if($status == 1){
+            $boxItem->update(['status' =>  1]);
+        }else{
+            if($status == 2){
+                $boxItem->update(['status' =>  2]);
+            }else{
+                $boxItem->update(['status' =>  3]);
+            }
+        }
+        
     }
 }

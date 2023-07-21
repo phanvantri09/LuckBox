@@ -25,8 +25,7 @@
                             <tr>
                                 <th>STT</th>
                                 <th>Tiêu đề</th>
-                                <th>Ngày bắt đầu</th>
-                                <th>Ngày kết thúc </th>
+                                <th>Box</th>                             
                                 <th>Trạng thái </th>
                                 <th></th>
                             </tr>
@@ -42,8 +41,8 @@
                                 <tr>
                                     <td>{{ $i }}</td>
                                     <td>{{ $item->title }}</td>
-                                    <td>{{date('H:i - d/m/Y', strtotime($item->time_start))  }}</td>
-                                    <td>{{ date('H:i - d/m/Y', strtotime($item->time_end)) }}</td>
+                                    <td>Đang có: {{count($item->boxItem).' box'}}</td>
+                                    
                                     <td>
                                         <input type="checkbox" class="input-switch" name="status"
                                             value="{{ $item->status }}" data-slide-id="{{ $item->id }}"
@@ -51,6 +50,10 @@
                                             {{ $item->status == 1 ? 'checked' : '' }}>
                                     </td>
                                     <td>
+                                        <a href="{{route('box.box_event.box_item.add', ['id_box_event' => $item->id])}}"
+                                            class="btn btn-app">
+                                            <i class="fas fa-book-open"></i> Thêm Box
+                                        </a>
                                         <a href="{{route('box.box_event.show',['id' => $item->id])}}"
                                             class="btn btn-app">
                                             <i class="fas fa-book-open"></i> Xem
