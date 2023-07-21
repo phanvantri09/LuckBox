@@ -65,6 +65,7 @@ Route::group(['prefix' => 'admin', 'middleware'=>['CheckAdmin']], function () {
             Route::get('/','indexAdmin')->name('index');
             Route::get('/getUser','getUser');
             Route::put('/updateRead','updateReadMessage');
+            Route::get('/getUserSearch','searchUser');
         });
     });
     Route::group(['prefix' => 'user', 'as' =>'user.'], function () {
@@ -177,7 +178,7 @@ Route::group(['prefix' => 'admin', 'middleware'=>['CheckAdmin']], function () {
                 // thêm
                 Route::get('/add', 'create')->name('add');
                 Route::post('/add', 'createPost')->name('addPost');
-                
+
 
                 // chức năng tạo mới 1 event từ event đã được tạo trước đó trong form chỉ cần thây đổi thời gian bắt đầu và kết thúc
                 // nhớ clone mới tất cả box_items của nó lun nha.
