@@ -218,5 +218,31 @@ Route::group(['prefix' => 'admin', 'middleware'=>['CheckAdmin']], function () {
 
         });
     });
+
+    Route::group(['prefix' => 'card', 'as' =>'card.'], function () {
+        Route::controller(CardController::class)->group(function () {
+            // danh sách
+            Route::get('/','index')->name('index');
+            Route::get('/admin','indexAdmin')->name('indexAdmin');
+
+            // thêm
+            Route::get('/add', 'create')->name('add');
+            Route::post('/add', 'store')->name('addPost');
+            Route::get('/addAdmin', 'createAdmin')->name('addAdmin');
+            Route::post('/addAdmin', 'storeAdmin')->name('addPostAdmin');
+
+            //sửa
+            Route::get('edit/{id}','edit')->name('edit');
+            Route::post('edit/{id}','update')->name('editPost');
+            Route::get('editAdmin/{id}','editAdmin')->name('editAdmin');
+            Route::post('editAdmin/{id}','updateAdmin')->name('editPostAdmin');
+            // xóa
+            Route::get('/delete/{id}', 'destroy')->name('delete');
+            Route::get('/deleteAdmin/{id}', 'destroyAdmin')->name('deleteAdmin');
+
+            // hiển thị tất cả
+            Route::get('/show/{id}', 'show')->name('show');
+        });
+    });
 });
 

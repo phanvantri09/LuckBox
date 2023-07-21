@@ -5,6 +5,8 @@ use App\Repositories\BoxProductRepository;
 use App\Repositories\BoxProductRepositoryInterface;
 use App\Repositories\BoxRepository;
 use App\Repositories\BoxRepositoryInterface;
+use App\Repositories\CardRepository;
+use App\Repositories\CardRepositoryInterface;
 use App\Repositories\MessageRepository;
 use App\Repositories\MessageRepositoryInterface;
 use Illuminate\Support\ServiceProvider;
@@ -41,6 +43,7 @@ class RepositoryServiceProvider extends ServiceProvider
         $this->app->bind(BoxRepositoryInterface::class, BoxRepository::class);
         $this->app->bind(BoxProductRepositoryInterface::class, BoxProductRepository::class);
         $this->app->bind(BoxEventRepositoryInterface::class, BoxEventRepository::class);
+        $this->app->bind(CardRepositoryInterface::class, CardRepository::class);
         $this->app->bind(BoxItemRepositoryInterface::class, BoxItemRepository::class);
         $this->app->bind(MessageRepositoryInterface::class, MessageRepository::class);
         // $this->app->bind(ProductRepositoryInterface::class, ProductRepository::class);
