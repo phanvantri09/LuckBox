@@ -41,7 +41,7 @@
             </div>
             <div class="col-sm-4 invoice-col">
                 <div class="cover-image">
-                    <img src="{{Storage::url($data->link_image)}}" alt="Cover Image">
+                    <img src="{{\App\Helpers\ConstCommon::getLinkImageToStorage($data->link_image)}}" alt="Cover Image">
                 </div>
             </div>
             <!-- /.col -->
