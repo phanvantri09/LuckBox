@@ -76,34 +76,72 @@
             <div class="row py-2">
                 <!-- gift -->
                 <div class="col-md-6 col-6 py-2">
-                    <div class="mx-1 d-md-flex bg-white product-card rounded">
-                        <div class="col-md-6 pb-3 px-md-0 px-1 text-center">
-                            <p class="font-weight-bold">
-                                Smart Tivi Samsung 4K Crystal UHD 50 Inch UA50AUS100
-                            </p>
-                            <span class="price bg-danger text-white font-weight-bold px-1 py-2 rounded-circle">Giá:
-                                12.000.000.000đ</span>
+                    <a href="{{ route('productDetails') }}" class="text-decoration-none text-dark">
+                        <div class="mx-1 d-md-flex bg-white product-card rounded">
+                            <div class="col-md-6 pb-3 px-md-0 px-1 text-center">
+                                <p class="font-weight-bold">
+                                    Smart Tivi Samsung 4K Crystal UHD 50 Inch UA50AUS100
+                                </p>
+                                <span class="price bg-danger text-white font-weight-bold px-1 py-2 rounded-circle">Giá:
+                                    12.000.000.000đ</span>
+                            </div>
+                            <div class="col-md-6 px-0">
+                                <img class="rounded-right"
+                                    src="https://cdn.tgdd.vn/Files/2014/10/29/577178/diem-mat-nhung-do-phan-giai-pho-bien-hien-nay-tren-6.jpg" />
+                            </div>
                         </div>
-                        <div class="col-md-6 px-0">
-                            <img class="rounded-right"
-                                src="https://cdn.tgdd.vn/Files/2014/10/29/577178/diem-mat-nhung-do-phan-giai-pho-bien-hien-nay-tren-6.jpg" />
-                        </div>
-                    </div>
+                    </a>
                 </div>
                 <div class="col-md-6 col-6 py-2">
-                    <div class="mx-1 d-md-flex bg-white product-card rounded">
-                        <div class="col-md-6 pb-3 px-md-0 px-1 text-center">
-                            <p class="font-weight-bold">
-                                Smart Tivi Samsung 4K Crystal UHD 50 Inch UA50AUS100
-                            </p>
-                            <span class="price bg-danger text-white font-weight-bold px-1 py-2 rounded-circle">Giá:
-                                12.000.000.000đ</span>
+                    <a href="{{ route('productDetails') }}" class="text-decoration-none text-dark">
+                        <div class="mx-1 d-md-flex bg-white product-card rounded">
+                            <div class="col-md-6 pb-3 px-md-0 px-1 text-center">
+                                <p class="font-weight-bold">
+                                    Smart Tivi Samsung 4K Crystal UHD 50 Inch UA50AUS100
+                                </p>
+                                <span class="price bg-danger text-white font-weight-bold px-1 py-2 rounded-circle">Giá:
+                                    12.000.000.000đ</span>
+                            </div>
+                            <div class="col-md-6 px-0">
+                                <img class="rounded"
+                                    src="https://sieuthibachhoa.net/public/uploads/622a9c2621724674428c0b4d258f3de6/images/Watermark/Qu%E1%BA%A1t%20nlmt/quat-nang-luong-mat-troi-20w%20(1).jpg" />
+                            </div>
                         </div>
-                        <div class="col-md-6 px-0">
-                            <img class="rounded"
-                                src="https://sieuthibachhoa.net/public/uploads/622a9c2621724674428c0b4d258f3de6/images/Watermark/Qu%E1%BA%A1t%20nlmt/quat-nang-luong-mat-troi-20w%20(1).jpg" />
+                    </a>
+                </div>
+                <div class="col-md-6 col-6 py-2">
+                    <a href="{{ route('productDetails') }}" class="text-decoration-none text-dark">
+                        <div class="mx-1 d-md-flex bg-white product-card rounded">
+                            <div class="col-md-6 pb-3 px-md-0 px-1 text-center">
+                                <p class="font-weight-bold">
+                                    Smart Tivi Samsung 4K Crystal UHD 50 Inch UA50AUS100
+                                </p>
+                                <span class="price bg-danger text-white font-weight-bold px-1 py-2 rounded-circle">Giá:
+                                    12.000.000.000đ</span>
+                            </div>
+                            <div class="col-md-6 px-0">
+                                <img class="rounded"
+                                    src="https://sieuthibachhoa.net/public/uploads/622a9c2621724674428c0b4d258f3de6/images/Watermark/Qu%E1%BA%A1t%20nlmt/quat-nang-luong-mat-troi-20w%20(1).jpg" />
+                            </div>
                         </div>
-                    </div>
+                    </a>
+                </div>
+                <div class="col-md-6 col-6 py-2">
+                    <a href="{{ route('productDetails') }}" class="text-decoration-none text-dark">
+                        <div class="mx-1 d-md-flex bg-white product-card rounded">
+                            <div class="col-md-6 pb-3 px-md-0 px-1 text-center">
+                                <p class="font-weight-bold">
+                                    Smart Tivi Samsung 4K Crystal UHD 50 Inch UA50AUS100
+                                </p>
+                                <span class="price bg-danger text-white font-weight-bold px-1 py-2 rounded-circle">Giá:
+                                    12.000.000.000đ</span>
+                            </div>
+                            <div class="col-md-6 px-0">
+                                <img class="rounded"
+                                    src="https://sieuthibachhoa.net/public/uploads/622a9c2621724674428c0b4d258f3de6/images/Watermark/Qu%E1%BA%A1t%20nlmt/quat-nang-luong-mat-troi-20w%20(1).jpg" />
+                            </div>
+                        </div>
+                    </a>
                 </div>
                 <!-- end gift -->
             </div>
@@ -111,4 +149,5 @@
     </div>
 @endsection
 @section('scripts')
+<script src="./js/countdown.js"></script>
 @endsection
