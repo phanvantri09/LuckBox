@@ -29,4 +29,8 @@ class Box_item extends Model
     {
         return $this->hasOne(Box::class, 'id', 'id_box');
     }
+    public function boxInfo()
+    {
+        return $this->belongsTo(Box::class, 'id_box');
+    }
 }

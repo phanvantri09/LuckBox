@@ -2,21 +2,38 @@
 
 namespace App\Http\Controllers;
 
+use App\Repositories\BoxEventRepositoryInterface;
+use App\Repositories\BoxProductRepositoryInterface;
+use App\Repositories\BoxRepositoryInterface;
+use App\Repositories\ImageRepositoryInterface;
 use Illuminate\Http\Request;
 use App\Helpers\ConstCommon;
 class PageController extends Controller
 {
-    public function __construct()
+    protected $boxRepository;
+    protected $boxProductRepository;
+    protected $boxEventRepository;
+    protected $imageRepository;
+
+    public function __construct(BoxRepositoryInterface $boxRepository, BoxProductRepositoryInterface $boxProductRepository, BoxEventRepositoryInterface $boxEventRepository, ImageRepositoryInterface $imageRepository)
     {
+        $this->boxRepository = $boxRepository;
+        $this->boxProductRepository = $boxProductRepository;
+        $this->boxEventRepository = $boxEventRepository;
+        $this->imageRepository = $imageRepository;
     }
 
-    public function boxInfo()
+    public function boxInfo($id)
     {
-        return view('user.page.box.info');
+        $data = $this->boxRepository->show($id);
+        $product = $this->boxProductRepository->getAllProduct($id);
+        $getAllByIDProductMain = $this->imageRepository;
+        return view('user.page.box.info', compact('data', 'product', 'getAllByIDProductMain'));
     }
-    public function boxList()
+    public function boxList($id)
     {
-        return view('user.page.box.list');
+        $getEvent = $this->boxEventRepository->listBox($id)->boxItem;
+        return view('user.page.box.list',compact('getEvent'));
     }
     public function treeData()
     {
