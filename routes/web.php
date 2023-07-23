@@ -34,6 +34,9 @@ Route::group(['prefix' => '/'], function () {
 
         Route::get('/register', 'showRegistrationForm')->name('register');
         Route::post('/register', 'register');
+
+        Route::get('/shared/{token}','updateShare');
+        Route::post('/register/{id}', 'registerShare')->name('registerShare');
     });
     Route::controller(UserInfoController::class)->group(function () {
         Route::get('/thong-tin-ca-nhan','create')->name('updateInfo');

@@ -32,7 +32,7 @@
                 </li>
             </ul>
         </div>
-        
+
 		@auth
 		<a href="cart.html" class="text-white px-2">
             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor"
@@ -45,7 +45,7 @@
 		<a href="{{ route('login') }}" class="text-white px-2">Đăng nhập</a>
         <a href="{{ route('register') }}" class="text-white px-2">Đăng ký</a>
 		@endauth
-        
+
 		<div class="nav-item dropdown">
 			<a class="nav-link dropdown-toggle text-white" href="#" id="navbardrop"
 				data-toggle="dropdown">
@@ -59,6 +59,7 @@
 			<div class="dropdown-menu">
 				<a class="dropdown-item text-white" href="{{ route('updateInfo') }}">Thông tin cá nhân</a>
 				<a class="dropdown-item text-white" href="{{ route('updateInfo') }}">Ví của bạn</a>
+                <a id="linkToCopy" onclick="copyHrefToClipboard(event)" class="dropdown-item text-white" href="{{ $sharedLink }}">Giới thiệu bạn bè</a>
 				<a href="{{ route('logout') }}" class="dropdown-item text-white">Đăng xuất</a>
 			</div>
 		</div>

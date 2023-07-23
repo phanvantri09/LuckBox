@@ -23,6 +23,7 @@ class User extends Authenticatable
         'password',
         'type',
         'status',
+        'id_user_referral'
     ];
 
     /**
