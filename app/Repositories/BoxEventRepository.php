@@ -12,7 +12,7 @@ class BoxEventRepository implements BoxEventRepositoryInterface
 
     public function create(array $data)
     {
-        
+
         return Box_event::create($data);
     }
 
@@ -55,14 +55,25 @@ class BoxEventRepository implements BoxEventRepositoryInterface
     }
 
     public function getInTimeThan($time){
-        return Box_event::where('time_start', '>', $time)->whereNotIn('status', [2,3])->orderBy('time_start', 'asc')->first();
+        return Box_event::where('time_start', '>=', $time)->whereNotIn('status', [2,3])->orderBy('time_start', 'asc')->first();
     }
-    // qua thời gian mở bán
-    public function changeStatusExpried($time){
-        Box_event::where('time_start', '>', $time)->update('status', 3);
-    }
-    public function changeStatusUpMaket($time){
-        Box_event::where('time_start', '>=', $time)->where('time_end', '<=', $time)->update('status', 2);
+    public function checkAndAutoUpdateStatus($time){
+        // dd($time);
+        $data = Box_event::where('time_start', '<=', $time)->where('time_end', '>=', $time)->first();
+        if(empty($data)){
+            $data = Box_event::where('time_end', '<', $time)->first();
+            if(!empty($data)){
+                if($data->status != 3){
+                    $data->status = 3;
+                    $data->save();
+                }
+            }
+        } else {
+            if ($data->status != 2 ) {
+                $data->status = 2;
+                $data->save();
+            }
+        }
     }
 
 }
