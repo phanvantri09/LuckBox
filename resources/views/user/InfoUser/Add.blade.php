@@ -109,7 +109,7 @@
         </div>
     </div>
 @endsection
-@section('script')
+@section('scripts')
     <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"></script>
     <script>
         var citySelectCurrent = districtSelectCurrent = neighborhood_villageSelectCurrent = null;
