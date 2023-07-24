@@ -8,18 +8,30 @@
                 <h3 class="card-title">Thêm Box Vào Event</h3>
             </div>
             <div class="card-body">
-                <form action="{{route('box.box_event.box_item.addPost',[ 'id_box_event' => $idEvent ])}}" method="POST" enctype="multipart/form-data">
+                <form action="{{ route('box.box_event.box_item.addPost', ['id_box_event' => $idEvent]) }}" method="POST"
+                    enctype="multipart/form-data">
                     @csrf
                     <div class="col-sm-6">
                         <div class="form-group">
                             <label>Chọn Box</label>
                             <select name="id_box" class="form-control select2" style="width: 100%;">
-                              <option selected="selected">Chọn Box cho Event này</option>
-                              @foreach ($getBox as $item)
-                                <option value="{{$item->id}}" >{{$item->title}}</option>
-                              @endforeach
+                                <option selected="selected">Chọn Box cho Event này</option>
+                                @foreach ($getBox as $item)
+                                    <option value="{{ $item->id }}">{{ $item->title }}</option>
+                                @endforeach
                             </select>
-                          </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <label for="timeStart">Số lượng box</label>
+                            <div class="input-group date">
+                                <input type="number" name="amount" class="form-control" />
+                                @error('amount')
+                                    <div class="alert alert-danger">{{ $errors->first('amount') }}</div>
+                                @enderror
+                            </div>
+                        </div>
                     </div>
                     <div class="col-sm-6">
                         <div class="form-group">
@@ -80,14 +92,18 @@
                 theme: 'bootstrap4'
             })
 
-        })
+        });
     </script>
     <script type="text/javascript">
         $(function() {
-            $('#datetimepicker7').datetimepicker();
+            $('#datetimepicker7').datetimepicker({
+                format: 'YYYY-MM-DD HH:mm:ss'
+            });
             $('#datetimepicker8').datetimepicker({
+                format: 'YYYY-MM-DD HH:mm:ss',
                 useCurrent: false
             });
+
             $("#datetimepicker7").on("change.datetimepicker", function(e) {
                 $('#datetimepicker8').datetimepicker('minDate', e.date);
             });

@@ -21,9 +21,19 @@
                                     @if ($getBoxItem->id_box == $item->id)
                                         <option selected value="{{ $item->id }}">{{ $item->title }}</option>
                                     @endif
-                                    
                                 @endforeach
                             </select>
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <label for="timeStart">Số lượng box</label>
+                            <div class="input-group date">
+                                <input type="number" name="amount" class="form-control" value="{{ $item->amount ?? null }}" />
+                                @error('amount')
+                                    <div class="alert alert-danger">{{ $errors->first('amount') }}</div>
+                                @enderror
+                            </div>
                         </div>
                     </div>
                     <div class="col-sm-6">
@@ -35,9 +45,9 @@
                                 <div class="input-group-append" data-target="#datetimepicker7" data-toggle="datetimepicker">
                                     <div class="input-group-text"><i class="fa fa-calendar"></i></div>
                                 </div>
-                                {{-- @error('time_start')
+                                @error('time_start')
                                     <div class="alert alert-danger">{{ $errors->first('time_start') }}</div>
-                                @enderror --}}
+                                @enderror
                             </div>
                         </div>
 
@@ -49,9 +59,9 @@
                                 <div class="input-group-append" data-target="#datetimepicker8" data-toggle="datetimepicker">
                                     <div class="input-group-text" ><i class="fa fa-calendar"></i></div>
                                 </div>
-                                {{-- @error('time_end')
+                                @error('time_end')
                                     <div class="alert alert-danger">{{ $errors->first('time_end') }}</div>
-                                @enderror --}}
+                                @enderror
                             </div>
                         </div>
                     </div>
@@ -89,8 +99,11 @@
     </script>
     <script type="text/javascript">
         $(function() {
-            $('#datetimepicker7').datetimepicker();
+            $('#datetimepicker7').datetimepicker({
+                format: 'YYYY-MM-DD HH:mm:ss'
+            });
             $('#datetimepicker8').datetimepicker({
+                format: 'YYYY-MM-DD HH:mm:ss',
                 useCurrent: false
             });
             $("#datetimepicker7").on("change.datetimepicker", function(e) {

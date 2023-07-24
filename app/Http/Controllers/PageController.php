@@ -60,4 +60,16 @@ class PageController extends Controller
     {
         return view('user.page.cashOut');
     }
+    public function historyTransaction()
+    {
+        return view('user.page.historyTransaction');
+    }
+    public function productDetails()
+    {
+        return view('user.page.productDetails');
+    }
+    public function statusOrder()
+    {
+        return view('user.page.statusOrder');
+    }
 }
