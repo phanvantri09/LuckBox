@@ -44,12 +44,12 @@
                             <div class="form-group">
                                 <label for="exampleFormControlInput1">Họ tên</label>
                                 <input type="text" class="form-control" id="exampleFormControlInput1"
-                                    placeholder="Nguyễn Văn A..." required></input>
+                                    placeholder="Nguyễn Văn A..." required>
                             </div>
                             <div class="form-group">
                                 <label for="exampleFormControlInput2">Số điện thoại</label>
                                 <input type="tel" class="form-control" id="exampleFormControlInput2"
-                                    placeholder="Số điện thoại" required></input>
+                                    placeholder="Số điện thoại" required>
                             </div>
                             <div class="row">
                                 <input type="hidden" name="country" value="Việt Nam">
@@ -76,7 +76,7 @@
                                 <div class="form-group">
                                     <label for="exampleFormControlInput5">Số nhà/đường</label>
                                     <input type="text" class="form-control" id="exampleFormControlInput5"
-                                        placeholder="Số nhà..." required></input>
+                                        placeholder="Số nhà..." required>
                                 </div>
                             </div>
                         </div>
@@ -88,4 +88,6 @@
     </div>
 @endsection
 @section('scripts')
+<script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"></script>
+<script src="./js/address.js"></script>
 @endsection

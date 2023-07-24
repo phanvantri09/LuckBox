@@ -77,6 +77,7 @@
                 <!-- gift -->
                 @foreach ($product->boxProducts as $key => $item)
                 <div class="col-md-6 col-6 py-2">
+                  <a href="{{ route('productDetails') }}" class="text-decoration-none text-dark">
                     <div class="mx-1 d-md-flex bg-white product-card rounded">
                         <div class="col-md-6 pb-3 px-md-0 px-1 text-center">
                             <p class="font-weight-bold">
@@ -89,7 +90,8 @@
                             <img class="rounded-right"
                                 src="{{\App\Helpers\ConstCommon::getLinkImageToStorage( isset($getAllByIDProductMain->getAllByIDProductMain($item->product->id)['link_image']) ? $getAllByIDProductMain->getAllByIDProductMain($item->product->id)['link_image'] : null)}}" />
                         </div>
-                    </div>
+                        </div>
+                    </a>
                 </div>
                 @endforeach
                 <!-- end gift -->
@@ -98,4 +100,5 @@
     </div>
 @endsection
 @section('scripts')
+<script src="./js/countdown.js"></script>
 @endsection

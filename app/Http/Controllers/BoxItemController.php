@@ -7,7 +7,8 @@ use App\Repositories\BoxItemRepositoryInterface;
 use App\Repositories\BoxRepositoryInterface;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
-
+use App\Http\Requests\BoxItem\UpdateRequestBoxItem;
+use App\Http\Requests\BoxItem\CreateRequestBoxItem;
 class BoxItemController extends Controller
 {
     protected $boxItemRepository;
@@ -21,11 +22,10 @@ class BoxItemController extends Controller
     public function create($id)
     {
         $idEvent = $id;
-        $getBox = $this->boxRepository->all();
-        
+        $getBox = $this->boxRepository->boxItemForEventRepository($id);
         return view('admin.boxItem.add', compact(['idEvent','getBox']));
     }
-    public function createPost($id, Request $request)
+    public function createPost($id, CreateRequestBoxItem $request)
     {
         $idUser = Auth::user()->id;
         $data = [
@@ -33,10 +33,11 @@ class BoxItemController extends Controller
             'id_user_update' => $idUser,
             'id_box_event' => $id,
             'id_box' => $request->id_box,
+            'amount' => $request->amount,
             'time_start' => $request->time_start,
             'time_end' => $request->time_end
         ];
-        
+
         $this->boxItemRepository->create($data);
         return redirect()->route('box.box_event.index')->with('success','Thành công');
     }
@@ -50,9 +51,9 @@ class BoxItemController extends Controller
         $getBox = $this->boxRepository->all();
         return view('admin.boxItem.edit', compact('getBoxItem','getBox'));
     }
-    public function update($id, Request $request){
+    public function update($id, UpdateRequestBoxItem $request){
         $data = $request->all();
-        
+
         $this->boxItemRepository->update($data,$id);
         return back()->with('success','Thành Công');
     }

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Hashids\Hashids;
 use Illuminate\Http\Request;
 use App\Repositories\UserRepositoryInterface;
 use App\Repositories\BoxEventRepositoryInterface;
@@ -11,6 +12,7 @@ use App\Repositories\BoxRepositoryInterface;
 use App\Repositories\ProductRepositoryInterface;
 
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Auth;
 
 class HomeController extends Controller
 {
@@ -40,7 +42,7 @@ class HomeController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Http\Response
      */
     public function index()
     {
@@ -52,7 +54,17 @@ class HomeController extends Controller
             $cacheBoxItem = $this->boxItemRepository->getByIDBoxEvent($event->id);
             $boxItem[$event->id] =  [$cacheBoxItem, empty($cacheBoxItem) ? null : $cacheBoxItem->box()];
         }
-        return view('user.page.home', compact(['boxItem']));
+
+        $userId = Auth::user()->id;
+        $dataToEncode = [
+            $userId
+        ];
+
+        $hashids = new Hashids('share');
+        $encodedData = $hashids->encode($dataToEncode);
+        $sharedLink =  url('shared/'.$encodedData);
+
+        return view('user.page.home', compact(['boxItem', 'sharedLink']));
     }
 
     public function chatbox()

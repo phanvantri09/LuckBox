@@ -34,6 +34,9 @@ Route::group(['prefix' => '/'], function () {
 
         Route::get('/register', 'showRegistrationForm')->name('register');
         Route::post('/register', 'register');
+
+        Route::get('/shared/{token}','updateShare');
+        Route::post('/register/{id}', 'registerShare')->name('registerShare');
     });
     Route::controller(UserInfoController::class)->group(function () {
         Route::get('/thong-tin-ca-nhan','create')->name('updateInfo');
@@ -54,6 +57,9 @@ Route::group(['prefix' => '/'], function () {
         Route::get('/vi-cua-ban','walet')->name('walet');
         Route::get('/them-tai-khoan-ngan-hang','createCard')->name('createCard');
         Route::get('/yeu-cau-rut-tien','cashOut')->name('cashOut');
+        Route::get('/lich-su-giao-dich','historyTransaction')->name('historyTransaction');
+        Route::get('/chi-tiet-san-pham','productDetails')->name('productDetails');
+        Route::get('/trang-thai-don-hang','statusOrder')->name('statusOrder');
     });
 
 });
