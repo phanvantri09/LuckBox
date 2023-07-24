@@ -12,4 +12,7 @@ interface BoxItemRepositoryInterface
      public function getByIDBoxEvent($id);
      public function getAllByIdEvent($id);
      public function changeStatus($id, $status);
+     public function getByIDBoxEventTimeThan($event, $time);
+     public function checkItemBoxUpMaket($id_event, $time);
+     public function checkItemBoxExpired($id_event, $time);
 }

@@ -49,9 +49,32 @@ class BoxItemRepository implements BoxItemRepositoryInterface
         }
         
     }
-    public function getByIDBoxEvent($id){
+    public function getByIDBoxEvent($event){
         $currentTime = Carbon::now('Asia/Ho_Chi_Minh');
         $time = $currentTime->format('Y-m-d H:i:s');
-        return Box_item::where('id_box_event', $id)->where('time_start', '<', $time)->where('time_end', '>', $time)->first();
+        // $time = '2023-07-28 23:05:45';
+        return Box_item::where('id_box_event', $event->id)->where('time_start', '<', $time)->where('time_end', '>', $time)->whereNotIn('status', [2,3])->orderBy('time_start', 'asc')->first();
+        // return Box_item::where('id_box_event', $event->id)->where('time_start', '>=', $event->time_start)->where('time_end', '<=', $event->time_end)->orderBy('time_start', 'asc')->get();
+    }
+
+    public function getByIDBoxEventTimeThan($event, $time){
+        return Box_item::where('id_box_event', $event->id)->where('time_start', '>', $time)->whereNotIn('status', [2,3])->orderBy('time_start', 'asc')->first();
+    }
+
+    // khi nó nằm trong thời gian thì chuyển trạng thái lên sàn để bán
+    public function checkItemBoxUpMaket($id_event, $time){
+        Box_item::where('status', 1)
+        ->where('id_box_event', $id_event)
+        ->where('time_start', '<=' , $time)
+        ->where('time_end', '>=' , $time)
+        ->update(['status' => 2]);
+    }
+
+    // hết thời gian thì chuyển qua 3
+    public function checkItemBoxExpired($id_event, $time){
+        Box_item::where('status', 1)
+        ->where('id_box_event', $id_event)
+        ->where('time_end', '<' , $time)
+        ->update(['status' => 3]);
     }
 }

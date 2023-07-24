@@ -45,14 +45,54 @@ class HomeController extends Controller
     public function index()
     {
         $currentTime = Carbon::now('Asia/Ho_Chi_Minh');
-        $events = $this->boxEventRepository->getInTime($currentTime->format('Y-m-d H:i:s'));
-        $boxItem = [];
-        foreach ($events as $key => $event) {
+        $time = $currentTime->format('m/d/Y H:i:s');
+        // 07/20/2023 22:34:15
+        // $time = '07/25/2023 14:11:50';
+        // $time = '2023-07-20 14:11:50';
+        // dd($time)  ;
+        // $event = $this->boxEventRepository->getInTime($currentTime->format('Y-m-d H:i:s'));
+        
+        // kiểm tra và đổi trạng thái
+
+        $this->boxEventRepository->changeStatusUpMaket($time);
+        $this->boxEventRepository->changeStatusExpried($time);
+
+        $event = $this->boxEventRepository->getInTime($time);
+        
+        $typeEvent = 1; // 1 là trong thời gian, 2 là trước khi event bắt đầu
+        $typeItemBox = 1;
+
+        if (empty($event)) {
+            // nếu rỗng láy event gần nhất và láy time của box_item time_start gần nhất
+            // check trước khi chyển qua event mới thì chuyển trạng thái cho các event đã hết thời gian
+            $event = $this->boxEventRepository->getInTimeThan($time);
+            $cacheBoxItem = $this->boxItemRepository->getByIDBoxEventTimeThan($event, $time);
+            $typeItemBox = 2;
+            $typeEvent = 2;
+            // dd(1, $event);
+        } else {
+            // kiểm tra và chuyển status box
+            // nếu nằm trong tg này thì chuyển trạng thài về 2 và đưa lên bán
+            $this->boxItemRepository->checkItemBoxUpMaket($event, $time);
+            // nếu qua thòi gian thì chuyển thành 3
+            // sau khi load 2 cái trên thì còn case check status 2 nếu kho có 2 thì get 1
+            $this->boxItemRepository->checkItemBoxExpired($event, $time);
             // láy item trong thời gian đó
-            $cacheBoxItem = $this->boxItemRepository->getByIDBoxEvent($event->id);
-            $boxItem[$event->id] =  [$cacheBoxItem, empty($cacheBoxItem) ? null : $cacheBoxItem->box()];
+            // case 1 status = 2 và trong tg bán
+            // case 2  if case 1 k có thì get status = 1 và time_start nhỏ nhất
+            $cacheBoxItem = $this->boxItemRepository->getByIDBoxEvent($event);
+
+            $cachebox = empty($cacheBoxItem) ? null :  $cacheBoxItem->box()->first();
+
+            $cacheProduct = empty($cachebox) ? null : $cachebox->boxProducts()->get();
+            
         }
-        return view('user.page.home', compact(['boxItem']));
+        
+        // dd(2, empty($event));
+        
+        
+        
+        return view('user.page.home', compact(['event','cacheBoxItem', 'cachebox', 'cacheProduct','time']));
     }
 
     public function chatbox()

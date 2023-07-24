@@ -51,6 +51,18 @@ class BoxEventRepository implements BoxEventRepositoryInterface
         }
     }
     public function getInTime($time){
-        return Box_event::where('time_start', '<', $time)->where('time_end', '>', $time)->get();
+        return Box_event::where('time_start', '<', $time)->where('time_end', '>', $time)->first();
     }
+
+    public function getInTimeThan($time){
+        return Box_event::where('time_start', '>', $time)->whereNotIn('status', [2,3])->orderBy('time_start', 'asc')->first();
+    }
+    // qua thời gian mở bán
+    public function changeStatusExpried($time){
+        Box_event::where('time_start', '>', $time)->update('status', 3);
+    }
+    public function changeStatusUpMaket($time){
+        Box_event::where('time_start', '>=', $time)->where('time_end', '<=', $time)->update('status', 2);
+    }
+
 }

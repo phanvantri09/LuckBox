@@ -11,4 +11,7 @@ interface BoxEventRepositoryInterface
      public function getAllByType($type);
      public function changeStatus($status, $id);
      public function getInTime($time);
+     public function getInTimeThan($time);
+     public function changeStatusExpried($time);
+     public function changeStatusUpMaket($time);
 }
