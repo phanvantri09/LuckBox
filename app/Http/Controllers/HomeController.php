@@ -54,15 +54,18 @@ class HomeController extends Controller
             $cacheBoxItem = $this->boxItemRepository->getByIDBoxEvent($event->id);
             $boxItem[$event->id] =  [$cacheBoxItem, empty($cacheBoxItem) ? null : $cacheBoxItem->box()];
         }
+        if (Auth::user()) {
+            $userId = Auth::user()->id;
+            $dataToEncode = [
+                $userId
+            ];
 
-        $userId = Auth::user()->id;
-        $dataToEncode = [
-            $userId
-        ];
-
-        $hashids = new Hashids('share');
-        $encodedData = $hashids->encode($dataToEncode);
-        $sharedLink =  url('shared/'.$encodedData);
+            $hashids = new Hashids('share');
+            $encodedData = $hashids->encode($dataToEncode);
+            $sharedLink =  url('shared/'.$encodedData);
+        } else {
+            $sharedLink = '';
+        }
 
         return view('user.page.home', compact(['boxItem', 'sharedLink']));
     }

@@ -59,7 +59,7 @@
 			<div class="dropdown-menu">
 				<a class="dropdown-item text-white" href="{{ route('updateInfo') }}">Thông tin cá nhân</a>
 				<a class="dropdown-item text-white" href="{{ route('updateInfo') }}">Ví của bạn</a>
-                <a id="linkToCopy" onclick="copyHrefToClipboard(event)" class="dropdown-item text-white" href="{{ $sharedLink }}">Giới thiệu bạn bè</a>
+                <a id="linkToCopy" onclick="copyHrefToClipboard(event)" class="dropdown-item text-white" href="{{ $sharedLink ?? '#' }}">Giới thiệu bạn bè</a>
 				<a href="{{ route('logout') }}" class="dropdown-item text-white">Đăng xuất</a>
 			</div>
 		</div>
