@@ -12,7 +12,7 @@ class BoxEventRepository implements BoxEventRepositoryInterface
 
     public function create(array $data)
     {
-        
+
         return Box_event::create($data);
     }
 
@@ -52,5 +52,10 @@ class BoxEventRepository implements BoxEventRepositoryInterface
     }
     public function getInTime($time){
         return Box_event::where('time_start', '<', $time)->where('time_end', '>', $time)->get();
+    }
+
+    public function listBox($id)
+    {
+        return Box_event::with('boxItem')->findOrFail($id);
     }
 }

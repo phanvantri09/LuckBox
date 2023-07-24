@@ -28,7 +28,7 @@
                             </button>
                         </span>
                         <input type="number" id="quantity" name="quantity" class="form-control input-number text-center"
-                            value="1" min="2" max="100" />
+                            value="{{number_format($data->amount) }}" min="2" max="100" />
                         <span class="input-group-btn">
                             <button type="button" class="quantity-right-plus btn btn-warning btn-number" data-type="plus"
                                 data-field="">
@@ -41,7 +41,7 @@
                         </span>
                     </div>
                     <div class="py-2">
-                        <h4 class="mb-0 text-danger">2.000.000</h4>
+                        <h4 class="mb-0 text-danger">{{number_format($data->price) }}đ</h4>
                     </div>
                     <a href="cart.html" class="text-decoration-none">
                         <button type="button" class="btn bg-orange font-weight-bold text-white btn-block btn-lg">
@@ -75,74 +75,25 @@
             </div>
             <div class="row py-2">
                 <!-- gift -->
+                @foreach ($product->boxProducts as $key => $item)
                 <div class="col-md-6 col-6 py-2">
-                    <a href="{{ route('productDetails') }}" class="text-decoration-none text-dark">
-                        <div class="mx-1 d-md-flex bg-white product-card rounded">
-                            <div class="col-md-6 pb-3 px-md-0 px-1 text-center">
-                                <p class="font-weight-bold">
-                                    Smart Tivi Samsung 4K Crystal UHD 50 Inch UA50AUS100
-                                </p>
-                                <span class="price bg-danger text-white font-weight-bold px-1 py-2 rounded-circle">Giá:
-                                    12.000.000.000đ</span>
-                            </div>
-                            <div class="col-md-6 px-0">
-                                <img class="rounded-right"
-                                    src="https://cdn.tgdd.vn/Files/2014/10/29/577178/diem-mat-nhung-do-phan-giai-pho-bien-hien-nay-tren-6.jpg" />
-                            </div>
+                  <a href="{{ route('productDetails') }}" class="text-decoration-none text-dark">
+                    <div class="mx-1 d-md-flex bg-white product-card rounded">
+                        <div class="col-md-6 pb-3 px-md-0 px-1 text-center">
+                            <p class="font-weight-bold">
+                                {{$item->product->title}}
+                            </p>
+                            <span class="price bg-danger text-white font-weight-bold px-1 py-2 rounded-circle">Giá:
+                                {{number_format($item->product->price) }}đ</span>
+                        </div>
+                        <div class="col-md-6 px-0">
+                            <img class="rounded-right"
+                                src="{{\App\Helpers\ConstCommon::getLinkImageToStorage( isset($getAllByIDProductMain->getAllByIDProductMain($item->product->id)['link_image']) ? $getAllByIDProductMain->getAllByIDProductMain($item->product->id)['link_image'] : null)}}" />
+                        </div>
                         </div>
                     </a>
                 </div>
-                <div class="col-md-6 col-6 py-2">
-                    <a href="{{ route('productDetails') }}" class="text-decoration-none text-dark">
-                        <div class="mx-1 d-md-flex bg-white product-card rounded">
-                            <div class="col-md-6 pb-3 px-md-0 px-1 text-center">
-                                <p class="font-weight-bold">
-                                    Smart Tivi Samsung 4K Crystal UHD 50 Inch UA50AUS100
-                                </p>
-                                <span class="price bg-danger text-white font-weight-bold px-1 py-2 rounded-circle">Giá:
-                                    12.000.000.000đ</span>
-                            </div>
-                            <div class="col-md-6 px-0">
-                                <img class="rounded"
-                                    src="https://sieuthibachhoa.net/public/uploads/622a9c2621724674428c0b4d258f3de6/images/Watermark/Qu%E1%BA%A1t%20nlmt/quat-nang-luong-mat-troi-20w%20(1).jpg" />
-                            </div>
-                        </div>
-                    </a>
-                </div>
-                <div class="col-md-6 col-6 py-2">
-                    <a href="{{ route('productDetails') }}" class="text-decoration-none text-dark">
-                        <div class="mx-1 d-md-flex bg-white product-card rounded">
-                            <div class="col-md-6 pb-3 px-md-0 px-1 text-center">
-                                <p class="font-weight-bold">
-                                    Smart Tivi Samsung 4K Crystal UHD 50 Inch UA50AUS100
-                                </p>
-                                <span class="price bg-danger text-white font-weight-bold px-1 py-2 rounded-circle">Giá:
-                                    12.000.000.000đ</span>
-                            </div>
-                            <div class="col-md-6 px-0">
-                                <img class="rounded"
-                                    src="https://sieuthibachhoa.net/public/uploads/622a9c2621724674428c0b4d258f3de6/images/Watermark/Qu%E1%BA%A1t%20nlmt/quat-nang-luong-mat-troi-20w%20(1).jpg" />
-                            </div>
-                        </div>
-                    </a>
-                </div>
-                <div class="col-md-6 col-6 py-2">
-                    <a href="{{ route('productDetails') }}" class="text-decoration-none text-dark">
-                        <div class="mx-1 d-md-flex bg-white product-card rounded">
-                            <div class="col-md-6 pb-3 px-md-0 px-1 text-center">
-                                <p class="font-weight-bold">
-                                    Smart Tivi Samsung 4K Crystal UHD 50 Inch UA50AUS100
-                                </p>
-                                <span class="price bg-danger text-white font-weight-bold px-1 py-2 rounded-circle">Giá:
-                                    12.000.000.000đ</span>
-                            </div>
-                            <div class="col-md-6 px-0">
-                                <img class="rounded"
-                                    src="https://sieuthibachhoa.net/public/uploads/622a9c2621724674428c0b4d258f3de6/images/Watermark/Qu%E1%BA%A1t%20nlmt/quat-nang-luong-mat-troi-20w%20(1).jpg" />
-                            </div>
-                        </div>
-                    </a>
-                </div>
+                @endforeach
                 <!-- end gift -->
             </div>
         </div>

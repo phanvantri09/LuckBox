@@ -45,8 +45,8 @@ Route::group(['prefix' => '/'], function () {
     });
 
     Route::controller(PageController::class)->group(function () {
-        Route::get('/thong-tin-box','boxInfo')->name('boxInfo');
-        Route::get('/danh-sach-box','boxList')->name('boxList');
+        Route::get('/thong-tin-box/{id}','boxInfo')->name('boxInfo');
+        Route::get('/danh-sach-box/{id}','boxList')->name('boxList');
         Route::get('/thong-tin-du-lieu-box','treeData')->name('treeData');
         Route::get('/gio-hang','cart')->name('cart');
         Route::get('/thanh-toan','chekout')->name('chekout');
