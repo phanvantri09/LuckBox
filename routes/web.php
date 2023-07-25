@@ -62,7 +62,7 @@ Route::group(['prefix' => '/'], function () {
         Route::get('/change-status/{id}','changeStatus')->name('changeStatus');
 
         Route::get('/lich-su-giao-dich','historyTransaction')->name('historyTransaction');
-        Route::get('/chi-tiet-san-pham','productDetails')->name('productDetails');
+        Route::get('/chi-tiet-san-pham/{id}','productDetails')->name('productDetails');
         Route::get('/trang-thai-don-hang','statusOrder')->name('statusOrder');
     });
 
