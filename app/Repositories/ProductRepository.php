@@ -43,4 +43,9 @@ class ProductRepository implements ProductRepositoryInterface
             ->get();
         // return DB::table('products')->select('products.*', 'images.link_image')->leftJoin('images', 'images.id_product', '=', 'products.id')->whereIn('id', $array)->where('type', 1)->get();
     }
+    public function getImageSlide($array){
+        return Image::whereIn('id_product', $array)
+            ->where('is_slide', 1)
+            ->get();
+    }
 }

@@ -7,22 +7,17 @@
         <div id="demo" class="carousel slide container-lg px-0 my-3" data-ride="carousel">
             <!-- Indicators -->
             <ul class="carousel-indicators">
-                <li data-target="#demo" data-slide-to="0" class="active"></li>
-                <li data-target="#demo" data-slide-to="1"></li>
-                <li data-target="#demo" data-slide-to="2"></li>
+                @foreach ($imageSlide as $key => $slide)
+                    <li data-target="#demo" data-slide-to="{{$key}}" class="{{$key == 0 ? "active" : ''}}"></li>
+                @endforeach
             </ul>
-
             <!-- The slideshow -->
             <div class="carousel-inner">
-                <div class="carousel-item active">
-                    <img src="https://hinhanhdep.net/wp-content/uploads/2017/06/anh-hoa-hong-dep-18.jpg" />
-                </div>
-                <div class="carousel-item">
-                    <img src="https://hoala.vn/upload/img/images/album-nhung-hinh-anh-dep-nhat-ve-hoa-hong-leo-07.jpg" />
-                </div>
-                <div class="carousel-item">
-                    <img src="https://img4.thuthuatphanmem.vn/uploads/2020/05/14/hinh-anh-hoa-hong-leo-dep_021528729.jpg" />
-                </div>
+                @foreach ($imageSlide as $key => $slide)
+                    <div class="carousel-item {{ $key == 0 ? "active" : '' }}">
+                        <img src="{{\App\Helpers\ConstCommon::getLinkImageToStorage($slide) }}" />
+                    </div>
+                @endforeach
             </div>
 
             <!-- Left and right controls -->
@@ -197,7 +192,7 @@
                     document.getElementById("countdown").innerHTML = hours + ": " +
                         minutes + ": " + seconds;
 
-                    // If the count down is over, write some text 
+                    // If the count down is over, write some text
                     if (distance < 0) {
                         clearInterval(x);
                         // location.reload();

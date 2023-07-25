@@ -9,6 +9,7 @@ use App\Repositories\BoxItemRepositoryInterface;
 use App\Repositories\BoxProductRepositoryInterface;
 use App\Repositories\BoxRepositoryInterface;
 use App\Repositories\ProductRepositoryInterface;
+use App\Repositories\ImageRepositoryInterface;
 
 use Carbon\Carbon;
 
@@ -21,13 +22,15 @@ class HomeController extends Controller
     protected $boxProductRepository;
     protected $boxRepository;
     protected $productRepository;
+    protected $imageRepository;
 
     public function __construct(UserRepositoryInterface $userRepository,
     BoxEventRepositoryInterface $boxEventRepository,
     BoxRepositoryInterface $boxRepository,
     BoxItemRepositoryInterface $boxItemRepository,
     BoxProductRepositoryInterface $boxProductRepository,
-    ProductRepositoryInterface $productRepository
+    ProductRepositoryInterface $productRepository,
+    ImageRepositoryInterface $imageRepository
     )
     {
         $this->userRepository = $userRepository;
@@ -36,6 +39,7 @@ class HomeController extends Controller
         $this->boxItemRepository = $boxItemRepository;
         $this->boxProductRepository = $boxProductRepository;
         $this->productRepository = $productRepository;
+        $this->imageRepository = $imageRepository;
     }
     /**
      * Display a listing of the resource.
@@ -85,8 +89,11 @@ class HomeController extends Controller
             $cachebox = empty($cacheBoxItem) ? null :  $cacheBoxItem->box()->first();
             $cacheProduct = empty($cachebox) ? null : $cachebox->boxProducts()->get();
             $products = $this->productRepository->getByArrayID($cacheProduct->pluck('id')->toArray());
+            $imageSlide = $this->productRepository->getImageSlide($cacheProduct->pluck('id')->toArray())->pluck('link_image');
         }
-        return view('user.page.home', compact(['event','cacheBoxItem', 'cachebox', 'cacheProduct','time','timeEventInCase','timeEventNotInCase','products']));
+        return view('user.page.home', compact(['event','cacheBoxItem', 'cachebox',
+                                               'cacheProduct','time','timeEventInCase',
+                                               'timeEventNotInCase','products','imageSlide']));
     }
 
     public function chatbox()

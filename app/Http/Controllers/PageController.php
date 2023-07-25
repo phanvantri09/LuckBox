@@ -22,10 +22,7 @@ class PageController extends Controller
     {
         return view('user.page.box.treedata');
     }
-    public function cart()
-    {
-        return view('user.page.cart');
-    }
+    
     public function chekout()
     {
 

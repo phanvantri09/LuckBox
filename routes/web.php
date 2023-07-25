@@ -58,8 +58,9 @@ Route::group(['prefix' => '/'], function () {
 
     Route::controller(CartController::class)->group(function () {
         Route::post('/them-vao-gio-hang','addToCart')->name('addToCart');
+        Route::get('/gio-hang','cart')->name('cart');
     });
-    
+
 });
 Route::group(['prefix' => 'admin', 'middleware'=>['CheckAdmin']], function () {
     Route::controller(AdminController::class)->group(function () {
