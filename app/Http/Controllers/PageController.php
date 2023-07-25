@@ -9,21 +9,27 @@ use App\Repositories\ImageRepositoryInterface;
 use App\Repositories\ProductRepositoryInterface;
 use Illuminate\Http\Request;
 use App\Helpers\ConstCommon;
+use App\Http\Requests\Card\CreateRequestCard;
+use App\Repositories\PageRepositoryInterface;
+use Illuminate\Support\Facades\Auth;
 class PageController extends Controller
 {
+    protected $pageRepository;
     protected $boxRepository;
     protected $boxProductRepository;
     protected $boxEventRepository;
     protected $imageRepository;
     protected $productRepository;
 
-    public function __construct(BoxRepositoryInterface $boxRepository, BoxProductRepositoryInterface $boxProductRepository, BoxEventRepositoryInterface $boxEventRepository, ImageRepositoryInterface $imageRepository, ProductRepositoryInterface $productRepository)
+    public function __construct(PageRepositoryInterface $pageRepository, BoxRepositoryInterface $boxRepository, BoxProductRepositoryInterface $boxProductRepository, BoxEventRepositoryInterface $boxEventRepository, ImageRepositoryInterface $imageRepository, ProductRepositoryInterface $productRepository)
     {
+        $this->pageRepository = $pageRepository;
         $this->productRepository = $productRepository;
         $this->boxRepository = $boxRepository;
         $this->boxProductRepository = $boxProductRepository;
         $this->boxEventRepository = $boxEventRepository;
         $this->imageRepository = $imageRepository;
+
     }
 
     public function boxInfo($id)
@@ -72,9 +78,39 @@ class PageController extends Controller
         $dataBank = ConstCommon::BankVN;
         return view('user.page.createCard', compact(['dataBank']));
     }
+    public function createCardPost(CreateRequestCard $request)
+    {
+            $currentUser = Auth::user();
+            $request->merge([
+            'id_user' => $currentUser->id,
+            'id_user_create' => $currentUser->id, 
+            'id_user_update' => $currentUser->id, 
+            'type' => $currentUser->type, 
+        ]);
+        $data = $request->all();
+        $this->pageRepository->createCard($data);
+        return redirect()->route('walet')->with('message', 'Thêm thành công');
+    }
     public function walet()
     {
-        return view('user.page.walet');
+        $currentUser = Auth::user();
+        $checkCard = $this->pageRepository->checkCard($currentUser->id);
+        if(empty($checkCard)){
+            return redirect()->route('createCard');
+        };
+        $showCardDefault = $this->pageRepository->showCardDefault($currentUser->id);//lấy card ưu tiên
+        $getAllCard = $this->pageRepository->getAllCardNotIn([$showCardDefault->id]);//lấy ra tất cả card của khác user này
+        
+        
+        return view('user.page.walet',compact('showCardDefault','currentUser','getAllCard'));
+    }
+    public function changeStatus($id)
+    {
+        $currentUser = Auth::user();
+        $idCard  = $id;
+        $this->pageRepository->changeStatus($currentUser->id, $idCard);
+        return back()->with('message', ' Thành Công');
+        
     }
     public function cashOut()
     {
