@@ -6,6 +6,7 @@ use App\Repositories\BoxEventRepositoryInterface;
 use App\Repositories\BoxProductRepositoryInterface;
 use App\Repositories\BoxRepositoryInterface;
 use App\Repositories\ImageRepositoryInterface;
+use App\Repositories\ProductRepositoryInterface;
 use Illuminate\Http\Request;
 use App\Helpers\ConstCommon;
 class PageController extends Controller
@@ -14,9 +15,11 @@ class PageController extends Controller
     protected $boxProductRepository;
     protected $boxEventRepository;
     protected $imageRepository;
+    protected $productRepository;
 
-    public function __construct(BoxRepositoryInterface $boxRepository, BoxProductRepositoryInterface $boxProductRepository, BoxEventRepositoryInterface $boxEventRepository, ImageRepositoryInterface $imageRepository)
+    public function __construct(BoxRepositoryInterface $boxRepository, BoxProductRepositoryInterface $boxProductRepository, BoxEventRepositoryInterface $boxEventRepository, ImageRepositoryInterface $imageRepository, ProductRepositoryInterface $productRepository)
     {
+        $this->productRepository = $productRepository;
         $this->boxRepository = $boxRepository;
         $this->boxProductRepository = $boxProductRepository;
         $this->boxEventRepository = $boxEventRepository;
@@ -81,9 +84,12 @@ class PageController extends Controller
     {
         return view('user.page.historyTransaction');
     }
-    public function productDetails()
+    public function productDetails($id)
     {
-        return view('user.page.productDetails');
+        $data = $this->productRepository->show($id);
+        $getAllByIDProductMain = $this->imageRepository->getAllByIDProductMain($id);
+        $getAllByIDProductItem = $this->imageRepository->getAllByIDProductItem($id);
+        return view('user.page.productDetails', compact('data', 'getAllByIDProductMain', 'getAllByIDProductItem'));
     }
     public function statusOrder()
     {
