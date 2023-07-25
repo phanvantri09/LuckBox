@@ -56,7 +56,11 @@ Route::group(['prefix' => '/'], function () {
         Route::get('/nap-tien-vao-vi','infoCardPay')->name('infoCardPay');
         Route::get('/vi-cua-ban','walet')->name('walet');
         Route::get('/them-tai-khoan-ngan-hang','createCard')->name('createCard');
+        Route::post('/them-tai-khoan-ngan-hang','createCardPost')->name('createCard');
         Route::get('/yeu-cau-rut-tien','cashOut')->name('cashOut');
+
+        Route::get('/change-status/{id}','changeStatus')->name('changeStatus');
+
         Route::get('/lich-su-giao-dich','historyTransaction')->name('historyTransaction');
         Route::get('/chi-tiet-san-pham','productDetails')->name('productDetails');
         Route::get('/trang-thai-don-hang','statusOrder')->name('statusOrder');
