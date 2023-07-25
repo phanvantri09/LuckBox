@@ -89,5 +89,9 @@ class BoxItemRepository implements BoxItemRepositoryInterface
 
         return Box_item::where('id_box_event', $id)->whereNotIn('status', [2,3])->orderBy('time_start', 'asc')->first();
     }
+    public function getFirstInCaseEventHasData($id){
+
+        return Box_item::where('id_box_event', $id)->whereNotIn('status', [1,3])->orderBy('time_start', 'asc')->first();
+    }
 
 }

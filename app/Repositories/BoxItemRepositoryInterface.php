@@ -15,5 +15,6 @@ interface BoxItemRepositoryInterface
      public function getByIDBoxEventTimeThan($event, $time);
      public function checkAndAutoUpdateStatus($id_event, $time);
      public function getFirstInCaseEventEmpty($id);
+     public function getFirstInCaseEventHasData($id);
 
 }

@@ -56,6 +56,10 @@ Route::group(['prefix' => '/'], function () {
         Route::get('/yeu-cau-rut-tien','cashOut')->name('cashOut');
     });
 
+    Route::controller(CartController::class)->group(function () {
+        Route::post('/them-vao-gio-hang','addToCart')->name('addToCart');
+    });
+    
 });
 Route::group(['prefix' => 'admin', 'middleware'=>['CheckAdmin']], function () {
     Route::controller(AdminController::class)->group(function () {

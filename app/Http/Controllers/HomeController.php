@@ -84,9 +84,9 @@ class HomeController extends Controller
             }
             $cachebox = empty($cacheBoxItem) ? null :  $cacheBoxItem->box()->first();
             $cacheProduct = empty($cachebox) ? null : $cachebox->boxProducts()->get();
-
+            $products = $this->productRepository->getByArrayID($cacheProduct->pluck('id')->toArray());
         }
-        return view('user.page.home', compact(['event','cacheBoxItem', 'cachebox', 'cacheProduct','time','timeEventInCase','timeEventNotInCase']));
+        return view('user.page.home', compact(['event','cacheBoxItem', 'cachebox', 'cacheProduct','time','timeEventInCase','timeEventNotInCase','products']));
     }
 
     public function chatbox()
