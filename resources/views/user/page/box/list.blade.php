@@ -19,28 +19,19 @@
                 <div class="col-lg-2">Thời gian kết thúc</div>
             </div>
             <!-- khung box -->
+            @foreach ($getEvent as $key => $item)
             <div class="row bg-white my-lg-3 my-0 py-2 align-items-center">
                 <div class="col-lg-2">
-                    <img src="https://vn-live-01.slatic.net/p/dbf45cda7d56f7641227a80a5957efdf.jpg" width="75%"
+                    <img src="{{\App\Helpers\ConstCommon::getLinkImageToStorage($item->boxInfo->link_image)}}" width="75%"
                         height="auto" />
                 </div>
-                <div class="col-lg-2">Title Title Title Title Title Title Title Title Title</div>
-                <div class="col-lg-2 font-weight-bold text-danger">2.000.000.000</div>
-                <div class="col-lg-2 text-info font-weight-bold">1.000.000</div>
-                <div class="col-lg-2 ">22/03/2023</div>
-                <div class="col-lg-2">22/05/2023</div>
+                <div class="col-lg-2">{{$item->boxInfo->title}}</div>
+                <div class="col-lg-2 font-weight-bold text-danger">{{number_format($item->boxInfo->price)}}</div>
+                <div class="col-lg-2 text-info font-weight-bold">{{number_format($item->boxInfo->amount)}}</div>
+                <div class="col-lg-2 ">{{date('d/m/Y - H:i', strtotime($item->time_start))}}</div>
+                <div class="col-lg-2">{{date('d/m/Y - H:i', strtotime($item->time_end))}}</div>
             </div>
-            <div class="row bg-white my-lg-3 my-0 py-2 align-items-center">
-                <div class="col-lg-2">
-                    <img src="https://vn-live-01.slatic.net/p/dbf45cda7d56f7641227a80a5957efdf.jpg" width="75%"
-                        height="auto" />
-                </div>
-                <div class="col-lg-2">Title Title Title Title Title Title Title Title Title</div>
-                <div class="col-lg-2 font-weight-bold text-danger">2.000.000.000</div>
-                <div class="col-lg-2 text-info font-weight-bold">1.000.000</div>
-                <div class="col-lg-2">22/03/2023</div>
-                <div class="col-lg-2">22/05/2023</div>
-            </div>
+            @endforeach
             <!-- end khung box -->
         </div>
         <!-- end desktop -->

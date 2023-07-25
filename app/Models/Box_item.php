@@ -17,6 +17,7 @@ class Box_item extends Model
         'id_box',
         'link_image',
         'status',
+        'amount',
         'order_number',
         'time_start',
         'time_end'
@@ -28,5 +29,9 @@ class Box_item extends Model
     public function box()
     {
         return $this->hasOne(Box::class, 'id', 'id_box');
+    }
+    public function boxInfo()
+    {
+        return $this->belongsTo(Box::class, 'id_box');
     }
 }
