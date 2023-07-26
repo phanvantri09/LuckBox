@@ -101,7 +101,13 @@
             }
             toastr.success("{{ session('message') }}");
         @endif
-
+        @if (Session::has('success'))
+            toastr.options = {
+                "closeButton": true,
+                "progressBar": true
+            }
+            toastr.success("{{ session('success') }}");
+        @endif
         @if (Session::has('error'))
             toastr.options = {
                 "closeButton": true,
@@ -128,7 +134,9 @@
     });
 </script>
 <script src="./js/app.js"></script>
-<script src="./js/countdown.js"></script>
+
+{{-- <script src="./js/countdown.js"></script> --}}
+
 <script>
     function copyHrefToClipboard(event) {
         event.preventDefault();

@@ -14,11 +14,14 @@ class AuthController extends Controller
     //
     public function showLoginForm()
     {
+        session(['url.intended' => url()->previous()]);
         return view('auth.login');
     }
 
     public function login(Request $request)
     {
+        
+        $intendedUrl = session('url.intended');
         $credentials = $request->validate([
             'email' => ['required', 'email'],
             'password' => ['required'],
@@ -27,15 +30,21 @@ class AuthController extends Controller
         if (Auth::attempt($credentials)) {
             $request->session()->regenerate();
             if(Auth::user()->type != ConstCommon::TypeUser){
-                return redirect()->route('admin');
+                if (!$intendedUrl || $intendedUrl == route('login')) {
+                    return redirect()->route('amdin');
+                }
+                return redirect()->intended($intendedUrl);
             } else {
-                return redirect()->route('home');
+                if (!$intendedUrl || $intendedUrl == route('login')) {
+                    return redirect()->route('home');
+                }
+                return redirect()->intended($intendedUrl);
             }
             return redirect()->intended('login');
         }
 
         return back()->withErrors([
-            'email' => 'The provided credentials do not match our records.',
+            'email' => 'Email của bạn không hợp lệ',
         ]);
     }
     public function showRegistrationForm(Request $request)

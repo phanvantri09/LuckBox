@@ -23,21 +23,43 @@
                                 <!-- text input -->
                                 <div class="form-group">
                                     <label>Tiêu đề</label>
-                                    <input type="text" name="title" class="form-control" placeholder="Enter ..." value="{{old('title', $data->title)}}">
+                                    <input type="text" name="title" class="form-control" placeholder="Enter ..."
+                                           value="{{old('title', $data->title)}}">
                                     @error('title')
-                                        <div class="alert alert-danger">{{ $errors->first('title') }}</div>
+                                    <div class="alert alert-danger">{{ $errors->first('title') }}</div>
                                     @enderror
                                 </div>
                             </div>
                             <div class="col-sm-12">
                                 <div class="form-group">
                                     <label>Nội dung</label>
-
-                                    <textarea class="form-control" name="description" rows="3" placeholder="Enter ..." >
-                                        {{empty(old('description')) ? $data->description : old('description')}}
-                                    </textarea>
+                                    <textarea name="description" rows="3" id="summernote">
+                                        {!! empty(old('description')) ? $data->description : old('description') !!}
+                                      </textarea>
                                     @error('description')
-                                        <div class="alert alert-danger">{{ $errors->first('description') }}</div>
+                                    <div class="alert alert-danger">{{ $errors->first('description') }}</div>
+                                    @enderror
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <!-- text input -->
+                                <div class="form-group">
+                                    <label>Số lượng</label>
+                                    <input type="number" name="amount" class="form-control" placeholder="Enter ..."
+                                           value="{{old('amount', $data->amount)}}">
+                                    @error('amount')
+                                    <div class="alert alert-danger">{{ $errors->first('amount') }}</div>
+                                    @enderror
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <!-- text input -->
+                                <div class="form-group">
+                                    <label>Giá tiền | VNĐ</label>
+                                    <input type="number" name="price" class="form-control" placeholder="Enter ..."
+                                           value="{{old('price', $data->price)}}">
+                                    @error('price')
+                                    <div class="alert alert-danger">{{ $errors->first('price') }}</div>
                                     @enderror
                                 </div>
                             </div>
@@ -48,9 +70,9 @@
                                 <!-- select -->
                                 <div class="form-group">
                                     <label>Loại</label>
-                                    <select name="type" class="form-control">
-                                        @foreach (\App\Helpers\ConstCommon::ListTypeCatogory as $key => $item)
-                                            <option {{( $data->type == $item) ? ' selected' : '' }} value="{{ $item }}"> {{ $key }}</option>
+                                    <select name="id_category" class="form-control">
+                                        @foreach ($category as $key => $item)
+                                            <option {{( $data->type == $item) ? ' selected' : '' }} value="{{ $item->id }}"> {{ $item->title }}</option>
                                         @endforeach
                                     </select>
                                 </div>
@@ -67,4 +89,21 @@
     </div>
 @endsection
 @section('scripts')
+    <script src="../../plugins/codemirror/codemirror.js"></script>
+    <script src="../../plugins/codemirror/mode/css/css.js"></script>
+    <script src="../../plugins/codemirror/mode/xml/xml.js"></script>
+    <script src="../../plugins/codemirror/mode/htmlmixed/htmlmixed.js"></script>
+    <script>
+        $(function() {
+            // Summernote
+            $('#summernote').summernote()
+
+            // CodeMirror
+            CodeMirror.fromTextArea(document.getElementById("codeMirrorDemo"), {
+                mode: "htmlmixed",
+                theme: "monokai"
+            });
+        })
+    </script>
 @endsection
+

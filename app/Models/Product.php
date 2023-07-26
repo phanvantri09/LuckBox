@@ -35,4 +35,14 @@ class Product extends Model
     {
         return $this->hasMany(Box_product::class, 'id_product');
     }
+
+    public function userCreated()
+    {
+        return $this->belongsTo(User::class, 'id_user_create');
+    }
+
+    public function userUpdated()
+    {
+        return $this->belongsTo(User::class, 'id_user_update');
+    }
 }

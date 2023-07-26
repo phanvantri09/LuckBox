@@ -6,7 +6,10 @@ use App\Repositories\BoxEventRepositoryInterface;
 use App\Repositories\BoxProductRepositoryInterface;
 use App\Repositories\BoxRepositoryInterface;
 use App\Repositories\ImageRepositoryInterface;
+
 use App\Repositories\TransactionRepositoryInterface;
+
+use App\Repositories\ProductRepositoryInterface;
 
 use Illuminate\Http\Request;
 use App\Helpers\ConstCommon;
@@ -26,9 +29,11 @@ class PageController extends Controller
     protected $transactionRepository;
 
     public function __construct(PageRepositoryInterface $pageRepository, BoxRepositoryInterface $boxRepository, BoxProductRepositoryInterface $boxProductRepository, BoxEventRepositoryInterface $boxEventRepository, 
-    ImageRepositoryInterface $imageRepository, TransactionRepositoryInterface $transactionRepository)
+    ImageRepositoryInterface $imageRepository, TransactionRepositoryInterface $transactionRepository, ProductRepositoryInterface $productRepository)
+
     {
         $this->pageRepository = $pageRepository;
+        $this->productRepository = $productRepository;
         $this->boxRepository = $boxRepository;
         $this->boxProductRepository = $boxProductRepository;
         $this->boxEventRepository = $boxEventRepository;
@@ -52,10 +57,7 @@ class PageController extends Controller
     {
         return view('user.page.box.treedata');
     }
-    public function cart()
-    {
-        return view('user.page.cart');
-    }
+    
     public function chekout()
     {
 
@@ -118,11 +120,13 @@ class PageController extends Controller
         if (empty($checkCard)) {
             return redirect()->route('createCard');
         };
+
         $showCardDefault = $this->pageRepository->showCardDefault($currentUser->id); //lấy card ưu tiên
         $getAllCard = $this->pageRepository->getAllCardNotIn([$showCardDefault->id], $currentUser->id); //lấy ra tất cả card của khác user này
 
 
         return view('user.page.walet', compact('showCardDefault', 'currentUser', 'getAllCard'));
+
     }
     public function changeStatus($id)
     {
@@ -156,9 +160,13 @@ class PageController extends Controller
     {
         return view('user.page.historyTransaction');
     }
-    public function productDetails()
+    public function productDetails($id)
     {
-        return view('user.page.productDetails');
+        $data = $this->productRepository->show($id);
+        $getAllByIDProductMain = $this->imageRepository->getAllByIDProductMain($id);
+        $getAllByIDProductSlide = $this->imageRepository->getAllByIDProductSlide($id);
+        $getAllByIDProductItem = $this->imageRepository->getAllByIDProductItem($id);
+        return view('user.page.productDetails', compact('data', 'getAllByIDProductMain', 'getAllByIDProductSlide', 'getAllByIDProductItem'));
     }
     public function statusOrder()
     {

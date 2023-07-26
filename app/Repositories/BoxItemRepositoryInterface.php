@@ -9,7 +9,12 @@ interface BoxItemRepositoryInterface
      public function delete($id);
      public function show($id);
      // public function getAllByType($type);
-     public function getByIDBoxEvent($id);
+     public function getByIDBoxEvent($id, $time);
      public function getAllByIdEvent($id);
      public function changeStatus($id, $status);
+     public function getByIDBoxEventTimeThan($event, $time);
+     public function checkAndAutoUpdateStatus($id_event, $time);
+     public function getFirstInCaseEventEmpty($id);
+     public function getFirstInCaseEventHasData($id);
+
 }

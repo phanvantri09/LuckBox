@@ -51,11 +51,35 @@ class BoxEventRepository implements BoxEventRepositoryInterface
         }
     }
     public function getInTime($time){
-        return Box_event::where('time_start', '<', $time)->where('time_end', '>', $time)->get();
+        return Box_event::where('time_start', '<', $time)->where('time_end', '>', $time)->first();
+    }
+
+    public function getInTimeThan($time){
+        return Box_event::where('time_start', '>=', $time)->whereNotIn('status', [2,3])->orderBy('time_start', 'asc')->first();
+    }
+
+    public function checkAndAutoUpdateStatus($time){
+        // dd($time);
+        $data = Box_event::where('time_start', '<=', $time)->where('time_end', '>=', $time)->first();
+        if(empty($data)){
+            $data = Box_event::where('time_end', '<', $time)->first();
+            if(!empty($data)){
+                if($data->status != 3){
+                    $data->status = 3;
+                    $data->save();
+                }
+            }
+        } else {
+            if ($data->status != 2 ) {
+                $data->status = 2;
+                $data->save();
+            }
+        }
     }
 
     public function listBox($id)
     {
         return Box_event::with('boxItem')->findOrFail($id);
     }
+
 }
