@@ -131,4 +131,8 @@ class PageController extends Controller
     {
         return view('user.page.statusOrder');
     }
+    public function openBox()
+    {
+        return view('user.page.box.open');
+    }
 }

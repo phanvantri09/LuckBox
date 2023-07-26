@@ -64,6 +64,7 @@ Route::group(['prefix' => '/'], function () {
         Route::get('/lich-su-giao-dich','historyTransaction')->name('historyTransaction');
         Route::get('/chi-tiet-san-pham/{id}','productDetails')->name('productDetails');
         Route::get('/trang-thai-don-hang','statusOrder')->name('statusOrder');
+        Route::get('/mo-box','openBox')->name('openBox');
     });
 
 });
