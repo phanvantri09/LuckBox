@@ -16,6 +16,7 @@ use App\Http\Requests\Product\UpdateRequestProduct;
 use Illuminate\Support\Facades\Auth;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
 
 class ProductController extends Controller
 {
@@ -39,7 +40,10 @@ class ProductController extends Controller
     public function show($id)
     {
         $data = $this->productRepository->show($id);
-        return view('admin.product.list', compact('data'));
+        $getAllByIDProductMain = $this->imageRepository->getAllByIDProductMain($id);
+        $getAllByIDProductSlide = $this->imageRepository->getAllByIDProductSlide($id);
+        $getAllByIDProductItem = $this->imageRepository->getAllByIDProductItem($id);
+        return view('admin.product.show', compact('data', 'getAllByIDProductMain', 'getAllByIDProductSlide', 'getAllByIDProductItem'));
     }
     public function create()
     {
@@ -61,11 +65,15 @@ class ProductController extends Controller
     public function edit($id)
     {
         $data = $this->productRepository->show($id);
-        return view('admin.product.edit', compact('data'));
+        $category = $this->categoryRepository->getAllByType(ConstCommon::ListTypeCatogory['product']);
+        return view('admin.product.edit', compact('data', 'category'));
     }
 
     public function update(UpdateRequestProduct $request, $id)
     {
+        $currentUser = Auth::user();
+        $id_user_update = $currentUser->id;
+        $request->merge(["id_user_update"=>$id_user_update]);
         $data = $request->all();
         $this->productRepository->update($data, $id);
         return redirect()->route('product.index')->with('success', 'data updated successfully');
@@ -113,5 +121,67 @@ class ProductController extends Controller
             }
         }
         return redirect()->route('product.index');
+    }
+
+    public function addImage2($id){
+        return view('admin.product.addImage2', compact('id'));
+    }
+    public function addImagePost2(Request $request, $id){
+        if ($request->hasFile('imageItem')) {
+            $files = $request->file('imageItem');
+            foreach ($files as $key => $file){
+                $nameImage = 'Product-imageItem' . ConstCommon::getCurrentTime() . '-'.$key.'.' . $file->extension();
+                ConstCommon::addImageToStorage($file, $nameImage);
+                $request->merge([
+                    'link_image' => $nameImage,
+                    'id_product' => $id
+                ]);
+                $data = $request->all();
+                $this->imageRepository->create($data);
+            }
+        }
+        if ($request->hasFile('imageMain')) {
+            $getAllByIDProductMain = $this->imageRepository->getAllByIDProductMain($id);
+            if ($getAllByIDProductMain) {
+                Storage::disk('public')->delete('images/' . $getAllByIDProductMain['link_image']);
+                $this->imageRepository->delete($getAllByIDProductMain['id']);
+            }
+            $request->replace([]);
+            $nameImage = 'Product-imageMain' . ConstCommon::getCurrentTime() . '.' . $request->imageMain->extension();
+            ConstCommon::addImageToStorage($request->imageMain, $nameImage);
+            $request->merge([
+                'link_image' => $nameImage,
+                'id_product' => $id,
+                'type' => 1
+            ]);
+            $data = $request->all();
+            $this->imageRepository->create($data);
+        }
+        if ($request->hasFile('imageSlide')) {
+            $getAllByIDProductSlide = $this->imageRepository->getAllByIDProductSlide($id);
+            if ($getAllByIDProductSlide) {
+                Storage::disk('public')->delete('images/' . $getAllByIDProductSlide['link_image']);
+                $this->imageRepository->delete($getAllByIDProductSlide['id']);
+            }
+            $request->replace([]);
+            $nameImage = 'Product-imageSlide' . ConstCommon::getCurrentTime() . '.' . $request->imageSlide->extension();
+            ConstCommon::addImageToStorage($request->imageSlide, $nameImage);
+            $request->merge([
+                'link_image' => $nameImage,
+                'id_product' => $id,
+                'is_slide' => 1
+            ]);
+            $data = $request->all();
+            $this->imageRepository->create($data);
+        }
+        return redirect()->route('product.index');
+    }
+
+    public function destroyImage($id)
+    {
+        $imageData = $this->imageRepository->show($id);
+        Storage::disk('public')->delete('images/' . $imageData->link_image);
+        $this->imageRepository->delete($id);
+        return redirect()->route('product.show', ['id'=>$imageData->id_product])->with('success', 'data deleted successfully');
     }
 }

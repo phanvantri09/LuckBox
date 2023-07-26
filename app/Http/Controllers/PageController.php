@@ -83,9 +83,9 @@ class PageController extends Controller
             $currentUser = Auth::user();
             $request->merge([
             'id_user' => $currentUser->id,
-            'id_user_create' => $currentUser->id, 
-            'id_user_update' => $currentUser->id, 
-            'type' => $currentUser->type, 
+            'id_user_create' => $currentUser->id,
+            'id_user_update' => $currentUser->id,
+            'type' => $currentUser->type,
         ]);
         $data = $request->all();
         $this->pageRepository->createCard($data);
@@ -100,8 +100,8 @@ class PageController extends Controller
         };
         $showCardDefault = $this->pageRepository->showCardDefault($currentUser->id);//lấy card ưu tiên
         $getAllCard = $this->pageRepository->getAllCardNotIn([$showCardDefault->id]);//lấy ra tất cả card của khác user này
-        
-        
+
+
         return view('user.page.walet',compact('showCardDefault','currentUser','getAllCard'));
     }
     public function changeStatus($id)
@@ -110,7 +110,7 @@ class PageController extends Controller
         $idCard  = $id;
         $this->pageRepository->changeStatus($currentUser->id, $idCard);
         return back()->with('message', ' Thành Công');
-        
+
     }
     public function cashOut()
     {
@@ -124,8 +124,9 @@ class PageController extends Controller
     {
         $data = $this->productRepository->show($id);
         $getAllByIDProductMain = $this->imageRepository->getAllByIDProductMain($id);
+        $getAllByIDProductSlide = $this->imageRepository->getAllByIDProductSlide($id);
         $getAllByIDProductItem = $this->imageRepository->getAllByIDProductItem($id);
-        return view('user.page.productDetails', compact('data', 'getAllByIDProductMain', 'getAllByIDProductItem'));
+        return view('user.page.productDetails', compact('data', 'getAllByIDProductMain', 'getAllByIDProductSlide', 'getAllByIDProductItem'));
     }
     public function statusOrder()
     {

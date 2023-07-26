@@ -115,9 +115,13 @@ Route::group(['prefix' => 'admin', 'middleware'=>['CheckAdmin']], function () {
 
             // hiển thị tất cả
             Route::get('/show/{id}', 'show')->name('show');
-            Route::get('/addImage/{id}', 'addImage')->name('addImage');
-            Route::post('/addImagePost', 'addImagePost')->name('addImagePost');
+//            Route::get('/addImage/{id}', 'addImage')->name('addImage');
+//            Route::post('/addImagePost', 'addImagePost')->name('addImagePost');
+            Route::get('/addImage/{id}', 'addImage2')->name('addImage');
+            Route::post('/addImagePost/{id}', 'addImagePost2')->name('addImagePost');
 
+            // xóa ảnh
+            Route::get('/delete-image/{id}', 'destroyImage')->name('deleteImage');
         });
     });
 
