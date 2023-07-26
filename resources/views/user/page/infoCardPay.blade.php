@@ -117,29 +117,43 @@
                         Sau khi chuyển, vui lòng nhập thông tin vào form bên dưới.
                     </span>
                 </div>
-                <form action="">
+                <form action="{{ route('infoCardPay') }}" method="Post">
+                    @csrf
                     <div class="form-group">
                         <div class="form-group">
                             <label for="exampleFormControlInput1">Tên chủ tài khoản</label>
-                            <input type="text" name="name" class="form-control" id="exampleFormControlInput1"
-                                placeholder="Nguyễn Văn A">
+                            <input type="text" name="card_name" value="{{ $getCardDefault->card_name }}"
+                                class="form-control" id="exampleFormControlInput1" placeholder="Nguyễn Văn A">
+                            @error('card_name')
+                                <div class="alert alert-danger">{{ $errors->first('card_name') }}</div>
+                            @enderror
                         </div>
                         <div class="form-group">
                             <label for="exampleFormControlInput2">Tên ngân hàng</label>
-                            <input type="text" name="tennganhang" class="form-control" id="exampleFormControlInput2"
-                                placeholder="Agribank">
+                            <input type="text" name="bank" value="{{ $getCardDefault->bank }}" class="form-control"
+                                id="exampleFormControlInput2" placeholder="Agribank">
+                            @error('bank')
+                                <div class="alert alert-danger">{{ $errors->first('bank') }}</div>
+                            @enderror
                         </div>
                         <div class="form-group">
                             <label for="exampleFormControlInput3">Số tài khoản/Số thẻ</label>
-                            <input type="text" name="sothe" class="form-control" id="exampleFormControlInput3"
-                                placeholder="2356....">
+                            <input type="text" name="card_number" value="{{ $getCardDefault->card_number }}"
+                                class="form-control" id="exampleFormControlInput3" placeholder="2356....">
+                            @error('card_number')
+                                <div class="alert alert-danger">{{ $errors->first('card_number') }}</div>
+                            @enderror
                         </div>
                         <div class="form-group">
                             <label for="exampleFormControlInput4">Số tiền nạp vào ví</label>
-                            <input type="text" name="sotien" class="form-control" id="exampleFormControlInput4"
+                            <input type="number" name="total" class="form-control" id="exampleFormControlInput4"
                                 placeholder="2.000.000">
+                            @error('total')
+                                <div class="alert alert-danger">{{ $errors->first('total') }}</div>
+                            @enderror
                         </div>
-                        <input type="hidden" name="name" class="form-control" id="exampleFormControlInput5" value="noidungck">
+                        <input type="hidden" name="transaction_content" class="form-control"
+                            id="exampleFormControlInput5" value="noidungck">
                     </div>
                     <div class="d-flex">
                         <span class="bg-warning rounded-circle icon-stt">3</span>
@@ -151,8 +165,9 @@
                         <a href="checkout.html" class="col-4 pr-0">
                             <button class="btn bg-info font-weight-bold content-bank">Trợ giúp</button>
                         </a>
-                        <a href="checkout.html" class="col-8 text-right">
-                            <button class="btn bg-warning font-weight-bold content-bank">Đã chuyển tiền, thông báo cho người bán</button>
+                        <a href="" class="col-8 text-right">
+                            <button class="btn bg-warning font-weight-bold content-bank">Đã chuyển tiền, thông báo cho
+                                người bán</button>
                         </a>
                     </div>
                 </form>

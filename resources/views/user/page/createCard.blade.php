@@ -21,7 +21,7 @@
                             @endforeach
                         </select>
                         @error('bank')
-                            <div class="alert alert-danger">{{ $errors->first('card_name') }}</div>
+                            <div class="alert alert-danger">{{ $errors->first('bank') }}</div>
                         @enderror
                     </div>
                     <div class="form-group">
@@ -29,7 +29,7 @@
                         <input type="text" name="card_branch" class="form-control" id="exampleFormControlInput1"
                             placeholder="Đà Nẵng">
                         @error('card_branch')
-                            <div class="alert alert-danger">{{ $errors->first('card_name') }}</div>
+                            <div class="alert alert-danger">{{ $errors->first('card_branch') }}</div>
                         @enderror
                     </div>
                     <div class="form-group">
@@ -45,9 +45,10 @@
                         <input type="number" name="card_number" class="form-control" id="exampleFormControlInput2"
                             placeholder="Nguyễn Văn A">
                         @error('card_number')
-                            <div class="alert alert-danger">{{ $errors->first('card_name') }}</div>
+                            <div class="alert alert-danger">{{ $errors->first('card_number') }}</div>
                         @enderror
                     </div>
+                    <input type="hidden" value="1" name="status">
                     <button type="submit"
                         class="btn bg-success text-white font-weight-bold d-flex mx-auto px-4">Lưu</button>
                 </form>

@@ -53,11 +53,16 @@ Route::group(['prefix' => '/'], function () {
         Route::get('/purchase-order','purchaseOrder')->name('purchaseOrder');
         Route::get('/market','market')->name('market');
         Route::get('/resell','resell')->name('resell');
+
         Route::get('/nap-tien-vao-vi','infoCardPay')->name('infoCardPay');
+        Route::post('/nap-tien-vao-vi','infoCardPayPost')->name('infoCardPay');
+
         Route::get('/vi-cua-ban','walet')->name('walet');
         Route::get('/them-tai-khoan-ngan-hang','createCard')->name('createCard');
         Route::post('/them-tai-khoan-ngan-hang','createCardPost')->name('createCard');
+
         Route::get('/yeu-cau-rut-tien','cashOut')->name('cashOut');
+        Route::post('/yeu-cau-rut-tien','cashOutPost')->name('cashOut');
 
         Route::get('/change-status/{id}','changeStatus')->name('changeStatus');
 
@@ -253,6 +258,15 @@ Route::group(['prefix' => 'admin', 'middleware'=>['CheckAdmin']], function () {
 
             // hiển thị tất cả
             Route::get('/show/{id}', 'show')->name('show');
+        });
+    });
+    Route::group(['prefix' => 'transaction', 'as' =>'transaction.'], function () {
+        Route::controller(TransactionController::class)->group(function () {
+            // danh sách
+            Route::get('/','index')->name('index');
+
+            Route::post('change_status/{id}/{id_user}/{type}','changeStatus')->name('changeStatus');
+
         });
     });
 });
