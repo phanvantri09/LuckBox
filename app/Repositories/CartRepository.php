@@ -2,7 +2,7 @@
 namespace App\Repositories;
 
 use App\Models\Cart;
-
+use Illuminate\Support\Facades\DB;
 class CartRepository implements CartRepositoryInterface
 {
     public function all()
@@ -57,6 +57,36 @@ class CartRepository implements CartRepositoryInterface
             $cart->save();
             return true;
         }
+    }
+    public function getAllDataByIDUserAndStatus($id_user, $status)
+    {
+        if ($status == null && $id_user != null) {
+            // DB::table('products')
+            // ->leftJoin('images', 'products.id', '=', 'images.id_product')
+            // ->select('products.*', 'images.link_image')
+            return DB::table('carts')->select('carts.*', 'box.title', 'box.link_image', 'box.price')
+            ->leftJoin('box', 'carts.id_box', '=', 'box.id')->where('carts.id_user_create', $id_user)->get();
+        }
+        if ($id_user == null && $status != null) {
+            return DB::table('carts')->select('carts.*', 'box.title', 'box.link_image', 'box.price')
+            ->leftJoin('box', 'carts.id_box', '=', 'box.id')->where('status', $status)->get();
+        }
+        if ($id_user != null && $status != null) {
+            return DB::table('carts')->select('carts.*', 'box.title', 'box.link_image', 'box.price')
+            ->leftJoin('box', 'carts.id_box', '=', 'box.id')->where('carts.id_user_create','=', $id_user)->where('status', $status)->get();
+        }
+        // dnahf choa admin
+        if ($id_user == null && $status == null) {
+            return DB::table('carts')->select('carts.*', 'box.title', 'box.link_image', 'box.price')
+            ->leftJoin('box', 'carts.id_box', '=', 'box.id')->get();
+        }
+        return DB::table('carts')->select('carts.*', 'box.title', 'box.link_image', 'box.price')
+        ->leftJoin('box', 'carts.id_box', '=', 'box.id')->get();
+    }
+    public function getAllDataByIDCartIDUserAndStatus($id_cart, $id_user, $status){
+        return DB::table('carts')->select('carts.*', 'box.title', 'box.link_image', 'box.price')
+        ->leftJoin('box', 'carts.id_box', '=', 'box.id')->where('carts.id', $id_cart)
+        ->where('carts.id_user_create','=', $id_user)->where('status', $status)->first();
     }
 
 }
