@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Hashids\Hashids;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use App\Http\Requests\User\CreateRequestUser;
@@ -69,5 +70,27 @@ class AuthController extends Controller
         $request->session()->regenerateToken();
 
         return redirect()->route('login');
+    }
+
+
+    public function updateShare($token)
+    {
+        $hashids = new Hashids('share');
+        $decodedData = $hashids->decode($token);
+        $userId = $decodedData[0];
+        return view('auth.registerShare', compact('userId'));
+    }
+
+    public function registerShare(CreateRequestUser $request, $id)
+    {
+        $request->merge([
+            'password' => Hash::make($request->password),
+            'id_user_referral' => $id
+        ]);
+        if (User::create($request->all())) {
+            return redirect()->route('login');
+        } else {
+            return redirect()->back()->with('error', "Đã có 1 lỗi xảy ra vui lòng đăng ký lại!");
+        }
     }
 }

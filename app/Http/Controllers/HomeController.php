@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Hashids\Hashids;
 use Illuminate\Http\Request;
 use App\Repositories\UserRepositoryInterface;
 use App\Repositories\BoxEventRepositoryInterface;
@@ -12,6 +13,7 @@ use App\Repositories\ProductRepositoryInterface;
 use App\Repositories\ImageRepositoryInterface;
 
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Auth;
 
 class HomeController extends Controller
 {
@@ -44,10 +46,11 @@ class HomeController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Http\Response
      */
     public function index()
     {
+        $boxItem = null;
         $currentTime = Carbon::now('Asia/Ho_Chi_Minh');
         $timeEventInCase = $timeEventNotInCase = null;
         // $time = $currentTime->format('m/d/Y H:i:s');
@@ -91,9 +94,23 @@ class HomeController extends Controller
             $products = $this->productRepository->getByArrayID($cacheProduct->pluck('id')->toArray());
             $imageSlide = $this->productRepository->getImageSlide($cacheProduct->pluck('id')->toArray())->pluck('link_image');
         }
+        if (Auth::user()) {
+            $userId = Auth::user()->id;
+            $dataToEncode = [
+                $userId
+            ];
+
+            $hashids = new Hashids('share');
+            $encodedData = $hashids->encode($dataToEncode);
+            $sharedLink =  url('shared/'.$encodedData);
+        } else {
+            $sharedLink = '';
+        }
+
         return view('user.page.home', compact(['event','cacheBoxItem', 'cachebox',
                                                'cacheProduct','time','timeEventInCase',
-                                               'timeEventNotInCase','products','imageSlide']));
+                                               'timeEventNotInCase','products','imageSlide',
+                                               'boxItem', 'sharedLink']));
     }
 
     public function chatbox()

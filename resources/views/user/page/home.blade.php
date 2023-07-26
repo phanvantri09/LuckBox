@@ -129,7 +129,7 @@
                 <!-- gift -->
                 @foreach ($products as $product)
                 <div class="col-md-6 col-6 py-2">
-                    <div class="mx-1 d-md-flex bg-white product-card rounded">
+                    <a href="#" class="mx-1 d-md-flex bg-white product-card rounded">
                         <div class="col-md-6 pb-3 px-md-0 px-1 text-center">
                             <p class="font-weight-bold">
                                 {{$product->title}}
@@ -141,7 +141,7 @@
                             <img class="rounded-right"
                                 src="{{\App\Helpers\ConstCommon::getLinkImageToStorage($product->link_image) }}" />
                         </div>
-                    </div>
+                    </a>
                 </div>
                 @endforeach
 

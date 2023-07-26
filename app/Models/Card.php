@@ -12,6 +12,7 @@ class Card extends Model
     protected $table = 'cards';
 
     protected $fillable = [
+        'id_user',
         'id_user_create',
         'id_user_update',
         'bank',

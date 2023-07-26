@@ -50,6 +50,7 @@
                         <div class="form-group">
                             <div class="form-group">
                                 <label for="exampleFormControlInput1">Họ tên</label>
+
                                 <input type="text"  name="name" class="form-control" id="exampleFormControlInput1"
                                     placeholder="Nguyễn Văn A..." value="{{ $userInfo->name ?? null }}" required />
                             </div>
@@ -98,4 +99,6 @@
     </div>
 @endsection
 @section('scripts')
+<script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"></script>
+<script src="./js/address.js"></script>
 @endsection

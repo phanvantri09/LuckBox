@@ -13,4 +13,5 @@ interface BoxEventRepositoryInterface
      public function getInTime($time);
      public function getInTimeThan($time);
      public function checkAndAutoUpdateStatus($time);
+     public function listBox($id);
 }

@@ -134,6 +134,27 @@
     });
 </script>
 <script src="./js/app.js"></script>
+
 {{-- <script src="./js/countdown.js"></script> --}}
+
+<script>
+    function copyHrefToClipboard(event) {
+        event.preventDefault();
+        const linkElement = document.getElementById("linkToCopy");
+        const hrefValue = linkElement.href;
+        const range = document.createRange();
+        const tempElement = document.createElement("span");
+        tempElement.innerText = hrefValue;
+        document.body.appendChild(tempElement);
+        range.selectNode(tempElement);
+        window.getSelection().removeAllRanges();
+        window.getSelection().addRange(range);
+        document.execCommand("copy");
+        window.getSelection().removeAllRanges();
+        document.body.removeChild(tempElement);
+        alert("Đã sao chép link!");
+    }
+</script>
+
 
 </html>
