@@ -7,22 +7,17 @@
         <div id="demo" class="carousel slide container-lg px-0 my-3" data-ride="carousel">
             <!-- Indicators -->
             <ul class="carousel-indicators">
-                <li data-target="#demo" data-slide-to="0" class="active"></li>
-                <li data-target="#demo" data-slide-to="1"></li>
-                <li data-target="#demo" data-slide-to="2"></li>
+                @foreach ($imageSlide as $key => $slide)
+                    <li data-target="#demo" data-slide-to="{{$key}}" class="{{$key == 0 ? "active" : ''}}"></li>
+                @endforeach
             </ul>
-
             <!-- The slideshow -->
-            <div class="carousel-inner carousel-inner-img">
-                <div class="carousel-item active">
-                    <img src="https://hinhanhdep.net/wp-content/uploads/2017/06/anh-hoa-hong-dep-18.jpg" />
-                </div>
-                <div class="carousel-item">
-                    <img src="https://hoala.vn/upload/img/images/album-nhung-hinh-anh-dep-nhat-ve-hoa-hong-leo-07.jpg" />
-                </div>
-                <div class="carousel-item">
-                    <img src="https://img4.thuthuatphanmem.vn/uploads/2020/05/14/hinh-anh-hoa-hong-leo-dep_021528729.jpg" />
-                </div>
+            <div class="carousel-inner">
+                @foreach ($imageSlide as $key => $slide)
+                    <div class="carousel-item {{ $key == 0 ? "active" : '' }}">
+                        <img src="{{\App\Helpers\ConstCommon::getLinkImageToStorage($slide) }}" />
+                    </div>
+                @endforeach
             </div>
 
             <!-- Left and right controls -->
@@ -36,14 +31,17 @@
         <!-- End SlideShow -->
         <div class="container-lg bg-warning py-2">
             <div class="row mx-1 py-2 bg-white align-items-center">
+                {{-- <div class="col-12"> <h3 class="text-danger text-center">{{$datas[0]->title}}</h3></div> --}}
                 <div class="col-md-7 py-2">
                     <div class="row">
-                        <div class="col-sm-6 d-flex flex-column align-items-center justify-content-center">
+                        <form action="{{ route('addToCart') }}" method="post" enctype="multipart/form-data"
+                            class="col-sm-6 d-flex flex-column align-items-center justify-content-center">
+                            @csrf
                             <a href="thongtinbox.html"
                                 class="d-flex flex-column align-items-center w-100 text-decoration-none">
                                 <img src="https://vn-live-01.slatic.net/p/dbf45cda7d56f7641227a80a5957efdf.jpg"
                                     width="60%" height="auto" />
-                                {{-- <h4 class="mt-1 text-dark">Event.....</h4> --}}
+                                <h4 class="mt-1 text-danger">{{ $event->title }}</h4>
                             </a>
                             <div id="countdown" class="bg-danger text-white px-1"></div>
                             <div class="input-group py-2">
@@ -56,9 +54,15 @@
                                         </svg>
                                     </button>
                                 </span>
-                                <input type="number" id="quantity" name="quantity"
-                                    class="form-control input-number text-center" value="1" min="2"
-                                    max="100" />
+
+                                <input type="hidden" name="id_box_event" value="{{ $event->id }}">
+                                <input type="hidden" name="id_box_item" value="{{ $cacheBoxItem->id }}">
+                                <input type="hidden" name="id_box" value="{{ $cachebox->id }}">
+
+                                <input type="number" id="quantity" name="amount"
+                                    class="form-control input-number text-center" value="1" min="1"
+                                    max="100" title="Phải là số nguyên và mọi người chỉ được mua nhiều nhất 100 họp."
+                                    required />
                                 <span class="input-group-btn">
                                     <button type="button" class="quantity-right-plus btn btn-warning btn-number"
                                         data-type="plus" data-field="">
@@ -71,21 +75,34 @@
                                 </span>
                             </div>
                             <div class="py-2">
-                                <h4 class="mb-0 text-danger">2.000.000</h4>
+                                <h4 class="mb-0 text-danger">
+                                    {{ isset($cachebox->price) ? number_format($cachebox->price) : null }} VNĐ</h4>
                             </div>
-                            <a href="cart.html" class="text-decoration-none">
-                                <button type="button" class="btn bg-orange font-weight-bold text-white btn-block btn-lg">
-                                    Mua ngay
-                                </button>
-                            </a>
-                        </div>
+                            @if (!empty($timeEventNotInCase))
+                                <div class="text-decoration-none">
+                                    <div type="submit" class="btn bg-orange font-weight-bold text-white btn-block btn-lg"
+                                        disabled>
+                                        Sắp mở bán
+                                    </div>
+                                </div>
+                            @else
+                                <div class="text-decoration-none">
+                                    <button type="submit"
+                                        class="btn bg-orange font-weight-bold text-white btn-block btn-lg ">
+                                        Mua ngay
+                                    </button>
+                                </div>
+                            @endif
+
+                        </form>
                         <div class="col-sm-5 border border-right-0 font-weight-bold m-2">
                             <h3 class="text-danger text-center">LƯU Ý</h3>
-                            <div class="text-right font-weight-normal">Tổng bán: 50.000</div>
+                            <div class="text-right font-weight-normal">Tổng bán:
+                                {{ isset($cacheBoxItem->amount) ? number_format($cacheBoxItem->amount) : null }}</div>
                             <div class="rank-bar">
                                 <div class="rank-progress" style="width: 70%;"></div>
                             </div>
-                            <div class="text-left font-weight-normal">Còn lại: 1.000</div>
+                            <div class="text-left font-weight-normal">Còn lại: 130</div>
                             <p>- Mở bán vào khung giờ 12h00 và 22h00 hằng ngày</p>
                             <p>- Số lượng: 50.000 hộp/phiên bản</p>
                             <p>
@@ -110,79 +127,79 @@
             </div>
             <div class="row py-2">
                 <!-- gift -->
+                @foreach ($products as $product)
                 <div class="col-md-6 col-6 py-2">
-                    <a href="{{ route('productDetails') }}" class="text-decoration-none text-dark">
-                        <div class="mx-1 d-md-flex bg-white product-card rounded">
-                            <div class="col-md-6 pb-3 px-md-0 px-1 text-center">
-                                <p class="font-weight-bold">
-                                    Smart Tivi Samsung 4K Crystal UHD 50 Inch UA50AUS100
-                                </p>
-                                <span class="price bg-danger text-white font-weight-bold px-1 py-2 rounded-circle">Giá:
-                                    12.000.000.000đ</span>
-                            </div>
-                            <div class="col-md-6 px-0">
-                                <img class="rounded-right"
-                                    src="https://cdn.tgdd.vn/Files/2014/10/29/577178/diem-mat-nhung-do-phan-giai-pho-bien-hien-nay-tren-6.jpg" />
-                            </div>
+                    <a href="#" class="mx-1 d-md-flex bg-white product-card rounded">
+                        <div class="col-md-6 pb-3 px-md-0 px-1 text-center">
+                            <p class="font-weight-bold">
+                                {{$product->title}}
+                            </p>
+                            <span class="price bg-danger text-white font-weight-bold px-1 py-2 rounded-circle">Giá:
+                                {{ number_format($product->price)}}</span>
+                        </div>
+                        <div class="col-md-6 px-0">
+                            <img class="rounded-right"
+                                src="{{\App\Helpers\ConstCommon::getLinkImageToStorage($product->link_image) }}" />
                         </div>
                     </a>
                 </div>
-                <div class="col-md-6 col-6 py-2">
-                    <a href="{{ route('productDetails') }}" class="text-decoration-none text-dark">
-                        <div class="mx-1 d-md-flex bg-white product-card rounded">
-                            <div class="col-md-6 pb-3 px-md-0 px-1 text-center">
-                                <p class="font-weight-bold">
-                                    Smart Tivi Samsung 4K Crystal UHD 50 Inch UA50AUS100
-                                </p>
-                                <span class="price bg-danger text-white font-weight-bold px-1 py-2 rounded-circle">Giá:
-                                    12.000.000.000đ</span>
-                            </div>
-                            <div class="col-md-6 px-0">
-                                <img class="rounded"
-                                    src="https://sieuthibachhoa.net/public/uploads/622a9c2621724674428c0b4d258f3de6/images/Watermark/Qu%E1%BA%A1t%20nlmt/quat-nang-luong-mat-troi-20w%20(1).jpg" />
-                            </div>
-                        </div>
-                    </a>
-                </div>
-                <div class="col-md-6 col-6 py-2">
-                    <a href="{{ route('productDetails') }}" class="text-decoration-none text-dark">
-                        <div class="mx-1 d-md-flex bg-white product-card rounded">
-                            <div class="col-md-6 pb-3 px-md-0 px-1 text-center">
-                                <p class="font-weight-bold">
-                                    Smart Tivi Samsung 4K Crystal UHD 50 Inch UA50AUS100
-                                </p>
-                                <span class="price bg-danger text-white font-weight-bold px-1 py-2 rounded-circle">Giá:
-                                    12.000.000.000đ</span>
-                            </div>
-                            <div class="col-md-6 px-0">
-                                <img class="rounded"
-                                    src="https://sieuthibachhoa.net/public/uploads/622a9c2621724674428c0b4d258f3de6/images/Watermark/Qu%E1%BA%A1t%20nlmt/quat-nang-luong-mat-troi-20w%20(1).jpg" />
-                            </div>
-                        </div>
-                    </a>
-                </div>
-                <div class="col-md-6 col-6 py-2">
-                    <a href="{{ route('productDetails') }}" class="text-decoration-none text-dark">
-                        <div class="mx-1 d-md-flex bg-white product-card rounded">
-                            <div class="col-md-6 pb-3 px-md-0 px-1 text-center">
-                                <p class="font-weight-bold">
-                                    Smart Tivi Samsung 4K Crystal UHD 50 Inch UA50AUS100
-                                </p>
-                                <span class="price bg-danger text-white font-weight-bold px-1 py-2 rounded-circle">Giá:
-                                    12.000.000.000đ</span>
-                            </div>
-                            <div class="col-md-6 px-0">
-                                <img class="rounded"
-                                    src="https://sieuthibachhoa.net/public/uploads/622a9c2621724674428c0b4d258f3de6/images/Watermark/Qu%E1%BA%A1t%20nlmt/quat-nang-luong-mat-troi-20w%20(1).jpg" />
-                            </div>
-                        </div>
-                    </a>
-                </div>
-                <!-- end gift -->
+                @endforeach
+
             </div>
         </div>
     </div>
 @endsection
 @section('scripts')
-<script src="./js/countdown.js"></script>
+    <script>
+        $(document).ready(function() {
+            var time = '';
+
+            @if ($timeEventInCase)
+                time = '{{ $timeEventInCase }}';
+            @endif
+
+            @if ($timeEventNotInCase)
+                time = '{{ $timeEventNotInCase }}';
+            @endif
+            console.log(time);
+            // var time = "{{ $time }}";
+            // Set the date we're counting down to
+            var countDownDate = new Date(time).getTime();
+
+            var timenow = new Date().getTime();
+
+            // Find the distance between now and the count down date
+            var distanceTime = countDownDate - timenow;
+            if (distanceTime < 0) {
+                document.getElementById("countdown").innerHTML = "00:00";
+            } else {
+                // Update the count down every 1 second
+                var x = setInterval(function() {
+
+                    // Get today's date and time
+                    var now = new Date().getTime();
+
+                    // Find the distance between now and the count down date
+                    var distance = countDownDate - now;
+
+                    // Time calculations for days, hours, minutes and seconds
+                    // var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+                    var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                    var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+                    var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+                    // Output the result in an element with id="demo"
+                    document.getElementById("countdown").innerHTML = hours + ": " +
+                        minutes + ": " + seconds;
+
+                    // If the count down is over, write some text
+                    if (distance < 0) {
+                        clearInterval(x);
+                        // location.reload();
+                        document.getElementById("countdown").innerHTML = "Đã mở bán vui lòng khởi động lại trang web";
+                    }
+                }, 1000);
+            }
+        });
+    </script>
 @endsection

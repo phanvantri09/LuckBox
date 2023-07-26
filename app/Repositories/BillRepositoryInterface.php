@@ -1,7 +1,7 @@
 <?php
 namespace App\Repositories;
 
-interface BoxEventRepositoryInterface
+interface BillRepositoryInterface
 {
      public function all();
      public function create(array $data);
@@ -9,9 +9,4 @@ interface BoxEventRepositoryInterface
      public function delete($id);
      public function show($id);
      public function getAllByType($type);
-     public function changeStatus($status, $id);
-     public function getInTime($time);
-     public function getInTimeThan($time);
-     public function checkAndAutoUpdateStatus($time);
-     public function listBox($id);
 }

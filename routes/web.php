@@ -49,7 +49,7 @@ Route::group(['prefix' => '/'], function () {
         Route::get('/danh-sach-box/{id}','boxList')->name('boxList');
         Route::get('/thong-tin-du-lieu-box','treeData')->name('treeData');
         Route::get('/gio-hang','cart')->name('cart');
-        Route::get('/thanh-toan','chekout')->name('chekout');
+        // Route::get('/thanh-toan','chekout')->name('chekout');
         Route::get('/purchase-order','purchaseOrder')->name('purchaseOrder');
         Route::get('/market','market')->name('market');
         Route::get('/resell','resell')->name('resell');
@@ -64,6 +64,14 @@ Route::group(['prefix' => '/'], function () {
         Route::get('/lich-su-giao-dich','historyTransaction')->name('historyTransaction');
         Route::get('/chi-tiet-san-pham/{id}','productDetails')->name('productDetails');
         Route::get('/trang-thai-don-hang','statusOrder')->name('statusOrder');
+    });
+    Route::middleware(['CheckLoginUser'])->group(function () {
+        Route::controller(CartController::class)->group(function () {
+            Route::post('/them-vao-gio-hang','addToCart')->name('addToCart');
+            Route::get('/gio-hang','cart')->name('cart');
+            Route::get('/thanh-toán','checkout')->name('checkout');
+            Route::post('/thanh-toán','checkoutPost')->name('checkoutPost');
+        });
     });
 
 });

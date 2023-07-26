@@ -14,44 +14,54 @@
                 <div class="col-lg-4 col-md-12 col-sm-12 col-12 p-lg-0">
                     <div class="title">Đơn hàng của bạn</div>
                     <div class="d-flex ">
-                        <a href="home.html" class="text-decoration-none text-black-50 pr-3">Home</a>
-                        <a href="cart.html" class="text-decoration-none text-black-50">Giỏ hàng</a>
+                        <a href="{{ route('home') }}" class="text-decoration-none text-black-50 pr-3">Home</a>
+                        <a href="{{ route('cart') }}" class="text-decoration-none text-black-50">Giỏ hàng</a>
                     </div>
                     <div class="d-flex py-2">
                         <div class="col-lg-4 col-md-3 col-4 px-0">
-                            <img src="https://vn-live-01.slatic.net/p/dbf45cda7d56f7641227a80a5957efdf.jpg" width="100%"
+                            <img src="{{ \App\Helpers\ConstCommon::getLinkImageToStorage($dataCart->link_image) }}" width="100%"
                                 height="auto" />
                         </div>
                         <div class="col-lg-8 col-md-9 col-8">
                             <a href="thongtinbox.html" class="text-decoration-none">
-                                <p class="mb-0 text-white-space text-dark">Title Title Title Title Title Title Title
-                                    Title Title Title</p>
+                                <p class="mb-0 text-white-space text-dark">{{ $dataCart->title }}</p>
                             </a>
-                            <div>Số lượng: 2</div>
-                            <div>Đơn giá: 4.000.000VND</div>
+                            <div>Số lượng: {{ $dataCart->amount }}</div>
+                            <div>Đơn giá: {{ number_format($dataCart->price) }} VND</div>
                         </div>
                     </div>
                     <div class="d-flex justify-content-between">
                         <span class="title">Tổng đơn:</span>
-                        <span class="title">4.000.000VND</span>
+                        <span class="title">{{ number_format($dataCart->amount * $dataCart->price) }} VND</span>
                     </div>
                 </div>
                 <div class="col-lg-8 col-md-12 col-sm-12 col-12 px-lg-5">
                     <div class="title text-danger pt-sm-2">Thanh toán</div>
-                    <form action="" class="border p-3 mt-2 rounded">
+                    <form action="{{ route('checkoutPost') }}" class="border p-3 mt-2 rounded" method="post">
+                        @csrf
+                        <input type="hidden" name="id_cart" value="{{$dataCart->id}}">
+                        <input type="hidden" name="id_box_item" value="{{$dataCart->id_box_item}}">
+                        <input type="hidden" name="id_box_event" value="{{$dataCart->id_box_event}}">
+                        <input type="hidden" name="id_box" value="{{$dataCart->id_box}}">
+                        <input type="hidden" name="amount" value="{{$dataCart->amount}}">
+                        <input type="hidden" name="total" value="{{$dataCart->amount * $dataCart->price}}">
+                        {{-- <input type="" name="amount" value="{{$dataCart->amount}}"> --}}
                         <div>Bạn vui lòng nhập đầy đủ thông tin trước khi thanh toán</div>
                         <div class="form-group">
                             <div class="form-group">
                                 <label for="exampleFormControlInput1">Họ tên</label>
-                                <input type="text" class="form-control" id="exampleFormControlInput1"
-                                    placeholder="Nguyễn Văn A..." required>
+
+                                <input type="text"  name="name" class="form-control" id="exampleFormControlInput1"
+                                    placeholder="Nguyễn Văn A..." value="{{ $userInfo->name ?? null }}" required />
                             </div>
                             <div class="form-group">
                                 <label for="exampleFormControlInput2">Số điện thoại</label>
-                                <input type="tel" class="form-control" id="exampleFormControlInput2"
-                                    placeholder="Số điện thoại" required>
+                                <input type="tel" name="number_phone" class="form-control" id="exampleFormControlInput2"
+                                value="{{ $userInfo->number_phone ?? null }}"
+                                    pattern="/(84|0[3|5|7|8|9])+([0-9]{8})\b/g"
+                                    placeholder="Số điện thoại" required />
                             </div>
-                            <div class="row">
+                            {{-- <div class="row">
                                 <input type="hidden" name="country" value="Việt Nam">
                                 <div class="form-group col-lg-4 col-md-6">
                                     <label for="city">Tỉnh/Thành phố</label>
@@ -71,12 +81,13 @@
                                         <option value="" selected>Chọn phường xã</option>
                                     </select>
                                 </div>
-                            </div>
+                            </div> --}}
                             <div class="form-group">
                                 <div class="form-group">
-                                    <label for="exampleFormControlInput5">Số nhà/đường</label>
-                                    <input type="text" class="form-control" id="exampleFormControlInput5"
-                                        placeholder="Số nhà..." required>
+                                    <label for="exampleFormControlInput5">Địa chỉ cụ thể nhận hàng</label>
+                                    <textarea name="address" id=""  class="form-control" cols="30" rows="3" required></textarea>
+                                    {{-- <input type="text" name="address" class="form-control" id="exampleFormControlInput5"
+                                        placeholder="Địa chỉ cụ thể nhận hàng..." required /> --}}
                                 </div>
                             </div>
                         </div>

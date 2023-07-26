@@ -3,6 +3,9 @@ namespace App\Repositories;
 
 use App\Models\Product;
 
+use App\Models\Image;
+use Illuminate\Support\Facades\DB;
+
 class ProductRepository implements ProductRepositoryInterface
 {
     public function all()
@@ -31,5 +34,18 @@ class ProductRepository implements ProductRepositoryInterface
     public function show($id)
     {
         return Product::findOrFail($id);
+    }
+    public function getByArrayID($array){
+        return DB::table('products')
+            ->leftJoin('images', 'products.id', '=', 'images.id_product')
+            ->select('products.*', 'images.link_image')
+            ->where('type', 1)
+            ->get();
+        // return DB::table('products')->select('products.*', 'images.link_image')->leftJoin('images', 'images.id_product', '=', 'products.id')->whereIn('id', $array)->where('type', 1)->get();
+    }
+    public function getImageSlide($array){
+        return Image::whereIn('id_product', $array)
+            ->where('is_slide', 1)
+            ->get();
     }
 }
