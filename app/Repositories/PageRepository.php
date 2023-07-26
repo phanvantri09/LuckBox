@@ -31,9 +31,9 @@ class PageRepository implements PageRepositoryInterface
     {   
         return Card::where('id_user', $id)->where('status','=','1')->first();
     }
-    public function getAllCardNotIn($id)
+    public function getAllCardNotIn($id,$idUser)
     {
-        return Card::whereNotIn('id',$id)->get();
+        return Card::whereNotIn('id',$id)->where('id_user',$idUser)->get();
     }
     public function changeStatus($idUser, $idCard)
     { 

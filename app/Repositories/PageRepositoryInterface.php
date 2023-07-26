@@ -9,5 +9,5 @@ interface PageRepositoryInterface
      public function checkCard($id);
      public function changeStatus($idUser, $idCard);
      public function showCardDefault($id);
-     public function getAllCardNotIn($id);
+     public function getAllCardNotIn($id, $idUser);
 }

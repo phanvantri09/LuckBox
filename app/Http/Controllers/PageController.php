@@ -6,12 +6,19 @@ use App\Repositories\BoxEventRepositoryInterface;
 use App\Repositories\BoxProductRepositoryInterface;
 use App\Repositories\BoxRepositoryInterface;
 use App\Repositories\ImageRepositoryInterface;
+
+use App\Repositories\TransactionRepositoryInterface;
+
 use App\Repositories\ProductRepositoryInterface;
+
 use Illuminate\Http\Request;
 use App\Helpers\ConstCommon;
+
 use App\Http\Requests\Card\CreateRequestCard;
+use App\Http\Requests\TransactionRequest;
 use App\Repositories\PageRepositoryInterface;
 use Illuminate\Support\Facades\Auth;
+
 class PageController extends Controller
 {
     protected $pageRepository;
@@ -19,9 +26,11 @@ class PageController extends Controller
     protected $boxProductRepository;
     protected $boxEventRepository;
     protected $imageRepository;
-    protected $productRepository;
+    protected $transactionRepository;
 
-    public function __construct(PageRepositoryInterface $pageRepository, BoxRepositoryInterface $boxRepository, BoxProductRepositoryInterface $boxProductRepository, BoxEventRepositoryInterface $boxEventRepository, ImageRepositoryInterface $imageRepository, ProductRepositoryInterface $productRepository)
+    public function __construct(PageRepositoryInterface $pageRepository, BoxRepositoryInterface $boxRepository, BoxProductRepositoryInterface $boxProductRepository, BoxEventRepositoryInterface $boxEventRepository, 
+    ImageRepositoryInterface $imageRepository, TransactionRepositoryInterface $transactionRepository, ProductRepositoryInterface $productRepository)
+
     {
         $this->pageRepository = $pageRepository;
         $this->productRepository = $productRepository;
@@ -29,7 +38,7 @@ class PageController extends Controller
         $this->boxProductRepository = $boxProductRepository;
         $this->boxEventRepository = $boxEventRepository;
         $this->imageRepository = $imageRepository;
-
+        $this->transactionRepository = $transactionRepository;
     }
 
     public function boxInfo($id)
@@ -42,7 +51,7 @@ class PageController extends Controller
     public function boxList($id)
     {
         $getEvent = $this->boxEventRepository->listBox($id)->boxItem;
-        return view('user.page.box.list',compact('getEvent'));
+        return view('user.page.box.list', compact('getEvent'));
     }
     public function treeData()
     {
@@ -68,7 +77,21 @@ class PageController extends Controller
     }
     public function infoCardPay()
     {
-        return view('user.page.infoCardPay');
+        $currentUser =  Auth::user();
+        $getCardDefault = $this->pageRepository->showCardDefault($currentUser->id);
+        
+        return view('user.page.infoCardPay', compact('getCardDefault'));
+    }
+    public function infoCardPayPost(TransactionRequest $request)
+    {
+        $currentUser =  Auth::user();
+        $request->merge([
+            'id_user' => $currentUser->id,
+            'type' => 2,
+        ]);
+        $data = $request->all();
+        $this->transactionRepository->create($data);
+        return redirect()->route('walet')->with('message','Gửi yêu cầu thành công');
     }
     public function createCard()
     {
@@ -77,14 +100,16 @@ class PageController extends Controller
     }
     public function createCardPost(CreateRequestCard $request)
     {
-            $currentUser = Auth::user();
-            $request->merge([
+
+        $currentUser = Auth::user();
+        $request->merge([
             'id_user' => $currentUser->id,
             'id_user_create' => $currentUser->id,
             'id_user_update' => $currentUser->id,
             'type' => $currentUser->type,
         ]);
         $data = $request->all();
+
         $this->pageRepository->createCard($data);
         return redirect()->route('walet')->with('message', 'Thêm thành công');
     }
@@ -92,14 +117,16 @@ class PageController extends Controller
     {
         $currentUser = Auth::user();
         $checkCard = $this->pageRepository->checkCard($currentUser->id);
-        if(empty($checkCard)){
+        if (empty($checkCard)) {
             return redirect()->route('createCard');
         };
-        $showCardDefault = $this->pageRepository->showCardDefault($currentUser->id);//lấy card ưu tiên
-        $getAllCard = $this->pageRepository->getAllCardNotIn([$showCardDefault->id]);//lấy ra tất cả card của khác user này
+
+        $showCardDefault = $this->pageRepository->showCardDefault($currentUser->id); //lấy card ưu tiên
+        $getAllCard = $this->pageRepository->getAllCardNotIn([$showCardDefault->id], $currentUser->id); //lấy ra tất cả card của khác user này
 
 
-        return view('user.page.walet',compact('showCardDefault','currentUser','getAllCard'));
+        return view('user.page.walet', compact('showCardDefault', 'currentUser', 'getAllCard'));
+
     }
     public function changeStatus($id)
     {
@@ -107,11 +134,27 @@ class PageController extends Controller
         $idCard  = $id;
         $this->pageRepository->changeStatus($currentUser->id, $idCard);
         return back()->with('message', ' Thành Công');
-
     }
     public function cashOut()
     {
-        return view('user.page.cashOut');
+        $currentUser =  Auth::user();
+        $getCardDefault = $this->pageRepository->showCardDefault($currentUser->id);
+
+        return view('user.page.cashOut', compact('getCardDefault'));
+    }
+    public function cashOutPost(Request $request)
+    {
+        $currentUser =  Auth::user();
+        if($request->total > $currentUser->balance ){
+            return back()->with('thongbao', 'Số dư ví không đủ để rút.');
+        }
+        $request->merge([
+            'id_user' => $currentUser->id,
+            'type' => 1,
+        ]);
+        $data = $request->all();
+        $this->transactionRepository->create($data);
+        return redirect()->route('walet')->with('message','Gửi yêu cầu thành công');
     }
     public function historyTransaction()
     {
