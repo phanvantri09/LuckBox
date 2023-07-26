@@ -14,9 +14,16 @@
                     <div id="demo-slide" class="carousel">
                         <!-- The slideshow -->
                         <div class="carousel-inner">
+                            @if($getAllByIDProductMain)
                             <div class="carousel-item carousel-item-details active">
                                 <img src="{{\App\Helpers\ConstCommon::getLinkImageToStorage( $getAllByIDProductMain['link_image'] ?? null)}}">
                             </div>
+                            @endif
+                            @if($getAllByIDProductSlide)
+                            <div class="carousel-item carousel-item-details">
+                                <img src="{{\App\Helpers\ConstCommon::getLinkImageToStorage( $getAllByIDProductSlide['link_image'] ?? null)}}">
+                            </div>
+                            @endif
                             @foreach ($getAllByIDProductItem as $key => $item)
                                 <div class="carousel-item carousel-item-details">
                                     <img src="{{\App\Helpers\ConstCommon::getLinkImageToStorage( $item->link_image ?? null)}}">
