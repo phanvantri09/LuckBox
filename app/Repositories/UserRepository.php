@@ -16,7 +16,10 @@ class UserRepository implements UserRepositoryInterface
     {
         return User::create($data);
     }
-
+    public function find($id)
+    {
+        return User::find($id);
+    }
     public function update(array $data, $id)
     {
         $user = User::findOrFail($id);
@@ -59,7 +62,7 @@ class UserRepository implements UserRepositoryInterface
     }
     public function updateInfoUser($data, $id){
         $infoUser = UserInfo::where('id_user', $id)->first();
-        
+
         $infoUser->update($data);
         return $infoUser;
     }

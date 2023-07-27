@@ -10,6 +10,7 @@ use App\Repositories\ImageRepositoryInterface;
 use App\Repositories\TransactionRepositoryInterface;
 
 use App\Repositories\ProductRepositoryInterface;
+use App\Repositories\CartRepositoryInterface;
 
 use Illuminate\Http\Request;
 use App\Helpers\ConstCommon;
@@ -27,8 +28,9 @@ class PageController extends Controller
     protected $boxEventRepository;
     protected $imageRepository;
     protected $transactionRepository;
+    protected $cartRepository;
 
-    public function __construct(PageRepositoryInterface $pageRepository, BoxRepositoryInterface $boxRepository, BoxProductRepositoryInterface $boxProductRepository, BoxEventRepositoryInterface $boxEventRepository, 
+    public function __construct(CartRepositoryInterface $cartRepository, PageRepositoryInterface $pageRepository, BoxRepositoryInterface $boxRepository, BoxProductRepositoryInterface $boxProductRepository, BoxEventRepositoryInterface $boxEventRepository,
     ImageRepositoryInterface $imageRepository, TransactionRepositoryInterface $transactionRepository, ProductRepositoryInterface $productRepository)
 
     {
@@ -39,6 +41,7 @@ class PageController extends Controller
         $this->boxEventRepository = $boxEventRepository;
         $this->imageRepository = $imageRepository;
         $this->transactionRepository = $transactionRepository;
+        $this->cartRepository = $cartRepository;
     }
 
     public function boxInfo($id)
@@ -57,7 +60,7 @@ class PageController extends Controller
     {
         return view('user.page.box.treedata');
     }
-    
+
     public function chekout()
     {
 
@@ -73,13 +76,15 @@ class PageController extends Controller
     }
     public function market()
     {
-        return view('user.page.market');
+        $dataCarts = $this->cartRepository->getAllByStatusmartket();
+        // dd($dataCarts)   ;
+        return view('user.page.market', compact(['dataCarts']));
     }
     public function infoCardPay()
     {
         $currentUser =  Auth::user();
         $getCardDefault = $this->pageRepository->showCardDefault($currentUser->id);
-        
+
         return view('user.page.infoCardPay', compact('getCardDefault'));
     }
     public function infoCardPayPost(TransactionRequest $request)

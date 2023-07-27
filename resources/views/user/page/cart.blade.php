@@ -29,6 +29,7 @@
                                 <h5>Đơn giá: <br>{{ number_format($cart->price) }} VNĐ</h5>
                             </div>
                             <div class="col-lg-2 input-group py-2">
+                                @if (empty($cart->id_cart_old))
                                 <span class="input-group-btn">
                                     <button type="button" class="quantity-left-minus btn btn-danger btn-number"
                                         data-type="minus" data-field="">
@@ -39,7 +40,7 @@
                                     </button>
                                 </span>
                                 <input type="number" id="quantity" name="quantity"
-                                    class="form-control input-number text-center" value="{{ $cart->amount }}" min="1"
+                                    class="form-control input-number text-center" disabled value="{{ $cart->amount }}" min="1"
                                     max="100" />
                                 <span class="input-group-btn">
                                     <button type="button" class="quantity-right-plus btn btn-success btn-number"
@@ -51,6 +52,10 @@
                                         </svg>
                                     </button>
                                 </span>
+                                @else
+                                    <h5>Số lượng: {{ $cart->amount }} </h5>
+                                @endif
+
                             </div>
                             <div class="col-lg-2">
                                 <h5>Tổng tiền: <br><span

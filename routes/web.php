@@ -74,6 +74,8 @@ Route::group(['prefix' => '/'], function () {
     Route::middleware(['CheckLoginUser'])->group(function () {
         Route::controller(CartController::class)->group(function () {
             Route::post('/them-vao-gio-hang','addToCart')->name('addToCart');
+
+            Route::get('/them-vao-gio-hang-co-id/{id_cart_old}','addToCartOld')->name('addToCartOld');
             Route::get('/gio-hang','cart')->name('cart');
             Route::get('/thanh-toán','checkout')->name('checkout');
             Route::post('/thanh-toán','checkoutPost')->name('checkoutPost');

@@ -49,6 +49,7 @@ class CartRepository implements CartRepositoryInterface
         ->where('id_box', $data['id_box'])
         ->where('id_box_item', $data['id_box_item'])
         ->where('id_box_event', $data['id_box_event'])
+        ->where('id_cart_old', null)
         ->first();
         if (empty($cart)) {
             return false;
@@ -87,11 +88,21 @@ class CartRepository implements CartRepositoryInterface
         // dd($id_cart, $id_user, $status);
         return DB::table('carts')->select('carts.*', 'box.title', 'box.link_image', 'box.price')
         ->leftJoin('box', 'carts.id_box', '=', 'box.id')->where('carts.id', $id_cart)
-        ->where('carts.id_user_create','=', $id_user)->where('status', $status)->first();
+        ->where('carts.id_user_create','=', $id_user)
+
+        ->where('status', $status)->first();
     }
     public function showAllData($id_cart){
         return DB::table('carts')->select('carts.*', 'box.title', 'box.link_image', 'box.price', 'bills.total')
         ->leftJoin('box', 'carts.id_box', '=', 'box.id')->leftJoin('bills', 'carts.id', '=', 'bills.id_cart')->where('carts.id', $id_cart)->first();
+    }
+    public function getAllByStatusmartket(){
+        return DB::table('carts')->select('carts.*', 'box.title', 'box.link_image', 'box.price', 'folows.id_user as id_user_folow')
+        ->leftJoin('box', 'carts.id_box', '=', 'box.id')
+        ->leftJoin('folows', 'carts.id_folow', '=', 'folows.id')
+        ->where('carts.amount', '>', 0)
+        ->where('carts.status', 10)
+        ->get();
     }
 
 }

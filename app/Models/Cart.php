@@ -13,6 +13,8 @@ class Cart extends Model
         'id_user_create',
         'id_admin_update',
         'id_box_event',
+        'id_folow',
+        'id_cart_old',
         'id_box',
         'id_box_item',
         'status',

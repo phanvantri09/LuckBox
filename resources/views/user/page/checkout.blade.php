@@ -27,12 +27,12 @@
                                 <p class="mb-0 text-white-space text-dark">{{ $dataCart->title }}</p>
                             </a>
                             <div>Số lượng: {{ $dataCart->amount }}</div>
-                            <div>Đơn giá: {{ number_format($dataCart->price) }} VND</div>
+                            <div>Đơn giá: {{ (empty($dataCart->id_cart_old)) ? number_format($dataCart->price) : number_format(\App\Helpers\ConstCommon::priceUp( count(explode(",", $dataCart->id_folow)), $dataCart->price)) }} VND</div>
                         </div>
                     </div>
                     <div class="d-flex justify-content-between">
                         <span class="title">Tổng đơn:</span>
-                        <span class="title">{{ number_format($dataCart->amount * $dataCart->price) }} VND</span>
+                        <span class="title">{{ (empty($dataCart->id_cart_old)) ? number_format($dataCart->amount * $dataCart->price) : number_format(\App\Helpers\ConstCommon::priceUp( count(explode(",", $dataCart->id_folow)), $dataCart->price)) }} VND</span>
                     </div>
                 </div>
                 <div class="col-lg-8 col-md-12 col-sm-12 col-12 px-lg-5">
@@ -43,8 +43,9 @@
                         <input type="hidden" name="id_box_item" value="{{$dataCart->id_box_item}}">
                         <input type="hidden" name="id_box_event" value="{{$dataCart->id_box_event}}">
                         <input type="hidden" name="id_box" value="{{$dataCart->id_box}}">
-                        <input type="hidden" name="amount" value="{{$dataCart->amount}}">
-                        <input type="hidden" name="total" value="{{$dataCart->amount * $dataCart->price}}">
+                        <input type="hidden" name="price" value="{{$dataCart->price}}">
+                        <input type="hidden" name="amount" value="{{(empty($dataCart->id_cart_old)) ? $dataCart->amount : 1 }}">
+                        <input type="hidden" name="total" value="{{ (empty($dataCart->id_cart_old)) ? ($dataCart->amount * $dataCart->price) : (\App\Helpers\ConstCommon::priceUp( count(explode(",", $dataCart->id_folow)), $dataCart->price)) }}">
                         {{-- <input type="" name="amount" value="{{$dataCart->amount}}"> --}}
                         <div>Bạn vui lòng nhập đầy đủ thông tin trước khi thanh toán</div>
                         <div class="form-group">

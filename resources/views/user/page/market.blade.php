@@ -11,74 +11,25 @@
         <div class="container my-lg-2 my-0">
             <!-- desktop -->
             <div class="d-lg-block d-none">
+                @foreach ($dataCarts as $dataCart)
                 <div class="row align-items-center bg-orange-white py-2 rounded mb-2 px-2">
                     <div class="col-lg-2 px-1">
-                        <img src="https://vn-live-01.slatic.net/p/dbf45cda7d56f7641227a80a5957efdf.jpg" width="100%"
+                        <img src="{{ \App\Helpers\ConstCommon::getLinkImageToStorage($dataCart->link_image) }}" width="100%"
                             height="auto" />
                     </div>
                     <div class="col-lg-3">
                         <a href="thongtinbox.html" class="text-decoration-none">
-                            <h4 class="text-dark">Title</h4>
+                            <h4 class="text-dark">{{$dataCart->title}}</h4>
                         </a>
                     </div>
                     <div class="col-lg-5">
-                        <h5>Đơn giá: <span class="font-weight-bold text-danger">4.000.000 VNĐ</span></h5>
+                        <h5>Đơn giá: <span class="font-weight-bold text-danger">{{number_format(\App\Helpers\ConstCommon::priceUp(count(explode(",", $dataCart->id_user_folow)), $dataCart->price))}} VNĐ</span></h5>
                     </div>
-                    <a href="checkout.html" class="w-100 col-lg-2 px-lg-0">
+                    <a href="{{ route('addToCartOld', ['id_cart_old'=>$dataCart->id]) }}" class="w-100 col-lg-2 px-lg-0">
                         <button class="btn bg-orange text-white">Mua ngay</button>
                     </a>
                 </div>
-                <div class="row align-items-center bg-orange-white py-2 rounded mb-2 px-2">
-                    <div class="col-lg-2 px-1">
-                        <img src="https://vn-live-01.slatic.net/p/dbf45cda7d56f7641227a80a5957efdf.jpg" width="100%"
-                            height="auto" />
-                    </div>
-                    <div class="col-lg-3">
-                        <a href="thongtinbox.html" class="text-decoration-none">
-                            <h4 class="text-dark">Title</h4>
-                        </a>
-                    </div>
-                    <div class="col-lg-5">
-                        <h5>Đơn giá: <span class="font-weight-bold text-danger">4.000.000 VNĐ</span></h5>
-                    </div>
-                    <a href="checkout.html" class="w-100 col-lg-2 px-lg-0">
-                        <button class="btn bg-orange text-white">Mua ngay</button>
-                    </a>
-                </div>
-                <div class="row align-items-center bg-orange-white py-2 rounded mb-2 px-2">
-                    <div class="col-lg-2 px-1">
-                        <img src="https://vn-live-01.slatic.net/p/dbf45cda7d56f7641227a80a5957efdf.jpg" width="100%"
-                            height="auto" />
-                    </div>
-                    <div class="col-lg-3">
-                        <a href="thongtinbox.html" class="text-decoration-none">
-                            <h4 class="text-dark">Title</h4>
-                        </a>
-                    </div>
-                    <div class="col-lg-5">
-                        <h5>Đơn giá: <span class="font-weight-bold text-danger">4.000.000 VNĐ</span></h5>
-                    </div>
-                    <a href="checkout.html" class="w-100 col-lg-2 px-lg-0">
-                        <button class="btn bg-orange text-white">Mua ngay</button>
-                    </a>
-                </div>
-                <div class="row align-items-center bg-orange-white py-2 rounded mb-2 px-2">
-                    <div class="col-lg-2 px-1">
-                        <img src="https://vn-live-01.slatic.net/p/dbf45cda7d56f7641227a80a5957efdf.jpg" width="100%"
-                            height="auto" />
-                    </div>
-                    <div class="col-lg-3">
-                        <a href="thongtinbox.html" class="text-decoration-none">
-                            <h4 class="text-dark">Title</h4>
-                        </a>
-                    </div>
-                    <div class="col-lg-5">
-                        <h5>Đơn giá: <span class="font-weight-bold text-danger">4.000.000 VNĐ</span></h5>
-                    </div>
-                    <a href="checkout.html" class="w-100 col-lg-2 px-lg-0">
-                        <button class="btn bg-orange text-white">Mua ngay</button>
-                    </a>
-                </div>
+                @endforeach
             </div>
             <!-- end desltop -->
             <!-- mobile -->

@@ -13,5 +13,6 @@ interface UserRepositoryInterface
      public function getUserByType(int $type);
      public function checkInfoUser($id);
      public function updateInfoUser(array $data, $id);
+     public function find($id);
 }
 

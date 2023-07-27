@@ -81,4 +81,11 @@ class ConstCommon {
         $now->setTimezone('Asia/Ho_Chi_Minh');
         return $now->format('Y-m-d').'-'. $now->format('h-s-i');
      }
+     public static function priceUp($count, $price){
+        $totalShow = $price;
+        for ($i=0; $i < $count; $i++) {
+            $totalShow = $totalShow + ($totalShow * 6/100);
+        }
+        return $totalShow;
+     }
 }
