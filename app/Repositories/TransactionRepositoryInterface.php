@@ -7,5 +7,5 @@ interface TransactionRepositoryInterface
      public function all();
 
      public function changeStatus($id,$idUser,$type, $status);
-     
+     public function update(array $data, $id);
 }

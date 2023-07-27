@@ -43,21 +43,12 @@
                                 @endphp
                                 <tr>
                                     <td>{{ $i }}</td>
-                                    @if ($item->type == 2)
                                     <td style="
                                     border-radius: 3px;
                                     color: #fff;
-                                    background-color: #28a745;
+                                    background-color: {{ ($item->type == 1 || $item->type == 3 || $item->type == 4 ) ? '#28a745' : 'red' }};
                                 ">{{ \App\Helpers\ConstCommon::TypeTransaction[$item->type] }}</td>
-                                    @else
-                                        @if ($item->type == 1)
-                                        <td style="
-                                        border-radius: 3px;
-                                        color: #fff;
-                                        background-color: #ff0000;
-                                    ">{{ \App\Helpers\ConstCommon::TypeTransaction[$item->type] }}</td>
-                                        @endif
-                                    @endif
+                                    </td>
                                     <td>{{ $item->User->email }}</td>
                                     <td>{{ number_format($item->total) }}đ</td>
                                     <td>{{ $item->card_name }}</td>
@@ -69,26 +60,14 @@
                                             method="POST">
                                             @csrf
                                             <select class="status-select form-control" name="status">
-                                                @if ($item->status == 1)
-                                                    <option selected value="1">Vừa mới tạo</option>
-                                                    <option value="2">Thành Công</option>
-                                                    <option value="3">Từ chối</option>
-                                                @else
-                                                    @if ($item->status == 2)
-                                                        <option  value="1">Vừa mới tạo</option>
-                                                        <option selected value="2">Thành Công</option>
-                                                        <option value="3">Từ chối</option>
-                                                    @else
-                                                        <option  value="1">Vừa mới tạo</option>
-                                                        <option  value="2">Thành Công</option>
-                                                        <option selected value="3">Từ chối</option>
-                                                    @endif
-                                                @endif
+                                                <option {{ $item->status == 1 ? 'selected' : '' }} value="1">Vừa mới tạo</option>
+                                                <option {{ $item->status == 2 ? 'selected' : '' }} value="2">Thành Công</option>
+                                                <option {{ $item->status == 3 ? 'selected' : '' }} value="3">Từ chối</option>
                                             </select>
                                         </form>
                                     </td>
-                                    
-                                    
+
+
                                 </tr>
                             @endforeach
                         </tbody>

@@ -16,5 +16,6 @@ interface BoxItemRepositoryInterface
      public function checkAndAutoUpdateStatus($id_event, $time);
      public function getFirstInCaseEventEmpty($id);
      public function getFirstInCaseEventHasData($id);
+     public function updateAmount($id, $amount);
 
 }

@@ -7,9 +7,13 @@ use App\Repositories\CartRepositoryInterface;
 use App\Repositories\BoxItemRepositoryInterface;
 use App\Repositories\BoxRepositoryInterface;
 use App\Repositories\BillRepositoryInterface;
-
+use App\Repositories\TransactionRepositoryInterface;
+use App\Repositories\CardRepositoryInterface;
+use App\Repositories\PageRepositoryInterface;
+use App\Repositories\FolowRepositoryInterface;
 use Illuminate\Support\Facades\Auth;
-
+use App\Helpers\ConstCommon;
+use Illuminate\Support\Facades\DB;
 class CartController extends Controller
 {
     // protected $userRepository;
@@ -19,8 +23,11 @@ class CartController extends Controller
     protected $boxRepository;
     protected $cartRepository;
     protected $billRepository;
-
-    public function __construct(BillRepositoryInterface $billRepository , CartRepositoryInterface $cartRepository, BoxItemRepositoryInterface $boxItemRepository, BoxRepositoryInterface $boxRepository)
+    protected $transactionRepository;
+    protected $cardRepository;
+    protected $pageRepository;
+    protected $folowRepository;
+    public function __construct(FolowRepositoryInterface $folowRepository, PageRepositoryInterface $pageRepository, CardRepositoryInterface $cardRepository, TransactionRepositoryInterface $transactionRepository, BillRepositoryInterface $billRepository , CartRepositoryInterface $cartRepository, BoxItemRepositoryInterface $boxItemRepository, BoxRepositoryInterface $boxRepository)
     {
         // $this->userRepository = $userRepository;
         // $this->boxEventRepository = $boxEventRepository;
@@ -29,6 +36,10 @@ class CartController extends Controller
         // $this->boxProductRepository = $boxProductRepository;
         $this->cartRepository = $cartRepository;
         $this->billRepository = $billRepository;
+        $this->transactionRepository = $transactionRepository;
+        $this->cardRepository = $cardRepository;
+        $this->pageRepository = $pageRepository;
+        $this->folowRepository = $folowRepository;
     }
     public function addToCart(Request $request){
         $user = Auth::user();
@@ -53,7 +64,7 @@ class CartController extends Controller
     public function cart()
     {
         $user = Auth::user();
-        
+
         $dataCart = $this->cartRepository->getAllDataByIDUserAndStatus($user->id, 1);
         return view('user.page.cart', compact(['dataCart']));
 
@@ -61,34 +72,181 @@ class CartController extends Controller
     public function checkout(Request $request)
     {
         $user = Auth::user();
-        $userInfo = $user->UserInfo()->first();
+
 
         if ($request->has('id_cart')) {
-            $dataCart = $this->cartRepository->getAllDataByIDCartIDUserAndStatus($user->id, $request->id_cart, 1);
+            $dataCart = $this->cartRepository->getAllDataByIDCartIDUserAndStatus( $request->id_cart, $user->id, 1);
         } else {
             $dataCart = $this->cartRepository->getAllDataByIDUserAndStatus($user->id, 1);
         }
+        if ($user->balance < ($dataCart->amount + $dataCart->price)){
+            return redirect()->route('infoCardPay')->with('error', 'Số tài khoản trong ví không đủ để thực hiện, vui lòng nạp thêm tiền để thực hiện giao dịch này.');
+        }
+        $userInfo = $user->UserInfo()->first();
         if (empty($dataCart)) {
             return redirect()->route('home')->with('info', 'Hiện tại chưa có đơn hàng nào để thanh toán');
         }
-        // dd( $dataCart);
         return view('user.page.checkout', compact(['dataCart', 'userInfo']));
-        
+
     }
     public function checkoutPost(Request $request)
     {
         // dd($request->all());
         $user = Auth::user();
-        $request->merge(['id_user_create' => $user->id, 'id_admin_update' => $user->id, $user->id, 'id_transaction' => 1, $user->id, 'id_admin_update' => $user->id,]);
+
+        $request->merge([
+            'id_user' => $user->id,
+            'id_user_create' => $user->id,
+            'id_admin_update' => $user->id,
+            'status' => 2
+        ]);
         DB::beginTransaction();
         try {
+            session(['transaction_bill' => $request->all()]);
+            $dataTransaction = [
+                'id_user' => $user->id,
+                'id_admin_accept' => null,
+                'type' => 3,
+                'total'=> $request->total,
+                'status'=> 2
+                , 'card_name'=> null
+                , 'bank'=> null
+                , 'card_number'=> null
+                , 'transaction_content'=> null
+            ];
+            $transaction = $this->transactionRepository->create($dataTransaction);
+            $request->merge(['id_transaction' => $transaction->id]);
             $bill = $this->billRepository->create($request->all());
+
+            $this->boxItemRepository->updateAmount($request->id_box_item, $request->amount);
+
+            $dataFolow = [
+                'id_user' => $user->id,
+                'id_box_item' => $request->id_box_item,
+                'id_box_event' => $request->id_box_event,
+                'id_box' => $request->id_box,
+                'id_cart' => $request->id_cart,
+            ];
+            $folow = $this->folowRepository->create($dataFolow);
+
+            $this->cartRepository->update(['folow' => $folow->id, 'status' => 2], $request->id_cart);
+
+            $user->balance = $user->balance - $request->total;
+            $user->save();
+
             DB::commit();
         } catch (\Exception $e){
             report($e);
-            $this->info("Error!: ".$e->getMessage());
             DB::rollBack();
+            return redirect()->back()->with('error', 'Đã xảy ra lỗi');
         }
+        // $infoCard = $this->cardRepository->choese();
+        // $getCardDefault = $this->pageRepository->showCardDefault($user->id);
+        // $total = $request->total;
+        return redirect()->route('purchaseOrder')->with('success', 'Mua hàng thành công');
+        // return view('user.page.infoCardPay', compact(['infoCard','getCardDefault','total']));
+    }
+    public function infoCardPayPost(Request $request){
+        // dd($request->all(), session('transaction_bill'));
+
+        //  kiểm tra có id_cart_father mua từ 1 cart khác thì chia thành 2 hướng giải quyết
+        $dataSessionBill = session('transaction_bill');
+        $user = Auth::user();
+        DB::beginTransaction();
+        try {
+            $transaction = $this->transactionRepository->create([
+                'id_user' => $user->id,
+                'id_admin_accept' => null,
+                'type' => 3,
+                'total'=> $dataSessionBill['total'],
+                'status'=> 2
+                , 'card_name'=> $request->card_name
+                , 'bank'=> $request->bank
+                , 'card_number'=> $request->card_number
+                , 'transaction_content'=> $request->transaction_content
+                ]);
+            // $transaction = $request->transaction;
+
+            $dataBill = [
+                'id_user_create' => $user->id,
+                'id_admin_update' => null,
+                'id_cart' => $dataSessionBill['id_cart'],
+                'id_transaction'=> $transaction->id,
+                'id_box_item' => $dataSessionBill['id_box_item'],
+                'id_box_event' => $dataSessionBill['id_box_event'],
+                'id_box' => $dataSessionBill['id_box'],
+                'status' => 2 ,
+                'amount' => $dataSessionBill['amount'],
+                'total' => $dataSessionBill['total'],
+                'name' => $dataSessionBill['name'],
+                'number_phone' => $dataSessionBill['number_phone'],
+                'address' => $dataSessionBill['address']
+            ];
+            $bill = $this->billRepository->create($dataBill);
+            $this->boxItemRepository->updateAmount($dataSessionBill['id_box_item'], $dataSessionBill['amount']);
+            // cập nhật folow ở đây nhá
+            $id_user_list = $user->id;
+            // dd($id_user_list);
+            $dataFolow = [
+                'id_user' => $user->id,
+                'id_box_item' => $dataSessionBill['id_box_item'],
+                'id_box_event' => $dataSessionBill['id_box_event'],
+                'id_box' => $dataSessionBill['id_box'],
+                'id_cart' => $dataSessionBill['id_cart'],
+            ];
+            $folow = $this->folowRepository->create($dataFolow);
+            $this->cartRepository->update(['folow' => $folow->id, 'status' => 2], $dataSessionBill['id_cart']);
+            $user->balance = $user->balance - $dataSessionBill['total'];
+            $user->save();
+            DB::commit();
+        } catch (\Exception $e){
+            report($e);
+            dd($e);
+            DB::rollBack();
+            return redirect()->route('home')->with('error', 'Đã xảy ra lỗi');
+        }
+        session()->forget('transaction_bill');
+        return redirect()->route('purchaseOrder')->with('success','Thành công đặt hàng');
+    }
+    public function purchaseOrder(){
+        $user = Auth::user();
+        $carts = $this->cartRepository->getAllDataByIDUserAndStatus($user->id, 2);
+        return view('user.page.box.purchaseOrder', compact(['carts']));
+    }
+    public function sendToMarket($id_cart){
+        $dataCart =  $this->cartRepository->showAllData($id_cart);
+        // dd($dataCart);
+        return view('user.page.resell', compact(['dataCart']));
+        // return redirect()->route('')->with('Đăng bán thành công');
+
+    }
+    public function sendToMarketPost($id_cart){
+        $user = Auth::user();
+        DB::beginTransaction();
+        try {
+            $this->cartRepository->update(['status'=>10], $id_cart);
+            $phiguiban = 100000;
+            $user->balance = $user->balance - $phiguiban;
+            $user->save();
+            $transaction = $this->transactionRepository->create([
+                'id_user' => $user->id,
+                'id_admin_accept' => null,
+                'type' => 4,
+                'total'=> $phiguiban,
+                'status'=> 2
+                , 'card_name'=> null
+                , 'bank'=> null
+                , 'card_number'=> null
+                , 'transaction_content'=> null
+                ]);
+            DB::commit();
+        } catch (\Exception $e){
+            report($e);
+            dd($e);
+            DB::rollBack();
+            return redirect()->route('home')->with('error', 'Đã xảy ra lỗi');
+        }
+        return redirect()->route('home')->with('success', 'Đăng bán thành công');
     }
 
 }

@@ -1,13 +1,11 @@
 <?php
 namespace App\Repositories;
 
-interface CardRepositoryInterface
+interface FolowRepositoryInterface
 {
-     public function allAdmin();
-     public function allUser();
+     public function all();
      public function create(array $data);
      public function update(array $data, $id);
      public function delete($id);
      public function show($id);
-     public  function choese();
 }

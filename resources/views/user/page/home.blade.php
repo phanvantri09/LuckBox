@@ -12,7 +12,7 @@
                 @endforeach
             </ul>
             <!-- The slideshow -->
-            <div class="carousel-inner">
+            <div class="carousel-inner carousel-inner-img">
                 @foreach ($imageSlide as $key => $slide)
                     <div class="carousel-item {{ $key == 0 ? "active" : '' }}">
                         <img src="{{\App\Helpers\ConstCommon::getLinkImageToStorage($slide) }}" />

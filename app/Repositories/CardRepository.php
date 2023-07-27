@@ -38,4 +38,7 @@ class CardRepository implements CardRepositoryInterface
     {
         return Card::findOrFail($id);
     }
+    public  function choese(){
+        return Card::whereIn('type', [222, 333])->where('status',1)->first();
+    }
 }

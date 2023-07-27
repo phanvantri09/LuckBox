@@ -28,8 +28,8 @@ use App\Repositories\BoxItemRepositoryInterface;
 
 use App\Repositories\TransactionRepository;
 use App\Repositories\TransactionRepositoryInterface;
-// use App\Repositories\ProductRepository;
-// use App\Repositories\ProductRepositoryInterface;
+use App\Repositories\FolowRepository;
+use App\Repositories\FolowRepositoryInterface;
 
 use App\Repositories\CartRepositoryInterface;
 use App\Repositories\CartRepository;
@@ -61,7 +61,7 @@ class RepositoryServiceProvider extends ServiceProvider
         $this->app->bind(MessageRepositoryInterface::class, MessageRepository::class);
 
         $this->app->bind(TransactionRepositoryInterface::class, TransactionRepository::class);
-        // $this->app->bind(ProductRepositoryInterface::class, ProductRepository::class);
+        $this->app->bind(FolowRepositoryInterface::class, FolowRepository::class);
         // $this->app->bind(ProductRepositoryInterface::class, ProductRepository::class);
 
         $this->app->bind(CartRepositoryInterface::class, CartRepository::class);

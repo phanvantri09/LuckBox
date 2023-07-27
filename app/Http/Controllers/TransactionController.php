@@ -16,13 +16,17 @@ class TransactionController extends Controller
     public function index()
     {
         $getAllTrans = $this->transactionRepository->all();
-        
+
         return view('admin.transaction.list', compact('getAllTrans'));
     }
     public function changeStatus($id, $idUser,$type, Request $request)
     {
-        
         $this->transactionRepository->changeStatus($id, $idUser,$type,$request->status);
-        return back()->with('message', 'Thành Công');
+        if ($this->transactionRepository->changeStatus($id, $idUser,$type,$request->status)) {
+            return back()->with('message', 'Thành Công');
+        } else {
+            return back()->with('error', 'Lỗi tiến trình');
+        }
+
     }
 }

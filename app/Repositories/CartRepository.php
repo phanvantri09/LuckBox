@@ -84,9 +84,14 @@ class CartRepository implements CartRepositoryInterface
         ->leftJoin('box', 'carts.id_box', '=', 'box.id')->get();
     }
     public function getAllDataByIDCartIDUserAndStatus($id_cart, $id_user, $status){
+        // dd($id_cart, $id_user, $status);
         return DB::table('carts')->select('carts.*', 'box.title', 'box.link_image', 'box.price')
         ->leftJoin('box', 'carts.id_box', '=', 'box.id')->where('carts.id', $id_cart)
         ->where('carts.id_user_create','=', $id_user)->where('status', $status)->first();
+    }
+    public function showAllData($id_cart){
+        return DB::table('carts')->select('carts.*', 'box.title', 'box.link_image', 'box.price', 'bills.total')
+        ->leftJoin('box', 'carts.id_box', '=', 'box.id')->leftJoin('bills', 'carts.id', '=', 'bills.id_cart')->where('carts.id', $id_cart)->first();
     }
 
 }

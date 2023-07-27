@@ -93,5 +93,10 @@ class BoxItemRepository implements BoxItemRepositoryInterface
 
         return Box_item::where('id_box_event', $id)->whereNotIn('status', [1,3])->orderBy('time_start', 'asc')->first();
     }
+    public function updateAmount($id, $amount){
+        $Box_item = Box_item::find($id);
+        $Box_item->amount = $Box_item->amount - $amount;
+        $Box_item->save();
+    }
 
 }

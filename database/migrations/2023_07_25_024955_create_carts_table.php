@@ -20,7 +20,12 @@ class CreateCartsTable extends Migration
             $table->bigInteger('id_box_item');
             $table->bigInteger('id_box_event');
             $table->bigInteger('id_box');
-            $table->bigInteger('status')->default(1);// 1 vừa thêm vào và chưa thanh toán, 2 đã thanh toán chưa mở họp, 3 đã mở họp, 4 admin duyệt đơn để giao hàng, 5 đã giao thành công.
+            $table->bigInteger('id_folow')->nullable();
+            $table->bigInteger('status')->default(1);
+            //  1 vừa thêm vào và chưa thanh toán, 2 đã thanh toán chưa mở họp,
+            // 10 đăng bán lại
+            // 3 đã mở họp,
+            // 4 admin duyệt đơn để giao hàng, 5 đã giao thành công. 6 bị từ chối
             $table->bigInteger('amount');
             $table->timestamps();
         });

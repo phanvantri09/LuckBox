@@ -16,5 +16,6 @@ interface CartRepositoryInterface
      public function findAndUpdate(array $data);
      public function getAllDataByIDUserAndStatus($id_user, $status);
      public function getAllDataByIDCartIDUserAndStatus($id_cart, $id_user, $status);
+     public function showAllData($id_cart);
 
 }

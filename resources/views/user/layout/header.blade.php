@@ -1,7 +1,7 @@
 <!-- Menu -->
 <nav class="navbar navbar-expand-md navbar-dark bg-orange text-white">
     <div class="container-lg">
-        <a class="navbar-brand text-white" href="home.html">Navbar</a>
+        <a class="navbar-brand text-white" href="{{ route('home') }}">Navbar</a>
         <!-- <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
         <span class="navbar-toggler-icon"></span>
       </button> -->
@@ -34,7 +34,7 @@
         </div>
 
 		@auth
-		<a href="cart.html" class="text-white px-2">
+		<a href="{{ route('cart') }}" class="text-white px-2">
             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor"
                 class="bi bi-cart4" viewBox="0 0 16 16">
                 <path
@@ -58,7 +58,7 @@
 			</a>
 			<div class="dropdown-menu">
 				<a class="dropdown-item text-white" href="{{ route('updateInfo') }}">Thông tin cá nhân</a>
-				<a class="dropdown-item text-white" href="{{ route('updateInfo') }}">Ví của bạn</a>
+				<a class="dropdown-item text-white" href="{{ route('walet') }}">Ví của bạn</a>
                 <a id="linkToCopy" onclick="copyHrefToClipboard(event)" class="dropdown-item text-white" href="{{ $sharedLink ?? '#' }}">Giới thiệu bạn bè</a>
 				<a href="{{ route('logout') }}" class="dropdown-item text-white">Đăng xuất</a>
 			</div>
