@@ -159,6 +159,7 @@
 .bottom-mobile-panel{
   position: fixed;
   bottom: 0;
+  z-index: 11111;
 }
 .bottom-mobile-panel .text{
   font-size: 12px;

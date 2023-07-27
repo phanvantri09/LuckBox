@@ -41,7 +41,7 @@
                 <div class="row bg-white py-2 rounded mb-2 px-2">
                     <div class="col-md-3 col-sm-3 col-4 px-1">
                         <img src="https://img4.thuthuatphanmem.vn/uploads/2020/05/14/hinh-anh-hoa-hong-leo-dep_021528729.jpg"
-                            width="100%" height="120" />
+                            width="100%" height="auto" />
                     </div>
                     <div class="col-md-9 col-sm-9 col-8">
                         <a href="thongtinbox.html" class="text-decoration-none">
