@@ -6,7 +6,11 @@
         <!-- SlideShow -->
         <div id="demo" class="carousel slide container-lg px-0 my-3" data-ride="carousel">
             <!-- Indicators -->
+            @if (empty($imageSlide))
+            <marquee><h1>Hiện tại chưa có sự kiện nào mở</h1></marquee>
+            @else
             <ul class="carousel-indicators">
+                
                 @foreach ($imageSlide as $key => $slide)
                     <li data-target="#demo" data-slide-to="{{$key}}" class="{{$key == 0 ? "active" : ''}}"></li>
                 @endforeach
@@ -27,6 +31,8 @@
             <a class="carousel-control-next" href="#demo" data-slide="next">
                 <span class="carousel-control-next-icon"></span>
             </a>
+            @endif
+            
         </div>
         <!-- End SlideShow -->
         <div class="container-lg bg-warning py-2">
@@ -55,9 +61,9 @@
                                     </button>
                                 </span>
 
-                                <input type="hidden" name="id_box_event" value="{{ $event->id }}">
-                                <input type="hidden" name="id_box_item" value="{{ $cacheBoxItem->id }}">
-                                <input type="hidden" name="id_box" value="{{ $cachebox->id }}">
+                                <input type="hidden" name="id_box_event" value="{{ $event->id ?? null }}">
+                                <input type="hidden" name="id_box_item" value="{{ $cacheBoxItem->id ?? null }}">
+                                <input type="hidden" name="id_box" value="{{ $cachebox->id ?? null }}">
 
                                 <input type="number" id="quantity" name="amount"
                                     class="form-control input-number text-center" value="1" min="1"
@@ -85,13 +91,20 @@
                                         Sắp mở bán
                                     </div>
                                 </div>
-                            @else
+                            @elseIf($timeEventNotInCase == 1000)
                                 <div class="text-decoration-none">
-                                    <button type="submit"
+                                    <div 
                                         class="btn bg-orange font-weight-bold text-white btn-block btn-lg ">
-                                        Mua ngay
-                                    </button>
+                                        Chưa có sự kiện
+                                    </div>
                                 </div>
+                            @else 
+                            <div class="text-decoration-none">
+                                <button type="submit"
+                                    class="btn bg-orange font-weight-bold text-white btn-block btn-lg ">
+                                    Mua ngay
+                                </button>
+                            </div>
                             @endif
 
                         </form>
@@ -127,6 +140,9 @@
             </div>
             <div class="row py-2">
                 <!-- gift -->
+                @if (empty($products))
+                <marquee><h1>Hiện tại chưa có sự kiện mở bán sản phẩm nào</h1></marquee>
+                @else
                 @foreach ($products as $product)
                 <div class="col-md-6 col-6 py-2">
                     <a href="#" class="mx-1 d-md-flex bg-white product-card rounded">
@@ -144,6 +160,8 @@
                     </a>
                 </div>
                 @endforeach
+                @endif
+                
 
             </div>
         </div>

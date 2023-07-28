@@ -85,14 +85,24 @@ class HomeController extends Controller
             $cacheBoxItem = $this->boxItemRepository->getByIDBoxEvent($event->id, $time);
             if (empty($cacheBoxItem)) {
                 $cacheBoxItem = $this->boxItemRepository->getFirstInCaseEventEmpty($event->id, $time);
-                $timeEventNotInCase = Carbon::parse($cacheBoxItem->time_start)->format('m/d/Y H:i:s');
+                if (empty($cacheBoxItem)) {
+                    $timeEventNotInCase = 1000;
+                } else {
+                    $timeEventNotInCase = Carbon::parse($cacheBoxItem->time_start)->format('m/d/Y H:i:s');
+                }
             } else {
                 $timeEventInCase = Carbon::parse($cacheBoxItem->time_end)->format('m/d/Y H:i:s');
             }
             $cachebox = empty($cacheBoxItem) ? null :  $cacheBoxItem->box()->first();
             $cacheProduct = empty($cachebox) ? null : $cachebox->boxProducts()->get();
-            $products = $this->productRepository->getByArrayID($cacheProduct->pluck('id')->toArray());
-            $imageSlide = $this->productRepository->getImageSlide($cacheProduct->pluck('id')->toArray())->pluck('link_image');
+            if (empty($cacheProduct)) {
+                $products = null;
+                $imageSlide = null;
+            } else {
+                $products = $this->productRepository->getByArrayID($cacheProduct->pluck('id')->toArray());
+                $imageSlide = $this->productRepository->getImageSlide($cacheProduct->pluck('id')->toArray())->pluck('link_image');
+            }
+            
         }
         if (Auth::user()) {
             $userId = Auth::user()->id;

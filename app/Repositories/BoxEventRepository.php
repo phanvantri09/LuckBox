@@ -51,7 +51,7 @@ class BoxEventRepository implements BoxEventRepositoryInterface
         }
     }
     public function getInTime($time){
-        return Box_event::where('time_start', '<', $time)->where('time_end', '>', $time)->first();
+        return Box_event::where('time_start', '<', $time)->where('time_end', '>', $time)->whereNotIn('status', [3])->first();
     }
 
     public function getInTimeThan($time){
