@@ -46,7 +46,13 @@
                                     <td style="
                                     border-radius: 3px;
                                     color: #fff;
-                                    background-color: {{ ($item->type == 1 || $item->type == 3 || $item->type == 4 ) ? '#28a745' : 'red' }};
+                                    background-color: {{ ($item->type == 1 ) ? ' red' : '' }} 
+                                    {{ ($item->type == 2 ) ? 'green' : '' }} 
+                                    {{ ($item->type == 3 ) ? 'blue' : '' }}
+                                    {{ ($item->type == 4 ) ? 'black' : '' }}
+                                    {{ ($item->type == 5 ) ? 'orange' : '' }}
+                                    {{ ($item->type == 6 ) ? 'gray' : '' }}
+                                    ;
                                 ">{{ \App\Helpers\ConstCommon::TypeTransaction[$item->type] }}</td>
                                     </td>
                                     <td>{{ $item->User->email }}</td>

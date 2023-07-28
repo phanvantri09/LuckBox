@@ -176,7 +176,7 @@ class CartController extends Controller
                     'id_user' => $cartOld->id_user_create,
                     'id_admin_accept' => null,
                     'type' => 4,
-                    'total'=> $userPlusMoneyBoxTotal,
+                    'total'=> $request->total + $moneyX,
                     'status'=> 2
                     , 'card_name'=> null
                     , 'bank'=> null
@@ -194,7 +194,7 @@ class CartController extends Controller
                         'id_user' => $id_us,
                         'id_admin_accept' => null,
                         'type' => 4,
-                        'total'=> $userPlusMoney->balance + $moneyO,
+                        'total'=> $moneyO,
                         'status'=> 2
                         , 'card_name'=> null
                         , 'bank'=> null
@@ -301,6 +301,18 @@ class CartController extends Controller
         $user = Auth::user();
         $carts = $this->cartRepository->getAllDataByIDUserAndStatus($user->id, 2);
         return view('user.page.box.purchaseOrder', compact(['carts']));
+    }
+    public function boxUserMarket(){
+        $user = Auth::user();
+        $carts = $this->cartRepository->getAllDataByIDUserAndStatus($user->id, 10);
+        return view('user.page.box.purchaseOrder', compact(['carts']));
+    }
+    public function treeData($id){
+        // dd(123);
+        $dataCart = $this->cartRepository->show($id);
+        dd($dataCart);
+        // $this->folowRepository
+        return view('user.page.box.treedata');
     }
     public function sendToMarket($id_cart){
         $dataCart =  $this->cartRepository->showAllData($id_cart);

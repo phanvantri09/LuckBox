@@ -8,4 +8,5 @@ interface TransactionRepositoryInterface
 
      public function changeStatus($id,$idUser,$type, $status);
      public function update(array $data, $id);
+     public function listForUser($id_user);
 }

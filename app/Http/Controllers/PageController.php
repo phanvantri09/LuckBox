@@ -163,7 +163,9 @@ class PageController extends Controller
     }
     public function historyTransaction()
     {
-        return view('user.page.historyTransaction');
+        $user = Auth::user();
+        $datas = $this->transactionRepository->listForUser($user->id);
+        return view('user.page.historyTransaction', compact(['datas']));
     }
     public function productDetails($id)
     {

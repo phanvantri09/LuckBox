@@ -21,7 +21,6 @@ class TransactionController extends Controller
     }
     public function changeStatus($id, $idUser,$type, Request $request)
     {
-        $this->transactionRepository->changeStatus($id, $idUser,$type,$request->status);
         if ($this->transactionRepository->changeStatus($id, $idUser,$type,$request->status)) {
             return back()->with('message', 'Thành Công');
         } else {

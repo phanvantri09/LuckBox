@@ -30,12 +30,22 @@
                         <div class="col-lg-2">
                             <span>Số lượng: {{ $dataCart->amount }}</span>
                         </div>
+                        @if ($dataCart->status == 10)
+                        <a href="{{ route('openBox', ['id_cart' => $dataCart->id]) }}" class="w-100 col-lg-2 px-lg-0">
+                            <button class="btn bg-success text-white">Mở box</button>
+                        </a>
+                        <a href="{{ route('treeData', ['id' => $dataCart->id]) }}" class="w-100 col-lg-2 px-lg-0">
+                            <button class="btn bg-orange text-white">Xem doanh thu box</button>
+                        </a>
+                        @else 
                         <a href="{{ route('openBox', ['id_cart' => $dataCart->id]) }}" class="w-100 col-lg-2 px-lg-0">
                             <button class="btn bg-success text-white">Mở box</button>
                         </a>
                         <a href="{{ route('sendToMarket', ['id_cart' => $dataCart->id]) }}" class="w-100 col-lg-2 px-lg-0">
                             <button class="btn bg-orange text-white">Gửi bán</button>
                         </a>
+                        @endif
+                        
                     </div>
                 @endforeach
 

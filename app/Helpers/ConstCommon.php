@@ -61,7 +61,7 @@ class ConstCommon {
           'Woori'=>['name' => ' Woori Bank – Ngân hàng Woori', 'image'=>'dist/img/bank/noimage.jpg'],
 
      ] ;
-    const TypeTransaction = [ 1 => 'Rút tiền', 2 => 'Nạp tiền', 3 => 'Thanh toán box', 4 => "Phi đăng bán lại box", 5 => 'Hoa hồng bán box', 6 => 'Giới thiệu'];
+    const TypeTransaction = [ 1 => 'Rút tiền', 2 => 'Nạp tiền', 3 => 'Thanh toán box', 4 => "Phí đăng bán lại box", 5 => 'Hoa hồng bán box', 6 => 'Giới thiệu'];
 
 
     public static function getnameByTypeCategory($key){

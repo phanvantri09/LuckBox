@@ -19,24 +19,14 @@
                     </tr>
                 </thead>
                 <tbody>
+                    @foreach ($datas as $key => $data)
                     <tr>
-                        <td>1</td>
-                        <td>Nạp tiền</td>
-                        <td>200.000</td>
-                        <td>12:00 22/04/2023</td>
+                        <td>{{ $key+1 }}</td>
+                        <td>{{ \App\Helpers\ConstCommon::TypeTransaction[$data->type] }}</td>
+                        <td>{{number_format($data->total)}} VNĐ</td>
+                        <td>{{$data->created_at}}</td>
                     </tr>
-                    <tr>
-                        <td>2</td>
-                        <td>Rút tiền</td>
-                        <td>200.000</td>
-                        <td>12:00 22/04/2023</td>
-                    </tr>
-                    <tr>
-                        <td>3</td>
-                        <td>Thanh toán box</td>
-                        <td>200.000</td>
-                        <td>12:00 22/04/2023</td>
-                    </tr>
+                    @endforeach
                 </tbody>
             </table>
         </div>

@@ -21,7 +21,7 @@ class Transaction extends Migration
             $table->bigInteger('total');// số tiền giao dịch
             $table->string('bank')->nullable();// tên ngân hàng
             $table->string('card_name')->nullable();// tên chủ thẻ
-            $table->integer('card_number')->nullable();//
+            $table->string('card_number')->nullable();//
             $table->text('transaction_content')->nullable();// thông tin giao dịch
             $table->integer('status')->default(1)->comment("0 là mới tạo và chưa cập nhật thông tin tài khoản ck, 1 là vừa tạo đợi admin duyệt, 2 admin đã chấp nhận và thực hiện(Đối với thanh toán box thì oke lun), 3 admin từ chối");
             $table->timestamps();

@@ -21,32 +21,40 @@ class TransactionRepository implements TransactionRepositoryInterface
 
         $trans = Transaction::find($id);
         $bill = Bill::where('id_transaction', $trans->id)->first();
-        $cart = Cart::find($bill->id_cart);
+        if (!empty($bill)) {
+            $cart = Cart::find($bill->id_cart);
+        }
         $user = User::find($idUser);
         DB::beginTransaction();
         try {
             if($status == 1){
                 $trans->update(['status' => 1]);
+                if (!empty($bill)) {
                 $bill->update(['status' => 1]);
                 $cart->update(['status' => 1]);
+            }
             }else{
                 if($status == 2){
                     $trans->update(['status' => 2]);
-                    $bill->update(['status' => 2]);
-                    $cart->update(['status' => 2]);
+                    if (!empty($bill)) {
+                        $bill->update(['status' => 2]);
+                        $cart->update(['status' => 2]);
+                    }
                     if($trans->type == 1 || $trans->type == 3 || $trans->type == 4){
                         $user->balance = $user->balance - $trans->total;
-                        $user->save();
+                        
                     }else{
                         $user->balance = $user->balance + $trans->total;
-                        $user->save();
                     }
                 }else{
                     $trans->update(['status' => 3]);
-                    $bill->update(['status' => 6]);
-                    $cart->update(['status' => 6]);
+                    if (!empty($bill)) {
+                        $bill->update(['status' => 6]);
+                        $cart->update(['status' => 6]);
+                    }
                 }
             }
+            $user->save();
             DB::commit();
         } catch (\Exception $e){
             // report($e);
@@ -60,6 +68,9 @@ class TransactionRepository implements TransactionRepositoryInterface
         $user = Transaction::findOrFail($id);
         $user->update($data);
         return $user;
+    }
+    public function listForUser($id_user){
+        return Transaction::where('id_user',$id_user)->orderBy('created_at', 'desc')->get();
     }
 
 }

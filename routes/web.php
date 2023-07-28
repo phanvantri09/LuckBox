@@ -47,7 +47,7 @@ Route::group(['prefix' => '/'], function () {
     Route::controller(PageController::class)->group(function () {
         Route::get('/thong-tin-box/{id}','boxInfo')->name('boxInfo');
         Route::get('/danh-sach-box/{id}','boxList')->name('boxList');
-        Route::get('/thong-tin-du-lieu-box','treeData')->name('treeData');
+        
         Route::get('/gio-hang','cart')->name('cart');
         // Route::get('/thanh-toan','chekout')->name('chekout');
         Route::get('/hop-mu','purchaseOrder')->name('purchaseOrder');
@@ -81,6 +81,8 @@ Route::group(['prefix' => '/'], function () {
             Route::post('/thanh-toán','checkoutPost')->name('checkoutPost');
             Route::post('/hoan-tat-thanh-toan','infoCardPayPost')->name('infoCardPayPost');
             Route::get('/hop-mu','purchaseOrder')->name('purchaseOrder');
+            Route::get('/danh-sach-hop-gui-ban','boxUserMarket')->name('boxUserMarket');
+            Route::get('/thong-tin-du-lieu-box/{id}','treeData')->name('treeData');
             Route::get('/mo-hop/{id_cart}','openBox')->name('openBox');
             Route::get('/gui-ban/{id_cart}','sendToMarket')->name('sendToMarket');
             Route::get('/xac-nhan-gui-ban/{id_cart}','sendToMarketPost')->name('sendToMarketPost');
