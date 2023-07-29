@@ -4,6 +4,9 @@
       max-width: 1440px;
   }
 }
+.navbar-brand{
+  font-size: 1.5rem;
+}
 .bg-orange {
   background: linear-gradient(-180deg, #f53d2d, #f63);
 }
