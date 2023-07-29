@@ -27,49 +27,39 @@
                         <form action="{{ route('updateInfoPost') }}" method="POST" enctype="multipart/form-data">
                             @csrf
                             <div class="form-group">
-                                <div class="form-group">
-                                    <label for="exampleFormControlInput1">Họ và tên</label>
-                                    <input type="text" name="name" class="form-control" id="exampleFormControlInput1"
-                                        placeholder="Nguyễn Văn A"
-                                        value="{{ empty($getInfoUser->name) ? '' : $getInfoUser->name }}">
-                                </div>
+                                <label for="exampleFormControlInput1">Họ và tên</label>
+                                <input type="text" name="name" class="form-control" id="exampleFormControlInput1"
+                                    placeholder="Nguyễn Văn A"
+                                    value="{{ empty($getInfoUser->name) ? '' : $getInfoUser->name }}">
                             </div>
                             <div class="form-group">
-                                <div class="form-group">
-                                    <label for="exampleFormControlInput2">Số điện thoại</label>
-                                    <input type="tel" name="number_phone" class="form-control"
-                                        id="exampleFormControlInput2" placeholder="Số điện thoại"
-                                        value="{{ empty($getInfoUser->number_phone) ? '' : $getInfoUser->number_phone }}">
-                                </div>
+                                <label for="exampleFormControlInput2">Số điện thoại</label>
+                                <input type="tel" name="number_phone" class="form-control"
+                                    id="exampleFormControlInput2" placeholder="Số điện thoại"
+                                    value="{{ empty($getInfoUser->number_phone) ? '' : $getInfoUser->number_phone }}">
                             </div>
                             <div class="form-group">
-                                <div class="form-group">
-                                    <label for="exampleFormControlInput3">Ngày sinh</label>
-                                    <input type="date" name="birthdate" class="form-control"
-                                        id="exampleFormControlInput3" placeholder="Nguyễn Văn A"
-                                        value="{{ empty($getInfoUser->birthdate) ? '' : $getInfoUser->birthdate }}">
-                                </div>
+                                <label for="exampleFormControlInput3">Ngày sinh</label>
+                                <input type="date" name="birthdate" class="form-control"
+                                    id="exampleFormControlInput3" placeholder="Nguyễn Văn A"
+                                    value="{{ empty($getInfoUser->birthdate) ? '' : $getInfoUser->birthdate }}">
                             </div>
                             <div class="form-group">
-                                <div class="form-group">
-                                    <label class="form-label" for="customFile">Hình ảnh</label>
-                                    <input type="file" name="link_image"
-                                        class="form-control-file border rounded px-1 py-1"
-                                        alt="{{ empty($getInfoUser->link_image) ? '' : $getInfoUser->link_image }}"
-                                        id="customFile" />
-                                </div>
-                                @if ($errors->has('link_image'))
-                                    <label class="text-danger">
-                                        {{ $errors->first('link_image') }}
-                                    </label>
-                                @endif
+                                <label class="form-label" for="customFile">Hình ảnh</label>
+                                <input type="file" name="link_image"
+                                    class="form-control-file border rounded px-1 py-1"
+                                    alt="{{ empty($getInfoUser->link_image) ? '' : $getInfoUser->link_image }}"
+                                    id="customFile" />
                             </div>
+                            @if ($errors->has('link_image'))
+                                <label class="text-danger">
+                                    {{ $errors->first('link_image') }}
+                                </label>
+                            @endif
                             <div class="form-group">
-                                <div class="form-group">
-                                    <label for="exampleFormControlInput4">Giới thiệu bản thân</label>
-                                    <textarea type="text" name="content" class="form-control" id="exampleFormControlInput4"
-                                        placeholder="Giới thiệu bản thân...">{{ empty($getInfoUser->content) ? '' : $getInfoUser->content }}</textarea>
-                                </div>
+                                <label for="exampleFormControlInput4">Giới thiệu bản thân</label>
+                                <textarea type="text" name="content" class="form-control" id="exampleFormControlInput4"
+                                    placeholder="Giới thiệu bản thân...">{{ empty($getInfoUser->content) ? '' : $getInfoUser->content }}</textarea>
                             </div>
                             <div class="row">
                                 <input type="hidden" name="country" value="Việt Nam">
@@ -93,12 +83,10 @@
                                 </div>
                             </div>
                             <div class="form-group">
-                                <div class="form-group">
-                                    <label for="exampleFormControlInput5">Số nhà/đường</label>
-                                    <input name="house_number_street" type="text" class="form-control"
-                                        id="exampleFormControlInput5" placeholder="Số nhà..."
-                                        value="{{ empty($getInfoUser->house_number_street) ? '' : $getInfoUser->house_number_street }}">
-                                </div>
+                                <label for="exampleFormControlInput5">Số nhà/đường</label>
+                                <input name="house_number_street" type="text" class="form-control"
+                                    id="exampleFormControlInput5" placeholder="Số nhà..."
+                                    value="{{ empty($getInfoUser->house_number_street) ? '' : $getInfoUser->house_number_street }}">
                             </div>
                             <button type="submit" class="btn bg-orange text-white font-weight-bold">Lưu</button>
                         </form>

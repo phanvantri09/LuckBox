@@ -2,129 +2,103 @@
 <html>
 
 <head>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lucky Box</title>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <link rel="stylesheet" type="text/css"
-        href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.4/dist/jquery.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
+
     <style>
-        body {
-            font-family: Arial, Helvetica, sans-serif;
-        }
+        @media (min-width: 1200px) {
 
-        form {
-            border: 3px solid #f1f1f1;
+            .container,
+            .container-lg,
+            .container-md,
+            .container-sm,
+            .container-xl {
+                max-width: 1440px;
+            }
         }
-
-        input[type=email],
-        input[type=password] {
-            width: 100%;
-            padding: 12px 20px;
-            margin: 8px 0;
-            display: inline-block;
-            border: 1px solid #ccc;
-            box-sizing: border-box;
+        .navbar-brand {
+            font-size: 1.5rem;
         }
-
-        button {
-            background-color: #04AA6D;
-            color: white;
-            padding: 14px 20px;
-            margin: 8px 0;
-            border: none;
-            cursor: pointer;
-            width: 100%;
-        }
-
-        button:hover {
-            opacity: 0.8;
-        }
-
-        .cancelbtn {
-            width: auto;
-            padding: 10px 18px;
-            background-color: #f44336;
-        }
-
-        .imgcontainer {
-            text-align: center;
-            margin: 24px 0 12px 0;
-        }
-
-        img.avatar {
-            width: 40%;
-            border-radius: 50%;
-        }
-
-        .container {
-            padding: 16px;
-        }
-
-        span.psw {
-            float: right;
-            padding-top: 16px;
-        }
-
         .main {
-            padding: 100px 100px;
+            background-color: rgb(255, 235, 226);
         }
-
-        /* Change styles for span and cancel button on extra small screens */
-        @media screen and (max-width: 600px) {
-            span.psw {
-                display: block;
-                float: none;
-            }
-
-            .main {
-                padding: 0px 0px;
-            }
-
-            .cancelbtn {
-                width: 100%;
-            }
+        .bg-orange {
+            background: linear-gradient(-180deg, #f53d2d, #f63);
+        }
+        .lines{
+            height: 1px;
+            background-color: rgb(212, 212, 212);
+            width: 40%;
+        }
+        .text-lines{
+            color: rgb(119, 119, 119);
         }
     </style>
 </head>
 
 <body>
+    <nav class="navbar navbar-expand-md navbar-dark bg-white">
+        <div class="container-lg justify-content-start">
+            <a class="navbar-brand text-warning" href="{{ route('home') }}">Navbar</a>
+            <h4 class="mb-0">Đăng nhập</h4>
+        </div>
+    </nav>
 
     <div class="main">
-        <h1 style="text-align: center">Đăng Nhập</h1>
+        <div class="container py-md-5 py-4">
+            <div class="row px-md-5 px-3 align-items-center">
+                <div class="col-lg-8 d-lg-block d-none">
+                    <img src="{{asset('/dist/img/gift.png')}}" width="100%" >
+                </div>
+            <form action="{{ route('login') }}" method="post" class="col-lg-4 col-md-12 col-12 bg-white p-4 shadow rounded">
+                @csrf
+                <h5>Đăng nhập</h5>
+                <div class="form-group">
+                    <label for="uname">Email</label>
+                    <input type="email" placeholder="Enter Username" class="form-control" name="email"
+                        value="{{ old('email') }}" required>
+                    @error('email')
+                        <div class="text-danger">{{ $message }}</div>
+                    @enderror
+                </div>
 
-        <form action="{{ route('login') }}" method="post">
-            @csrf
-            <div class="imgcontainer">
-                <img src="img_avatar2.png" alt="Avatar" class="avatar">
-            </div>
-
-            <div class="container">
-                <label for="uname"><b>Email đăng nhập</b></label>
-                <input type="email" placeholder="Enter Username" name="email" value="{{ old('email') }}" required>
-                @error('email')
-                    <div>{{ $message }}</div>
-                @enderror
-
-                <label for="psw"><b>Mật khẩu đăng nhập</b></label>
-                <input type="password" placeholder="Enter Password" name="password" required>
-                @error('password')
-                    <div>{{ $message }}</div>
-                @enderror
-
-                <button type="submit">Đăng Nhập</button>
-                <label>
+                <div class="form-group">
+                    <label for="psw">Mật khẩu</label>
+                    <input type="password" placeholder="Enter Password" class="form-control" name="password" required>
+                    @error('password')
+                        <div class="text-danger">{{ $message }}</div>
+                    @enderror
+                </div>
+                <div>
                     <input type="checkbox" name="remember"> Lưu tài khoản
-                </label>
+                </div>
+                <button type="submit" class="btn bg-orange text-white w-100 my-1">ĐĂNG NHẬP</button>
+                <div class="pt-1">Quên <a href="#">Mật Khẩu?</a> </div>
+                <div class="d-flex align-items-center justify-content-between py-1">
+                    <div class="lines"></div>
+                    <span class="text-lines">Hoặc</span>
+                    <div class="lines"></div>
+                </div>
+                
+                <button type="button" class="btn bg-white border w-100 d-flex align-items-center justify-content-center">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/53/Google_%22G%22_Logo.svg/2008px-Google_%22G%22_Logo.svg.png" width="20" height="20" alt="">
+                    &nbsp;Google
+                </button>
+                
+                <div class="text-center pt-2">Bạn chưa có tài khoản <a
+                    href="{{ route('register') }}">Đăng ký ngay!</a></div>
+            </form>
             </div>
-
-            <div class="container" style="background-color:#f1f1f1">
-                <button type="button" class="cancelbtn">Bỏ qua</button>
-                <span class="psw">Quên <a href="#">Mật Khẩu?</a> <br> Bạn chưa có tài khoản <a href="{{ route('register') }}">Đăng ký ngay!</a></span>
-            </div>
-            <a href="#">Mật Khẩu?</a>
-        </form>
-
+        </div>
     </div>
 </body>
 <script>
@@ -168,4 +142,5 @@
         @endif
     });
 </script>
+
 </html>
