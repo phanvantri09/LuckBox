@@ -6,11 +6,11 @@
         <!-- SlideShow -->
         <div id="demo" class="carousel slide container-lg px-0 my-3" data-ride="carousel">
             <!-- Indicators -->
-            @if (empty($imageSlide))
+            {{-- @if (empty($imageSlide))
             <marquee><h1>Hiện tại chưa có sự kiện nào mở</h1></marquee>
-            @else
+            @else --}}
             <ul class="carousel-indicators">
-                
+
                 @foreach ($imageSlide as $key => $slide)
                     <li data-target="#demo" data-slide-to="{{$key}}" class="{{$key == 0 ? "active" : ''}}"></li>
                 @endforeach
@@ -31,8 +31,8 @@
             <a class="carousel-control-next" href="#demo" data-slide="next">
                 <span class="carousel-control-next-icon"></span>
             </a>
-            @endif
-            
+            {{-- @endif --}}
+
         </div>
         <!-- End SlideShow -->
         <div class="container-lg bg-warning py-2">
@@ -43,11 +43,11 @@
                         <form action="{{ route('addToCart') }}" method="post" enctype="multipart/form-data"
                             class="col-sm-6 d-flex flex-column align-items-center justify-content-center">
                             @csrf
-                            <a href="thongtinbox.html"
+                            <a href="{{ route('boxInfo', ['id'=>$cachebox->id]) }}"
                                 class="d-flex flex-column align-items-center w-100 text-decoration-none">
                                 <img src="https://vn-live-01.slatic.net/p/dbf45cda7d56f7641227a80a5957efdf.jpg"
                                     width="60%" height="auto" />
-                                <h4 class="mt-1 text-danger">{{ $event->title }}</h4>
+                                <h4 class="mt-1 text-danger">{{ $cachebox->title ?? null }}</h4>
                             </a>
                             <div id="countdown" class="bg-danger text-white px-1"></div>
                             <div class="input-group py-2">
@@ -65,7 +65,7 @@
                                 <input type="hidden" name="id_box_item" value="{{ $cacheBoxItem->id ?? null }}">
                                 <input type="hidden" name="id_box" value="{{ $cachebox->id ?? null }}">
 
-                                <input type="number" id="quantity" name="amount"
+                                <input type="number" id="quantity" name="amount" readonly
                                     class="form-control input-number text-center" value="1" min="1"
                                     max="100" title="Phải là số nguyên và mọi người chỉ được mua nhiều nhất 100 họp."
                                     required />
@@ -84,6 +84,14 @@
                                 <h4 class="mb-0 text-danger">
                                     {{ isset($cachebox->price) ? number_format($cachebox->price) : null }} VNĐ</h4>
                             </div>
+                            @if ($cacheBoxItem->amount <= 0)
+                            <div class="text-decoration-none">
+                                <div type="submit" class="btn bg-orange font-weight-bold text-white btn-block btn-lg"
+                                    disabled>
+                                    Hết hàng
+                                </div>
+                            </div>
+                            @else
                             @if (!empty($timeEventNotInCase))
                                 <div class="text-decoration-none">
                                     <div type="submit" class="btn bg-orange font-weight-bold text-white btn-block btn-lg"
@@ -93,12 +101,12 @@
                                 </div>
                             @elseIf($timeEventNotInCase == 1000)
                                 <div class="text-decoration-none">
-                                    <div 
+                                    <div
                                         class="btn bg-orange font-weight-bold text-white btn-block btn-lg ">
                                         Chưa có sự kiện
                                     </div>
                                 </div>
-                            @else 
+                            @else
                             <div class="text-decoration-none">
                                 <button type="submit"
                                     class="btn bg-orange font-weight-bold text-white btn-block btn-lg ">
@@ -106,23 +114,26 @@
                                 </button>
                             </div>
                             @endif
+                            @endif
+
 
                         </form>
                         <div class="col-sm-5 border border-right-0 font-weight-bold m-2">
                             <h3 class="text-danger text-center">LƯU Ý</h3>
                             <div class="text-right font-weight-normal">Tổng bán:
-                                {{ isset($cacheBoxItem->amount) ? number_format($cacheBoxItem->amount) : null }}</div>
+                                {{$countSale}}
+                                </div>
                             <div class="rank-bar">
-                                <div class="rank-progress" style="width: 70%;"></div>
+                                <div class="rank-progress" style="width: {{($countSale/($cacheBoxItem->amount + $countSale))*100}}%;"></div>
                             </div>
-                            <div class="text-left font-weight-normal">Còn lại: 130</div>
+                            <div class="text-left font-weight-normal">Còn lại: {{$cacheBoxItem->amount}}</div>
                             <p>- Mở bán vào khung giờ 12h00 và 22h00 hằng ngày</p>
-                            <p>- Số lượng: 50.000 hộp/phiên bản</p>
+                            {{-- <p>- Số lượng: 50.000 hộp/phiên bản</p> --}}
                             <p>
                                 - Với tiêu chí người đến trước bán trước đến khi hết hộp sẽ đóng
                                 phiên
                             </p>
-                            <p>- Mỗi khách hàng chỉ được mua tối đa 100 hộp/phiên bản</p>
+                            <p>- Mỗi khách hàng chỉ được mua tối đa 100 hộp/phiên bán</p>
                             <p>
                                 - Quý khách có thể mở thưởng hoặc bán lại trên Maket ngay sau
                                 khi mua hộp
@@ -145,7 +156,7 @@
                 @else
                 @foreach ($products as $product)
                 <div class="col-md-6 col-6 py-2">
-                    <a href="#" class="mx-1 d-md-flex bg-white product-card rounded">
+                    <a href="{{ route('productDetails', ['id'=>$product->id]) }}" class="mx-1 d-md-flex bg-white product-card rounded">
                         <div class="col-md-6 pb-3 px-md-0 px-1 text-center">
                             <p class="font-weight-bold">
                                 {{$product->title}}
@@ -161,7 +172,7 @@
                 </div>
                 @endforeach
                 @endif
-                
+
 
             </div>
         </div>
@@ -220,4 +231,5 @@
             }
         });
     </script>
+    <script src="./js/quantity.js"></script>
 @endsection

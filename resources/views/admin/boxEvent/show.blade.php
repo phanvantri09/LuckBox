@@ -85,17 +85,17 @@
                                             <select class="status-select form-control" name="status">
                                                 @if ($item[0]->status == 1)
                                                     <option selected value="1">Đợi lên sàn để bán</option>
-                                                    <option value="2">Hết hạng rồi</option>
-                                                    <option value="3">User đã mở box</option>
+                                                    <option value="2">Đang bán</option>
+                                                    <option value="3">Hết hạn</option>
                                                 @else
                                                     @if ($item[0]->status == 2)
                                                         <option value="1">Đợi lên sàn để bán</option>
-                                                        <option selected value="2">Hết hạng rồi</option>
-                                                        <option value="3">User đã mở box</option>
+                                                        <option selected value="2">Đang bán</option>
+                                                        <option value="3">Hết hạn</option>
                                                     @else
                                                         <option value="1">Đợi lên sàn để bán</option>
-                                                        <option value="2">Hết hạng rồi</option>
-                                                        <option selected value="3">User đã mở box</option>
+                                                        <option value="2">Đang bán</option>
+                                                        <option selected value="3">Hết hạn</option>
                                                     @endif
                                                 @endif
 

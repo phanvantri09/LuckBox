@@ -11,7 +11,7 @@ use App\Repositories\BoxProductRepositoryInterface;
 use App\Repositories\BoxRepositoryInterface;
 use App\Repositories\ProductRepositoryInterface;
 use App\Repositories\ImageRepositoryInterface;
-
+use App\Repositories\CartRepositoryInterface;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 
@@ -25,6 +25,7 @@ class HomeController extends Controller
     protected $boxRepository;
     protected $productRepository;
     protected $imageRepository;
+    protected $cartRepository;
 
     public function __construct(UserRepositoryInterface $userRepository,
     BoxEventRepositoryInterface $boxEventRepository,
@@ -32,7 +33,8 @@ class HomeController extends Controller
     BoxItemRepositoryInterface $boxItemRepository,
     BoxProductRepositoryInterface $boxProductRepository,
     ProductRepositoryInterface $productRepository,
-    ImageRepositoryInterface $imageRepository
+    ImageRepositoryInterface $imageRepository,
+    CartRepositoryInterface $cartRepository
     )
     {
         $this->userRepository = $userRepository;
@@ -42,6 +44,7 @@ class HomeController extends Controller
         $this->boxProductRepository = $boxProductRepository;
         $this->productRepository = $productRepository;
         $this->imageRepository = $imageRepository;
+        $this->cartRepository = $cartRepository;
     }
     /**
      * Display a listing of the resource.
@@ -95,14 +98,19 @@ class HomeController extends Controller
             }
             $cachebox = empty($cacheBoxItem) ? null :  $cacheBoxItem->box()->first();
             $cacheProduct = empty($cachebox) ? null : $cachebox->boxProducts()->get();
+
             if (empty($cacheProduct)) {
+
                 $products = null;
                 $imageSlide = null;
             } else {
+
                 $products = $this->productRepository->getByArrayID($cacheProduct->pluck('id')->toArray());
-                $imageSlide = $this->productRepository->getImageSlide($cacheProduct->pluck('id')->toArray())->pluck('link_image');
+                $imageSlide = $this->productRepository->getImageSlide($products->pluck('id')->toArray())->pluck('link_image');
+                // dd($imageSlide);
             }
-            
+            $countSale = $this->cartRepository->getamountboxItemcartDone($event->id, $cacheBoxItem->id);
+            // dd($countSale);
         }
         if (Auth::user()) {
             $userId = Auth::user()->id;
@@ -120,7 +128,7 @@ class HomeController extends Controller
         return view('user.page.home', compact(['event','cacheBoxItem', 'cachebox',
                                                'cacheProduct','time','timeEventInCase',
                                                'timeEventNotInCase','products','imageSlide',
-                                               'boxItem', 'sharedLink']));
+                                               'boxItem', 'sharedLink', 'countSale']));
     }
 
     public function chatbox()

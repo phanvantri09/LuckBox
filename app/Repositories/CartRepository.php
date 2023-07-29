@@ -28,7 +28,12 @@ class CartRepository implements CartRepositoryInterface
     {
         return Cart::create($data);
     }
-
+    public function changeStatus($status, $id)
+    {
+        $user = Cart::findOrFail($id);
+        $user->status = $status;
+        $user->save();
+    }
     public function update(array $data, $id)
     {
         $user = Cart::findOrFail($id);
@@ -93,7 +98,7 @@ class CartRepository implements CartRepositoryInterface
         ->where('status', $status)->first();
     }
     public function showAllData($id_cart){
-        return DB::table('carts')->select('carts.*', 'box.title', 'box.link_image', 'box.price', 'bills.total')
+        return DB::table('carts')->select('carts.*', 'box.title', 'box.link_image', 'box.price as box_price', 'bills.total')
         ->leftJoin('box', 'carts.id_box', '=', 'box.id')->leftJoin('bills', 'carts.id', '=', 'bills.id_cart')->where('carts.id', $id_cart)->first();
     }
     public function getAllByStatusmartket(){
@@ -103,6 +108,9 @@ class CartRepository implements CartRepositoryInterface
         ->where('carts.amount', '>', 0)
         ->where('carts.status', 10)
         ->get();
+    }
+    public function getamountboxItemcartDone($id_event, $id_box_item){
+        return Cart::where('id_box_event', $id_event)->where('id_box_item',$id_box_item)->whereNotIn('status', [1, 6])->sum('amount');
     }
 
 }

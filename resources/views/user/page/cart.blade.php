@@ -26,24 +26,24 @@
                                 </a>
                             </div>
                             <div class="col-lg-2">
-                                <h5>Đơn giá: <br>{{ number_format($cart->price) }} VNĐ</h5>
+                                <h5>Đơn giá: <br>{{ number_format($cart->price_cart) }} VNĐ</h5>
                             </div>
                             <div class="col-lg-2 input-group py-2">
                                 @if (empty($cart->id_cart_old))
-                                <span class="input-group-btn">
-                                    <button type="button" class="quantity-left-minus btn btn-danger btn-number"
+                                <a href="{{ route('cartUpdateAmount', ['id_cart'=>$cart->id, 'type'=>1]) }}" class="input-group-btn">
+                                    <button type="button" class=" btn btn-danger btn-number"
                                         data-type="minus" data-field="">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
                                             fill="currentColor" class="bi bi-dash" viewBox="0 0 16 16">
                                             <path d="M4 8a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7A.5.5 0 0 1 4 8z" />
                                         </svg>
                                     </button>
-                                </span>
+                                </a>
                                 <input type="number" id="quantity" name="quantity"
                                     class="form-control input-number text-center" disabled value="{{ $cart->amount }}" min="1"
                                     max="100" />
-                                <span class="input-group-btn">
-                                    <button type="button" class="quantity-right-plus btn btn-success btn-number"
+                                <a class="input-group-btn" href="{{ route('cartUpdateAmount', ['id_cart'=>$cart->id, 'type'=>2]) }}">
+                                    <button type="button" class=" btn btn-success btn-number"
                                         data-type="plus" data-field="">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
                                             fill="currentColor" class="bi bi-plus" viewBox="0 0 16 16">
@@ -51,7 +51,7 @@
                                                 d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z" />
                                         </svg>
                                     </button>
-                                </span>
+                                </a>
                                 @else
                                     <h5>Số lượng: {{ $cart->amount }} </h5>
                                 @endif
@@ -59,7 +59,7 @@
                             </div>
                             <div class="col-lg-2">
                                 <h5>Tổng tiền: <br><span
-                                        class="font-weight-bold text-danger">{{ number_format($cart->amount * $cart->price) }}
+                                        class="font-weight-bold text-danger">{{ number_format($cart->amount * $cart->price_cart) }}
                                         VNĐ</span></h5>
                             </div>
                             <a href="{{ route('checkout', ['id_cart' => $cart->id]) }}" class="w-100 col-lg-1 px-lg-0">
@@ -83,20 +83,20 @@
                                 </a>
                                 <p class="mb-0">Đơn giá: {{ number_format($cart->price) }} VNĐ</p>
                                 <div class="col-md-6 col-sm-7 col-10 input-group py-2 px-0">
-                                    <span class="input-group-btn">
-                                        <button type="button" class="quantity-left-minus btn btn-danger btn-number"
+                                    <a href="{{ route('cartUpdateAmount', ['id_cart'=>$cart->id, 'type'=>1]) }}" class="input-group-btn">
+                                        <button type="button" class=" btn btn-danger btn-number"
                                             data-type="minus" data-field="">
                                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
                                                 fill="currentColor" class="bi bi-dash" viewBox="0 0 16 16">
                                                 <path d="M4 8a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7A.5.5 0 0 1 4 8z" />
                                             </svg>
                                         </button>
-                                    </span>
-                                    <input type="number" id="quantity" name="quantity"
+                                    </a>
+                                    <input type="number" id="quantity" name="quantity" disabled
                                         class="form-control input-number text-center" value="{{ $cart->amount }}"
                                         min="1" max="100" />
-                                    <span class="input-group-btn">
-                                        <button type="button" class="quantity-right-plus btn btn-success btn-number"
+                                    <a href="{{ route('cartUpdateAmount', ['id_cart'=>$cart->id, 'type'=>2]) }}" class="input-group-btn">
+                                        <button type="button" class="btn btn-success btn-number"
                                             data-type="plus" data-field="">
                                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
                                                 fill="currentColor" class="bi bi-plus" viewBox="0 0 16 16">
@@ -104,7 +104,7 @@
                                                     d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z" />
                                             </svg>
                                         </button>
-                                    </span>
+                                    </a>
                                 </div>
                                 <p class="mb-0">Tổng tiền: <span
                                         class="text-danger">{{ number_format($cart->amount * $cart->price) }} VNĐ</span>

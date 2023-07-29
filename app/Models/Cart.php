@@ -19,6 +19,8 @@ class Cart extends Model
         'id_box_item',
         'status',
         'amount',
+        'price_cart',
+        'order_number',
     ];
     public function user()
     {

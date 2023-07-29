@@ -44,9 +44,28 @@ class CartController extends Controller
         $this->folowRepository = $folowRepository;
         $this->userRepository = $userRepository;
     }
+    public function cartUpdateAmount($id_cart, $type){
+
+        $data = $this->cartRepository->show($id_cart);
+
+        if ($type == 1) {
+            if ($data->amount <= 1) {
+                $this->cartRepository->delete($id_cart);
+            } else {
+                $data->amount = $data->amount - 1;
+            }
+        } else {
+            $data->amount = $data->amount + 1;
+        }
+        $data->save();
+        return redirect()->back()->with('success', "Thành công");
+    }
+
     public function addToCart(Request $request){
         $user = Auth::user();
-        $request->merge(['status' => 1, 'id_user_create' => $user->id, 'id_admin_update'=> $user->id]);
+        // dd($request->all());
+        $box = $this->boxRepository->show($request->id_box);
+        $request->merge(['status' => 1, 'id_user_create' => $user->id, 'id_admin_update'=> $user->id, 'price_cart'=>$box->price, 'order_number'=>1]);
         // get box - item  để kiểm tra số lượng
         if ($this->cartRepository->findAndUpdate($request->all())) {
             return redirect()->back()->with('success', "Thêm vào giỏ thành công");
@@ -54,6 +73,9 @@ class CartController extends Controller
         $boxItem = $this->boxItemRepository->show($request->id_box_item);
         //check còn đủ 19 thì add, ngược lại thì thông báo là k thể đặt nhiều hơn
         $numberAmountOke = $boxItem->amount - $this->cartRepository->getSumAllByStatusNoCheckout();
+        if ($boxItem->amount <= 0) {
+            return redirect()->back()->with('error', "Hết hàng");
+        }
         if ( $numberAmountOke > $request->amount) {
             // oke
             $this->cartRepository->create($request->all());
@@ -84,6 +106,10 @@ class CartController extends Controller
             'id_box_item' => $cartOld->id_box_item ,
             'status' => 1 ,
             'amount' => 1,
+            // 'price_cart' => $cartOld->price_cart ,
+            // 'order_number' => $cartOld->order_number,
+            'price_cart' => $cartOld->price_cart + ( 6 *($cartOld->price_cart / 100)),
+            'order_number' => $cartOld->order_number + 1,
         ];
         $this->cartRepository->create($data);
         return redirect()->route('cart')->with('success',"Thêm vào giỏ thành công");
@@ -107,7 +133,7 @@ class CartController extends Controller
         } else {
             $dataCart = $this->cartRepository->getAllDataByIDUserAndStatus($user->id, 1);
         }
-        if ($user->balance < ($dataCart->amount + $dataCart->price)){
+        if ($user->balance < ($dataCart->amount * $dataCart->price)){
             return redirect()->route('infoCardPay')->with('error', 'Số tài khoản trong ví không đủ để thực hiện, vui lòng nạp thêm tiền để thực hiện giao dịch này.');
         }
         $userInfo = $user->UserInfo()->first();
@@ -308,7 +334,6 @@ class CartController extends Controller
         return view('user.page.box.purchaseOrder', compact(['carts']));
     }
     public function treeData($id){
-        // dd(123);
         $dataCart = $this->cartRepository->show($id);
         dd($dataCart);
         // $this->folowRepository
@@ -316,16 +341,40 @@ class CartController extends Controller
     }
     public function sendToMarket($id_cart){
         $dataCart =  $this->cartRepository->showAllData($id_cart);
-        // dd($dataCart);
         return view('user.page.resell', compact(['dataCart']));
-        // return redirect()->route('')->with('Đăng bán thành công');
 
     }
-    public function sendToMarketPost($id_cart){
+    public function sendToMarketPost(Request $request){
         $user = Auth::user();
+        $cart = $this->cartRepository->show($request->id_cart);
+        if ($cart->amount == $request->amount) {
+            $this->cartRepository->changeStatus(10, $request->id_cart);
+            return redirect()->route('home')->with('success', 'Đăng bán thành công nhé');
+        }
+        if ($cart->amount < $request->amount) {
+            return redirect()->back()->with('error', "Số lượng yêu cầu lớn hơn số lượng hiện có");
+        }
         DB::beginTransaction();
         try {
-            $this->cartRepository->update(['status'=>10], $id_cart);
+
+            $amountUpdate = $cart->amount - $request->amount;
+            $this->cartRepository->update(['amount'=>$amountUpdate], $cart->id);
+
+            $data = [
+                'id_user_create' => $user->id,
+                'id_admin_update' => null,
+                'id_box_event' => $cart->id_box_event ,
+                'id_folow' => $cart->id_folow , // sau khi checkout mới cập nhật cái này
+                'id_cart_old' => $cart->id ,
+                'id_box' => $cart->id_box,
+                'id_box_item' => $cart->id_box_item ,
+                'status' => 10 ,
+                'amount' => $request->amount,
+                'price_cart' => $cart->price_cart ,
+                'order_number' => $cart->order_number,
+            ];
+            $this->cartRepository->create($data);
+
             $phiguiban = 100000;
             $user->balance = $user->balance - $phiguiban;
             $user->save();
@@ -343,7 +392,6 @@ class CartController extends Controller
             DB::commit();
         } catch (\Exception $e){
             report($e);
-            dd($e);
             DB::rollBack();
             return redirect()->route('home')->with('error', 'Đã xảy ra lỗi');
         }

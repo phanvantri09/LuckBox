@@ -27,7 +27,7 @@
                                 </svg>
                             </button>
                         </span>
-                        <input type="number" id="quantity" name="quantity" class="form-control input-number text-center"
+                        <input type="number" id="quantity" name="quantity" class="form-control input-number text-center" readonly
                             value="{{number_format($data->amount) }}" min="2" max="100" />
                         <span class="input-group-btn">
                             <button type="button" class="quantity-right-plus btn btn-warning btn-number" data-type="plus"
@@ -77,7 +77,7 @@
                 <!-- gift -->
                 @foreach ($product->boxProducts as $key => $item)
                 <div class="col-md-6 col-6 py-2">
-                  <a href="{{ route('productDetails') }}" class="text-decoration-none text-dark">
+                  <a href="{{ route('productDetails', ['id'=>$item->id]) }}" class="text-decoration-none text-dark">
                     <div class="mx-1 d-md-flex bg-white product-card rounded">
                         <div class="col-md-6 pb-3 px-md-0 px-1 text-center">
                             <p class="font-weight-bold">
@@ -101,4 +101,5 @@
 @endsection
 @section('scripts')
 <script src="./js/countdown.js"></script>
+<script src="./js/quantity.js"></script>
 @endsection

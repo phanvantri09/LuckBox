@@ -23,7 +23,10 @@
                         </a>
                     </div>
                     <div class="col-lg-5">
-                        <h5>Đơn giá: <span class="font-weight-bold text-danger">{{number_format(\App\Helpers\ConstCommon::priceUp(count(explode(",", $dataCart->id_user_folow)), $dataCart->price))}} VNĐ</span></h5>
+                        @php
+                            $chenhlech = ($dataCart->price_cart * 6) / 100 + $dataCart->price_cart;
+                        @endphp
+                        <h5>Đơn giá: <span class="font-weight-bold text-danger">{{number_format($chenhlech)}} VNĐ</span></h5>
                     </div>
                     <a href="{{ route('addToCartOld', ['id_cart_old'=>$dataCart->id]) }}" class="w-100 col-lg-2 px-lg-0">
                         <button class="btn bg-orange text-white">Mua ngay</button>

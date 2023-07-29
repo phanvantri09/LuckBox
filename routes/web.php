@@ -17,12 +17,6 @@ use Illuminate\Support\Facades\Auth;
 
 // trang chủ ở đây
 Route::group(['prefix' => '/'], function () {
-    Route::controller(MessagesController::class)->group(function () {
-        Route::post('/sendMessage','index');
-        Route::get('/listChat','getChat');
-        Route::get('/listChatAdmin/{id}','getChatAdmin');
-        Route::post('/sendMessageAdmin','sendMessageAdmin');
-    });
     Route::controller(HomeController::class)->group(function () {
         Route::get('/','index')->name('home');
         Route::get('/chatbox','chatbox');
@@ -38,43 +32,55 @@ Route::group(['prefix' => '/'], function () {
         Route::get('/shared/{token}','updateShare');
         Route::post('/register/{id}', 'registerShare')->name('registerShare');
     });
-    Route::controller(UserInfoController::class)->group(function () {
-        Route::get('/thong-tin-ca-nhan','create')->name('updateInfo');
-        Route::post('/thong-tin-ca-nhan','createPost')->name('updateInfoPost');
-
-    });
 
     Route::controller(PageController::class)->group(function () {
         Route::get('/thong-tin-box/{id}','boxInfo')->name('boxInfo');
         Route::get('/danh-sach-box/{id}','boxList')->name('boxList');
-        
-        Route::get('/gio-hang','cart')->name('cart');
-        // Route::get('/thanh-toan','chekout')->name('chekout');
-        Route::get('/hop-mu','purchaseOrder')->name('purchaseOrder');
         Route::get('/market','market')->name('market');
-        // Route::get('/resell','resell')->name('resell');
-
-        Route::get('/nap-tien-vao-vi','infoCardPay')->name('infoCardPay');
-        Route::post('/nap-tien-vao-vi','infoCardPayPost')->name('infoCardPay');
-
-        Route::get('/vi-cua-ban','walet')->name('walet');
-        Route::get('/them-tai-khoan-ngan-hang','createCard')->name('createCard');
-        Route::post('/them-tai-khoan-ngan-hang','createCardPost')->name('createCard');
-
-        Route::get('/yeu-cau-rut-tien','cashOut')->name('cashOut');
-        Route::post('/yeu-cau-rut-tien','cashOutPost')->name('cashOut');
-
-        Route::get('/change-status/{id}','changeStatus')->name('changeStatus');
-
-        Route::get('/lich-su-giao-dich','historyTransaction')->name('historyTransaction');
         Route::get('/chi-tiet-san-pham/{id}','productDetails')->name('productDetails');
-        Route::get('/trang-thai-don-hang','statusOrder')->name('statusOrder');
-        Route::get('/mo-box','openBox')->name('openBox');
+
     });
     Route::middleware(['CheckLoginUser'])->group(function () {
+
+        Route::controller(MessagesController::class)->group(function () {
+            Route::post('/sendMessage','index');
+            Route::get('/listChat','getChat');
+            Route::get('/listChatAdmin/{id}','getChatAdmin');
+            Route::post('/sendMessageAdmin','sendMessageAdmin');
+        });
+        Route::controller(UserInfoController::class)->group(function () {
+            Route::get('/thong-tin-ca-nhan','create')->name('updateInfo');
+            Route::post('/thong-tin-ca-nhan','createPost')->name('updateInfoPost');
+
+        });
+        Route::controller(PageController::class)->group(function () {
+
+            Route::get('/gio-hang','cart')->name('cart');
+            // Route::get('/thanh-toan','chekout')->name('chekout');
+            Route::get('/hop-mu','purchaseOrder')->name('purchaseOrder');
+
+            // Route::get('/resell','resell')->name('resell');
+
+            Route::get('/nap-tien-vao-vi','infoCardPay')->name('infoCardPay');
+            Route::post('/nap-tien-vao-vi','infoCardPayPost')->name('infoCardPay');
+
+            Route::get('/vi-cua-ban','walet')->name('walet');
+            Route::get('/them-tai-khoan-ngan-hang','createCard')->name('createCard');
+            Route::post('/them-tai-khoan-ngan-hang','createCardPost')->name('createCard');
+
+            Route::get('/yeu-cau-rut-tien','cashOut')->name('cashOut');
+            Route::post('/yeu-cau-rut-tien','cashOutPost')->name('cashOut');
+
+            Route::get('/change-status/{id}','changeStatus')->name('changeStatus');
+
+            Route::get('/lich-su-giao-dich','historyTransaction')->name('historyTransaction');
+            Route::get('/trang-thai-don-hang','statusOrder')->name('statusOrder');
+            Route::get('/mo-box','openBox')->name('openBox');
+        });
+
         Route::controller(CartController::class)->group(function () {
             Route::post('/them-vao-gio-hang','addToCart')->name('addToCart');
-
+            Route::get('/cong-tru-gio-hang/{id_cart}/{type}','cartUpdateAmount')->name('cartUpdateAmount');
             Route::get('/them-vao-gio-hang-co-id/{id_cart_old}','addToCartOld')->name('addToCartOld');
             Route::get('/gio-hang','cart')->name('cart');
             Route::get('/thanh-toán','checkout')->name('checkout');
@@ -85,7 +91,7 @@ Route::group(['prefix' => '/'], function () {
             Route::get('/thong-tin-du-lieu-box/{id}','treeData')->name('treeData');
             Route::get('/mo-hop/{id_cart}','openBox')->name('openBox');
             Route::get('/gui-ban/{id_cart}','sendToMarket')->name('sendToMarket');
-            Route::get('/xac-nhan-gui-ban/{id_cart}','sendToMarketPost')->name('sendToMarketPost');
+            Route::post('/xac-nhan-gui-ban','sendToMarketPost')->name('sendToMarketPost');
         });
     });
 

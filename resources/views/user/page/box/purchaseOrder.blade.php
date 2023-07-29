@@ -23,9 +23,9 @@
                             </a>
                         </div>
                         <div class="col-lg-2">
-                            <h6>Giá mua: <br> {{ number_format($dataCart->price) }} VNĐ/hộp</h6>
+                            <h6>Giá mua: <br> {{ number_format($dataCart->price_cart) }} VNĐ/hộp</h6>
                             <h5>Tổng tiền: <br><span class="font-weight-bold text-danger">
-                                    {{ $dataCart->amount * $dataCart->price }} VNĐ</span></h5>
+                                    {{ number_format($dataCart->amount * $dataCart->price_cart) }} VNĐ</span></h5>
                         </div>
                         <div class="col-lg-2">
                             <span>Số lượng: {{ $dataCart->amount }}</span>
@@ -37,7 +37,7 @@
                         <a href="{{ route('treeData', ['id' => $dataCart->id]) }}" class="w-100 col-lg-2 px-lg-0">
                             <button class="btn bg-orange text-white">Xem doanh thu box</button>
                         </a>
-                        @else 
+                        @else
                         <a href="{{ route('openBox', ['id_cart' => $dataCart->id]) }}" class="w-100 col-lg-2 px-lg-0">
                             <button class="btn bg-success text-white">Mở box</button>
                         </a>
@@ -45,7 +45,7 @@
                             <button class="btn bg-orange text-white">Gửi bán</button>
                         </a>
                         @endif
-                        
+
                     </div>
                 @endforeach
 

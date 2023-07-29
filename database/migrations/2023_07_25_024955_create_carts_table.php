@@ -28,6 +28,8 @@ class CreateCartsTable extends Migration
             // 3 đã mở họp,
             // 4 admin duyệt đơn để giao hàng, 5 đã giao thành công. 6 bị từ chối
             $table->bigInteger('amount');
+            $table->bigInteger('price_cart')->nullable();
+            $table->bigInteger('order_number')->nullable();
             $table->timestamps();
         });
     }
