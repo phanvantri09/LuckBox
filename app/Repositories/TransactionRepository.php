@@ -1,11 +1,15 @@
 <?php
 namespace App\Repositories;
 
+use App\Mail\SendMailNapTien;
+use App\Mail\SendMailRutTien;
 use App\Models\Transaction;
 use App\Models\User;
 use App\Models\Bill;
 use App\Models\Cart;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Mail;
+
 class TransactionRepository implements TransactionRepositoryInterface
 {
     public function create(array $data)
@@ -23,6 +27,8 @@ class TransactionRepository implements TransactionRepositoryInterface
         $bill = Bill::where('id_transaction', $trans->id)->first();
         $cart = Cart::find($bill->id_cart);
         $user = User::find($idUser);
+        $infoUser = $user->UserInfo;
+        
         DB::beginTransaction();
         try {
             if($status == 1){
@@ -37,15 +43,17 @@ class TransactionRepository implements TransactionRepositoryInterface
                     if($trans->type == 1 || $trans->type == 3 || $trans->type == 4){
                         $user->balance = $user->balance - $trans->total;
                         $user->save();
+                        Mail::to($user->email)->send(new SendMailRutTien($infoUser, $trans));
                     }else{
                         $user->balance = $user->balance + $trans->total;
                         $user->save();
+                        Mail::to($user->email)->send(new SendMailNapTien($infoUser, $trans));
                     }
                 }else{
                     $trans->update(['status' => 3]);
                     $bill->update(['status' => 6]);
                     $cart->update(['status' => 6]);
-                }
+                }   
             }
             DB::commit();
         } catch (\Exception $e){

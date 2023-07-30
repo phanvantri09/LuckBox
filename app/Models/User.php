@@ -47,7 +47,7 @@ class User extends Authenticatable
     ];
     protected $cascadeDeletes = true;
     public function UserInfo(){
-        return $this->hasOne(UserInfo::class, 'id');
+        return $this->hasOne(UserInfo::class, 'id_user');
     }
     public function carts()
     {
