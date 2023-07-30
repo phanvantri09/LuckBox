@@ -19,6 +19,7 @@ use App\Http\Requests\Card\CreateRequestCard;
 use App\Http\Requests\TransactionRequest;
 use App\Repositories\PageRepositoryInterface;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class PageController extends Controller
 {
@@ -179,8 +180,61 @@ class PageController extends Controller
     {
         return view('user.page.statusOrder');
     }
-    public function openBox()
+    public function openBox($id_cart)
     {
-        return view('user.page.box.open');
+        $user = Auth::user();
+        $cart = $this->cartRepository->show($id_cart);
+        if ($cart->status == 2 || $cart->status == 11) {
+            return view('user.page.box.open', compact(['cart']));
+        } else {
+            return redirect()->route('home')->with('error',"Họp này không thể mở");
+        }
+    }
+    public function openBoxPost($id_cart){
+        $user = Auth::user();
+        DB::beginTransaction();
+        try {
+            $cart = $this->cartRepository->show($id_cart);
+            if ($cart->status == 2 || $cart->status == 11) {
+
+                if ($cart->amount > 1 ) {
+                    // nếu nhỏ hơn thì tạo cart mới để giao hàng vì mỗi lần chỉ mở 1 họp
+                    $data = [
+                        'id_user_create' => $user->id,
+                        'id_admin_update' => null,
+                        'id_box_event' => $cart->id_box_event ,
+                        'id_folow' => $cart->id_folow , // sau khi checkout mới cập nhật cái này
+                        'id_cart_old' => $cart->id ,
+                        'id_box' => $cart->id_box,
+                        'id_box_item' => $cart->id_box_item ,
+                        'status' => 3 ,
+                        'amount' => 1,
+                        'price_cart' => $cart->price_cart ,
+                        'order_number' => $cart->order_number,
+                    ];
+                    $cartNew = $this->cartRepository->create($data);
+                    $this->cartRepository->update(['amount'=> $cart->amount - 1], $cart->id);
+                } else {
+                    // nếu = 1 thì chuyển trạng thía thôi
+                    $this->cartRepository->update(['status'=> 3], $cart->id);
+                }
+            } else {
+                return response()->json([
+                            'success' => false,
+                            'message' => 'CSRF token mismatch. Please refresh the page and try again.'
+                        ], 400);
+            }
+            DB::commit();
+        } catch (\Exception $e){
+            report($e);
+            DB::rollBack();
+            // dd($e);
+            return response()->json([
+                        'success' => false,
+                        'message' => 'CSRF token mismatch. Please refresh the page and try again.'
+                    ], 400);
+        }
+        // Chuyển trạng thái xác nhận đơn hàng là đã mở họp
+        return response()->json(['success' => true]);
     }
 }

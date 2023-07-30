@@ -64,6 +64,13 @@ class CartRepository implements CartRepositoryInterface
             return true;
         }
     }
+    public function getAllDataByIDUserAndArrayStatus($id_user, array $status){
+        return DB::table('carts')->select('carts.*', 'box.title', 'box.link_image', 'box.price')
+                ->leftJoin('box', 'carts.id_box', '=', 'box.id')
+                ->where('carts.id_user_create','=', $id_user)
+                ->whereIn('status', $status)->get();
+    }
+
     public function getAllDataByIDUserAndStatus($id_user, $status)
     {
         if ($status == null && $id_user != null) {

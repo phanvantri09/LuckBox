@@ -25,6 +25,7 @@ class CreateCartsTable extends Migration
             $table->bigInteger('status')->default(1);
             //  1 vừa thêm vào và chưa thanh toán, 2 đã thanh toán chưa mở họp,
             // 10 đăng bán lại
+            // 11 f 30
             // 3 đã mở họp,
             // 4 admin duyệt đơn để giao hàng, 5 đã giao thành công. 6 bị từ chối
             $table->bigInteger('amount');

@@ -196,7 +196,7 @@
                         <img src="https://vn-live-01.slatic.net/p/dbf45cda7d56f7641227a80a5957efdf.jpg" width="100%"
                             height="auto" />
                     </div>
-                    <button class="btn_nav btn bg-orange open_box text-white mt-2 mb-5">Mở Box</button>
+                    <button id="openBox" class="btn_nav btn bg-orange open_box text-white mt-2 mb-5">Mở Box</button>
                 </div>
             </div>
         </div>
@@ -221,11 +221,11 @@
         });
 
         // on click show page after 1500ms
-        $('.open_box').click(function() {
-            setTimeout(function() {
-                $('.page_after_open_box').addClass('fadeIn');
-            }, 1500);
-        });
+        // $('.open_box').click(function() {
+        //     setTimeout(function() {
+        //         $('.page_after_open_box').addClass('fadeIn');
+        //     }, 1500);
+        // });
     </script>
     <script>
         // when animating on canvas, it is best to use requestAnimationFrame instead of setTimeout or setInterval
@@ -518,5 +518,31 @@
 
         // once the window loads, we are ready for some fireworks!
         window.onload = loop;
+        $('#openBox').click(function(event) {
+            var id_cart = '{{$cart->id}}';
+            $.ajax({
+                method: 'POST',
+                url: '{{ route("openBoxPost", ["id_cart"=>$cart->id]) }}',
+                headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+                // data: $(this).serialize(),
+                success: function(response) {
+                    setTimeout(function() {
+                        $('.page_after_open_box').addClass('fadeIn');
+                    }, 1500);
+                    toastr.options = {
+                        "closeButton": true,
+                        "progressBar": true
+                    }
+                    toastr.success("Mở box thảnh công");
+                },
+                error: function(response) {
+                    toastr.options = {
+                        "closeButton": true,
+                        "progressBar": true
+                    }
+                    toastr.warning("Mở box không thành công");
+                }
+            });
+        });
     </script>
 @endsection

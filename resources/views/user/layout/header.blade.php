@@ -68,6 +68,7 @@
 				<a class="dropdown-item text-white" href="{{ route('updateInfo') }}">Thông tin cá nhân</a>
 				<a class="dropdown-item text-white" href="{{ route('purchaseOrder') }}">Ví của bạn</a>
                 <a class="dropdown-item text-white" href="{{ route('purchaseOrder') }}">Họp mù</a>
+                <a class="dropdown-item text-white" href="{{ route('boxUserMarket') }}">Họp gửi bán</a>
                 <a class="dropdown-item text-white" href="{{ route('historyTransaction') }}">Lịch sử giao dịch</a>
                 <a class="dropdown-item text-white" href="{{ route('market') }}">Chợ</a>
 

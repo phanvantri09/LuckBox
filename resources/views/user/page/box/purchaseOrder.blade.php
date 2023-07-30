@@ -31,19 +31,24 @@
                             <span>Số lượng: {{ $dataCart->amount }}</span>
                         </div>
                         @if ($dataCart->status == 10)
-                        <a href="{{ route('openBox', ['id_cart' => $dataCart->id]) }}" class="w-100 col-lg-2 px-lg-0">
-                            <button class="btn bg-success text-white">Mở box</button>
-                        </a>
-                        <a href="{{ route('treeData', ['id' => $dataCart->id]) }}" class="w-100 col-lg-2 px-lg-0">
-                            <button class="btn bg-orange text-white">Xem doanh thu box</button>
-                        </a>
+                            <a href="{{ route('openBox', ['id_cart' => $dataCart->id]) }}" class="w-100 col-lg-2 px-lg-0">
+                                <button class="btn bg-success text-white">Mở box</button>
+                            </a>
+                            @if ($dataCart->status != 11)
+                                <a href="{{ route('treeData', ['id' => $dataCart->id]) }}" class="w-100 col-lg-2 px-lg-0">
+                                    <button class="btn bg-orange text-white">Xem doanh thu box</button>
+                                </a>
+                            @endif
                         @else
-                        <a href="{{ route('openBox', ['id_cart' => $dataCart->id]) }}" class="w-100 col-lg-2 px-lg-0">
-                            <button class="btn bg-success text-white">Mở box</button>
-                        </a>
-                        <a href="{{ route('sendToMarket', ['id_cart' => $dataCart->id]) }}" class="w-100 col-lg-2 px-lg-0">
-                            <button class="btn bg-orange text-white">Gửi bán</button>
-                        </a>
+                            <a href="{{ route('openBox', ['id_cart' => $dataCart->id]) }}" class="w-100 col-lg-2 px-lg-0">
+                                <button class="btn bg-success text-white">Mở box</button>
+                            </a>
+                            @if ($dataCart->status != 11)
+                                <a href="{{ route('sendToMarket', ['id_cart' => $dataCart->id]) }}"
+                                    class="w-100 col-lg-2 px-lg-0">
+                                    <button class="btn bg-orange text-white">Gửi bán</button>
+                                </a>
+                            @endif
                         @endif
 
                     </div>
@@ -69,12 +74,25 @@
                                     class="text-danger font-weight-bold">{{ $dataCart->amount * $dataCart->price }}
                                     VNĐ</span></p>
                             <div class="d-flex justify-content-between pt-1">
-                                <a href="{{ route('openBox', ['id_cart' => $dataCart->id]) }}">
-                                    <button class="btn bg-success text-white">Mở box</button>
-                                </a>
-                                <a href="{{ route('sendToMarket', ['id_cart' => $dataCart->id]) }}">
-                                    <button class="btn bg-orange text-white">Gửi bán</button>
-                                </a>
+                                @if ($dataCart->status == 10)
+                                    <a href="{{ route('openBox', ['id_cart' => $dataCart->id]) }}">
+                                        <button class="btn bg-success text-white">Mở box</button>
+                                    </a>
+                                    @if ($dataCart->status != 11)
+                                        <a href="{{ route('treeData', ['id' => $dataCart->id]) }}">
+                                            <button class="btn bg-orange text-white">Doanh thu</button>
+                                        </a>
+                                    @endif
+                                @else
+                                    <a href="{{ route('openBox', ['id_cart' => $dataCart->id]) }}">
+                                        <button class="btn bg-success text-white">Mở box</button>
+                                    </a>
+                                    @if ($dataCart->status != 11)
+                                        <a href="{{ route('sendToMarket', ['id_cart' => $dataCart->id]) }}">
+                                            <button class="btn bg-orange text-white">Gửi bán</button>
+                                        </a>
+                                    @endif
+                                @endif
                             </div>
                         </div>
                     </div>

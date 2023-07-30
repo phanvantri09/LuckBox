@@ -75,7 +75,8 @@ Route::group(['prefix' => '/'], function () {
 
             Route::get('/lich-su-giao-dich','historyTransaction')->name('historyTransaction');
             Route::get('/trang-thai-don-hang','statusOrder')->name('statusOrder');
-            Route::get('/mo-box','openBox')->name('openBox');
+            Route::get('/mo-box/{id_cart}','openBox')->name('openBox');
+            Route::post('/mo-box/{id_cart}','openBoxPost')->name('openBoxPost');
         });
 
         Route::controller(CartController::class)->group(function () {
@@ -89,14 +90,14 @@ Route::group(['prefix' => '/'], function () {
             Route::get('/hop-mu','purchaseOrder')->name('purchaseOrder');
             Route::get('/danh-sach-hop-gui-ban','boxUserMarket')->name('boxUserMarket');
             Route::get('/thong-tin-du-lieu-box/{id}','treeData')->name('treeData');
-            Route::get('/mo-hop/{id_cart}','openBox')->name('openBox');
+            // Route::get('/mo-hop/{id_cart}','openBox')->name('openBox');
             Route::get('/gui-ban/{id_cart}','sendToMarket')->name('sendToMarket');
             Route::post('/xac-nhan-gui-ban','sendToMarketPost')->name('sendToMarketPost');
         });
     });
 
 });
-Route::group(['prefix' => 'admin', 'middleware'=>['CheckAdmin']], function () {
+Route::group(['prefix' => 'admin', 'middleware'=>['CheckAdmin', 'CheckLoginUser']], function () {
     Route::controller(AdminController::class)->group(function () {
         Route::get('/','index')->name('admin');
     });
@@ -290,6 +291,15 @@ Route::group(['prefix' => 'admin', 'middleware'=>['CheckAdmin']], function () {
     });
     Route::group(['prefix' => 'transaction', 'as' =>'transaction.'], function () {
         Route::controller(TransactionController::class)->group(function () {
+            // danh sách
+            Route::get('/','index')->name('index');
+
+            Route::post('change_status/{id}/{id_user}/{type}','changeStatus')->name('changeStatus');
+
+        });
+    });
+    Route::group(['prefix' => 'don-hang', 'as' =>'cart.'], function () {
+        Route::controller(CartAdminController::class)->group(function () {
             // danh sách
             Route::get('/','index')->name('index');
 

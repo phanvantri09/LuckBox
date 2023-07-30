@@ -243,15 +243,18 @@ class CartController extends Controller
                 ];
             }
             $folow = $this->folowRepository->create($dataFolow);
-
-            $this->cartRepository->update(['id_folow' => $folow->id, 'status' => 2 ], $request->id_cart);
+            if ($cart->order_number == 30) {
+                $this->cartRepository->update(['id_folow' => $folow->id, 'status'=>11] ,$cart->id);
+            } else {
+                $this->cartRepository->update(['id_folow' => $folow->id, 'status' => 2 ], $request->id_cart);
+            }
             $user->balance = $user->balance - $request->total;
             $user->save();
 
             DB::commit();
         } catch (\Exception $e){
             report($e);
-            dd($e);
+            // dd($e);
             DB::rollBack();
             return redirect()->back()->with('error', 'Đã xảy ra lỗi');
         }
@@ -325,7 +328,8 @@ class CartController extends Controller
     }
     public function purchaseOrder(){
         $user = Auth::user();
-        $carts = $this->cartRepository->getAllDataByIDUserAndStatus($user->id, 2);
+        $carts = $this->cartRepository->getAllDataByIDUserAndArrayStatus($user->id, [2, 11]);
+        // dd($carts);
         return view('user.page.box.purchaseOrder', compact(['carts']));
     }
     public function boxUserMarket(){
