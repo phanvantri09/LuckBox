@@ -24,31 +24,40 @@
                         <thead>
                             <tr>
                                 <th>stt</th>
-                                <th>Tiêu đề</th>
-                                <th>Nội dung</th>
-                                <th>Loại </th>
-                                <th></th>
+                                <th>Box</th>
+                                <th>Thông tin đặt hàng</th>
+                                <th>Số lượng</th>
+                                <th>Thời gian mua hàng</th>
+                                @if ($item->status != 5)
+                                    <th></th>
+                                @endif
                             </tr>
                         </thead>
                         <tbody>
                             @foreach ($data as $key => $item)
                                 <tr>
                                     <td>{{ $key + 1 }}</td>
-                                    <td>{{$item->id}}</td>
+                                    <td>{{$item->title}}</td>
+                                    <td>THông tin tại đây</td>
                                     <td>{{$item->amount}}</td>
-                                    <td>{{ $item->price_cart }}</td>
+                                    <td>{{ $item->created_at }}</td>
+                                    @if ($item->status != 5)
                                     <td>
-                                        <a href="{{ route('category.show', ['id'=>$item->id]) }}" class="btn btn-app">
-                                            <i class="fas fa-book-open"></i> Xem
-                                        </a>
-                                        <a  href="{{ route('category.edit', ['id'=>$item->id]) }}" class="btn btn-app">
-                                            <i class="fas fa-edit"></i> Sửa
-                                        </a>
-                                        <a href="{{ route('category.delete', ['id'=>$item->id]) }}" class="btn btn-app">
-                                            <i class="fas fa-trash-alt"></i>Xóa
-                                        </a>
-
+                                        @if ($item->status == 3)
+                                            <a href="{{ route('cart.changeStatus', ['id_cart' => $item->id, 'status'=> 4]) }}" class="btn btn-app">
+                                                <i class="fas fa-check-square"></i> Duyệt đơn và giao hàng
+                                            </a>
+                                            <a href="{{ route('cart.changeStatus', ['id_cart' => $item->id, 'status'=> 6]) }}" class="btn btn-app">
+                                                <i class="fas fa-ban"></i> Từ chối Đơn
+                                            </a>
+                                        @endif
+                                        @if ($item->status == 4)
+                                            <a href="{{ route('cart.changeStatus', ['id_cart' => $item->id, 'status'=> 5]) }}" class="btn btn-app">
+                                                <i class="fas fa-donate"></i> Xác nhận đã giao thành công
+                                            </a>
+                                        @endif
                                     </td>
+                                    @endif
                                 </tr>
                             @endforeach
 
