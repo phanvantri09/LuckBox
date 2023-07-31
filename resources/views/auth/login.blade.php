@@ -10,9 +10,9 @@
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
-    <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.4/dist/jquery.slim.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
+    {{-- <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.4/dist/jquery.slim.min.js"></script> --}}
+    {{-- <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script> --}}
+    {{-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script> --}}
 
     <style>
         @media (min-width: 1200px) {
@@ -28,7 +28,7 @@
         .navbar-brand {
             font-size: 1.5rem;
         }
-        .main {
+        .main-class {
             background-color: rgb(255, 235, 226);
         }
         .bg-orange {
@@ -53,7 +53,7 @@
         </div>
     </nav>
 
-    <div class="main">
+    <div class="main-class">
         <div class="container py-md-5 py-4">
             <div class="row px-md-5 px-3 align-items-center">
                 <div class="col-lg-8 d-lg-block d-none">
@@ -89,10 +89,10 @@
                     <div class="lines"></div>
                 </div>
                 
-                <button type="button" class="btn bg-white border w-100 d-flex align-items-center justify-content-center">
+                <a href="{{ route('loginMail') }}"  class="btn bg-white border w-100 d-flex align-items-center justify-content-center">
                     <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/53/Google_%22G%22_Logo.svg/2008px-Google_%22G%22_Logo.svg.png" width="20" height="20" alt="">
                     &nbsp;Google
-                </button>
+                </a>
                 
                 <div class="text-center pt-2">Bạn chưa có tài khoản <a
                     href="{{ route('register') }}">Đăng ký ngay!</a></div>

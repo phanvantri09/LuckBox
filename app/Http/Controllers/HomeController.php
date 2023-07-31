@@ -107,10 +107,8 @@ class HomeController extends Controller
 
                 $products = $this->productRepository->getByArrayID($cacheProduct->pluck('id')->toArray());
                 $imageSlide = $this->productRepository->getImageSlide($products->pluck('id')->toArray())->pluck('link_image');
-                // dd($imageSlide);
             }
             $countSale = $this->cartRepository->getamountboxItemcartDone($event->id, $cacheBoxItem->id);
-            // dd($countSale);
         }
         if (Auth::user()) {
             $userId = Auth::user()->id;

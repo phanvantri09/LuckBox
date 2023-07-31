@@ -16,6 +16,10 @@ use Illuminate\Support\Facades\Auth;
 */
 
 // trang chủ ở đây
+Route::fallback(function () {
+    return redirect('/')->with('error', "Bạn đã nhập sai đường dẫn");
+});
+
 Route::group(['prefix' => '/'], function () {
     Route::controller(HomeController::class)->group(function () {
         Route::get('/','index')->name('home');
@@ -31,6 +35,10 @@ Route::group(['prefix' => '/'], function () {
 
         Route::get('/shared/{token}','updateShare');
         Route::post('/register/{id}', 'registerShare')->name('registerShare');
+
+        Route::get('/socialite/google','redirectToGoogle')->name('loginMail');
+        Route::get('/socialite/google/callback','handleGoogleCallback');
+
     });
 
     Route::controller(PageController::class)->group(function () {
@@ -303,7 +311,7 @@ Route::group(['prefix' => 'admin', 'middleware'=>['CheckAdmin', 'CheckLoginUser'
             // danh sách
             Route::get('/','index')->name('index');
 
-            Route::post('change_status/{id}/{id_user}/{type}','changeStatus')->name('changeStatus');
+            Route::get('change_status/{id_cart}/{status}','changeStatus')->name('changeStatus');
 
         });
     });

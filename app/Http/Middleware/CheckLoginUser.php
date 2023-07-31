@@ -20,7 +20,7 @@ class CheckLoginUser
         if (Auth::check()) {
             return $next($request);
         } else {
-            return redirect()->route('login')->with('warning', 'Vui lòng đăng nhập để dùng chức năng này');
+            return redirect()->route('login')->with('error', 'Vui lòng đăng nhập để dùng chức năng này');
         }
     }
 }

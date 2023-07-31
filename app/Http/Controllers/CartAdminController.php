@@ -33,4 +33,11 @@ class CartAdminController extends Controller
         $data = $this->cartRepository->getAllDataByIDUserAndStatus(null, $request->type);
         return view('admin.cart.list', compact(['title', 'data']));
     }
+    public function changeStatus($id_cart, $status){
+        if ($this->cartRepository->update(['status' => $status], $id_cart)) {
+            return redirect()->back()->with('message',"Thành công");
+        } else {
+            return redirect()->back()->with('error',"Đã có lỗi xảy ra");
+        }
+    }
 }

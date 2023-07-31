@@ -38,4 +38,11 @@ class Handler extends ExceptionHandler
             //
         });
     }
+    public function render($request, Throwable $exception)
+    {
+        if ($exception instanceof NotFoundHttpException) {
+            return redirect('/')->with('error', "Đã xảy ra lỗi không xác định.");
+        }
+        return parent::render($request, $exception);
+    }
 }
