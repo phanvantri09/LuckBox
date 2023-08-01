@@ -70,6 +70,14 @@ class CartRepository implements CartRepositoryInterface
                 ->where('carts.id_user_create','=', $id_user)
                 ->whereIn('status', $status)->get();
     }
+    public function getInforOder($status){
+        return DB::table('carts')->select('carts.*', 'box.title', 'box.link_image', 'box.price',
+                'bills.amount as bills_amount', 'bills.total as bills_total', 'bills.name', 'bills.number_phone', 'bills.address', 'users.email')
+                ->leftJoin('box', 'carts.id_box', '=', 'box.id')
+                ->leftJoin('users', 'carts.id_user_create', '=', 'users.id')
+                ->leftJoin('bills', 'carts.id', '=', 'bills.id_cart')
+                ->where('carts.status', $status)->get();
+    }
 
     public function getAllDataByIDUserAndStatus($id_user, $status)
     {

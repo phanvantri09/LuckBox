@@ -4,12 +4,18 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Repositories\CartRepositoryInterface;
+use App\Repositories\BoxProductRepositoryInterface;
+use App\Repositories\ProductRepositoryInterface;
 class CartAdminController extends Controller
 {
     protected $cartRepository;
-    public function __construct(CartRepositoryInterface $cartRepository )
+    protected $boxpPoductRepository;
+    protected $productRepository;
+    public function __construct(CartRepositoryInterface $cartRepository, BoxProductRepositoryInterface $boxpPoductRepository, ProductRepositoryInterface $productRepository )
     {
         $this->cartRepository = $cartRepository;
+        $this->boxpPoductRepository = $boxpPoductRepository;
+        $this->productRepository = $productRepository;
     }
             //  1 vừa thêm vào và chưa thanh toán, 2 đã thanh toán chưa mở họp,
             // 10 đăng bán lại
@@ -29,8 +35,10 @@ class CartAdminController extends Controller
         if ($request->type == 5) {
             $title = "Đơn hàng đã giao thành công";
         }
-        
-        $data = $this->cartRepository->getAllDataByIDUserAndStatus(null, $request->type);
+        if ($request->type == 6) {
+            $title = "Đơn đã bị tời chối hoặc phát sinh lỗi";
+        }
+        $data = $this->cartRepository->getInforOder($request->type);
         return view('admin.cart.list', compact(['title', 'data']));
     }
     public function changeStatus($id_cart, $status){
@@ -39,5 +47,12 @@ class CartAdminController extends Controller
         } else {
             return redirect()->back()->with('error',"Đã có lỗi xảy ra");
         }
+    }
+    public function productOrder($id_cart){
+        $cart = $this->cartRepository->show($id_cart);
+        $arrayBoxpPoduct = $this->boxpPoductRepository->getAllByIdBoxChoese($cart->id_box)->pluck('id_product')->toArray();
+        // dd($arrayBoxpPoduct);
+        $products = $this->productRepository->getByArrayID($arrayBoxpPoduct);
+        return view('admin.cart.productOrder', compact(['products']));
     }
 }

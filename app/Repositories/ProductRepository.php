@@ -39,6 +39,7 @@ class ProductRepository implements ProductRepositoryInterface
         return DB::table('products')
             ->leftJoin('images', 'products.id', '=', 'images.id_product')
             ->select('products.*', 'images.link_image')
+            ->whereIn('products.id', $array)
             ->where('type', 1)
             ->get();
         // return DB::table('products')->select('products.*', 'images.link_image')->leftJoin('images', 'images.id_product', '=', 'products.id')->whereIn('id', $array)->where('type', 1)->get();

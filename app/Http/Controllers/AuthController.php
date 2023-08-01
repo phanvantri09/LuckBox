@@ -25,25 +25,26 @@ class AuthController extends Controller
     public function login(LoginRequest $request)
     {
         $intendedUrl = session('url.intended');
-        $credentials = $request->validate([
-            'email' => ['required', 'email'],
-            'password' => ['required'],
-        ]);
-
+        $credentials = [
+            'email' => $request->email,
+            'password' => $request->password,
+        ];
         if (Auth::attempt($credentials)) {
             $request->session()->regenerate();
             if(Auth::user()->type != ConstCommon::TypeUser){
                 if (!$intendedUrl || $intendedUrl == route('login') || $intendedUrl == route('register')) {
                     return redirect()->route('admin')->with('message',"Đăng nhập thành công");
                 }
-                return redirect()->intended($intendedUrl);
+                return redirect()->intended($intendedUrl)->with('message',"Đăng nhập thành công");
             } else {
                 if (!$intendedUrl || $intendedUrl == route('login') || $intendedUrl == route('register')) {
                     return redirect()->route('home')->with('message',"Đăng nhập thành công");
                 }
-                return redirect()->intended($intendedUrl);
+                return redirect()->intended($intendedUrl)->with('message',"Đăng nhập thành công");
             }
             return redirect()->intended('login')->with('error', "Đã có 1 lỗi xảy ra vui lòng đăng nhập lại!");
+        } else {
+            return redirect()->back()->with('error',"Sai thông tin đăng nhập, vui lòng nhập lại");
         }
     }
     public function showRegistrationForm(Request $request)
@@ -103,7 +104,7 @@ class AuthController extends Controller
 
         // Kiểm tra xem người dùng đã đăng nhập bằng Google trước đó chưa
         $user = User::where('google_id', $googleUser->id)->first();
-    
+
         if (!$user) {
             // Nếu người dùng chưa đăng nhập bằng Google trước đó, tạo một tài khoản mới
             $user = User::create([
@@ -113,10 +114,10 @@ class AuthController extends Controller
                 // Xử lý các trường thông tin khác của người dùng nếu cần thiết
             ]);
         }
-    
+
         // Đăng nhập người dùng vào ứng dụng Laravel của bạn
         auth()->login($user);
-    
+
         // Chuyển hướng người dùng đến trang chủ của ứng dụng sau khi đăng nhập thành công
         return redirect()->route('home')->with('message',"Thành công");
     }

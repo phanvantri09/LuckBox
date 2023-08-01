@@ -12,4 +12,5 @@ interface BoxProductRepositoryInterface
      public function getAllProduct($id_box);
      public function getAllProductNotInBox($id_box);
      public function getCountProductStatus($id_box);
+     public function getAllByIdBoxChoese($id_box);
 }

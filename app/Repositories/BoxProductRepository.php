@@ -38,7 +38,9 @@ class BoxProductRepository implements BoxProductRepositoryInterface
     public function getAllByType($type){
         return Box_product::where('type', $type)->get();
     }
-
+    public function getAllByIdBoxChoese($id_box){
+        return Box_product::where('id_box', $id_box)->where('status', 1)->get();
+    }
     public function getAllProduct($id_box){
         return Box::with('boxProducts', 'boxProducts.product')->findOrFail($id_box);
     }

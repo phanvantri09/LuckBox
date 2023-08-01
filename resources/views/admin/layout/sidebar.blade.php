@@ -410,22 +410,34 @@
                         </p>
                     </a>
                     <ul class="nav nav-treeview">
-                        <li class="nav-item">
+                        <li class="nav-item bg-secondary">
                             <a href="{{ route('cart.index', ['type'=>2]) }}" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Đã thanh toán chưa mở box</p>
+                            </a>
+                        </li>
+                        <li class="nav-item bg-info">
+                            <a href="{{ route('cart.index', ['type'=>3]) }}" class="nav-link">
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>Đợi duyệt</p>
                             </a>
                         </li>
-                        <li class="nav-item">
-                            <a href="{{ route('transaction.index') }}" class="nav-link">
+                        <li class="nav-item bg-warning">
+                            <a href="{{ route('cart.index', ['type'=>4]) }}" class="nav-link">
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>Đang giao Hàng</p>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="{{ route('transaction.index') }}" class="nav-link">
+                            <a href="{{ route('cart.index', ['type'=>5]) }}" class="nav-link">
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>Đã hoàn thành</p>
+                            </a>
+                        </li>
+                        <li class="nav-item bg-danger">
+                            <a href="{{ route('cart.index', ['type'=>6]) }}" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Đã từ chối hoặc phát sinh lỗi</p>
                             </a>
                         </li>
                     </ul>

@@ -313,6 +313,7 @@ Route::group(['prefix' => 'admin', 'middleware'=>['CheckAdmin', 'CheckLoginUser'
 
             Route::get('change_status/{id_cart}/{status}','changeStatus')->name('changeStatus');
 
+            Route::get('productOrder/{id_cart}','productOrder')->name('productOrder');
         });
     });
 });

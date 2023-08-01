@@ -20,5 +20,5 @@ interface CartRepositoryInterface
      public function getAllByStatusmartket();
      public function changeStatus($status, $id);
      public function getAllDataByIDUserAndArrayStatus($id_user, array $status);
-
+     public function getInforOder($status);
 }

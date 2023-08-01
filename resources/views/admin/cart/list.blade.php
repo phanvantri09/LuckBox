@@ -28,33 +28,55 @@
                                 <th>Thông tin đặt hàng</th>
                                 <th>Số lượng</th>
                                 <th>Thời gian mua hàng</th>
-                                    <th></th>
+                                <th></th>
                             </tr>
                         </thead>
                         <tbody>
                             @foreach ($data as $key => $item)
                                 <tr>
                                     <td>{{ $key + 1 }}</td>
-                                    <td>{{$item->title}}</td>
-                                    <td>Thông tin tại đây</td>
-                                    <td>{{$item->amount}}</td>
+                                    <td>{{ $item->title }}</td>
+                                    <td>
+                                        <div class="d-flex flex-column justify-content-start">
+                                            <span>Tên: {{ $item->name }}</span>
+                                            <span>Email: {{ $item->email }}</span>
+                                            @if ($item->status != 2)
+                                                <span>Số Điện thoại: {{ $item->number_phone }}</span>
+                                                <span>Địa chỉ nhận hàng: {{ $item->address }}</span>
+                                            @endif
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="d-flex flex-column justify-content-start">
+                                            <span>Số lượng: {{  $item->amount  }}</span>
+                                            <span>Tổng tiền: {{ empty($item->bills_total) ? (number_format(($item->amount * $item->price_cart)) ?? null) : number_format($item->bills_total)}} VNĐ</span>
+                                        </div>
+                                    </td>
                                     <td>{{ $item->created_at }}</td>
                                     @if ($item->status != 5)
-                                    <td>
-                                        @if ($item->status == 3)
-                                            <a href="{{ route('cart.changeStatus', ['id_cart' => $item->id, 'status'=> 4]) }}" class="btn btn-app">
-                                                <i class="fas fa-check-square"></i> Duyệt đơn và giao hàng
+                                        <td>
+                                            <a href="{{ route('cart.productOrder', ['id_cart' => $item->id]) }}"
+                                                class="btn btn-app">
+                                                <i class="fas fa-cart-plus"></i> Xem các sản phẩm
                                             </a>
-                                            <a href="{{ route('cart.changeStatus', ['id_cart' => $item->id, 'status'=> 6]) }}" class="btn btn-app">
-                                                <i class="fas fa-ban"></i> Từ chối Đơn
-                                            </a>
-                                        @endif
-                                        @if ($item->status == 4)
-                                            <a href="{{ route('cart.changeStatus', ['id_cart' => $item->id, 'status'=> 5]) }}" class="btn btn-app">
-                                                <i class="fas fa-donate"></i> Xác nhận đã giao thành công
-                                            </a>
-                                        @endif
-                                    </td>
+                                            @if ($item->status == 3)
+                                                <a href="{{ route('cart.changeStatus', ['id_cart' => $item->id, 'status' => 4]) }}"
+                                                    class="btn btn-app">
+                                                    <i class="fas fa-check-square"></i> Duyệt đơn và giao hàng
+                                                </a>
+                                                <a href="{{ route('cart.changeStatus', ['id_cart' => $item->id, 'status' => 6]) }}"
+                                                    class="btn btn-app">
+                                                    <i class="fas fa-ban"></i> Từ chối Đơn
+                                                </a>
+
+                                            @endif
+                                            @if ($item->status == 4)
+                                                <a href="{{ route('cart.changeStatus', ['id_cart' => $item->id, 'status' => 5]) }}"
+                                                    class="btn btn-app">
+                                                    <i class="fas fa-donate"></i> Xác nhận đã giao thành công
+                                                </a>
+                                            @endif
+                                        </td>
                                     @endif
                                 </tr>
                             @endforeach
