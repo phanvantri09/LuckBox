@@ -28,9 +28,7 @@
                                 <th>Thông tin đặt hàng</th>
                                 <th>Số lượng</th>
                                 <th>Thời gian mua hàng</th>
-                                @if ($item->status != 5)
                                     <th></th>
-                                @endif
                             </tr>
                         </thead>
                         <tbody>
@@ -38,7 +36,7 @@
                                 <tr>
                                     <td>{{ $key + 1 }}</td>
                                     <td>{{$item->title}}</td>
-                                    <td>THông tin tại đây</td>
+                                    <td>Thông tin tại đây</td>
                                     <td>{{$item->amount}}</td>
                                     <td>{{ $item->created_at }}</td>
                                     @if ($item->status != 5)

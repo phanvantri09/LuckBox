@@ -39,7 +39,6 @@ class AuthController extends Controller
                 return redirect()->intended($intendedUrl);
             } else {
                 if (!$intendedUrl || $intendedUrl == route('login') || $intendedUrl == route('register')) {
-                    dd(321);
                     return redirect()->route('home')->with('message',"Đăng nhập thành công");
                 }
                 return redirect()->intended($intendedUrl);

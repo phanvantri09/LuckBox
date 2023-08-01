@@ -25,7 +25,9 @@
                             <tr>
                                 <th>STT</th>
                                 <th>Tiêu đề</th>
-                                <th>Box</th>                             
+                                <th>Box</th> 
+                                <th>Thời gian</th> 
+                                                            
                                 <th>Trạng thái </th>
                                 <th></th>
                             </tr>
@@ -42,7 +44,7 @@
                                     <td>{{ $i }}</td>
                                     <td>{{ $item->title }}</td>
                                     <td>Đang có: {{count($item->boxItem).' box'}}</td>
-                                    
+                                    <td> <b class="">{{ date(' H:i | d-m-Y ', strtotime($item->time_start)) }}</b> <br> <b>{{ date(' H:i | d-m-Y ', strtotime($item->time_end))}}</b></td>
                                     <td>
                                         <input type="checkbox" class="input-switch" name="status"
                                             value="{{ $item->status }}" data-slide-id="{{ $item->id }}"
