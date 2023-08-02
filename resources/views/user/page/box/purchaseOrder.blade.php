@@ -18,7 +18,7 @@
                                 width="80%" height="auto" />
                         </div>
                         <div class="col-lg-2">
-                            <a href="thongtinbox.html" class="text-decoration-none">
+                            <a href="{{ route('boxInfo', ['id'=> $dataCart->id]) }}" class="text-decoration-none">
                                 <h4 class="text-dark">{{ $dataCart->title }}</h4>
                             </a>
                         </div>
@@ -65,7 +65,7 @@
                                 width="100%" height="auto" />
                         </div>
                         <div class="col-md-9 col-sm-9 col-8">
-                            <a href="thongtinbox.html" class="text-decoration-none">
+                            <a href="{{ route('boxInfo', ['id'=> $dataCart->id]) }}" class="text-decoration-none">
                                 <p class="mb-0 font-weight-bold text-white-space text-dark">{{ $dataCart->title }}</p>
                             </a>
                             <p class="mb-0">Số lượng: {{ $dataCart->amount }}</p>

@@ -9,114 +9,77 @@
     </div>
     <div class="content-container py-4">
         <div class="container my-lg-2 my-0">
+            <div class="bg-orange-white row py-2 mb-2">
+                <div class="col-4 border-right text-center">
+                    <a class="text-dark font-weight-bold text-decoration-none" href="{{ route('market', ['type'=>1]) }}">Mới nhất</a>
+                </div>
+                <div class="col-4 border-right text-center">
+                    <a class="text-dark font-weight-bold text-decoration-none" href="{{ route('market', ['type'=>2]) }}">Giá
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                            class="bi bi-arrow-down" viewBox="0 0 16 16">
+                            <path fill-rule="evenodd"
+                                d="M8 1a.5.5 0 0 1 .5.5v11.793l3.146-3.147a.5.5 0 0 1 .708.708l-4 4a.5.5 0 0 1-.708 0l-4-4a.5.5 0 0 1 .708-.708L7.5 13.293V1.5A.5.5 0 0 1 8 1z" />
+                        </svg></a>
+                </div>
+                <div class="col-4 text-center">
+                    <a class="text-dark font-weight-bold text-decoration-none" href="{{ route('market', ['type'=>3]) }}">Giá
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                            class="bi bi-arrow-up" viewBox="0 0 16 16">
+                            <path fill-rule="evenodd"
+                                d="M8 15a.5.5 0 0 0 .5-.5V2.707l3.146 3.147a.5.5 0 0 0 .708-.708l-4-4a.5.5 0 0 0-.708 0l-4 4a.5.5 0 1 0 .708.708L7.5 2.707V14.5a.5.5 0 0 0 .5.5z" />
+                        </svg>
+                    </a>
+                </div>
+            </div>
             <!-- desktop -->
             <div class="d-lg-block d-none">
                 @foreach ($dataCarts as $dataCart)
-                <div class="row align-items-center bg-orange-white py-2 rounded mb-2 px-2">
-                    <div class="col-lg-2 px-1">
-                        <img src="{{ \App\Helpers\ConstCommon::getLinkImageToStorage($dataCart->link_image) }}" width="100%"
-                            height="auto" />
-                    </div>
-                    <div class="col-lg-3">
-                        <a href="thongtinbox.html" class="text-decoration-none">
-                            <h4 class="text-dark">{{$dataCart->title}}</h4>
+                    <div class="row align-items-center bg-orange-white py-2 rounded mb-2 px-2">
+                        <div class="col-lg-2 px-1">
+                            <img src="{{ \App\Helpers\ConstCommon::getLinkImageToStorage($dataCart->link_image) }}"
+                                width="100%" height="auto" />
+                        </div>
+                        <div class="col-lg-3">
+                            <a href="{{ route('boxInfo', ['id'=> $dataCart->id]) }}" class="text-decoration-none">
+                                <h4 class="text-dark">{{ $dataCart->title }}</h4>
+                            </a>
+                        </div>
+                        <div class="col-lg-5">
+                            @php
+                                $chenhlech = ($dataCart->price_cart * 6) / 100 + $dataCart->price_cart;
+                            @endphp
+                            <h5>Đơn giá: <span class="font-weight-bold text-danger">{{ number_format($chenhlech) }}
+                                    VNĐ</span></h5>
+                        </div>
+                        <a href="{{ route('addToCartOld', ['id_cart_old' => $dataCart->id]) }}"
+                            class="w-100 col-lg-2 px-lg-0">
+                            <button class="btn bg-orange text-white">Mua ngay</button>
                         </a>
                     </div>
-                    <div class="col-lg-5">
-                        @php
-                            $chenhlech = ($dataCart->price_cart * 6) / 100 + $dataCart->price_cart;
-                        @endphp
-                        <h5>Đơn giá: <span class="font-weight-bold text-danger">{{number_format($chenhlech)}} VNĐ</span></h5>
-                    </div>
-                    <a href="{{ route('addToCartOld', ['id_cart_old'=>$dataCart->id]) }}" class="w-100 col-lg-2 px-lg-0">
-                        <button class="btn bg-orange text-white">Mua ngay</button>
-                    </a>
-                </div>
                 @endforeach
+                {!! $dataCarts->links() !!}
             </div>
             <!-- end desltop -->
             <!-- mobile -->
             <div class="d-lg-none">
-                <div class="row bg-orange-white py-2 rounded mb-2 px-2">
-                    <div class="col-md-3 col-sm-3 col-4 px-1">
-                        <img src="https://img4.thuthuatphanmem.vn/uploads/2020/05/14/hinh-anh-hoa-hong-leo-dep_021528729.jpg"
-                            width="100%" height="auto" />
+                @foreach ($dataCarts as $dataCart)
+                    <div class="row bg-orange-white py-2 rounded mb-2 px-2">
+                        <div class="col-md-3 col-sm-3 col-4 px-1">
+                            <img src="{{ \App\Helpers\ConstCommon::getLinkImageToStorage($dataCart->link_image) }}"
+                                width="100%" height="auto" />
+                        </div>
+                        <div class="col-md-9 col-sm-9 col-8">
+                            <a href="{{ route('boxInfo', ['id'=> $dataCart->id]) }}" class="text-decoration-none">
+                                <p class="mb-0 font-weight-bold text-white-space text-dark">{{ $dataCart->title }}</p>
+                            </a>
+                            <p class="mb-0">Đơn giá: <span class="text-danger">{{ number_format($chenhlech) }} VNĐ</span></p>
+                            <a href="{{ route('addToCartOld', ['id_cart_old' => $dataCart->id]) }}" class="w-100 px-lg-0">
+                                <button class="btn bg-orange text-white">Mua ngay</button>
+                            </a>
+                        </div>
                     </div>
-                    <div class="col-md-9 col-sm-9 col-8">
-                        <a href="thongtinbox.html" class="text-decoration-none">
-                            <p class="mb-0 font-weight-bold text-white-space text-dark">Title Title Title Title Title Title
-                                Title Title Title Title</p>
-                        </a>
-                        <p class="mb-0">Đơn giá: <span class="text-danger">4.000.000 VNĐ</span></p>
-                        <a href="checkout.html" class="w-100 px-lg-0">
-                            <button class="btn bg-orange text-white">Mua ngay</button>
-                        </a>
-                    </div>
-                </div>
-                <div class="row bg-orange-white py-2 rounded mb-2 px-2">
-                    <div class="col-md-3 col-sm-3 col-4 px-1">
-                        <img src="https://img4.thuthuatphanmem.vn/uploads/2020/05/14/hinh-anh-hoa-hong-leo-dep_021528729.jpg"
-                            width="100%" height="auto" />
-                    </div>
-                    <div class="col-md-9 col-sm-9 col-8">
-                        <a href="thongtinbox.html" class="text-decoration-none">
-                            <p class="mb-0 font-weight-bold text-white-space text-dark">Title Title Title Title Title Title
-                                Title Title Title Title</p>
-                        </a>
-                        <p class="mb-0">Đơn giá: <span class="text-danger">4.000.000 VNĐ</span></p>
-                        <a href="checkout.html" class="w-100 px-lg-0">
-                            <button class="btn bg-orange text-white">Mua ngay</button>
-                        </a>
-                    </div>
-                </div>
-                <div class="row bg-orange-white py-2 rounded mb-2 px-2">
-                    <div class="col-md-3 col-sm-3 col-4 px-1">
-                        <img src="https://img4.thuthuatphanmem.vn/uploads/2020/05/14/hinh-anh-hoa-hong-leo-dep_021528729.jpg"
-                            width="100%" height="auto" />
-                    </div>
-                    <div class="col-md-9 col-sm-9 col-8">
-                        <a href="thongtinbox.html" class="text-decoration-none">
-                            <p class="mb-0 font-weight-bold text-white-space text-dark">Title Title Title Title Title Title
-                                Title Title Title Title</p>
-                        </a>
-                        <p class="mb-0">Đơn giá: <span class="text-danger">4.000.000 VNĐ</span></p>
-                        <a href="checkout.html" class="w-100 px-lg-0">
-                            <button class="btn bg-orange text-white">Mua ngay</button>
-                        </a>
-                    </div>
-                </div>
-                <div class="row bg-orange-white py-2 rounded mb-2 px-2">
-                    <div class="col-md-3 col-sm-3 col-4 px-1">
-                        <img src="https://img4.thuthuatphanmem.vn/uploads/2020/05/14/hinh-anh-hoa-hong-leo-dep_021528729.jpg"
-                            width="100%" height="auto" />
-                    </div>
-                    <div class="col-md-9 col-sm-9 col-8">
-                        <a href="thongtinbox.html" class="text-decoration-none">
-                            <p class="mb-0 font-weight-bold text-white-space text-dark">Title Title Title Title Title Title
-                                Title Title Title Title</p>
-                        </a>
-                        <p class="mb-0">Đơn giá: <span class="text-danger">4.000.000 VNĐ</span></p>
-                        <a href="checkout.html" class="w-100 px-lg-0">
-                            <button class="btn bg-orange text-white">Mua ngay</button>
-                        </a>
-                    </div>
-                </div>
-                <div class="row bg-orange-white py-2 rounded mb-2 px-2">
-                    <div class="col-md-3 col-sm-3 col-4 px-1">
-                        <img src="https://img4.thuthuatphanmem.vn/uploads/2020/05/14/hinh-anh-hoa-hong-leo-dep_021528729.jpg"
-                            width="100%" height="auto" />
-                    </div>
-                    <div class="col-md-9 col-sm-9 col-8">
-                        <a href="thongtinbox.html" class="text-decoration-none">
-                            <p class="mb-0 font-weight-bold text-white-space text-dark">Title Title Title Title Title Title
-                                Title Title Title Title</p>
-                        </a>
-                        <p class="mb-0">Đơn giá: <span class="text-danger">4.000.000 VNĐ</span></p>
-                        <a href="checkout.html" class="w-100 px-lg-0">
-                            <button class="btn bg-orange text-white">Mua ngay</button>
-                        </a>
-                    </div>
-                </div>
+                @endforeach
+                {!! $dataCarts->links() !!}
             </div>
             <!-- end mobile -->
         </div>

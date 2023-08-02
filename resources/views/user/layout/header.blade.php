@@ -1,7 +1,7 @@
 <!-- Menu -->
-<nav class="navbar navbar-expand-md navbar-dark bg-orange text-white">
+<nav class="navbar navbar-expand-md navbar-dark bg-orange text-white menu-fixed">
     <div class="container-lg">
-        <a class="navbar-brand text-white col-lg-2 col-md-3 col-3" href="{{ route('home') }}">
+        <a class="navbar-brand text-white col-lg-2 col-md-3 col-5" href="{{ route('home') }}">
             <img src="{{asset('/dist/img/logo.png')}}" style="width: 100%;" alt="">
         </a>
         <!-- <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
@@ -56,7 +56,7 @@
         <a href="{{ route('register') }}" class="text-white px-2">Đăng ký</a>
 		@endauth
 
-		<div class="nav-item dropdown">
+		<div class="nav-item dropdown menu-info-user">
 			<a class="nav-link dropdown-toggle text-white" href="#" id="navbardrop"
 				data-toggle="dropdown">
 				<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor"

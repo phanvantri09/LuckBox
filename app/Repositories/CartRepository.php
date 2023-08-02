@@ -78,6 +78,28 @@ class CartRepository implements CartRepositoryInterface
                 ->leftJoin('bills', 'carts.id', '=', 'bills.id_cart')
                 ->where('carts.status', $status)->get();
     }
+    public function getInforOderUser($id_user, $status){
+        return DB::table('carts')->select('carts.*', 'box.title', 'box.link_image', 'box.price',
+                'bills.amount as bills_amount', 'bills.total as bills_total', 'bills.name', 'bills.number_phone', 'bills.address', 'users.email')
+                ->leftJoin('box', 'carts.id_box', '=', 'box.id')
+                ->leftJoin('users', 'carts.id_user_create', '=', 'users.id')
+                ->leftJoin('bills', 'carts.id', '=', 'bills.id_cart')
+                ->where('carts.id_user_create', $id_user)
+                ->whereIn('carts.status', $status)
+                ->orderBy('carts.status', 'desc')
+                ->get();
+    }
+    public function getInforBillOderUser($id_user, $id_cart){
+        return DB::table('carts')->select('carts.*', 'box.title', 'box.link_image', 'box.price',
+            'bills.amount as bills_amount', 'bills.total as bills_total', 'bills.name',
+            'bills.number_phone', 'bills.address', 'users.email')
+            ->leftJoin('box', 'carts.id_box', '=', 'box.id')
+            ->leftJoin('bills', 'carts.id', '=', 'bills.id_cart')
+            ->leftJoin('users', 'carts.id_user_create', '=', 'users.id')
+            ->where('carts.id', $id_cart)
+            ->where('carts.id_user_create', $id_user)
+            ->first();
+    }
 
     public function getAllDataByIDUserAndStatus($id_user, $status)
     {
@@ -116,13 +138,44 @@ class CartRepository implements CartRepositoryInterface
         return DB::table('carts')->select('carts.*', 'box.title', 'box.link_image', 'box.price as box_price', 'bills.total')
         ->leftJoin('box', 'carts.id_box', '=', 'box.id')->leftJoin('bills', 'carts.id', '=', 'bills.id_cart')->where('carts.id', $id_cart)->first();
     }
-    public function getAllByStatusmartket(){
-        return DB::table('carts')->select('carts.*', 'box.title', 'box.link_image', 'box.price', 'folows.id_user as id_user_folow')
-        ->leftJoin('box', 'carts.id_box', '=', 'box.id')
-        ->leftJoin('folows', 'carts.id_folow', '=', 'folows.id')
-        ->where('carts.amount', '>', 0)
-        ->where('carts.status', 10)
-        ->get();
+    public function getAllByStatusmartket($type = null){
+        if ($type != null) {
+            if ($type == 1) {
+                return DB::table('carts')->select('carts.*', 'box.title', 'box.link_image', 'box.price', 'folows.id_user as id_user_folow')
+                ->leftJoin('box', 'carts.id_box', '=', 'box.id')
+                ->leftJoin('folows', 'carts.id_folow', '=', 'folows.id')
+                ->where('carts.amount', '>', 0)
+                ->where('carts.status', 10)
+                ->orderBy('carts.created_at', 'desc')
+                ->paginate(20);
+            }
+            if ($type == 2) {
+                return DB::table('carts')->select('carts.*', 'box.title', 'box.link_image', 'box.price', 'folows.id_user as id_user_folow')
+                ->leftJoin('box', 'carts.id_box', '=', 'box.id')
+                ->leftJoin('folows', 'carts.id_folow', '=', 'folows.id')
+                ->where('carts.amount', '>', 0)
+                ->where('carts.status', 10)
+                ->orderBy('carts.price_cart', 'desc')
+                ->paginate(20);
+            }
+            if ($type == 3) {
+                return DB::table('carts')->select('carts.*', 'box.title', 'box.link_image', 'box.price', 'folows.id_user as id_user_folow')
+                ->leftJoin('box', 'carts.id_box', '=', 'box.id')
+                ->leftJoin('folows', 'carts.id_folow', '=', 'folows.id')
+                ->where('carts.amount', '>', 0)
+                ->where('carts.status', 10)
+                ->orderBy('carts.price_cart', 'asc')
+                ->paginate(20);
+            }
+        } else {
+            return DB::table('carts')->select('carts.*', 'box.title', 'box.link_image', 'box.price', 'folows.id_user as id_user_folow')
+            ->leftJoin('box', 'carts.id_box', '=', 'box.id')
+            ->leftJoin('folows', 'carts.id_folow', '=', 'folows.id')
+            ->where('carts.amount', '>', 0)
+            ->where('carts.status', 10)
+            ->paginate(20);
+        }
+
     }
     public function getamountboxItemcartDone($id_event, $id_box_item){
         return Cart::where('id_box_event', $id_event)->where('id_box_item',$id_box_item)->whereNotIn('status', [1, 6])->sum('amount');

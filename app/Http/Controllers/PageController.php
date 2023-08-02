@@ -75,10 +75,13 @@ class PageController extends Controller
     {
         return view('user.page.resell');
     }
-    public function market()
+    public function market(Request $request)
     {
-        $dataCarts = $this->cartRepository->getAllByStatusmartket();
-        // dd($dataCarts)   ;
+        if ($request->has('type')) {
+            $dataCarts = $this->cartRepository->getAllByStatusmartket($request->type);
+        } else {
+            $dataCarts = $this->cartRepository->getAllByStatusmartket();
+        }
         return view('user.page.market', compact(['dataCarts']));
     }
     public function infoCardPay()

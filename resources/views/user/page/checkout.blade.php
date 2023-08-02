@@ -23,7 +23,7 @@
                                 height="auto" />
                         </div>
                         <div class="col-lg-8 col-md-9 col-8">
-                            <a href="thongtinbox.html" class="text-decoration-none">
+                            <a href="{{ route('boxInfo', ['id'=> $dataCart->id]) }}" class="text-decoration-none">
                                 <p class="mb-0 text-white-space text-dark">{{ $dataCart->title }}</p>
                             </a>
                             <div>Số lượng: {{ $dataCart->amount }}</div>

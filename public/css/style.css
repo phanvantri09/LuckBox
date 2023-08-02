@@ -150,6 +150,9 @@
   .w-md-50{
     width: 100%;
   }
+  body main {
+    margin-top: 80px !important;
+ }
 }
 .content-container {
   background-color: #f5f5f5;
@@ -197,7 +200,7 @@
   border-radius: 5px;
 }
 .text-note{
-  font-size: 12px; 
+  font-size: 12px;
   color: #6c757d;
 }
 .icon-stt{
@@ -211,3 +214,16 @@
   text-decoration: none;
   color: #000;
 }
+.menu-fixed{
+    position: fixed;
+    top: 0;
+    z-index: 1111;
+    width: 100%;
+}
+ body main {
+    margin-top: 100px;
+ }
+ .menu-info-user .dropdown-menu{
+    right: 0 !important;
+    left: unset;
+ }

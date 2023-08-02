@@ -16,7 +16,7 @@
                         height="auto" />
                 </div>
                 <div class="text-center">
-                    <a href="thongtinbox.html" class="text-decoration-none">
+                    <a href="{{ route('boxInfo', ['id'=> $dataCart->id]) }}" class="text-decoration-none">
                         <h4 class="text-dark">{{ $dataCart->title }}</h4>
                     </a>
                 </div>

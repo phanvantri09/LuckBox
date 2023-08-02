@@ -69,7 +69,7 @@
             <p class="mb-0">Email: cskh@luckboxvn.com</p>
         </div>
     </div>
-    <div class="row border-top py-2">
+    <div class="row justify-content-lg-start justify-content-center border-top py-2">
         © 2023 LuckBox - Unique Personalized Gifts.
     </div>
 </div>

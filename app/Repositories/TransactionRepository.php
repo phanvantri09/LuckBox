@@ -6,6 +6,7 @@ use App\Models\User;
 use App\Models\Bill;
 use App\Models\Cart;
 use Illuminate\Support\Facades\DB;
+use App\Helpers\ConstCommon;
 class TransactionRepository implements TransactionRepositoryInterface
 {
     public function create(array $data)
@@ -42,9 +43,12 @@ class TransactionRepository implements TransactionRepositoryInterface
                     }
                     if($trans->type == 1 || $trans->type == 3 || $trans->type == 4){
                         $user->balance = $user->balance - $trans->total;
-                        
+                        ConstCommon::sendMail($user->email, ['email' => $user->email,'type'=>'rút tiền','status'=> "Thành công", "balance"=>$trans->total, 'link'=>route('walet')]);
+
                     }else{
                         $user->balance = $user->balance + $trans->total;
+                        ConstCommon::sendMail($user->email, ['email' => $user->email,'type'=>'nạp tiền','status'=> "Thành công", "balance"=>$trans->total, 'link'=>route('walet')]);
+
                     }
                 }else{
                     $trans->update(['status' => 3]);
@@ -59,6 +63,7 @@ class TransactionRepository implements TransactionRepositoryInterface
         } catch (\Exception $e){
             // report($e);
             DB::rollBack();
+            ConstCommon::sendMail($user->email, ['email' => $user->email,'type'=>'nạp/rút tiền','status'=> "Không thành công", "balance"=>$trans->total, 'link'=>route('walet')]);
             return false;
         }
         return true;

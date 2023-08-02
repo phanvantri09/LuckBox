@@ -29,7 +29,9 @@
 <body>
 
     @include('user.layout.header')
-    @yield('content')
+    <main>
+        @yield('content')
+    </main>
     @include('user.layout.footer')
     @include('user.layout.panel')
     @if (Auth::user() && Auth::user()->type == \App\Helpers\ConstCommon::TypeUser)

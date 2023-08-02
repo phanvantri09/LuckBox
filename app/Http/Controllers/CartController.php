@@ -126,27 +126,27 @@ class CartController extends Controller
     public function checkout(Request $request)
     {
         $user = Auth::user();
-
+        $dataCart = null;
 
         if ($request->has('id_cart')) {
             $dataCart = $this->cartRepository->getAllDataByIDCartIDUserAndStatus( $request->id_cart, $user->id, 1);
         } else {
             $dataCart = $this->cartRepository->getAllDataByIDUserAndStatus($user->id, 1);
         }
+        if (empty($dataCart)) {
+            return redirect()->route('home')->with('info', 'Hiện tại chưa có đơn hàng nào để thanh toán');
+        }
         if ($user->balance < ($dataCart->amount * $dataCart->price)){
             return redirect()->route('infoCardPay')->with('error', 'Số tài khoản trong ví không đủ để thực hiện, vui lòng nạp thêm tiền để thực hiện giao dịch này.');
         }
         $userInfo = $user->UserInfo()->first();
-        if (empty($dataCart)) {
-            return redirect()->route('home')->with('info', 'Hiện tại chưa có đơn hàng nào để thanh toán');
-        }
+
         // dd($dataCart, count(explode(",", $dataCart->id_folow)), empty($dataCart->id_cart_old));
         return view('user.page.checkout', compact(['dataCart', 'userInfo']));
 
     }
     public function checkoutPost(Request $request)
     {
-        // dd($request->all());
         $user = Auth::user();
 
         $request->merge([
@@ -261,11 +261,11 @@ class CartController extends Controller
         // $infoCard = $this->cardRepository->choese();
         // $getCardDefault = $this->pageRepository->showCardDefault($user->id);
         // $total = $request->total;
+        ConstCommon::sendMail($user->email, ['email' => $user->email,'type'=>'mua hàng','status'=> "Thành công", "balance"=>$request->total, 'link'=>route('listOrder')]);
         return redirect()->route('purchaseOrder')->with('success', 'Mua hàng thành công');
         // return view('user.page.infoCardPay', compact(['infoCard','getCardDefault','total']));
     }
     public function infoCardPayPost(Request $request){
-        // dd($request->all(), session('transaction_bill'));
 
         //  kiểm tra có id_cart_father mua từ 1 cart khác thì chia thành 2 hướng giải quyết
         $dataSessionBill = session('transaction_bill');
@@ -400,6 +400,16 @@ class CartController extends Controller
             return redirect()->route('home')->with('error', 'Đã xảy ra lỗi');
         }
         return redirect()->route('home')->with('success', 'Đăng bán thành công');
+    }
+    public function listOrder(){
+        $user = Auth::user();
+        $dataCart = $this->cartRepository->getInforOderUser($user->id, [3, 4, 5]);
+        return view('user.page.listOrder', compact(['dataCart']));
+    }
+    public function showOrder($id_cart){
+        $user = Auth::user();
+        $dataCart = $this->cartRepository->getInforBillOderUser($user->id, $id_cart);
+        return view('user.page.showOrder', compact(['dataCart']));
     }
 
 }

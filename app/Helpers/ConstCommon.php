@@ -6,6 +6,8 @@ use Illuminate\Http\UploadedFile;
 use Illuminate\Contracts\Routing\UrlGenerator;
 use App\Models\Category;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\SendMail;
 class ConstCommon {
      const ListTypeUser = ['user'=>111, 'admin'=>222, 'super_admin'=>333];
      const TypeUser = 111;
@@ -88,4 +90,8 @@ class ConstCommon {
         }
         return $totalShow;
      }
+     public static function sendMail($email, $content){
+        $mail = new SendMail($content);
+        Mail::to($email)->queue($mail);
+    }
 }
