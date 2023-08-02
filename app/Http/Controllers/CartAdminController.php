@@ -51,7 +51,6 @@ class CartAdminController extends Controller
     public function productOrder($id_cart){
         $cart = $this->cartRepository->show($id_cart);
         $arrayBoxpPoduct = $this->boxpPoductRepository->getAllByIdBoxChoese($cart->id_box)->pluck('id_product')->toArray();
-        // dd($arrayBoxpPoduct);
         $products = $this->productRepository->getByArrayID($arrayBoxpPoduct);
         return view('admin.cart.productOrder', compact(['products']));
     }

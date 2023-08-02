@@ -108,6 +108,7 @@ Route::group(['prefix' => '/'], function () {
 Route::group(['prefix' => 'admin', 'middleware'=>['CheckAdmin', 'CheckLoginUser']], function () {
     Route::controller(AdminController::class)->group(function () {
         Route::get('/','index')->name('admin');
+        Route::get('/huong-dan-su-dung','docs')->name('docs');
     });
     Route::group(['prefix' => 'chat', 'as' =>'chat.'], function () {
         Route::controller(MessagesController::class)->group(function () {
