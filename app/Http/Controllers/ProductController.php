@@ -124,7 +124,10 @@ class ProductController extends Controller
     }
 
     public function addImage2($id){
-        return view('admin.product.addImage2', compact('id'));
+        $getAllByIDProductMain = $this->imageRepository->getAllByIDProductMain($id);
+        $getAllByIDProductSlide = $this->imageRepository->getAllByIDProductSlide($id);
+        $getAllByIDProductItem = $this->imageRepository->getAllByIDProductItem($id);
+        return view('admin.product.addImage2', compact('id', 'getAllByIDProductMain', 'getAllByIDProductSlide', 'getAllByIDProductItem'));
     }
     public function addImagePost2(Request $request, $id){
         if ($request->hasFile('imageItem')) {
