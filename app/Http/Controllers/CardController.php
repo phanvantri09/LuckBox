@@ -211,7 +211,7 @@ class CardController extends Controller
     public function destroy($id)
     {
         $this->cardRepository->delete($id);
-        return redirect()->route('card.index')->with('success', 'data deleted successfully');
+        return redirect()->route('card.index')->with('success', 'Xóa thành công');
     }
 
     /**
@@ -223,6 +223,6 @@ class CardController extends Controller
     public function destroyAdmin($id)
     {
         $this->cardRepository->delete($id);
-        return redirect()->route('card.indexAdmin')->with('success', 'data deleted successfully');
+        return redirect()->route('card.indexAdmin')->with('success', 'Xóa thành công');
     }
 }

@@ -82,7 +82,7 @@ class ProductController extends Controller
     public function destroy($id)
     {
         $this->productRepository->delete($id);
-        return redirect()->route('product.index')->with('success', 'data deleted successfully');
+        return redirect()->route('product.index')->with('success', 'Xóa thành công');
     }
     public function addImage($id){
         $data = $this->productRepository->show($id);
@@ -185,6 +185,6 @@ class ProductController extends Controller
         $imageData = $this->imageRepository->show($id);
         Storage::disk('public')->delete('images/' . $imageData->link_image);
         $this->imageRepository->delete($id);
-        return redirect()->route('product.show', ['id'=>$imageData->id_product])->with('success', 'data deleted successfully');
+        return redirect()->route('product.show', ['id'=>$imageData->id_product])->with('success', 'Xóa thành công');
     }
 }

@@ -34,7 +34,7 @@ class AdminController extends Controller
     BoxProductRepositoryInterface $boxProductRepository,
     ProductRepositoryInterface $productRepository,
     ImageRepositoryInterface $imageRepository,
-    CartRepositoryInterface $cartRepository, 
+    CartRepositoryInterface $cartRepository,
     TransactionRepositoryInterface $transactionRepository
     )
     {
@@ -63,8 +63,7 @@ class AdminController extends Controller
     }
     public function docs()
     {
-
         return view('admin.docs');
     }
-    
+
 }

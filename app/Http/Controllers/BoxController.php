@@ -131,6 +131,6 @@ class BoxController extends Controller
     public function destroy($id)
     {
         $this->boxRepository->delete($id);
-        return redirect()->route('box.index')->with('success', 'data deleted successfully');
+        return redirect()->route('box.index')->with('success', 'Xóa thành công');
     }
 }

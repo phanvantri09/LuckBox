@@ -94,6 +94,6 @@ class BoxProductController extends Controller
     {
         $boxProduct = Box_product::findOrFail($id);
         $this->boxProductRepository->delete($id);
-        return redirect()->route('box.show', ['id'=>$boxProduct->id_box])->with('success', 'data deleted successfully');
+        return redirect()->route('box.show', ['id'=>$boxProduct->id_box])->with('success', 'Xóa thành công');
     }
 }

@@ -70,7 +70,6 @@ class HomeController extends Controller
             // nếu rỗng láy event gần nhất và láy time của box_item time_start gần nhất
             // check trước khi chyển qua event mới thì chuyển trạng thái cho các event đã hết thời gian
             $event = $this->boxEventRepository->getInTimeThan($time);
-            // dd($event);
             $cacheBoxItem = $this->boxItemRepository->getFirstInCaseEventEmpty($event->id);
             $cachebox = empty($cacheBoxItem) ? null :  $cacheBoxItem->box()->first();
             $cacheProduct = empty($cachebox) ? null : $cachebox->boxProducts()->get();
@@ -97,15 +96,14 @@ class HomeController extends Controller
                 $timeEventInCase = Carbon::parse($cacheBoxItem->time_end)->format('m/d/Y H:i:s');
             }
             $cachebox = empty($cacheBoxItem) ? null :  $cacheBoxItem->box()->first();
+            // CACHE boxx product
             $cacheProduct = empty($cachebox) ? null : $cachebox->boxProducts()->get();
-
             if (empty($cacheProduct)) {
 
                 $products = null;
                 $imageSlide = null;
             } else {
-
-                $products = $this->productRepository->getByArrayID($cacheProduct->pluck('id')->toArray());
+                $products = $this->productRepository->getByArrayID($cacheProduct->pluck('id_product')->toArray());
                 $imageSlide = $this->productRepository->getImageSlide($products->pluck('id')->toArray())->pluck('link_image');
             }
             $countSale = $this->cartRepository->getamountboxItemcartDone($event->id, $cacheBoxItem->id);
