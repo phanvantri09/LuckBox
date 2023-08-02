@@ -1,7 +1,9 @@
 <!-- Menu -->
 <nav class="navbar navbar-expand-md navbar-dark bg-orange text-white">
     <div class="container-lg">
-        <a class="navbar-brand text-white" href="{{ route('home') }}">Navbar</a>
+        <a class="navbar-brand text-white col-lg-2 col-md-3 col-3" href="{{ route('home') }}">
+            <img src="{{asset('/dist/img/logo.png')}}" style="width: 100%;" alt="">
+        </a>
         <!-- <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
         <span class="navbar-toggler-icon"></span>
       </button> -->

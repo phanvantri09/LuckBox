@@ -30,6 +30,7 @@
 
     @include('user.layout.header')
     @yield('content')
+    @include('user.layout.footer')
     @include('user.layout.panel')
     @if (Auth::user() && Auth::user()->type == \App\Helpers\ConstCommon::TypeUser)
         <div class="floating-chat me-4 d-md-block d-none">
