@@ -20,11 +20,10 @@
                     </div>
                     <div class="col-sm-6">
                         <div class="form-group">
-                            <label for="customFile">Image</label>
-                            <div class="custom-file">
-                                <input type="file" name="link_image" class="custom-file-input" id="customFile">
-                                <label class="custom-file-label" for="customFile">Chọn ảnh</label>
-                            </div>
+                                <label class="form-label" for="customFile">Hình ảnh</label>
+                                <input type="file" name="link_image" class="form-control-file border rounded px-1 py-1" id="image-input" accept="image/*">
+                                <img id="preview-image" 
+                                    src="" alt="Preview" style="display: none; height:100px;">                          
                         </div>
                     </div>
                     <div class="col-sm-6">
@@ -76,30 +75,24 @@
         <script src="../../plugins/codemirror/mode/css/css.js"></script>
         <script src="../../plugins/codemirror/mode/xml/xml.js"></script>
         <script src="../../plugins/codemirror/mode/htmlmixed/htmlmixed.js"></script>
-        {{-- <script>
-            $(function() {
-                // Summernote
-                $('#summernote').summernote()
+        -- <script>
+            document.getElementById('image-input').addEventListener('change', function(event) {
+            var input = event.target;
 
-                // CodeMirror
-                CodeMirror.fromTextArea(document.getElementById("codeMirrorDemo"), {
-                    mode: "htmlmixed",
-                    theme: "monokai"
-                });
-            })
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+
+                reader.onload = function(e) {
+                    var previewImage = document.getElementById('preview-image');
+
+                    // Hiển thị hình ảnh xem trước
+                    previewImage.src = e.target.result;
+                    previewImage.style.display = 'block';
+                };
+
+                reader.readAsDataURL(input.files[0]);
+            }
+        });
         </script>
-        <script type="text/javascript">
-            $(function() {
-                $('#datetimepicker7').datetimepicker();
-                $('#datetimepicker8').datetimepicker({
-                    useCurrent: false
-                });
-                $("#datetimepicker7").on("change.datetimepicker", function(e) {
-                    $('#datetimepicker8').datetimepicker('minDate', e.date);
-                });
-                $("#datetimepicker8").on("change.datetimepicker", function(e) {
-                    $('#datetimepicker7').datetimepicker('maxDate', e.date);
-                });
-            });
-        </script> --}}
+
     @endsection

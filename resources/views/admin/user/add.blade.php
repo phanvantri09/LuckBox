@@ -23,7 +23,7 @@
                                 <!-- text input -->
                                 <div class="form-group">
                                     <label>Email</label>
-                                    <input type="email" name="email" class="form-control" placeholder="Enter ...">
+                                    <input type="email" name="email" value="{{old('email')}}" class="form-control" placeholder="Enter ...">
                                     @error('email')
                                         <div class="alert alert-danger">{{ $errors->first('email') }}</div>
                                     @enderror
@@ -32,7 +32,7 @@
                             <div class="col-sm-6">
                                 <div class="form-group">
                                     <label>Mật khẩu</label>
-                                    <input type="text" name="password" class="form-control" placeholder="Enter ...">
+                                    <input type="text" name="password" value="{{old('password')}}" class="form-control" placeholder="Enter ...">
                                     @error('password')
                                         <div class="alert alert-danger">{{ $errors->first('password') }}</div>
                                     @enderror

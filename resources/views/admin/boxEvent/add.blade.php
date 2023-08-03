@@ -27,11 +27,10 @@
                     </div>
                     <div class="col-sm-6">
                         <div class="form-group">
-                            <label for="customFile">Image</label>
-                            <div class="custom-file">
-                                <input type="file" name="link_image" class="custom-file-input" id="customFile">
-                                <label class="custom-file-label" for="customFile">Chọn ảnh</label>
-                            </div>
+                                <label class="form-label" for="customFile">Hình ảnh</label>
+                                <input type="file" name="link_image" class="form-control-file border rounded px-1 py-1" id="image-input" accept="image/*">
+                                <img id="preview-image" 
+                                    src="" alt="Preview" style="display: none; height:100px;">                          
                             @error('link_image')
                                 <div class="alert alert-danger">{{ $errors->first('link_image') }}</div>
                             @enderror
@@ -91,17 +90,23 @@
     <script src="../../plugins/codemirror/mode/xml/xml.js"></script>
     <script src="../../plugins/codemirror/mode/htmlmixed/htmlmixed.js"></script>
     <script>
-        //     $(function() {
-        //         // Summernote
-        //         $('#summernote').summernote()
+        document.getElementById('image-input').addEventListener('change', function(event) {
+            var input = event.target;
 
-        //         // CodeMirror
-        //         CodeMirror.fromTextArea(document.getElementById("codeMirrorDemo"), {
-        //             mode: "htmlmixed",
-        //             theme: "monokai"
-        //         });
-        //     })
-        // 
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+
+                reader.onload = function(e) {
+                    var previewImage = document.getElementById('preview-image');
+
+                    // Hiển thị hình ảnh xem trước
+                    previewImage.src = e.target.result;
+                    previewImage.style.display = 'block';
+                };
+
+                reader.readAsDataURL(input.files[0]);
+            }
+        });
     </script>
     //
     <script type="text/javascript">

@@ -2,6 +2,7 @@
 namespace App\Repositories;
 
 use App\Models\Box_event;
+use App\Helpers\ConstCommon;
 
 class BoxEventRepository implements BoxEventRepositoryInterface
 {
@@ -19,6 +20,7 @@ class BoxEventRepository implements BoxEventRepositoryInterface
     public function update(array $data, $id)
     {
         $event = Box_event::findOrFail($id);
+        ConstCommon::delImageToStorage($event->link_image);
         $event->update($data);
         return $event;
     }
