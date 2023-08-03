@@ -203,6 +203,35 @@ class CardController extends Controller
     }
 
     /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function updateStatusAdmin($id)
+    {
+        $currentUser = Auth::user();
+        $data = $this->cardRepository->show($id);
+        if ($data->status == ConstCommon::TypeCard['Không ưu tiên']) {
+            foreach ($this->cardRepository->allAdmin() as $item) {
+                if ($item->status == ConstCommon::TypeCard['Ưu tiên']) {
+                    $item->status = ConstCommon::TypeCard['Không ưu tiên'];
+                    $item->update();
+                }
+            }
+            $data->id_user_update = $currentUser->id;
+            $data->status = ConstCommon::TypeCard['Ưu tiên'];
+            $data->update();
+        } else {
+            $data->id_user_update = $currentUser->id;
+            $data->status = ConstCommon::TypeCard['Không ưu tiên'];
+            $data->update();
+        }
+        return redirect()->route('card.indexAdmin')->with('success', 'data updated successfully');
+    }
+
+    /**
      * Remove the specified resource from storage.
      *
      * @param  int  $id

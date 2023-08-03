@@ -292,6 +292,7 @@ Route::group(['prefix' => 'admin', 'middleware'=>['CheckAdmin', 'CheckLoginUser'
             Route::post('edit/{id}','update')->name('editPost');
             Route::get('editAdmin/{id}','editAdmin')->name('editAdmin');
             Route::post('editAdmin/{id}','updateAdmin')->name('editPostAdmin');
+            Route::get('editStatusAdmin/{id}','updateStatusAdmin')->name('editPostStatusAdmin');
             // xóa
             Route::get('/delete/{id}', 'destroy')->name('delete');
             Route::get('/deleteAdmin/{id}', 'destroyAdmin')->name('deleteAdmin');

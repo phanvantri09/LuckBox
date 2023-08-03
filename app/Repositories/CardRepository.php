@@ -8,12 +8,17 @@ class CardRepository implements CardRepositoryInterface
 {
     public function allAdmin()
     {
-        return Card::where('type', '<>', ConstCommon::TypeUser)->get();
+        return Card::where('type', '<>', ConstCommon::TypeUser)
+            ->orderBy('status', 'desc')
+            ->orderBy('updated_at', 'desc')
+            ->get();
     }
 
     public function allUser()
     {
-        return Card::where('type', ConstCommon::TypeUser)->get();
+        return Card::where('type', ConstCommon::TypeUser)
+            ->orderBy('updated_at', 'desc')
+            ->get();
     }
 
     public function create(array $data)
