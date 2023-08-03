@@ -48,6 +48,9 @@
                                     <td>{{ array_search($item->status, \App\Helpers\ConstCommon::TypeCard)}}</td>
                                     <td>{{ \App\Helpers\ConstCommon::BankVN[$item->bank]['name'] }}</td>
                                     <td>
+                                        <a  href="{{ route('card.editPostStatusAdmin', ['id'=>$item->id]) }}" class="btn btn-app">
+                                            <i class="fas fa-edit"></i> Đặt làm <span style="text-transform: lowercase;">{{ array_search(!$item->status, \App\Helpers\ConstCommon::TypeCard)}}</span>
+                                        </a>
                                         <a  href="{{ route('card.editAdmin', ['id'=>$item->id]) }}" class="btn btn-app">
                                             <i class="fas fa-edit"></i> Sửa
                                         </a>
