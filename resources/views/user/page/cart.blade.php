@@ -78,7 +78,7 @@
                                     width="100%" height="auto" />
                             </div>
                             <div class="col-md-9 col-sm-9 col-8">
-                                <a href="{{ route('boxInfo', ['id'=> $Cart->id]) }}" class="text-decoration-none">
+                                <a href="{{ route('boxInfo', ['id'=> $cart->id]) }}" class="text-decoration-none">
                                     <p class="mb-0 font-weight-bold text-white-space text-dark">{{ $cart->title }}</p>
                                 </a>
                                 <p class="mb-0">Đơn giá: {{ number_format($cart->price) }} VNĐ</p>

@@ -53,16 +53,28 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $boxItem = null;
+        if (Auth::user()) {
+            $userId = Auth::user()->id;
+            $dataToEncode = [
+                $userId
+            ];
+
+            $hashids = new Hashids('share');
+            $encodedData = $hashids->encode($dataToEncode);
+            $sharedLink =  url('shared/'.$encodedData);
+        } else {
+            $sharedLink = '';
+        }
+        $boxItem = $event = $cacheBoxItem = $cachebox = $cacheProduct = $products = $imageSlide = $boxItem = $countSale = null;
         $currentTime = Carbon::now('Asia/Ho_Chi_Minh');
-        $timeEventInCase = $timeEventNotInCase = null;
+        $timeEventInCase = $timeEventNotInCase = $timeEventStart = $timeEventEnd = null;
         // $time = $currentTime->format('m/d/Y H:i:s');
         // $event = $this->boxEventRepository->getInTime($currentTime->format('Y-m-d H:i:s'));
 
         // kiểm tra và đổi trạng thái
         $time = $currentTime->format('Y-m-d H:i:s');
         $this->boxEventRepository->checkAndAutoUpdateStatus($time);
-
+        
         $event = $this->boxEventRepository->getInTime($time);
 
         if (empty($event)) {
@@ -70,12 +82,23 @@ class HomeController extends Controller
             // nếu rỗng láy event gần nhất và láy time của box_item time_start gần nhất
             // check trước khi chyển qua event mới thì chuyển trạng thái cho các event đã hết thời gian
             $event = $this->boxEventRepository->getInTimeThan($time);
+            if (empty($event)) {
+                return view('user.page.home', compact(['event','cacheBoxItem', 'cachebox',
+                                               'cacheProduct','time','timeEventInCase',
+                                               'timeEventNotInCase','products','imageSlide',
+                                               'boxItem', 'sharedLink', 'countSale', 
+                                               'timeEventStart', 'timeEventEnd']));
+            }
+
+            $timeEventStart = Carbon::parse($event->time_start)->format('m/d/Y H:i:s');
+
             $cacheBoxItem = $this->boxItemRepository->getFirstInCaseEventEmpty($event->id);
             $cachebox = empty($cacheBoxItem) ? null :  $cacheBoxItem->box()->first();
             $cacheProduct = empty($cachebox) ? null : $cachebox->boxProducts()->get();
             $timeEventNotInCase = Carbon::parse($cacheBoxItem->time_start)->format('m/d/Y H:i:s');
 
         } else {
+            $timeEventEnd = Carbon::parse($event->time_end)->format('m/d/Y H:i:s');
             // kiểm tra và chuyển status box
             // nếu nằm trong tg này thì chuyển trạng thài về 2 và đưa lên bán
             $this->boxItemRepository->checkAndAutoUpdateStatus($event->id, $time);
@@ -108,23 +131,12 @@ class HomeController extends Controller
             }
             $countSale = $this->cartRepository->getamountboxItemcartDone($event->id, $cacheBoxItem->id);
         }
-        if (Auth::user()) {
-            $userId = Auth::user()->id;
-            $dataToEncode = [
-                $userId
-            ];
-
-            $hashids = new Hashids('share');
-            $encodedData = $hashids->encode($dataToEncode);
-            $sharedLink =  url('shared/'.$encodedData);
-        } else {
-            $sharedLink = '';
-        }
 
         return view('user.page.home', compact(['event','cacheBoxItem', 'cachebox',
                                                'cacheProduct','time','timeEventInCase',
                                                'timeEventNotInCase','products','imageSlide',
-                                               'boxItem', 'sharedLink', 'countSale']));
+                                               'boxItem', 'sharedLink', 'countSale',
+                                               'timeEventStart', 'timeEventEnd']));
     }
 
     public function chatbox()

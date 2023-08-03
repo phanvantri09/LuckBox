@@ -338,10 +338,20 @@ class CartController extends Controller
         return view('user.page.box.purchaseOrder', compact(['carts']));
     }
     public function treeData($id){
+        return back()->with("error", ' Chức năng này chưa được cập nhật!');
+
         $dataCart = $this->cartRepository->show($id);
-        dd($dataCart);
+        $folows = $this->cartRepository->treedataCart($dataCart->id_user_create, $dataCart->id_box_item, $dataCart->id_box_event, $dataCart->id_box);
+        // dựa vào id cart để phân biệt
+        // từ last cart láy được idcarr chhuaws numberorder
+        // dd($folows->last());
+        $dataCartLast = $this->cartRepository->show($folows->last()->id_cart);
+        $number_order = $dataCartLast->order_number;
+        $box = $this->boxRepository->show($dataCart->id_box);
+        // dd($dataCartLast);
+        // dd($dataCart);
         // $this->folowRepository
-        return view('user.page.box.treedata');
+        return view('user.page.box.treedata', compact(['box', 'number_order', 'dataCart', 'folows']));
     }
     public function sendToMarket($id_cart){
         $dataCart =  $this->cartRepository->showAllData($id_cart);

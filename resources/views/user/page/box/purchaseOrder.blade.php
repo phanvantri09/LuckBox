@@ -31,9 +31,9 @@
                             <span>Số lượng: {{ $dataCart->amount }}</span>
                         </div>
                         @if ($dataCart->status == 10)
-                            <a href="{{ route('openBox', ['id_cart' => $dataCart->id]) }}" class="w-100 col-lg-2 px-lg-0">
+                            {{-- <a href="{{ route('openBox', ['id_cart' => $dataCart->id]) }}" class="w-100 col-lg-2 px-lg-0">
                                 <button class="btn bg-success text-white">Mở box</button>
-                            </a>
+                            </a> --}}
                             @if ($dataCart->status != 11)
                                 <a href="{{ route('treeData', ['id' => $dataCart->id]) }}" class="w-100 col-lg-2 px-lg-0">
                                     <button class="btn bg-orange text-white">Xem doanh thu box</button>
@@ -75,9 +75,9 @@
                                     VNĐ</span></p>
                             <div class="d-flex justify-content-between pt-1">
                                 @if ($dataCart->status == 10)
-                                    <a href="{{ route('openBox', ['id_cart' => $dataCart->id]) }}">
+                                    {{-- <a href="{{ route('openBox', ['id_cart' => $dataCart->id]) }}">
                                         <button class="btn bg-success text-white">Mở box</button>
-                                    </a>
+                                    </a> --}}
                                     @if ($dataCart->status != 11)
                                         <a href="{{ route('treeData', ['id' => $dataCart->id]) }}">
                                             <button class="btn bg-orange text-white">Doanh thu</button>

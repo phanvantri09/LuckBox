@@ -88,7 +88,9 @@ class PageController extends Controller
     {
         $currentUser =  Auth::user();
         $getCardDefault = $this->pageRepository->showCardDefault($currentUser->id);
-
+        if (empty($getCardDefault)) {
+            return redirect()->route('createCard')->with('error','Bạn cần có 1 tài khoản mặt định');
+        }
         return view('user.page.infoCardPay', compact('getCardDefault'));
     }
     public function infoCardPayPost(TransactionRequest $request)

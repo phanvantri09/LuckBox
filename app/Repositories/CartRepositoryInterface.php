@@ -22,4 +22,5 @@ interface CartRepositoryInterface
      public function getAllDataByIDUserAndArrayStatus($id_user, array $status);
      public function getInforOder($status);
      public function getInforOderUser($id_user, $status);
+     public function treedataCart($id, $id_box_item, $id_box_event, $id_box);
 }

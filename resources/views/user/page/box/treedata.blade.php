@@ -20,24 +20,15 @@
                     </tr>
                 </thead>
                 <tbody>
+                    {{-- 'box', 'number_order', 'dataCart', 'folows' --}}
+                    @for ($i = 1; $i <= $number_order; $i++)
                     <tr>
                         <td>1</td>
                         <td>1.000.000</td>
                         <td>Nguyễn văn A</td>
                         <td>22/04/2023</td>
                     </tr>
-                    <tr>
-                        <td>2</td>
-                        <td>1.000.000</td>
-                        <td>Moe</td>
-                        <td>22/04/2023</td>
-                    </tr>
-                    <tr>
-                        <td>3</td>
-                        <td>1.000.000</td>
-                        <td>Dooley</td>
-                        <td>22/04/2023</td>
-                    </tr>
+                    @endfor
                 </tbody>
             </table>
         </div>

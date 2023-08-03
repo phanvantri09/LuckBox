@@ -13,10 +13,13 @@ class TransactionController extends Controller
         $this->transactionRepository = $transactionRepository;
     }
 
-    public function index()
+    public function index(Request $request)
     {
-        $getAllTrans = $this->transactionRepository->all();
-
+        if ($request->has('type')) {
+            $getAllTrans = $this->transactionRepository->getByStatus($request->type);
+        } else {
+            $getAllTrans = $this->transactionRepository->all();
+        }
         return view('admin.transaction.list', compact('getAllTrans'));
     }
     public function changeStatus($id, $idUser,$type, Request $request)

@@ -68,12 +68,13 @@
 			</a>
 			<div class="dropdown-menu">
 				<a class="dropdown-item text-white" href="{{ route('updateInfo') }}">Thông tin cá nhân</a>
-				<a class="dropdown-item text-white" href="{{ route('purchaseOrder') }}">Ví của bạn</a>
+				<a class="dropdown-item text-white" href="{{ route('walet') }}">Ví của bạn</a>
+                <a class="dropdown-item text-white" href="{{ route('cart') }}">Giỏ</a>
                 <a class="dropdown-item text-white" href="{{ route('purchaseOrder') }}">Họp mù</a>
                 <a class="dropdown-item text-white" href="{{ route('boxUserMarket') }}">Họp gửi bán</a>
+                <a class="dropdown-item text-white" href="{{ route('listOrder') }}">Đơn sắp nhận</a>
                 <a class="dropdown-item text-white" href="{{ route('historyTransaction') }}">Lịch sử giao dịch</a>
                 <a class="dropdown-item text-white" href="{{ route('market') }}">Chợ</a>
-
                 <a id="linkToCopy" onclick="copyHrefToClipboard(event)" class="dropdown-item text-white" href="{{ $sharedLink ?? '#' }}">Giới thiệu bạn bè</a>
 				<a href="{{ route('logout') }}" class="dropdown-item text-white">Đăng xuất</a>
 			</div>

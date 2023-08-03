@@ -57,9 +57,7 @@
             <div class="content-header">
                 <div class="container-fluid">
                     <div class="row mb-2">
-                        <div class="col-sm-12">
-                            <h1 class="m-0 text-center">Admin</h1>
-                        </div><!-- /.col -->
+                        
                         {{-- <div class="col-sm-6">
                             <ol class="breadcrumb float-sm-right">
                                 <li class="breadcrumb-item"><a href="#">Home</a></li>
@@ -85,8 +83,7 @@
         </div>
         <!-- /.content-wrapper -->
         <footer class="main-footer">
-            <strong>Copyright &copy; 2023 code and code.</strong>
-            All rights reserved.
+            <strong>LuckBox &copy; 2023 </strong>
             <div class="float-right d-none d-sm-inline-block">
                 <b>Version</b> 1
             </div>

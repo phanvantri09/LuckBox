@@ -1,6 +1,11 @@
 @extends('user.layout.index')
 @section('css')
     <link rel="stylesheet" href="./css/openbox.css">
+    <style>
+        .footer-content {
+            display: none !important;
+        }
+    </style>
 @endsection
 @section('content')
     <div class="bg-white text-orange title-page">
@@ -26,48 +31,50 @@
                         <div class="giftbox">🎁</div>
                         <div class="giftbox">🎈</div>
                         <div class="giftbox">🎉</div>
-                      </div>
+                    </div>
                     <canvas id="canvas"></canvas>
                     <div class="col-6 col-sm-4 col-md-3 col-lg-2">
                         <img src="https://vn-live-01.slatic.net/p/dbf45cda7d56f7641227a80a5957efdf.jpg" width="100%"
                             height="auto" />
                     </div>
                     <h2 class="mt-2">Chúc mừng bạn đã nhận được</h2>
+                    <h4 class="mt-2">Sản phẩm của bạn sẽ được giao trong ít ngày nữa</h4>
+                    {{-- <h5 class="mt-2"><a href="{{ route('showOrder', ['id_cart'=>$cart->id]) }}">Theo dõi đơn hàng tại đây</a></h5> --}}
                     <div class="row justify-content-center mb-5">
                         <div class="col-sm-5 col-6 p-2">
                             <div class="bg-white product-card-open-box rounded">
                                 <p class="font-weight-bold text-dark">Title Title Title</p>
                                 <span class="price bg-danger text-white font-weight-bold px-1 py-2 rounded-circle">Giá:
-                                        2.000.000 VND</span>
+                                    2.000.000 VND</span>
                                 <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRDKg2V4RwKxDjPmJV_1GTsOCeE1Iv_37TJPFte8uf0Gg&s"
-                                        class="mt-3 rounded-bottom">
+                                    class="mt-3 rounded-bottom">
                             </div>
                         </div>
                         <div class="col-sm-5 col-6 p-2">
                             <div class="bg-white product-card-open-box rounded">
                                 <p class="font-weight-bold text-dark">Title Title Title</p>
                                 <span class="price bg-danger text-white font-weight-bold px-1 py-2 rounded-circle">Giá:
-                                        2.000.000 VND</span>
+                                    2.000.000 VND</span>
                                 <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRDKg2V4RwKxDjPmJV_1GTsOCeE1Iv_37TJPFte8uf0Gg&s"
-                                        class="mt-3 rounded-bottom">
+                                    class="mt-3 rounded-bottom">
                             </div>
                         </div>
                         <div class="col-sm-5 col-6 p-2">
                             <div class="bg-white product-card-open-box rounded">
                                 <p class="font-weight-bold text-dark">Title Title Title</p>
                                 <span class="price bg-danger text-white font-weight-bold px-1 py-2 rounded-circle">Giá:
-                                        2.000.000 VND</span>
+                                    2.000.000 VND</span>
                                 <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRDKg2V4RwKxDjPmJV_1GTsOCeE1Iv_37TJPFte8uf0Gg&s"
-                                        class="mt-3 rounded-bottom">
+                                    class="mt-3 rounded-bottom">
                             </div>
                         </div>
                         <div class="col-sm-5 col-6 p-2">
                             <div class="bg-white product-card-open-box rounded">
                                 <p class="font-weight-bold text-dark">Title Title Title</p>
                                 <span class="price bg-danger text-white font-weight-bold px-1 py-2 rounded-circle">Giá:
-                                        2.000.000 VND</span>
+                                    2.000.000 VND</span>
                                 <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRDKg2V4RwKxDjPmJV_1GTsOCeE1Iv_37TJPFte8uf0Gg&s"
-                                        class="mt-3 rounded-bottom">
+                                    class="mt-3 rounded-bottom">
                             </div>
                         </div>
                     </div>
@@ -519,11 +526,13 @@
         // once the window loads, we are ready for some fireworks!
         window.onload = loop;
         $('#openBox').click(function(event) {
-            var id_cart = '{{$cart->id}}';
+            var id_cart = '{{ $cart->id }}';
             $.ajax({
                 method: 'POST',
-                url: '{{ route("openBoxPost", ["id_cart"=>$cart->id]) }}',
-                headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+                url: '{{ route('openBoxPost', ['id_cart' => $cart->id]) }}',
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
                 // data: $(this).serialize(),
                 success: function(response) {
                     setTimeout(function() {

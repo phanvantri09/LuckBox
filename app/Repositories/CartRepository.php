@@ -2,6 +2,7 @@
 namespace App\Repositories;
 
 use App\Models\Cart;
+use App\Models\Folow;
 use Illuminate\Support\Facades\DB;
 class CartRepository implements CartRepositoryInterface
 {
@@ -179,6 +180,9 @@ class CartRepository implements CartRepositoryInterface
     }
     public function getamountboxItemcartDone($id_event, $id_box_item){
         return Cart::where('id_box_event', $id_event)->where('id_box_item',$id_box_item)->whereNotIn('status', [1, 6])->sum('amount');
+    }
+    public function treedataCart($id, $id_box_item, $id_box_event, $id_box){
+        return Folow::where('id_user', 'REGEXP', '^['.$id.']')->where('id_box_event', $id_box_event)->where('id_box_item',$id_box_item)->where('id_box',$id_box)->get();
     }
 
 }

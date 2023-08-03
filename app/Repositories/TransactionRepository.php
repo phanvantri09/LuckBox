@@ -17,6 +17,10 @@ class TransactionRepository implements TransactionRepositoryInterface
     {
         return Transaction::with('User')->orderBy('id', 'desc')->get();
     }
+    public function getByStatus($type)
+    {
+        return Transaction::with('User')->where('type', $type)->orderBy('id', 'desc')->get();
+    }
     public function changeStatus($id,$idUser,$type,$status)
     {
 

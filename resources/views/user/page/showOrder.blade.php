@@ -15,16 +15,17 @@
                         height="auto" />
                 </div>
                 <div class="text-center">
-                    <a href="{{ route('boxInfo', ['id'=> $dataCart->id]) }}" class="text-decoration-none">
+                    <a href="{{ route('boxInfo', ['id' => $dataCart->id]) }}" class="text-decoration-none">
                         <h4 class="text-dark">{{ $dataCart->title }}</h4>
                     </a>
                 </div>
 
                 <div class="d-flex flex-column justify-content-between w-100 bg-gray px-2 py-2 rounded">
-                    <h4 class="text-center">Thông tin nhận hàng</h4>
+                    <h4 class="text-center">Thông tin mua hàng</h4>
                     <h5>Giá mua: <span class="text-danger">{{ number_format($dataCart->price_cart) }} VNĐ</span></h5>
                     <h5>Số lượng: <span class="text-danger">{{ $dataCart->amount }}</span></h5>
-                    <h5>Tổng tiền : <span class="text-danger">{{ number_format($dataCart->amount * $dataCart->price_cart) }} VNĐ</span></h5>
+                    <h5>Tổng tiền : <span class="text-danger">{{ number_format($dataCart->amount * $dataCart->price_cart) }}
+                            VNĐ</span></h5>
                 </div>
 
                 <div class="my-2 bg-gray px-2 py-2 rounded">
@@ -32,14 +33,16 @@
                     <p>Số điện thoại: <span class="text-danger">{{ $dataCart->number_phone }}</span></p>
                     <p>Email: <span class="text-danger">{{ $dataCart->email }}</span></p>
                     <p>Địa chỉ: <span class="text-danger">{{ $dataCart->address }}</span></p>
-                    </div>
-                <div class="w-100 px-lg-0 d-flex justify-content-center">
-                    <button type="submit" class="btn bg-orange text-white p-2 font-weight-bold">{{ $dataCart->status }}</button>
+                </div>
+               
+                <div class="w-100 px-lg-0 d-flex flex-column justify-content-center">
+                    <h4 class="text-center">Trạng thái đơn hàng</h4>
+                    <button type="submit"
+                        class="btn bg-orange text-white p-2 font-weight-bold">{{ $dataCart->status == 3 ? "Đợi admin duyệt giao hàng" : ($dataCart->status == 4 ? "Đang giao hàng" : ($dataCart->status == 5 ? "Đã nhận Hàng" : "Bị từ chối"))  }}</button>
                 </div>
             </div>
         </div>
     </div>
 @endsection
 @section('scripts')
-
 @endsection
