@@ -34,22 +34,21 @@
                             </div>
                             <div class="form-group">
                                 <label for="exampleFormControlInput2">Số điện thoại</label>
-                                <input type="tel" name="number_phone" class="form-control"
-                                    id="exampleFormControlInput2" placeholder="Số điện thoại"
+                                <input type="tel" name="number_phone" class="form-control" id="exampleFormControlInput2"
+                                    placeholder="Số điện thoại"
                                     value="{{ empty($getInfoUser->number_phone) ? '' : $getInfoUser->number_phone }}">
                             </div>
                             <div class="form-group">
                                 <label for="exampleFormControlInput3">Ngày sinh</label>
-                                <input type="date" name="birthdate" class="form-control"
-                                    id="exampleFormControlInput3" placeholder="Nguyễn Văn A"
+                                <input type="date" name="birthdate" class="form-control" id="exampleFormControlInput3"
+                                    placeholder="Nguyễn Văn A"
                                     value="{{ empty($getInfoUser->birthdate) ? '' : $getInfoUser->birthdate }}">
                             </div>
                             <div class="form-group">
                                 <label class="form-label" for="customFile">Hình ảnh</label>
-                                <input type="file" name="link_image"
-                                    class="form-control-file border rounded px-1 py-1"
-                                    alt="{{ empty($getInfoUser->link_image) ? '' : $getInfoUser->link_image }}"
-                                    id="customFile" />
+                                <input type="file" name="link_image" class="form-control-file border rounded px-1 py-1" id="image-input" accept="image/*">
+                                <img id="preview-image" 
+                                    src="{{ empty($getInfoUser->link_image) ? '' : $getInfoUser->link_image }}" alt="Preview" style="display: none; height:100px;">
                             </div>
                             @if ($errors->has('link_image'))
                                 <label class="text-danger">
@@ -177,5 +176,22 @@
                 }
             };
         }
+        document.getElementById('image-input').addEventListener('change', function(event) {
+            var input = event.target;
+
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+
+                reader.onload = function(e) {
+                    var previewImage = document.getElementById('preview-image');
+
+                    // Hiển thị hình ảnh xem trước
+                    previewImage.src = e.target.result;
+                    previewImage.style.display = 'block';
+                };
+
+                reader.readAsDataURL(input.files[0]);
+            }
+        });
     </script>
 @endsection

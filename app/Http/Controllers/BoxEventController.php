@@ -112,6 +112,7 @@ class BoxEventController extends Controller
                 'id_category' => $request->id_category
                 
             ];
+            
             $this->boxEventRepository->update($data, $id);
             return back()->with('success', 'Cập nhật thành công');
         }

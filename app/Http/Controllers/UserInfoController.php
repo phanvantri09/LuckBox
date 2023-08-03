@@ -91,6 +91,7 @@ class UserInfoController extends Controller
                 $imageName =  'AVT'.'_user'.'-'.$idUser.'-'. $time_string.'.'.$ext;
                 ConstCommon::addImageToStorage($file,$imageName);
                 $data = ['link_image' => $imageName];
+                ConstCommon::delImageToStorage($checkInfoUser->link_image);
                 $this->userInfoRepository->updateInfoUser($data, $idUser);    
             }
             $data = [

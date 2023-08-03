@@ -8,6 +8,7 @@ use App\Models\Category;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\SendMail;
+use Illuminate\Support\Facades\Storage;
 class ConstCommon {
      const ListTypeUser = ['user'=>111, 'admin'=>222, 'super_admin'=>333];
      const TypeUser = 111;
@@ -77,6 +78,9 @@ class ConstCommon {
      }
      public static function getLinkImageToStorage($name){
           return url('storage/images/'.$name);
+     }
+     public static function delImageToStorage($name){
+          return Storage::delete('images/'.$name);
      }
      public static function getCurrentTime(){
         $now = Carbon::now();

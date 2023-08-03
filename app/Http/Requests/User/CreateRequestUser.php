@@ -25,7 +25,11 @@ class CreateRequestUser extends FormRequest
     {
         return [
             'email' => 'required|unique:users',
-            'password' => 'required|min:8',
+            'password' =>  [
+                'required',
+                'min:8',
+                'regex:/^(?=.*[!@#$%^&*()\-_=+{};:,<.>ยง~`|[\]\\/"\'])/'
+            ],
         ];
     }
     public function messages()
@@ -35,6 +39,7 @@ class CreateRequestUser extends FormRequest
             'email.unique' => 'Đã tồn tại',
             'password.required' => 'Không để trống',
             'password.min' => 'Phải nhiều hơn 8 ký tự',
+            'password.regex' => 'Mật khẩu phải chứa ít nhất một ký tự đặc biệt'
         ];
     }
 }
