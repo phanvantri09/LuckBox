@@ -36,8 +36,8 @@
                 <b>Loại:</b> {{$data->category->title}}<br>
                 <b>Số lượng:</b> {{number_format($data->amount) }}<br>
                 <b>Giá tiền | VNĐ:</b> {{number_format($data->price) }} vnđ<br>
-                <b>Tạo bởi:</b> {{$data->userCreated->email}}<br>
-                <b>Sửa bởi:</b> {{$data->userUpdated->email}}
+                <b>Tạo bởi:</b> {{$data->userCreated->email ?? 'User tạo box này đã bị xóa'}}<br>
+                <b>Sửa bởi:</b> {{$data->userUpdated->email ?? 'User tạo box này đã bị xóa'}}
             </div>
             <!-- /.col -->
         </div>
