@@ -10,12 +10,18 @@
         <div class="collapse navbar-collapse justify-content-center" id="collapsibleNavbar">
             <ul class="navbar-nav">
                 <li class="nav-item">
-                    <a class="nav-link text-white" href="#">Link</a>
+                    <a class="nav-link text-white" href="{{ route('home') }}">Trang chủ</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link text-white" href="#">Link</a>
+                    <a class="nav-link text-white" href="{{ route('market') }}">Chợ</a>
                 </li>
-                <li class="nav-item dropdown">
+                <li class="nav-item">
+                    <a class="nav-link text-white" href="{{ route('home') }}">Liên hệ</a>
+                </li>
+                {{-- <li class="nav-item">
+                    <a class="nav-link text-white" href="{{ route('market') }}">Chợ</a>
+                </li> --}}
+                {{-- <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle text-white" href="#" id="navbardrop"
                         data-toggle="dropdown">
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor"
@@ -31,7 +37,7 @@
                         <a class="dropdown-item text-white" href="#">Link 2</a>
                         <a class="dropdown-item text-white" href="#">Link 3</a>
                     </div>
-                </li>
+                </li> --}}
             </ul>
         </div>
 		@auth

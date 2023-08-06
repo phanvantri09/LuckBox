@@ -8,13 +8,13 @@
         <div class="col-lg-3 col-sm-6 col-6 py-1">
             <h5 class="font-weight-bold">DANH MỤC</h5>
             <p class="mb-0">
-                <a href="">Home</a>
+                <a href="{{ route('home') }}">Trang chủ</a>
             </p>
             <p class="mb-0">
-                <a href="">Home</a>
+                <a href="{{ route('market') }}">Chợ</a>
             </p>
             <p class="mb-0">
-                <a href="">Home</a>
+                <a href="{{ route('home') }}">Liên hệ</a>
             </p>
         </div>
         <div class="col-lg-4 col-sm-6 col-6 py-1">
