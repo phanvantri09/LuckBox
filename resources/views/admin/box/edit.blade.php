@@ -73,12 +73,15 @@
                                 <div class="form-group">
                                     <label>Ảnh</label>
                                     <div class="custom-file">
-                                        <input name="image" type="file" class="custom-file-input" id="exampleInputFile">
+                                        <input onchange="readURL(this)" name="image" type="file" class="custom-file-input" id="exampleInputFile">
                                         <label class="custom-file-label" for="exampleInputFile">Chọn ảnh</label>
                                     </div>
                                     @error('image')
                                     <div class="alert alert-danger">{{ $errors->first('image') }}</div>
                                     @enderror
+                                    <div class="d-flex flex-row mt-4">
+                                        <img id="img-preview" style="width: 200px;height: 200px; object-fit: cover;" class="rounded" src="{{\App\Helpers\ConstCommon::getLinkImageToStorage($data->link_image)}}">
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -119,5 +122,22 @@
             // Summernote
             $('#summernoteDescription').summernote()
         })
+
+        let noimage =
+            "https://ami-sni.com/wp-content/themes/consultix/images/no-image-found-360x250.png";
+
+        function readURL(input) {
+            console.log(input.files);
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+                reader.onload = function (e) {
+                    $("#img-preview").attr("src", e.target.result);
+                };
+
+                reader.readAsDataURL(input.files[0]);
+            } else {
+                $("#img-preview").attr("src", noimage);
+            }
+        }
     </script>
 @endsection

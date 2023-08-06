@@ -108,9 +108,9 @@ class BoxController extends Controller
     {
         $currentUser = Auth::user();
         if ($request->hasFile('image')) {
-            $file = $request->file('image');
-            $path = Storage::disk('public')->putFileAs('images', $file, $file->getClientOriginalName());
-            $request->merge(['link_image' => $path]);
+            $nameImage = 'Box-'.ConstCommon::getCurrentTime().'.'.$request->image->extension();
+            ConstCommon::addImageToStorage($request->image, $nameImage );
+            $request->merge(['link_image' => $nameImage]);
         }
 
         $id_user_update = $currentUser->id;
