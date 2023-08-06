@@ -27,8 +27,8 @@
                                 </svg>
                             </button>
                         </span>
-                        <input type="number" id="quantity" name="quantity" class="form-control input-number text-center" readonly
-                            value="{{number_format($data->amount) }}" min="2" max="100" />
+                        <input type="number" id="quantity" name="quantity" class="form-control input-number text-center"
+                            readonly value="{{ number_format($data->amount) }}" min="2" max="100" />
                         <span class="input-group-btn">
                             <button type="button" class="quantity-right-plus btn btn-warning btn-number" data-type="plus"
                                 data-field="">
@@ -41,7 +41,7 @@
                         </span>
                     </div>
                     <div class="py-2">
-                        <h4 class="mb-0 text-danger">{{number_format($data->price) }}đ</h4>
+                        <h4 class="mb-0 text-danger">{{ number_format($data->price) }}đ</h4>
                     </div>
                     <a href="cart.html" class="text-decoration-none">
                         <button type="button" class="btn bg-orange font-weight-bold text-white btn-block btn-lg">
@@ -73,26 +73,32 @@
                 <h4>PHẦN THƯỞNG</h4>
                 <span>Gồm có 10 phần thưởng ngẫu nhiên khi mở box</span>
             </div>
-            <div class="row py-2">
+            <div class="row justify-content-center py-2">
                 <!-- gift -->
                 @foreach ($product->boxProducts as $key => $item)
-                <div class="col-md-6 col-6 py-2">
-                  <a href="{{ route('productDetails', ['id'=>$item->id]) }}" class="text-decoration-none text-dark">
-                    <div class="mx-1 d-md-flex bg-white product-card rounded">
-                        <div class="col-md-6 pb-3 px-md-0 px-1 text-center">
-                            <p class="font-weight-bold">
-                                {{$item->product->title}}
-                            </p>
-                            <span class="price bg-danger text-white font-weight-bold px-1 py-2 rounded-circle">Giá:
-                                {{number_format($item->product->price) }}đ</span>
-                        </div>
-                        <div class="col-md-6 px-0">
-                            <img class="rounded-right"
-                                src="{{\App\Helpers\ConstCommon::getLinkImageToStorage( isset($getAllByIDProductMain->getAllByIDProductMain($item->product->id)['link_image']) ? $getAllByIDProductMain->getAllByIDProductMain($item->product->id)['link_image'] : null)}}" />
-                        </div>
-                        </div>
-                    </a>
-                </div>
+                    <div class="col-lg-3 col-md-4 col-sm-6 col-6 py-2">
+                        <a href="{{ route('productDetails', ['id' => $item->id]) }}" class="text-decoration-none text-dark">
+                            <div class="mx-1 p-2 bg-white product-card rounded">
+                                <img class="rounded-right"
+                                    src="{{ \App\Helpers\ConstCommon::getLinkImageToStorage(isset($getAllByIDProductMain->getAllByIDProductMain($item->product->id)['link_image']) ? $getAllByIDProductMain->getAllByIDProductMain($item->product->id)['link_image'] : null) }}" />
+                                <div class="p-2">
+                                    <p class="mb-0 product-card-title">
+                                        {{ $item->product->title }}
+                                    </p>
+                                    <p class="text-danger font-weight-bold mb-0">
+                                        {{ number_format($item->product->price) }}đ</p>
+                                        <div>
+                                            <span class="fa fa-star checked"></span>
+                                            <span class="fa fa-star checked"></span>
+                                            <span class="fa fa-star checked"></span>
+                                            <span class="fa fa-star"></span>
+                                            <span class="fa fa-star"></span>
+                                        </div>
+                                </div>
+                                    <div class="product-card-detail px-2 py-1 rounded-bottom">Xem thêm</div>
+                            </div>
+                        </a>
+                    </div>
                 @endforeach
                 <!-- end gift -->
             </div>
@@ -100,6 +106,6 @@
     </div>
 @endsection
 @section('scripts')
-<script src="./js/countdown.js"></script>
-<script src="./js/quantity.js"></script>
+    <script src="./js/countdown.js"></script>
+    <script src="./js/quantity.js"></script>
 @endsection

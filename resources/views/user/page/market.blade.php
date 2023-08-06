@@ -7,15 +7,17 @@
             <p>LuckyBox | Chợ</p>
         </div>
     </div>
+    
     <div class="content-container py-4">
         <div class="container my-lg-2 my-0">
-            <div class="bg-orange-white row py-2 mb-2 border">
-                <div class="col-4 border-right text-center">
-                    <a class="text-dark font-weight-bold text-decoration-none" href="{{ route('market', ['type' => 1]) }}">Mới
+            <div class="row py-3 mb-2 border sort-market">
+                <div class="px-2 d-md-block d-none">Sắp xếp theo</div>
+                <div class="col-lg-2 col-md-3 col-4 text-center">
+                    <a class="text-dark font-weight-bold text-decoration-none {{ isset($_GET['type']) ? ($_GET['type'] == 1 ? 'active-sort' : '') : '' }}" href="{{ route('market', ['type' => 1]) }}">Mới
                         nhất</a>
                 </div>
-                <div class="col-4 border-right text-center">
-                    <a class="text-dark font-weight-bold text-decoration-none"
+                <div class="col-lg-2 col-md-3 col-4 text-center">
+                    <a class="text-dark font-weight-bold text-decoration-none {{ isset($_GET['type']) ? ($_GET['type'] == 2 ? 'active-sort' : '') : '' }}"
                         href="{{ route('market', ['type' => 2]) }}">Giá
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                             class="bi bi-arrow-down" viewBox="0 0 16 16">
@@ -23,8 +25,8 @@
                                 d="M8 1a.5.5 0 0 1 .5.5v11.793l3.146-3.147a.5.5 0 0 1 .708.708l-4 4a.5.5 0 0 1-.708 0l-4-4a.5.5 0 0 1 .708-.708L7.5 13.293V1.5A.5.5 0 0 1 8 1z" />
                         </svg></a>
                 </div>
-                <div class="col-4 text-center">
-                    <a class="text-dark font-weight-bold text-decoration-none"
+                <div class="col-lg-2 col-md-3 col-4 text-center">
+                    <a class="text-dark font-weight-bold text-decoration-none {{ isset($_GET['type']) ? ($_GET['type'] == 3 ? 'active-sort' : '') : '' }}"
                         href="{{ route('market', ['type' => 3]) }}">Giá
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                             class="bi bi-arrow-up" viewBox="0 0 16 16">
@@ -37,7 +39,7 @@
             <!-- desktop -->
             <div class="d-lg-block d-none">
                 @foreach ($dataCarts as $dataCart)
-                    <div class="row align-items-center bg-orange-white py-2 rounded mb-2 px-2">
+                    <div class="row align-items-center bg-orange-white py-2 rounded mb-2 px-2 market-content">
                         <div class="col-lg-2 px-1">
                             <img src="{{ \App\Helpers\ConstCommon::getLinkImageToStorage($dataCart->link_image) }}"
                                 width="100%" height="auto" />
@@ -61,6 +63,12 @@
                                     class="w-100 col-lg-2 px-lg-0">
                                     <button class="btn bg-orange text-white">Mua ngay</button>
                                 </a>
+
+                            @else
+                            <a href="{{ route('addToCartOld', ['id_cart_old' => $dataCart->id]) }}"
+                                class="w-100 col-lg-2 px-lg-0">
+                                <button class="btn bg-warning">Hủy bán</button>
+                            </a>
                             @endif
                         @else
                             <a href="{{ route('addToCartOld', ['id_cart_old' => $dataCart->id]) }}"
@@ -68,6 +76,7 @@
                                 <button class="btn bg-orange text-white">Mua ngay</button>
                             </a>
                         @endauth
+                        <div class="box-new bg-danger text-white px-1">New</div>
 
                     </div>
                 @endforeach
@@ -77,7 +86,7 @@
             <!-- mobile -->
             <div class="d-lg-none">
                 @foreach ($dataCarts as $dataCart)
-                    <div class="row bg-orange-white py-2 rounded mb-2 px-2">
+                    <div class="row bg-orange-white py-2 rounded mb-2 px-2 market-content">
                         <div class="col-md-3 col-sm-3 col-4 px-1">
                             <img src="{{ \App\Helpers\ConstCommon::getLinkImageToStorage($dataCart->link_image) }}"
                                 width="100%" height="auto" />
@@ -94,6 +103,12 @@
                                         class="w-100 px-lg-0">
                                         <button class="btn bg-orange text-white">Mua ngay</button>
                                     </a>
+
+                                @else
+                                <a href="{{ route('addToCartOld', ['id_cart_old' => $dataCart->id]) }}"
+                                    class="w-100 px-lg-0">
+                                    <button class="btn bg-warning">Hủy bán</button>
+                                </a>
                                 @endif
                             @else
                                 <a href="{{ route('addToCartOld', ['id_cart_old' => $dataCart->id]) }}"
@@ -102,6 +117,7 @@
                                 </a>
                             @endauth
                         </div>
+                        <div class="box-new bg-danger text-white px-1">New</div>
                     </div>
                 @endforeach
                 {!! $dataCarts->links() !!}
