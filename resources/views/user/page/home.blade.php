@@ -190,19 +190,27 @@
                     </marquee>
                 @else
                     @foreach ($products as $product)
-                        <div class="col-md-6 col-6 py-2">
+                        <div class="col-lg-3 col-md-4 col-sm-6 col-6 py-2">
                             <a href="{{ route('productDetails', ['id' => $product->id]) }}"
-                                class="mx-1 d-md-flex bg-white product-card rounded">
-                                <div class="col-md-6 pb-3 px-md-0 px-1 text-center">
-                                    <p class="font-weight-bold">
-                                        {{ $product->title }}
-                                    </p>
-                                    <span class="price bg-danger text-white font-weight-bold px-1 py-2 rounded-circle">Giá:
-                                        {{ number_format($product->price) }} VNĐ</span>
-                                </div>
-                                <div class="col-md-6 px-0">
+                                class="text-decoration-none text-dark">
+                                <div class="mx-1 p-2 bg-white product-card rounded">
                                     <img class="rounded-right"
                                         src="{{ \App\Helpers\ConstCommon::getLinkImageToStorage($product->link_image) }}" />
+                                    <div class="p-2">
+                                        <p class="mb-0 product-card-title">
+                                            {{ $product->title }}
+                                        </p>
+                                        <p class="text-danger font-weight-bold mb-0">
+                                            {{ number_format($product->price) }}đ</p>
+                                        <div>
+                                            <span class="fa fa-star checked"></span>
+                                            <span class="fa fa-star checked"></span>
+                                            <span class="fa fa-star checked"></span>
+                                            <span class="fa fa-star"></span>
+                                            <span class="fa fa-star"></span>
+                                        </div>
+                                    </div>
+                                    <div class="product-card-detail px-2 py-1 rounded-bottom">Xem thêm</div>
                                 </div>
                             </a>
                         </div>

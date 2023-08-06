@@ -158,7 +158,7 @@
                     <div class="d-flex">
                         <span class="bg-warning rounded-circle icon-stt">3</span>
                         <span class="pl-1">
-                            Sau khi nhập đủ thông tin, nhấp vào nút "Đã chuyển tiền, thông báo cho người bán" bên dưới.
+                            Sau khi nhập đủ thông tin, nhấp vào nút "Đã chuyển tiền".
                         </span>
                     </div>
                     <div class="row align-items-center justify-content-between mt-2">
@@ -166,8 +166,7 @@
                             <button class="btn bg-info font-weight-bold content-bank">Trợ giúp</button>
                         </a>
                         <a href="" class="col-8 text-right">
-                            <button class="btn bg-warning font-weight-bold content-bank">Đã chuyển tiền, thông báo cho
-                                người bán</button>
+                            <button class="btn bg-warning font-weight-bold content-bank">Đã chuyển tiền</button>
                         </a>
                     </div>
                 </form>
