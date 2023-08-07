@@ -54,9 +54,9 @@
                                 $chenhlech = ($dataCart->price_cart * 6) / 100 + $dataCart->price_cart;
                             @endphp
                             <h5>Đơn giá: <span class="font-weight-bold text-danger">{{ number_format($chenhlech) }}
-                                    VNĐ</span></h5>
+                                    </span>VNĐ</h5>
+                                <h5 class="text-dark">Còn lại: <span class="font-weight-bold text-danger">{{ $dataCart->amount }}</span></h5>
                         </div>
-                        {{-- @dd($dataCart->id_user_create != Auth::user()->id, $dataCart->id_user_create, Auth::user()->id) --}}
                         @auth
                             @if ($dataCart->id_user_create != Auth::user()->id)
                                 <a href="{{ route('addToCartOld', ['id_cart_old' => $dataCart->id]) }}"
@@ -65,7 +65,7 @@
                                 </a>
 
                             @else
-                            <a href="{{ route('addToCartOld', ['id_cart_old' => $dataCart->id]) }}"
+                            <a href="{{ route('stopMarket', ['id_cart' => $dataCart->id]) }}"
                                 class="w-100 col-lg-2 px-lg-0">
                                 <button class="btn bg-warning">Hủy bán</button>
                             </a>
@@ -105,7 +105,7 @@
                                     </a>
 
                                 @else
-                                <a href="{{ route('addToCartOld', ['id_cart_old' => $dataCart->id]) }}"
+                                <a href="{{ route('stopMarket', ['id_cart' => $dataCart->id]) }}"
                                     class="w-100 px-lg-0">
                                     <button class="btn bg-warning">Hủy bán</button>
                                 </a>

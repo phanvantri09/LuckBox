@@ -21,6 +21,7 @@ class Cart extends Model
         'amount',
         'price_cart',
         'order_number',
+        'id_product_choese'
     ];
     public function user()
     {

@@ -82,6 +82,7 @@ class PageController extends Controller
         } else {
             $dataCarts = $this->cartRepository->getAllByStatusmartket();
         }
+        // dd($dataCarts);
         return view('user.page.market', compact(['dataCarts']));
     }
     public function infoCardPay()

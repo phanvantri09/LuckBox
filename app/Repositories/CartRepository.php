@@ -93,12 +93,16 @@ class CartRepository implements CartRepositoryInterface
     public function getInforBillOderUser($id_user, $id_cart){
         return DB::table('carts')->select('carts.*', 'box.title', 'box.link_image', 'box.price',
             'bills.amount as bills_amount', 'bills.total as bills_total', 'bills.name',
-            'bills.number_phone', 'bills.address', 'users.email')
+            'bills.number_phone', 'bills.address', 'users.email',
+            'products.title' , 'products.id as id_product'  , 'images.link_image as product_link_image' )
             ->leftJoin('box', 'carts.id_box', '=', 'box.id')
             ->leftJoin('bills', 'carts.id', '=', 'bills.id_cart')
             ->leftJoin('users', 'carts.id_user_create', '=', 'users.id')
+            ->leftJoin('products', 'carts.id_product_choese', '=', 'products.id')
+            ->leftJoin('images', 'carts.id_product_choese', '=', 'images.id_product')
             ->where('carts.id', $id_cart)
             ->where('carts.id_user_create', $id_user)
+            ->where('images.type','=', 1)
             ->first();
     }
 

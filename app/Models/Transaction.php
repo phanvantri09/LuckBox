@@ -19,7 +19,8 @@ class Transaction extends Model
         'card_name',
         'card_number',
         'transaction_content',
-        'status'
+        'status', 
+        'id_cart'
     ];
     public function User(){
         return $this->belongsTo(User::class, 'id_user', 'id');

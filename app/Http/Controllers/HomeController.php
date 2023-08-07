@@ -129,7 +129,7 @@ class HomeController extends Controller
                 $products = $this->productRepository->getByArrayID($cacheProduct->pluck('id_product')->toArray());
                 $imageSlide = $this->productRepository->getImageSlide($products->pluck('id')->toArray())->pluck('link_image');
             }
-            $countSale = $this->cartRepository->getamountboxItemcartDone($event->id, $cacheBoxItem->id);
+            $countSale = empty($cacheBoxItem) ? 0 : $this->cartRepository->getamountboxItemcartDone($event->id, $cacheBoxItem->id);
         }
 
         return view('user.page.home', compact(['event','cacheBoxItem', 'cachebox',

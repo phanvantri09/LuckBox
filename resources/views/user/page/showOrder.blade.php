@@ -27,6 +27,12 @@
                     <h5>Tổng tiền : <span class="text-danger">{{ number_format($dataCart->amount * $dataCart->price_cart) }}
                             VNĐ</span></h5>
                 </div>
+                <div class=" my-2 d-flex flex-column  align-items-center  justify-content-between w-100 bg-gray px-2 py-2 rounded">
+                    <h4 class="text-center">Thông tin sản phẩm</h4>
+                    <h5><span class="text-danger">{{$dataCart->title}}</span></h5>
+                    <img src="{{ \App\Helpers\ConstCommon::getLinkImageToStorage($dataCart->product_link_image) }}" width="40%"
+                    height="auto" alt="">
+                </div>
 
                 <div class="my-2 bg-gray px-2 py-2 rounded">
                     <h4 class="text-center">Thông tin nhận hàng</h4>

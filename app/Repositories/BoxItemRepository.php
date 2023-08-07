@@ -71,11 +71,13 @@ class BoxItemRepository implements BoxItemRepositoryInterface
     public function checkAndAutoUpdateStatus($id_event, $time){
         $data = Box_item::where('time_start', '<=', $time)->where('time_end', '>=', $time)->where('id_box_event', $id_event)->first();
         if(empty($data)){
-            $data = Box_item::where('time_end', '<', $time)->where('id_box_event', $id_event)->first();
-            if(!empty($data)){
-                if($data->status != 3){
-                    $data->status = 3;
-                    $data->save();
+            $datas = Box_item::where('time_end', '<', $time)->where('id_box_event', $id_event)->get();
+            if(!empty($datas[0])){
+                foreach ($datas as $key => $data) {
+                    if($data->status != 3){
+                        $data->status = 3;
+                        $data->save();
+                    }
                 }
             }
         } else {

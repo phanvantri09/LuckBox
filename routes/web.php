@@ -92,7 +92,7 @@ Route::group(['prefix' => '/'], function () {
             Route::get('/cong-tru-gio-hang/{id_cart}/{type}','cartUpdateAmount')->name('cartUpdateAmount');
             Route::get('/them-vao-gio-hang-co-id/{id_cart_old}','addToCartOld')->name('addToCartOld');
             Route::get('/gio-hang','cart')->name('cart');
-            Route::get('/thanh-toán','checkout')->name('checkout');
+            Route::get('/thanh-toan','checkout')->name('checkout');
             Route::post('/thanh-toán-post','checkoutPost')->name('checkoutPost');
             Route::post('/hoan-tat-thanh-toan','infoCardPayPost')->name('infoCardPayPost');
             Route::get('/hop-mu','purchaseOrder')->name('purchaseOrder');
@@ -103,6 +103,7 @@ Route::group(['prefix' => '/'], function () {
             Route::post('/xac-nhan-gui-ban','sendToMarketPost')->name('sendToMarketPost');
             Route::get('/danh-sach-don-hang','listOrder')->name('listOrder');
             Route::get('/thong-tin-don-hang/{id_cart}','showOrder')->name('showOrder');
+            Route::get('/ngung-ban/{id_cart}','stopMarket')->name('stopMarket');
         });
     });
 

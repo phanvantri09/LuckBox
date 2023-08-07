@@ -31,6 +31,7 @@ class CreateCartsTable extends Migration
             $table->bigInteger('amount');
             $table->bigInteger('price_cart')->nullable();
             $table->bigInteger('order_number')->nullable();
+            $table->integer('id_product_choese')->nullable();
             $table->timestamps();
         });
     }

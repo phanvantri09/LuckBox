@@ -168,14 +168,14 @@
                     </div>
                 </div>
                 <div class="col-md-5 px-0 content-home d-flex justify-content-center align-content-center">
-                    <img src="dist/img/flashsale.png" alt="" />
-                    <h3 style="
+                    <img id="myImage" src="dist/img/flashsale.png" alt="" />
+                    {{-- <h3 style="
                     font-weight: bold; 
                     text-shadow: -1px 1px 0 #000,
                                 1px 1px 0 #000,
                                 1px -1px 0 #000,
                                 -1px -1px 0 #000;"
-                        class="text-block" id="time-event">Ngày - Giờ - Phút - Piây</h3>
+                        class="text-block" id="time-event">Ngày - Giờ - Phút - Piây</h3> --}}
                 </div>
             </div>
             <div class="mx-1 py-2 bg-danger-orange text-white text-center">
@@ -225,6 +225,13 @@
 @section('scripts')
     <script>
         $(document).ready(function() {
+            function formatNumberWithLeadingZero(number) {
+            if (number < 10) {
+                return "0" + number;
+            } else {
+                return number.toString();
+            }
+            }
             var time = '';
 
             @if ($timeEventInCase)
@@ -257,9 +264,9 @@
 
                     // Time calculations for days, hours, minutes and seconds
                     // var days = Math.floor(distance / (1000 * 60 * 60 * 24));
-                    var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-                    var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-                    var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+                    var hours = formatNumberWithLeadingZero(Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)));
+                    var minutes = formatNumberWithLeadingZero(Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60)));
+                    var seconds = formatNumberWithLeadingZero(Math.floor((distance % (1000 * 60)) / 1000));
 
                     // Output the result in an element with id="demo"
                     document.getElementById("countdown").innerHTML = hours + ": " +
@@ -290,50 +297,78 @@
             var timenowEvent = new Date().getTime();
 
             // Find the distance between now and the count down date
-            var distanceTimeEvent = countDownDateEvent - timenowEvent;
-            if (distanceTimeEvent < 0) {
-                document.getElementById("time-event").innerHTML = "00:00:00";
-            } else {
-                // Update the count down every 1 second
-                var x = setInterval(function() {
+            // var distanceTimeEvent = countDownDateEvent - timenowEvent;
+            // if (distanceTimeEvent < 0) {
+            //     document.getElementById("time-event").innerHTML = "00:00:00";
+            // } else {
+            //     // Update the count down every 1 second
+            //     var x = setInterval(function() {
 
-                    // Get today's date and time
-                    var nowEvent = new Date().getTime();
+            //         // Get today's date and time
+            //         var nowEvent = new Date().getTime();
 
-                    // Find the distance between now and the count down date
-                    var distanceEvent = countDownDateEvent - nowEvent;
+            //         // Find the distance between now and the count down date
+            //         var distanceEvent = countDownDateEvent - nowEvent;
 
-                    // Time calculations for days, hours, minutes and seconds
-                    var days = Math.floor(distanceEvent / (1000 * 60 * 60 * 24));
-                    var hoursE = Math.floor((distanceEvent % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-                    var minutesE = Math.floor((distanceEvent % (1000 * 60 * 60)) / (1000 * 60));
-                    var secondsE = Math.floor((distanceEvent % (1000 * 60)) / 1000);
+            //         // Time calculations for days, hours, minutes and seconds
+            //         var days = Math.floor(distanceEvent / (1000 * 60 * 60 * 24));
+            //         var hoursE = formatNumberWithLeadingZero(Math.floor((distanceEvent % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)));
+            //         var minutesE = formatNumberWithLeadingZero(Math.floor((distanceEvent % (1000 * 60 * 60)) / (1000 * 60)));
+            //         var secondsE = formatNumberWithLeadingZero(Math.floor((distanceEvent % (1000 * 60)) / 1000));
 
-                    // Output the result in an element with id="demo"
+            //         // Output the result in an element with id="demo"
 
-                    if (timeEventStart !== null) {
-                        document.getElementById("time-event").innerHTML = 'Sắp mở<br>' + days + " ngày " +
-                            hoursE + ": " +
-                            minutesE + ": " + secondsE;
-                    }
-                    if (timeEventEnd !== null) {
-                        document.getElementById("time-event").innerHTML = 'Còn lại<br>' + days + " ngày " +
-                            hoursE + ": " +
-                            minutesE + ": " + secondsE;
-                    }
+            //         if (timeEventStart !== null) {
+            //             document.getElementById("time-event").innerHTML = 'Sắp mở<br>' + days + " ngày " +
+            //                 hoursE + ": " +
+            //                 minutesE + ": " + secondsE;
+            //         }
+            //         if (timeEventEnd !== null) {
+            //             document.getElementById("time-event").innerHTML = 'Còn lại<br>' + days + " ngày " +
+            //                 hoursE + ": " +
+            //                 minutesE + ": " + secondsE;
+            //         }
 
 
-                    // If the count down is over, write some text
-                    if (distance < 0) {
-                        clearInterval(x);
-                        // location.reload();
-                        document.getElementById("time-event").innerHTML =
-                            "Đã mở bán vui lòng khởi động lại trang web";
-                    }
-                }, 1000);
-            }
+            //         // If the count down is over, write some text
+            //         if (distance < 0) {
+            //             clearInterval(x);
+            //             // location.reload();
+            //             document.getElementById("time-event").innerHTML =
+            //                 "Đã mở bán vui lòng khởi động lại trang web";
+            //         }
+            //     }, 1000);
+            // }
 
             // , 'timeEventStart', 'timeEventEnd'
+
+            function startShake() {
+            var image = document.getElementById("myImage");
+            image.classList.add("shake");
+            }
+
+            function stopShake() {
+            var image = document.getElementById("myImage");
+            image.classList.remove("shake");
+            }
+
+            // Kích hoạt hiệu ứng rung sau 5 giây và lặp lại sau mỗi 5 giây
+            setInterval(function() {
+            startShake();
+            setTimeout(stopShake, 2000); // Dừng hiệu ứng sau 0.5 giây
+            }, 5000);
+            // function openGift() {
+            // var giftBox = document.getElementById("giftBox");
+            // giftBox.style.animation = "none";
+            // giftBox.style.backgroundColor = "yellow";
+
+            // setTimeout(function() {
+            //     giftBox.innerHTML = "🎉";
+            // }, 500);
+            // }
+
+            // setTimeout(openGift, 2000);
+            
         });
     </script>
     <script src="./js/quantity.js"></script>
