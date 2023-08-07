@@ -67,7 +67,7 @@
   background-color: #f53d2d;
   color: #fff;
 }
-.product-card .checked {
+.product-card .checked, .product-card-box .checked {
   color: orange;
 }
 .title-page p{
