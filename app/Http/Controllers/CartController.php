@@ -163,7 +163,7 @@ class CartController extends Controller
                 'id_user' => $user->id,
                 'id_admin_accept' => null,
                 'type' => 3,
-                'total'=> $request->total,
+                'total'=> $cart->amount * $cart->price_cart,
                 'status'=> 2
                 , 'card_name'=> null
                 , 'bank'=> null
@@ -177,7 +177,6 @@ class CartController extends Controller
 
             $this->boxItemRepository->updateAmount($request->id_box_item, $request->amount);
 
-            
             if (!empty($cart->id_cart_old)) {
                 // trừ amount cart của cart old
                 $cartOld = $this->cartRepository->show($cart->id_cart_old);
@@ -209,10 +208,10 @@ class CartController extends Controller
                     , 'card_name'=> null
                     , 'bank'=> null
                     , 'card_number'=> null
-                    , 'transaction_content'=> null, 
+                    , 'transaction_content'=> null,
                     'id_cart' => $request->id_cart
                 ];
-                
+
                 $dataTransactionPlusUser2  = [
                     'id_user' => $cartOld->id_user_create,
                     'id_admin_accept' => null,
@@ -235,7 +234,7 @@ class CartController extends Controller
 
                 foreach (explode(',', $folowOld->id_user) as $key => $id_us) {
                     // kiểm tra khác user bán
-                    if ($id_us !== $cartOld->id_user_create) {
+                    if ($id_us != $cartOld->id_user_create) {
                         $userPlusMoney = $this->userRepository->find($id_us);
 
                         $dataTransactionPlus = [
@@ -274,7 +273,24 @@ class CartController extends Controller
             }
             $user->balance = $user->balance - $request->total;
             $user->save();
-
+            if (!empty($user->id_user_referral)) {
+                $userReferral = $this->userRepository->find($user->id_user_referral);
+                $moneyUserReferral = $userReferral->balance + ($request->total * 0.2 / 100);
+                $dataTransactionPlusUserreferral  = [
+                    'id_user' => $user->id_user_referral,
+                    'id_admin_accept' => null,
+                    'type' => 6,
+                    'total'=> $request->total * 0.2 / 100,
+                    'status'=> 2
+                    , 'card_name'=> null
+                    , 'bank'=> null
+                    , 'card_number'=> null
+                    , 'transaction_content'=> null,
+                    'id_cart' =>$request->id_cart
+                ];
+                $this->transactionRepository->create($dataTransactionPlusUserreferral);
+                $this->userRepository->update(['balance' => $moneyUserReferral], $user->id_user_referral);
+            }
             DB::commit();
         } catch (\Exception $e){
             report($e);
@@ -413,20 +429,20 @@ class CartController extends Controller
             ];
             $this->cartRepository->create($data);
 
-            $phiguiban = 100000;
-            $user->balance = $user->balance - $phiguiban;
-            $user->save();
-            $transaction = $this->transactionRepository->create([
-                'id_user' => $user->id,
-                'id_admin_accept' => null,
-                'type' => 4,
-                'total'=> $phiguiban,
-                'status'=> 2
-                , 'card_name'=> null
-                , 'bank'=> null
-                , 'card_number'=> null
-                , 'transaction_content'=> null
-                ]);
+            // $phiguiban = 100000;
+            // $user->balance = $user->balance - $phiguiban;
+            // $user->save();
+            // $transaction = $this->transactionRepository->create([
+            //     'id_user' => $user->id,
+            //     'id_admin_accept' => null,
+            //     'type' => 4,
+            //     'total'=> $phiguiban,
+            //     'status'=> 2
+            //     , 'card_name'=> null
+            //     , 'bank'=> null
+            //     , 'card_number'=> null
+            //     , 'transaction_content'=> null
+            //     ]);
             DB::commit();
         } catch (\Exception $e){
             report($e);
@@ -443,7 +459,6 @@ class CartController extends Controller
     public function showOrder($id_cart){
         $user = Auth::user();
         $dataCart = $this->cartRepository->getInforBillOderUser($user->id, $id_cart);
-        // dd($dataCart);
         return view('user.page.showOrder', compact(['dataCart']));
     }
     public function stopMarket($id_cart){

@@ -57,7 +57,7 @@
                     <h5>Giá gửi bán: <br><span class="text-danger">{{ number_format($chenhlech) }} VNĐ</span></h5>
                 </div>
                 <div class="my-2">
-                    Phí gửi bán: <span class="text-danger">100.000 VND</span>
+                    Phí gửi bán: <span class="text-danger">Không mất phí</span>
                 </div>
                 <div class="w-100 px-lg-0 d-flex justify-content-center">
                     <button type="submit" class="btn bg-orange text-white p-2 font-weight-bold">Xác nhận gửi bán</button>
