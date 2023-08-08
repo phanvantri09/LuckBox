@@ -35,4 +35,7 @@ class BillRepository implements BillRepositoryInterface
     public function getAllByType($type){
         return Bill::where('type', $type)->get();
     }
+    public function showByIdCart($id_cart){
+        return Bill::where('id_cart', $id_cart)->first();
+    }
 }

@@ -82,4 +82,8 @@ class TransactionRepository implements TransactionRepositoryInterface
         return Transaction::where('id_user',$id_user)->orderBy('created_at', 'desc')->get();
     }
 
+    public function getByIDCart($id_cart, $id_user){
+        return Transaction::whereIn('id_cart',$id_cart)->whereIn('type', [5])->where('id_user', $id_user)->get();
+    }
+
 }

@@ -105,7 +105,15 @@ class CartRepository implements CartRepositoryInterface
             ->where('images.type','=', 1)
             ->first();
     }
-
+    public function getAllDataByIDUserAndStatusTreeData($id_user, $status)
+    {
+        return DB::table('carts')->select('carts.*', 'box.title', 'box.link_image', 'box.price')
+            ->leftJoin('box', 'carts.id_box', '=', 'box.id')
+            ->where('carts.id_user_create','=', $id_user)
+            ->where('status', $status)
+            ->where('carts.amount','>=', 0)
+            ->orderBy('created_at','ASC')->get();
+    }
     public function getAllDataByIDUserAndStatus($id_user, $status)
     {
         if ($status == null && $id_user != null) {
@@ -186,7 +194,9 @@ class CartRepository implements CartRepositoryInterface
         return Cart::where('id_box_event', $id_event)->where('id_box_item',$id_box_item)->whereNotIn('status', [1, 6])->sum('amount');
     }
     public function treedataCart($id, $id_box_item, $id_box_event, $id_box){
-        return Folow::where('id_user', 'REGEXP', '^['.$id.']')->where('id_box_event', $id_box_event)->where('id_box_item',$id_box_item)->where('id_box',$id_box)->get();
+        return Folow::where('id_user', 'LIKE','%'.$id.',%')->where('id_box_event', $id_box_event)->where('id_box_item',$id_box_item)->where('id_box',$id_box)->get();
+
+        // return Folow::where('id_user', 'REGEXP', '^['.$id.']')->where('id_box_event', $id_box_event)->where('id_box_item',$id_box_item)->where('id_box',$id_box)->get();
     }
 
 }

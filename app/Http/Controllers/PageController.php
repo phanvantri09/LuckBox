@@ -21,6 +21,7 @@ use App\Repositories\PageRepositoryInterface;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
+use Carbon\Carbon;
 class PageController extends Controller
 {
     protected $pageRepository;
@@ -82,8 +83,13 @@ class PageController extends Controller
         } else {
             $dataCarts = $this->cartRepository->getAllByStatusmartket();
         }
-        // dd($dataCarts);
-        return view('user.page.market', compact(['dataCarts']));
+        date_default_timezone_set('Asia/Ho_Chi_Minh');
+        $currentDateTime = Carbon::now();
+        $currentDateTime3 = Carbon::now();
+        $currentDateTime2 = Carbon::now();
+        $threeDaysAgo = $currentDateTime2->subDays(3);
+        $sevenDaysAgo = $currentDateTime3->subDays(7);
+        return view('user.page.market', compact(['dataCarts','currentDateTime','threeDaysAgo', 'sevenDaysAgo']));
     }
     public function infoCardPay()
     {
@@ -190,13 +196,20 @@ class PageController extends Controller
     {
         $user = Auth::user();
         $cart = $this->cartRepository->show($id_cart);
+        $allProductItem = $this->boxProductRepository->getAllProductByBox($cart->id_box)->pluck('id_product');
+        $allProduct = $this->productRepository->getByArrayID($allProductItem);
+        
+        $arrayBoxpPoduct = $this->boxProductRepository->getAllByIdBoxChoese($cart->id_box)->pluck('id_product')->toArray();
+        
+        $productChoese = $this->productRepository->show($arrayBoxpPoduct[Array_rand($arrayBoxpPoduct)]);
+        $productChoeseImage = $this->imageRepository->getAllByIDProductMain($productChoese->id);
         if ($cart->status == 2 || $cart->status == 11) {
-            return view('user.page.box.open', compact(['cart']));
+            return view('user.page.box.opennew', compact(['cart', 'allProduct', 'productChoese', 'productChoeseImage']));
         } else {
             return redirect()->route('home')->with('error',"Họp này không thể mở");
         }
     }
-    public function openBoxPost($id_cart){
+    public function openBoxPost($id_cart, $id_product){
         $user = Auth::user();
         DB::beginTransaction();
         try {
@@ -217,12 +230,13 @@ class PageController extends Controller
                         'amount' => 1,
                         'price_cart' => $cart->price_cart ,
                         'order_number' => $cart->order_number,
+                        'id_product_choese' => $id_product,
                     ];
                     $cartNew = $this->cartRepository->create($data);
                     $this->cartRepository->update(['amount'=> $cart->amount - 1], $cart->id);
                 } else {
                     // nếu = 1 thì chuyển trạng thía thôi
-                    $this->cartRepository->update(['status'=> 3], $cart->id);
+                    $this->cartRepository->update(['status'=> 3, 'id_product_choese' => $id_product], $cart->id);
                 }
             } else {
                 return response()->json([

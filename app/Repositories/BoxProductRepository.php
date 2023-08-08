@@ -44,6 +44,9 @@ class BoxProductRepository implements BoxProductRepositoryInterface
     public function getAllProduct($id_box){
         return Box::with('boxProducts', 'boxProducts.product')->findOrFail($id_box);
     }
+    public function getAllProductByBox($id_box){
+        return Box_product::where('id_box',$id_box)->get();
+    }
 
     public function getAllProductNotInBox($id_box){
         return Product::whereNotIn('id', function ($query) use ($id_box) {

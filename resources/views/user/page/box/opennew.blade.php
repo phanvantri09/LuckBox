@@ -24,212 +24,93 @@
             <div class="giftbox">🎉</div>
         </div>
         <div class="row justify-content-center p-2">
-            <div class="product-card-box p-2">
-                <div class="bg-white rounded p-2">
-                    <div class="opacity-75">
-                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRDKg2V4RwKxDjPmJV_1GTsOCeE1Iv_37TJPFte8uf0Gg&s"
-                            class="mt-3 rounded-bottom">
-                        <p class="mb-0 product-card-title">Title Title Title</p>
-                        <p class="text-danger font-weight-bold mb-0">
-                            2.000.000 VND</p>
-                        <div>
-                            <span class="fa fa-star checked"></span>
-                            <span class="fa fa-star checked"></span>
-                            <span class="fa fa-star checked"></span>
-                            <span class="fa fa-star"></span>
-                            <span class="fa fa-star"></span>
+            @foreach ($allProduct as $product)
+                <div class="col-lg-3 col-md-4 col-sm-6 col-12 py-2">
+                    <div class="product-card-box p-2">
+                        <div class="bg-white rounded p-2">
+                            <div class="opacity-75">
+                                <img src="{{\App\Helpers\ConstCommon::getLinkImageToStorage($product->link_image)}}"
+                                    class="mt-3 rounded-bottom">
+                                <p class="mb-0 product-card-title">{{ $product->title }}</p>
+                                <p class="text-danger font-weight-bold mb-0">
+                                    {{ number_format($product->price) }} VNĐ</p>
+                                <div>
+                                    <span class="fa fa-star checked"></span>
+                                    <span class="fa fa-star checked"></span>
+                                    <span class="fa fa-star checked"></span>
+                                    <span class="fa fa-star checked"></span>
+                                    <span class="fa fa-star checked"></span>
+                                </div>
+    
+                            </div>
                         </div>
-
                     </div>
                 </div>
-            </div>
-            <div class="product-card-box p-2">
-                <div class="bg-white rounded p-2">
-                    <div class="opacity-75">
-                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRDKg2V4RwKxDjPmJV_1GTsOCeE1Iv_37TJPFte8uf0Gg&s"
-                            class="mt-3 rounded-bottom">
-                        <p class="mb-0 product-card-title">Title Title Title</p>
-                        <p class="text-danger font-weight-bold mb-0">
-                            2.000.000 VND</p>
-                        <div>
-                            <span class="fa fa-star checked"></span>
-                            <span class="fa fa-star checked"></span>
-                            <span class="fa fa-star checked"></span>
-                            <span class="fa fa-star"></span>
-                            <span class="fa fa-star"></span>
-                        </div>
-
-                    </div>
-                </div>
-            </div>
-            <div class="product-card-box p-2">
-                <div class="bg-white rounded p-2">
-                    <div class="opacity-75">
-                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRDKg2V4RwKxDjPmJV_1GTsOCeE1Iv_37TJPFte8uf0Gg&s"
-                            class="mt-3 rounded-bottom">
-                        <p class="mb-0 product-card-title">Title Title Title</p>
-                        <p class="text-danger font-weight-bold mb-0">
-                            2.000.000 VND</p>
-                        <div>
-                            <span class="fa fa-star checked"></span>
-                            <span class="fa fa-star checked"></span>
-                            <span class="fa fa-star checked"></span>
-                            <span class="fa fa-star"></span>
-                            <span class="fa fa-star"></span>
-                        </div>
-
-                    </div>
-                </div>
-            </div>
-            <div class="product-card-box p-2">
-                <div class="bg-white rounded p-2">
-                    <div class="opacity-75">
-                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRDKg2V4RwKxDjPmJV_1GTsOCeE1Iv_37TJPFte8uf0Gg&s"
-                            class="mt-3 rounded-bottom">
-                        <p class="mb-0 product-card-title">Title Title Title</p>
-                        <p class="text-danger font-weight-bold mb-0">
-                            2.000.000 VND</p>
-                        <div>
-                            <span class="fa fa-star checked"></span>
-                            <span class="fa fa-star checked"></span>
-                            <span class="fa fa-star checked"></span>
-                            <span class="fa fa-star"></span>
-                            <span class="fa fa-star"></span>
-                        </div>
-
-                    </div>
-                </div>
-            </div>
-            <div class="product-card-box p-2">
-                <div class="bg-white rounded p-2">
-                    <div class="opacity-75">
-                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRDKg2V4RwKxDjPmJV_1GTsOCeE1Iv_37TJPFte8uf0Gg&s"
-                            class="mt-3 rounded-bottom">
-                        <p class="mb-0 product-card-title">Title Title Title</p>
-                        <p class="text-danger font-weight-bold mb-0">
-                            2.000.000 VND</p>
-                        <div>
-                            <span class="fa fa-star checked"></span>
-                            <span class="fa fa-star checked"></span>
-                            <span class="fa fa-star checked"></span>
-                            <span class="fa fa-star"></span>
-                            <span class="fa fa-star"></span>
-                        </div>
-
-                    </div>
-                </div>
-            </div>
-            <div class="product-card-box p-2">
-                <div class="bg-white rounded p-2">
-                    <div class="opacity-75">
-                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRDKg2V4RwKxDjPmJV_1GTsOCeE1Iv_37TJPFte8uf0Gg&s"
-                            class="mt-3 rounded-bottom">
-                        <p class="mb-0 product-card-title">Title Title Title</p>
-                        <p class="text-danger font-weight-bold mb-0">
-                            2.000.000 VND</p>
-                        <div>
-                            <span class="fa fa-star checked"></span>
-                            <span class="fa fa-star checked"></span>
-                            <span class="fa fa-star checked"></span>
-                            <span class="fa fa-star"></span>
-                            <span class="fa fa-star"></span>
-                        </div>
-
-                    </div>
-                </div>
-            </div>
-            <div class="product-card-box p-2">
-                <div class="bg-white rounded p-2">
-                    <div class="opacity-75">
-                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRDKg2V4RwKxDjPmJV_1GTsOCeE1Iv_37TJPFte8uf0Gg&s"
-                            class="mt-3 rounded-bottom">
-                        <p class="mb-0 product-card-title">Title Title Title</p>
-                        <p class="text-danger font-weight-bold mb-0">
-                            2.000.000 VND</p>
-                        <div>
-                            <span class="fa fa-star checked"></span>
-                            <span class="fa fa-star checked"></span>
-                            <span class="fa fa-star checked"></span>
-                            <span class="fa fa-star"></span>
-                            <span class="fa fa-star"></span>
-                        </div>
-
-                    </div>
-                </div>
-            </div>
-            <div class="product-card-box p-2">
-                <div class="bg-white rounded p-2">
-                    <div class="opacity-75">
-                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRDKg2V4RwKxDjPmJV_1GTsOCeE1Iv_37TJPFte8uf0Gg&s"
-                            class="mt-3 rounded-bottom">
-                        <p class="mb-0 product-card-title">Title Title Title</p>
-                        <p class="text-danger font-weight-bold mb-0">
-                            2.000.000 VND</p>
-                        <div>
-                            <span class="fa fa-star checked"></span>
-                            <span class="fa fa-star checked"></span>
-                            <span class="fa fa-star checked"></span>
-                            <span class="fa fa-star"></span>
-                            <span class="fa fa-star"></span>
-                        </div>
-
-                    </div>
-                </div>
-            </div>
-            <div class="product-card-box p-2">
-                <div class="bg-white rounded p-2">
-                    <div class="opacity-75">
-                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRDKg2V4RwKxDjPmJV_1GTsOCeE1Iv_37TJPFte8uf0Gg&s"
-                            class="mt-3 rounded-bottom">
-                        <p class="mb-0 product-card-title">Title Title Title</p>
-                        <p class="text-danger font-weight-bold mb-0">
-                            2.000.000 VND</p>
-                        <div>
-                            <span class="fa fa-star checked"></span>
-                            <span class="fa fa-star checked"></span>
-                            <span class="fa fa-star checked"></span>
-                            <span class="fa fa-star"></span>
-                            <span class="fa fa-star"></span>
-                        </div>
-
-                    </div>
-                </div>
-            </div>
-            <div class="product-card-box p-2">
-                <div class="bg-white rounded p-2">
-                    <div class="opacity-75">
-                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRDKg2V4RwKxDjPmJV_1GTsOCeE1Iv_37TJPFte8uf0Gg&s"
-                            class="mt-3 rounded-bottom">
-                        <p class="mb-0 product-card-title">Title Title Title</p>
-                        <p class="text-danger font-weight-bold mb-0">
-                            2.000.000 VND</p>
-                        <div>
-                            <span class="fa fa-star checked"></span>
-                            <span class="fa fa-star checked"></span>
-                            <span class="fa fa-star checked"></span>
-                            <span class="fa fa-star"></span>
-                            <span class="fa fa-star"></span>
-                        </div>
-
-                    </div>
-                </div>
-            </div>
+            @endforeach
 
         </div>
         <div class="giftcontainer-content d-flex flex-column justify-content-between align-items-center">
-            <h4 class="text-center">Sau khi ấn vào nắp hộp box, bạn sẽ nhận được 1 trong 10 sản phẩm phía trên</h4>
+            <h4 class="text-center">Sau khi ấn vào nắp hộp, bạn sẽ nhận được 1 trong 10 sản phẩm phía trên</h4>
             <div class="giftcontainer">
                 <div class="gift">
                     <input type="checkbox" id="click">
-                    <label for="click" class="click"></label>
+                    <label id="openBox" for="click" class="click"></label>
                     <div class="giftopen">
-                        <img src="https://vn-live-01.slatic.net/p/dbf45cda7d56f7641227a80a5957efdf.jpg" width="100%"
-                            height="auto" />
+                        <div class="opacity-75 d-flex flex-column align-items-center">
+                            <img src="{{\App\Helpers\ConstCommon::getLinkImageToStorage($productChoeseImage->link_image)}}"
+                                class="mt-3 rounded-bottom">
+                            <p class="mb-0 product-card-title text-danger font-weight-bold">{{ $productChoese->title }}</p>
+
+                            <div>
+                                <span class="fa fa-star checked "></span>
+                                <span class="fa fa-star checked"></span>
+                                <span class="fa fa-star checked"></span>
+                                <span class="fa fa-star checked"></span>
+                                <span class="fa fa-star checked"></span>
+                            </div>
+
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+    </div>
 @endsection
 @section('scripts')
+    <script>
+        $('#openBox').click(function(event) {
+            var id_cart = '{{ $cart->id }}';
+            $.ajax({
+                method: 'POST',
+                url: '{{ route('openBoxPost', ['id_cart' => $cart->id, 'id_product' => $productChoese->id]) }}',
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                success: function(response) {
+                    setTimeout(function() {
+                        $('.page_after_open_box').addClass('fadeIn');
+                    }, 1500);
+                    toastr.options = {
+                        "closeButton": true,
+                        "progressBar": true
+                    }
+                    toastr.success(
+                        "chúc mừng bạn mở box thành công, sẽ chuyển sang trang nhận hàng sau vài giây nữa!"
+                        );
+                    // setTimeout(function() {
+                    //     window.location.href =
+                    //     '{{ route('listOrder') }}'; // Thay đổi URL của trang tới đích mong muốn
+                    // }, 5000);
+                },
+                error: function(response) {
+                    toastr.options = {
+                        "closeButton": true,
+                        "progressBar": true
+                    }
+                    toastr.warning("Mở box không thành công");
+                }
+            });
+        });
+    </script>
 @endsection

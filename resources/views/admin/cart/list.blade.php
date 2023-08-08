@@ -49,16 +49,19 @@
                                     <td>
                                         <div class="d-flex flex-column justify-content-start">
                                             <span>Số lượng: {{  $item->amount  }}</span>
-                                            <span>Tổng tiền: {{ empty($item->bills_total) ? (number_format(($item->amount * $item->price_cart)) ?? null) : number_format($item->bills_total)}} VNĐ</span>
+                                            <span>Tổng tiền: {{number_format(($item->amount * $item->price_cart))}} VNĐ</span>
                                         </div>
                                     </td>
                                     <td>{{ $item->created_at }}</td>
                                     @if ($item->status != 5)
                                         <td>
-                                            <a href="{{ route('cart.productOrder', ['id_cart' => $item->id]) }}"
-                                                class="btn btn-app">
-                                                <i class="fas fa-cart-plus"></i> Xem các sản phẩm
-                                            </a>
+                                            @if ($item->status != 2)
+                                                <a href="{{ route('cart.productChoeseOrder', ['id_cart' => $item->id]) }}"
+                                                    class="btn btn-app">
+                                                    <i class="fas fa-shopping-basket"></i> Sản phẩm cần giao
+                                                </a>
+                                            @endif
+                                            
                                             @if ($item->status == 3)
                                                 <a href="{{ route('cart.changeStatus', ['id_cart' => $item->id, 'status' => 4]) }}"
                                                     class="btn btn-app">
@@ -76,6 +79,10 @@
                                                     <i class="fas fa-donate"></i> Xác nhận đã giao thành công
                                                 </a>
                                             @endif
+                                            <a href="{{ route('cart.productOrder', ['id_cart' => $item->id]) }}"
+                                                class="btn btn-app">
+                                                <i class="fas fa-cart-plus"></i> 4 phẩm admin chọn
+                                            </a>
                                         </td>
                                     @endif
                                 </tr>

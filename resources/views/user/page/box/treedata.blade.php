@@ -4,7 +4,7 @@
 @section('content')
     <div class="bg-white text-orange title-page">
         <div class="container">
-            <p>LuckyBox | Danh sách người mua box</p>
+            <p>LuckyBox | Hoa hồng từ bán box</p>
         </div>
     </div>
     <div class="content-container py-4">
@@ -14,21 +14,22 @@
                 <thead class="bg-orange text-white">
                     <tr>
                         <th>STT</th>
-                        <th>Số tiền thưởng</th>
-                        <th>Người mua</th>
+                        <th>Số tiền</th>
+                        <th>Loại</th>
                         <th>Ngày mua</th>
                     </tr>
                 </thead>
                 <tbody>
                     {{-- 'box', 'number_order', 'dataCart', 'folows' --}}
-                    @for ($i = 1; $i <= $number_order; $i++)
-                    <tr>
-                        <td>1</td>
-                        <td>1.000.000</td>
-                        <td>Nguyễn văn A</td>
-                        <td>22/04/2023</td>
-                    </tr>
-                    @endfor
+                    @foreach ($transactions as $key => $transaction)
+                        <tr>
+                            <td>{{$key + 1}}</td>
+                            <td>{{number_format($transaction->total)}}</td>
+                            <td>{{$transaction->total == 4 ? "Trừ tiền" : "Cộng tiền"}}</td>
+                            <td>{{$transaction->created_at}}</td>
+                        </tr>
+                    @endforeach
+                    
                 </tbody>
             </table>
         </div>

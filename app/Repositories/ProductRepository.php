@@ -50,4 +50,13 @@ class ProductRepository implements ProductRepositoryInterface
             ->where('is_slide', 1)
             ->get();
     }
+    public function showOrder($id)
+    {
+        return DB::table('products')
+                ->leftJoin('images', 'products.id', '=', 'images.id_product')
+                ->select('products.*', 'images.link_image')
+                ->where('products.id', $id)
+                ->where('images.type', 1)
+                ->first();
+    }
 }

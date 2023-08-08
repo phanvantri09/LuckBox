@@ -7,13 +7,16 @@
             <p>LuckyBox | Chợ</p>
         </div>
     </div>
-    
+    @php
+        use Carbon\Carbon;
+    @endphp
     <div class="content-container py-4">
         <div class="container my-lg-2 my-0">
             <div class="row py-3 mb-2 border sort-market">
                 <div class="px-2 d-md-block d-none">Sắp xếp theo</div>
                 <div class="col-lg-2 col-md-3 col-4 text-center">
-                    <a class="text-dark font-weight-bold text-decoration-none {{ isset($_GET['type']) ? ($_GET['type'] == 1 ? 'active-sort' : '') : '' }}" href="{{ route('market', ['type' => 1]) }}">Mới
+                    <a class="text-dark font-weight-bold text-decoration-none {{ isset($_GET['type']) ? ($_GET['type'] == 1 ? 'active-sort' : '') : '' }}"
+                        href="{{ route('market', ['type' => 1]) }}">Mới
                         nhất</a>
                 </div>
                 <div class="col-lg-2 col-md-3 col-4 text-center">
@@ -54,8 +57,9 @@
                                 $chenhlech = ($dataCart->price_cart * 6) / 100 + $dataCart->price_cart;
                             @endphp
                             <h5>Đơn giá: <span class="font-weight-bold text-danger">{{ number_format($chenhlech) }}
-                                    </span>VNĐ</h5>
-                                <h5 class="text-dark">Còn lại: <span class="font-weight-bold text-danger">{{ $dataCart->amount }}</span></h5>
+                                </span>VNĐ</h5>
+                            <h5 class="text-dark">Còn lại: <span
+                                    class="font-weight-bold text-danger">{{ $dataCart->amount }}</span></h5>
                         </div>
                         @auth
                             @if ($dataCart->id_user_create != Auth::user()->id)
@@ -63,12 +67,11 @@
                                     class="w-100 col-lg-2 px-lg-0">
                                     <button class="btn bg-orange text-white">Mua ngay</button>
                                 </a>
-
                             @else
-                            <a href="{{ route('stopMarket', ['id_cart' => $dataCart->id]) }}"
-                                class="w-100 col-lg-2 px-lg-0">
-                                <button class="btn bg-warning">Hủy bán</button>
-                            </a>
+                                <a href="{{ route('stopMarket', ['id_cart' => $dataCart->id]) }}"
+                                    class="w-100 col-lg-2 px-lg-0">
+                                    <button class="btn bg-warning">Hủy bán</button>
+                                </a>
                             @endif
                         @else
                             <a href="{{ route('addToCartOld', ['id_cart_old' => $dataCart->id]) }}"
@@ -76,8 +79,20 @@
                                 <button class="btn bg-orange text-white">Mua ngay</button>
                             </a>
                         @endauth
-                        <div class="box-new bg-danger text-white px-1">New</div>
-
+                        @php
+                            $createdAt = Carbon::parse($dataCart->created_at);
+                        @endphp
+                        <div class="box-new bg-danger text-white px-1 label-status">
+                            @if ($createdAt->lt($threeDaysAgo) && $createdAt->gt($sevenDaysAgo))
+                                Mới
+                            @elseIf($createdAt->gt($threeDaysAgo))
+                                Mới nhất
+                            @elseIf($createdAt->lt($sevenDaysAgo))
+                                Nổi bật
+                            @else
+                                Đề xuất
+                            @endif
+                        </div>
                     </div>
                 @endforeach
                 {!! $dataCarts->links() !!}
@@ -103,12 +118,10 @@
                                         class="w-100 px-lg-0">
                                         <button class="btn bg-orange text-white">Mua ngay</button>
                                     </a>
-
                                 @else
-                                <a href="{{ route('stopMarket', ['id_cart' => $dataCart->id]) }}"
-                                    class="w-100 px-lg-0">
-                                    <button class="btn bg-warning">Hủy bán</button>
-                                </a>
+                                    <a href="{{ route('stopMarket', ['id_cart' => $dataCart->id]) }}" class="w-100 px-lg-0">
+                                        <button class="btn bg-warning">Hủy bán</button>
+                                    </a>
                                 @endif
                             @else
                                 <a href="{{ route('addToCartOld', ['id_cart_old' => $dataCart->id]) }}"
@@ -117,7 +130,20 @@
                                 </a>
                             @endauth
                         </div>
-                        <div class="box-new bg-danger text-white px-1">New</div>
+                        @php
+                            $createdAt = Carbon::parse($dataCart->created_at);
+                        @endphp
+                        <div class="box-new bg-danger text-white px-1">
+                            @if ($createdAt->lt($threeDaysAgo) && $createdAt->gt($sevenDaysAgo))
+                                Mới
+                            @elseIf($createdAt->gt($threeDaysAgo))
+                                Mới nhất
+                            @elseIf($createdAt->lt($sevenDaysAgo))
+                                Nổi bật
+                            @else
+                                Đề xuất
+                            @endif
+                        </div>
                     </div>
                 @endforeach
                 {!! $dataCarts->links() !!}

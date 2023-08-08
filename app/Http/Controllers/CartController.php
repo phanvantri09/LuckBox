@@ -358,24 +358,30 @@ class CartController extends Controller
     }
     public function boxUserMarket(){
         $user = Auth::user();
-        $carts = $this->cartRepository->getAllDataByIDUserAndStatus($user->id, 10);
+        $carts = $this->cartRepository->getAllDataByIDUserAndStatusTreeData($user->id, 10);
         return view('user.page.box.purchaseOrder', compact(['carts']));
     }
     public function treeData($id){
-        return back()->with("error", ' Chức năng này chưa được cập nhật!');
+        // return back()->with("error", ' Chức năng này chưa được cập nhật!');
 
-        $dataCart = $this->cartRepository->show($id);
+        $dataCart = $this->cartRepository->show($id); 
         $folows = $this->cartRepository->treedataCart($dataCart->id_user_create, $dataCart->id_box_item, $dataCart->id_box_event, $dataCart->id_box);
         // dựa vào id cart để phân biệt
         // từ last cart láy được idcarr chhuaws numberorder
-        // dd($folows->last());
+        // dd($folows->pluck('id_cart')->toArray());
+        // dd($folows);
+        $arrayCart = $folows->pluck('id_cart')->toArray();
+        // dd($arrayCart);
+        $transactions = $this->transactionRepository->getByIDCart($arrayCart ,$dataCart->id_user_create);
+        // dd($transactions);
         $dataCartLast = $this->cartRepository->show($folows->last()->id_cart);
         $number_order = $dataCartLast->order_number;
         $box = $this->boxRepository->show($dataCart->id_box);
+
         // dd($dataCartLast);
         // dd($dataCart);
         // $this->folowRepository
-        return view('user.page.box.treedata', compact(['box', 'number_order', 'dataCart', 'folows']));
+        return view('user.page.box.treedata', compact(['box', 'number_order', 'dataCart', 'folows', 'transactions']));
     }
     public function sendToMarket($id_cart){
         $dataCart =  $this->cartRepository->showAllData($id_cart);

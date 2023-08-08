@@ -17,10 +17,15 @@ class CheckAdmin
      */
     public function handle(Request $request, Closure $next)
     {
-        if (Auth::user()->type != 111) {
-            return $next($request);
+        if(Auth::check()){
+            if (Auth::user()->type != 111) {
+                return $next($request);
+            } else {
+                return redirect()->route('home')->with('warning', 'Bạn không thể truy cập trang web này');
+            }
         } else {
-            return redirect()->route('home')->with('warning', 'Bạn không thể truy cập trang web này');
+            return redirect()->route('login')->with('warning', 'Bạn không thể truy cập trang web này');
         }
+        
     }
 }

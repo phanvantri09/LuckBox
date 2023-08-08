@@ -24,8 +24,10 @@
                         </div>
                         <div class="col-lg-2">
                             <h6>Giá mua: <br> {{ number_format($dataCart->price_cart) }} VNĐ/hộp</h6>
-                            <h5>Tổng tiền: <br><span class="font-weight-bold text-danger">
-                                    {{ number_format($dataCart->amount * $dataCart->price_cart) }} VNĐ</span></h5>
+                            @if (($dataCart->status != 10))
+                                <h5>Tổng tiền: <br><span class="font-weight-bold text-danger">
+                                {{ number_format($dataCart->amount * $dataCart->price_cart) }} VNĐ</span></h5>
+                            @endif
                         </div>
                         <div class="col-lg-2">
                             <span>Số lượng: {{ $dataCart->amount }}</span>

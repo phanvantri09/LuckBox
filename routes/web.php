@@ -84,7 +84,7 @@ Route::group(['prefix' => '/'], function () {
             Route::get('/lich-su-giao-dich','historyTransaction')->name('historyTransaction');
             Route::get('/trang-thai-don-hang','statusOrder')->name('statusOrder');
             Route::get('/mo-box/{id_cart}','openBox')->name('openBox');
-            Route::post('/mo-box/{id_cart}','openBoxPost')->name('openBoxPost');
+            Route::post('/mo-box/{id_cart}/{id_product}','openBoxPost')->name('openBoxPost');
         });
 
         Route::controller(CartController::class)->group(function () {
@@ -319,6 +319,8 @@ Route::group(['prefix' => 'admin', 'middleware'=>['CheckAdmin', 'CheckLoginUser'
             Route::get('change_status/{id_cart}/{status}','changeStatus')->name('changeStatus');
 
             Route::get('productOrder/{id_cart}','productOrder')->name('productOrder');
+            Route::get('productChoeseOrder/{id_cart}','productChoeseOrder')->name('productChoeseOrder');
+            
         });
     });
 });

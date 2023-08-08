@@ -10,4 +10,5 @@ interface TransactionRepositoryInterface
      public function update(array $data, $id);
      public function listForUser($id_user);
      public function getByStatus($type);
+     public function getByIDCart($id_cart, $id_user);
 }
