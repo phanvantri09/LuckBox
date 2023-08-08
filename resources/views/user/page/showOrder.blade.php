@@ -4,7 +4,7 @@
 @section('content')
     <div class="bg-white text-orange title-page">
         <div class="container">
-            <p>LuckyBox | Gửi bán box</p>
+            <p>LuckyBox | Thông tin nhận hàng</p>
         </div>
     </div>
     <div class="content-container py-4">
@@ -29,7 +29,7 @@
                 </div>
                 <div class=" my-2 d-flex flex-column  align-items-center  justify-content-between w-100 bg-gray px-2 py-2 rounded">
                     <h4 class="text-center">Thông tin sản phẩm</h4>
-                    <h5><span class="text-danger">{{$dataCart->title}}</span></h5>
+                    <h5><span class="text-danger">{{$dataCart->product_title}}</span></h5>
                     <img src="{{ \App\Helpers\ConstCommon::getLinkImageToStorage($dataCart->product_link_image) }}" width="40%"
                     height="auto" alt="">
                 </div>
@@ -40,7 +40,7 @@
                     <p>Email: <span class="text-danger">{{ $dataCart->email }}</span></p>
                     <p>Địa chỉ: <span class="text-danger">{{ $dataCart->address }}</span></p>
                 </div>
-               
+
                 <div class="w-100 px-lg-0 d-flex flex-column justify-content-center">
                     <h4 class="text-center">Trạng thái đơn hàng</h4>
                     <button type="submit"

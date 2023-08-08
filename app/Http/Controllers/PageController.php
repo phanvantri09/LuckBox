@@ -203,9 +203,9 @@ class PageController extends Controller
         $cart = $this->cartRepository->show($id_cart);
         $allProductItem = $this->boxProductRepository->getAllProductByBox($cart->id_box)->pluck('id_product');
         $allProduct = $this->productRepository->getByArrayID($allProductItem);
-        
+
         $arrayBoxpPoduct = $this->boxProductRepository->getAllByIdBoxChoese($cart->id_box)->pluck('id_product')->toArray();
-        
+
         $productChoese = $this->productRepository->show($arrayBoxpPoduct[Array_rand($arrayBoxpPoduct)]);
         $productChoeseImage = $this->imageRepository->getAllByIDProductMain($productChoese->id);
         if ($cart->status == 2 || $cart->status == 11) {
@@ -238,6 +238,7 @@ class PageController extends Controller
                         'id_product_choese' => $id_product,
                     ];
                     $cartNew = $this->cartRepository->create($data);
+                    $id_cart = $cartNew->id;
                     $this->cartRepository->update(['amount'=> $cart->amount - 1], $cart->id);
                 } else {
                     // nếu = 1 thì chuyển trạng thía thôi
@@ -260,6 +261,6 @@ class PageController extends Controller
                     ], 400);
         }
         // Chuyển trạng thái xác nhận đơn hàng là đã mở họp
-        return response()->json(['success' => true]);
+        return response()->json(['success' => true, 'routeShowOrder' => route('showOrder', ['id_cart'=>$id_cart])]);
     }
 }

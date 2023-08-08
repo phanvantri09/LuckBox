@@ -82,17 +82,12 @@
                         @php
                             $createdAt = Carbon::parse($dataCart->created_at);
                         @endphp
-                        <div class="box-new bg-danger text-white px-1 label-status">
-                            @if ($createdAt->lt($threeDaysAgo) && $createdAt->gt($sevenDaysAgo))
+                        @if($createdAt->gt($threeDaysAgo))
+                            <div class="box-new bg-danger text-white px-1 label-status">
                                 Mới
-                            @elseIf($createdAt->gt($threeDaysAgo))
-                                Mới nhất
-                            @elseIf($createdAt->lt($sevenDaysAgo))
-                                Nổi bật
-                            @else
-                                Đề xuất
-                            @endif
-                        </div>
+                            </div>
+                        @endif
+
                     </div>
                 @endforeach
                 {!! $dataCarts->links() !!}
@@ -133,17 +128,11 @@
                         @php
                             $createdAt = Carbon::parse($dataCart->created_at);
                         @endphp
-                        <div class="box-new bg-danger text-white px-1">
-                            @if ($createdAt->lt($threeDaysAgo) && $createdAt->gt($sevenDaysAgo))
+                        @if($createdAt->gt($threeDaysAgo))
+                            <div class="box-new bg-danger text-white px-1">
                                 Mới
-                            @elseIf($createdAt->gt($threeDaysAgo))
-                                Mới nhất
-                            @elseIf($createdAt->lt($sevenDaysAgo))
-                                Nổi bật
-                            @else
-                                Đề xuất
-                            @endif
-                        </div>
+                            </div>
+                        @endif
                     </div>
                 @endforeach
                 {!! $dataCarts->links() !!}

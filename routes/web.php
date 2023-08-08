@@ -93,7 +93,7 @@ Route::group(['prefix' => '/'], function () {
             Route::get('/them-vao-gio-hang-co-id/{id_cart_old}','addToCartOld')->name('addToCartOld');
             Route::get('/gio-hang','cart')->name('cart');
             Route::get('/thanh-toan','checkout')->name('checkout');
-            Route::post('/thanh-toán-post','checkoutPost')->name('checkoutPost');
+            Route::post('/thanh-toan-post','checkoutPost')->name('checkoutPost');
             Route::post('/hoan-tat-thanh-toan','infoCardPayPost')->name('infoCardPayPost');
             Route::get('/hop-mu','purchaseOrder')->name('purchaseOrder');
             Route::get('/danh-sach-hop-gui-ban','boxUserMarket')->name('boxUserMarket');
@@ -320,7 +320,7 @@ Route::group(['prefix' => 'admin', 'middleware'=>['CheckAdmin', 'CheckLoginUser'
 
             Route::get('productOrder/{id_cart}','productOrder')->name('productOrder');
             Route::get('productChoeseOrder/{id_cart}','productChoeseOrder')->name('productChoeseOrder');
-            
+
         });
     });
 });

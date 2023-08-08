@@ -73,7 +73,7 @@
                             <p class="mb-0">Số lượng: {{ $dataCart->amount }}</p>
                             <p class="mb-0">Giá mua: {{ number_format($dataCart->price) }} VNĐ</p>
                             <p class="mb-0">Tổng tiền: <span
-                                    class="text-danger font-weight-bold">{{ $dataCart->amount * $dataCart->price }}
+                                    class="text-danger font-weight-bold">{{ number_format($dataCart->amount * $dataCart->price) }}
                                     VNĐ</span></p>
                             <div class="d-flex justify-content-between pt-1">
                                 @if ($dataCart->status == 10)

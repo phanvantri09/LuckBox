@@ -170,7 +170,7 @@
                 <div class="col-md-5 px-0 content-home d-flex justify-content-center align-content-center">
                     <img id="myImage" src="dist/img/flashsale.png" alt="" />
                     {{-- <h3 style="
-                    font-weight: bold; 
+                    font-weight: bold;
                     text-shadow: -1px 1px 0 #000,
                                 1px 1px 0 #000,
                                 1px -1px 0 #000,
@@ -182,7 +182,7 @@
                 <h4>PHẦN THƯỞNG</h4>
                 <span>Gồm có 10 phần thưởng ngẫu nhiên khi mở box</span>
             </div>
-            <div class="row py-2">
+            <div class="row justify-content-center py-2">
                 <!-- gift -->
                 @if (empty($products))
                     <marquee>
@@ -368,7 +368,7 @@
             // }
 
             // setTimeout(openGift, 2000);
-            
+
         });
     </script>
     <script src="./js/quantity.js"></script>

@@ -5,6 +5,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Admin Luck Box</title>
+    <link rel="icon" type="image/x-icon" href="{{asset('/dist/img/logo.png')}}">
     <base href="{{ URL::asset('/') }}" target="_top">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <!-- Google Font: Source Sans Pro -->
@@ -57,7 +58,7 @@
             <div class="content-header">
                 <div class="container-fluid">
                     <div class="row mb-2">
-                        
+
                         {{-- <div class="col-sm-6">
                             <ol class="breadcrumb float-sm-right">
                                 <li class="breadcrumb-item"><a href="#">Home</a></li>

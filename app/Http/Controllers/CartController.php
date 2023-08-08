@@ -192,12 +192,12 @@ class CartController extends Controller
                 ];
                 // cộng tiền khi user mua hàng từ maket
                  // x 1.8 trực tiếp cho người bán , O 0.22 gián tiếp cho tất cả
-                $moneyX = ( $cartOld->price_cart * $request->amount ) * 1.8 / 100;
-                $moneyO = ( $cartOld->price_cart * $request->amount ) * 0.22 / 100;
+                $moneyX = ( $cart->price_cart * $request->amount ) * 1.8 / 100;
+                $moneyO = ( $cart->price_cart * $request->amount ) * 0.22 / 100;
                 // cộng tiền cho người bán
                 $userPlusMoneyBox = $this->userRepository->find($cartOld->id_user_create);
 
-                $userPlusMoneyBoxTotal = $userPlusMoneyBox->balance + $moneyX + ConstCommon::priceUp(count(explode(',', $folowOld->id_user)), $request->price);
+                // $userPlusMoneyBoxTotal = $userPlusMoneyBox->balance + $moneyX + ConstCommon::priceUp(count(explode(',', $folowOld->id_user)), $request->price);
 
                 $dataTransactionPlusUser = [
                     'id_user' => $cartOld->id_user_create,
@@ -229,7 +229,7 @@ class CartController extends Controller
 
                 $this->transactionRepository->create($dataTransactionPlusUser2);
 
-                $userPlusMoneyBox->balance = $userPlusMoneyBoxTotal;
+                $userPlusMoneyBox->balance = $userPlusMoneyBox->balance + $cartOld->price_cart + $moneyX;
                 $userPlusMoneyBox->save();
 
                 foreach (explode(',', $folowOld->id_user) as $key => $id_us) {
@@ -380,7 +380,7 @@ class CartController extends Controller
     public function treeData($id){
         // return back()->with("error", ' Chức năng này chưa được cập nhật!');
 
-        $dataCart = $this->cartRepository->show($id); 
+        $dataCart = $this->cartRepository->show($id);
         $folows = $this->cartRepository->treedataCart($dataCart->id_user_create, $dataCart->id_box_item, $dataCart->id_box_event, $dataCart->id_box);
         // dựa vào id cart để phân biệt
         // từ last cart láy được idcarr chhuaws numberorder
@@ -390,6 +390,9 @@ class CartController extends Controller
         // dd($arrayCart);
         $transactions = $this->transactionRepository->getByIDCart($arrayCart ,$dataCart->id_user_create);
         // dd($transactions);
+        if(empty($folows->last()->id_cart)){
+            return redirect()->back()->with('warning','Chưa có giao dịch nào diễn ra ở họp gửi bán này');
+        }
         $dataCartLast = $this->cartRepository->show($folows->last()->id_cart);
         $number_order = $dataCartLast->order_number;
         $box = $this->boxRepository->show($dataCart->id_box);

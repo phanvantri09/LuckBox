@@ -41,7 +41,7 @@
                                     <span class="fa fa-star checked"></span>
                                     <span class="fa fa-star checked"></span>
                                 </div>
-    
+
                             </div>
                         </div>
                     </div>
@@ -55,7 +55,7 @@
                 <div class="gift">
                     <input type="checkbox" id="click">
                     <label id="openBox" for="click" class="click"></label>
-                    <div class="giftopen p-2">
+                    <a id="showOrder" href="#" target="_blank" class="giftopen p-2">
                         <div class="opacity-75 d-flex flex-column align-items-center">
                             <img src="{{\App\Helpers\ConstCommon::getLinkImageToStorage($productChoeseImage->link_image)}}"
                                 class="rounded-bottom">
@@ -70,7 +70,7 @@
                             </div>
 
                         </div>
-                    </div>
+                    </a>
                 </div>
             </div>
         </div>
@@ -88,16 +88,12 @@
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 },
                 success: function(response) {
-                    setTimeout(function() {
-                        $('.page_after_open_box').addClass('fadeIn');
-                    }, 1500);
+                    $("#showOrder").attr("href", response.routeShowOrder);
                     toastr.options = {
                         "closeButton": true,
                         "progressBar": true
                     }
-                    toastr.success(
-                        "chúc mừng bạn mở box thành công, sẽ chuyển sang trang nhận hàng sau vài giây nữa!"
-                        );
+                    toastr.success("chúc mừng bạn mở box thành công!");
                     // setTimeout(function() {
                     //     window.location.href =
                     //     '{{ route('listOrder') }}'; // Thay đổi URL của trang tới đích mong muốn

@@ -94,7 +94,7 @@ class CartRepository implements CartRepositoryInterface
         return DB::table('carts')->select('carts.*', 'box.title', 'box.link_image', 'box.price',
             'bills.amount as bills_amount', 'bills.total as bills_total', 'bills.name',
             'bills.number_phone', 'bills.address', 'users.email',
-            'products.title' , 'products.id as id_product'  , 'images.link_image as product_link_image' )
+            'products.title as product_title' , 'products.id as id_product'  , 'images.link_image as product_link_image' )
             ->leftJoin('box', 'carts.id_box', '=', 'box.id')
             ->leftJoin('bills', 'carts.id', '=', 'bills.id_cart')
             ->leftJoin('users', 'carts.id_user_create', '=', 'users.id')
