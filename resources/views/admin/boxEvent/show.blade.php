@@ -44,7 +44,7 @@
 
                     <strong><i class="far fa-file-alt mr-1"></i> Hình ảnh</strong>
                     <p>
-                        <img src="{{ \App\Helpers\ConstCommon::getLinkImageToStorage($showEvent->link_image) }}"
+                        <img style="width: 100%" src="{{ \App\Helpers\ConstCommon::getLinkImageToStorage($showEvent->link_image) }}"
                             alt="">
                     </p>
                 </div>
