@@ -1,4 +1,4 @@
-<div class="container bg-white py-3 footer-content">
+<div id="footter" class="container bg-white py-3 footer-content">
     <div class="row justify-content-center">
         <div class="col-lg-2 col-md-3 col-5">
             <img src="{{ asset('/dist/img/logo.png') }}" style="width: 100%;" alt="">
@@ -14,7 +14,7 @@
                 <a href="{{ route('market') }}">Chợ</a>
             </p>
             <p class="mb-0">
-                <a href="{{ route('home') }}">Liên hệ</a>
+                <a href="#footter">Liên hệ</a>
             </p>
         </div>
         <div class="col-lg-4 col-sm-6 col-6 py-1">

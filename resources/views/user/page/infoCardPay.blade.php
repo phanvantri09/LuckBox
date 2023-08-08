@@ -24,9 +24,7 @@
                             d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8 4a.905.905 0 0 0-.9.995l.35 3.507a.552.552 0 0 0 1.1 0l.35-3.507A.905.905 0 0 0 8 4zm.002 6a1 1 0 1 0 0 2 1 1 0 0 0 0-2z" />
                     </svg>
                     <span class="pl-1">
-                        Không ghi bất kỳ từ nào liên quan đến tiền mã hóa (ví dụ tiền mã hóa, BTC) trong phần nội dung
-                        chuyển
-                        tiền thanh toán của bạn.
+                        Chú ý nhập đúng thông tin ở tài khoản nhận của chúng tôi ở dưới.
                     </span>
                 </div>
                 <div class="pl-4 content-bank">
@@ -34,7 +32,7 @@
                     <div class="row justify-content-between align-items-start pt-1">
                         <span class="col-5 text-secondary">Họ và tên</span>
                         <div class="col-6 text-right" id="hoten">
-                            Nguyễn Thị Quỳnh Hoa
+                            {{$getCardAdmin->card_name}}
                         </div>
                         <button class="border-0 bg-white col-1 px-0 clickcopy" onclick="copyText('#hoten')">
                             <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 448 512">
@@ -46,7 +44,7 @@
                     <div class="row justify-content-between align-items-start pt-1">
                         <span class="col-5 text-secondary">Tên ngân hàng</span>
                         <div class="col-6 text-right" id="tenNH">
-                            ACB-Ngân hàng Á Châu
+                            {{$getCardAdmin->bank}}
                         </div>
                         <button class="border-0 bg-white col-1 px-0 clickcopy" onclick="copyText('#tenNH')">
                             <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 448 512">
@@ -58,7 +56,7 @@
                     <div class="row justify-content-between align-items-start pt-1">
                         <span class="col-5 text-secondary">Số tài khoản/Số thẻ</span>
                         <div class="col-6 text-right" id="numberCard">
-                            34895497
+                            {{$getCardAdmin->card_number}}
                         </div>
                         <button class="border-0 bg-white col-1 px-0 clickcopy" onclick="copyText('#numberCard')">
                             <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 448 512">
@@ -70,7 +68,8 @@
                     <div class="row justify-content-between align-items-start pt-1">
                         <span class="col-5 text-secondary">Nội dung chuyển khoản đề xuất</span>
                         <div class="col-6 text-right" id="ndckdx">
-                            NAP TIEN VAO VI, id_user, email
+
+                            NAP TIEN VAO VI {{ $currentUser->id }}
                         </div>
                         <button class="border-0 bg-white col-1 px-0 clickcopy" onclick="copyText('#ndckdx')">
                             <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 448 512">
@@ -163,7 +162,7 @@
                     </div>
                     <div class="row align-items-center justify-content-between mt-2">
                         <a href="checkout.html" class="col-4 pr-0">
-                            <button class="btn bg-info font-weight-bold content-bank">Trợ giúp</button>
+                            {{-- <button class="btn bg-info font-weight-bold content-bank">Trợ giúp</button> --}}
                         </a>
                         <a href="" class="col-8 text-right">
                             <button class="btn bg-warning font-weight-bold content-bank">Đã chuyển tiền</button>
