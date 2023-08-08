@@ -1,14 +1,30 @@
 
-@media (max-width: 992px){
-    .product-card-box {
+@media (max-width: 768px){
+    .product-card-width{
         width: 50%;
+    }
+}
+@media (min-width: 768px) and (max-width: 1200px) {
+    .product-card-width{
+        width: 33%;
+    }
+}
+@media (min-width: 1200px) and (max-width: 1440px){
+    .product-card-width{
+        width: 25%;
+    }
+}
+@media (min-width: 1440px){
+    .product-card-width{
+        width: 20%;
     }
 }
 .product-card-box img{
     width: 100%;
+    height: 200px;
 }
 .giftcontainer-content {
-    height: 520px;
+    height: 620px;
 }
 .giftcontainer {
     position: relative;
@@ -61,16 +77,17 @@
 .giftcontainer::before {
     content: "";
     position: absolute;
-    width: 240px;
+    width: 290px;
     height: 20px;
     background-color: rgba(0, 0, 0, 0.4);
     border-radius: 50%;
-    top: 132px;
+    top: 152px;
     left: -10px;
+    z-index: -1;
 }
 .gift {
-    width: 220px;
-    height: 140px;
+    width: 260px;
+    height: 160px;
     background-color: rgb(255, 31, 24);
     border-radius: 12px 12px 25px 25px;
 }
@@ -78,7 +95,7 @@
     content: "";
     position: absolute;
     width: 25px;
-    height: 140px;
+    height: 160px;
     background-color: rgb(255, 255, 52);
     left: 50%;
     transform: translateX(-50%);
@@ -87,8 +104,8 @@
     content: "";
     position: absolute;
     box-shadow: inset 0 10px rgba(0, 0, 0, 0.3);
-    width: 220px;
-    height: 140px;
+    width: 260px;
+    height: 160px;
 }
 #click {
     display: none;
@@ -96,7 +113,7 @@
 .click {
     position: absolute;
     background-color: rgb(255, 31, 24);
-    width: 240px;
+    width: 280px;
     height: 45px;
     top: -45px;
     left: -10px;
@@ -124,7 +141,7 @@
     border-left: 0px solid transparent;
     border-right: 50px solid transparent;
     transform: rotate(-90deg);
-    left: 95px;
+    left: 115px;
     top: -75px;
     border-radius: 10px;
 }
@@ -132,7 +149,7 @@
     transform: rotate(-110deg) scale(0.85);
 }
 #click:checked ~ .giftopen {
-    transform: translateY(-250px);
+    transform: translateY(-350px);
     display: block;
     transition: 1s ease-in-out;
     animation: glow 2s infinite;
@@ -154,7 +171,9 @@
     transition: 1s ease-in-out;
     display: none;
 }
-
+.giftopen img{
+    width: 100%;
+}
 @-webkit-keyframes giftboxs-fall {
     0% {
         top: -10%;
