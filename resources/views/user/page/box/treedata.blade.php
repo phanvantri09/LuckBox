@@ -13,7 +13,6 @@
             <table class="table table-bordered table-hover">
                 <thead class="bg-orange text-white">
                     <tr>
-                        <th>STT</th>
                         <th>Số tiền</th>
                         <th>Loại</th>
                         <th>Ngày mua</th>
@@ -23,7 +22,6 @@
                     {{-- 'box', 'number_order', 'dataCart', 'folows' --}}
                     @foreach ($transactions as $key => $transaction)
                         <tr>
-                            <td>{{$key + 1}}</td>
                             <td>{{number_format($transaction->total)}}</td>
                             <td>{{$transaction->total == 4 ? "Trừ tiền" : "Cộng tiền"}}</td>
                             <td>{{$transaction->created_at}}</td>

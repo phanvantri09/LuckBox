@@ -32,10 +32,10 @@ class AuthController extends Controller
         if (Auth::attempt($credentials)) {
             $request->session()->regenerate();
             if(Auth::user()->type != ConstCommon::TypeUser){
-                if (!$intendedUrl || $intendedUrl == route('login') || $intendedUrl == route('register')) {
+                // if (!$intendedUrl || $intendedUrl == route('login') || $intendedUrl == route('register') || $intendedUrl == route('home')) {
                     return redirect()->route('admin')->with('message',"Đăng nhập thành công");
-                }
-                return redirect()->intended($intendedUrl)->with('message',"Đăng nhập thành công");
+                // }
+                // return redirect()->intended($intendedUrl)->with('message',"Đăng nhập thành công");
             } else {
                 if (!$intendedUrl || $intendedUrl == route('login') || $intendedUrl == route('register')) {
                     return redirect()->route('home')->with('message',"Đăng nhập thành công");
@@ -96,10 +96,12 @@ class AuthController extends Controller
 
     public function redirectToGoogle()
     {
+        return redirect()->back()->with('info',"Chức năng này đang được bảo trì");
         return Socialite::driver('google')->redirect();
     }
     public function handleGoogleCallback()
     {
+        return redirect()->back()->with('info',"Chức năng này đang được bảo trì");
         $googleUser = Socialite::driver('google')->user();
 
         // Kiểm tra xem người dùng đã đăng nhập bằng Google trước đó chưa

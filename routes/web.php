@@ -36,8 +36,8 @@ Route::group(['prefix' => '/'], function () {
         Route::get('/shared/{token}','updateShare');
         Route::post('/register/{id}', 'registerShare')->name('registerShare');
 
-        Route::get('/socialite/google','redirectToGoogle')->name('loginMail');
-        Route::get('/socialite/google/callback','handleGoogleCallback');
+        Route::get('/mang-xa-hoi/dang-nhap','redirectToGoogle')->name('loginMail');
+        Route::get('/mang-xa-hoi/dang-nhap/callback','handleGoogleCallback');
 
     });
 

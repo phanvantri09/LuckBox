@@ -61,7 +61,7 @@
 		<a href="{{ route('login') }}" class="text-white px-2">Đăng nhập</a>
         <a href="{{ route('register') }}" class="text-white px-2">Đăng ký</a>
 		@endauth
-
+        @auth
 		<div class="nav-item dropdown menu-info-user">
 			<a class="nav-link dropdown-toggle text-white" href="#" id="navbardrop"
 				data-toggle="dropdown">
@@ -85,6 +85,7 @@
 				<a href="{{ route('logout') }}" class="dropdown-item text-white">Đăng xuất</a>
 			</div>
 		</div>
+        @endauth
     </div>
 </nav>
 <!-- End Menu -->

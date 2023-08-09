@@ -471,7 +471,7 @@ class CartController extends Controller
         return view('user.page.showOrder', compact(['dataCart']));
     }
     public function stopMarket($id_cart){
-        if ($this->cartRepository->update(['status' => 3])) {
+        if ($this->cartRepository->update(['status' => 2], $id_cart)) {
             return redirect()->route('purchaseOrder')->with('message', "Thành công");
         } else {
             return redirect()->back()->with('error', "Không thành công, vui lòng thử lại.");

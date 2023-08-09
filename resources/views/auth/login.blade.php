@@ -5,15 +5,16 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Lucky Box</title>
+    <link rel="icon" type="image/x-icon" href="{{asset('/dist/img/logo.png')}}">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" type="text/css"
+        href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
-    {{-- <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.4/dist/jquery.slim.min.js"></script> --}}
-    {{-- <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script> --}}
-    {{-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script> --}}
-
     <style>
         @media (min-width: 1200px) {
 
@@ -28,7 +29,7 @@
         .navbar-brand {
             font-size: 1.5rem;
         }
-        .main-class {
+        .main-class1 {
             background-color: rgb(255, 235, 226);
         }
         .bg-orange {
@@ -41,6 +42,9 @@
         }
         .text-lines{
             color: rgb(119, 119, 119);
+        }
+        .toast-container{
+            background: #f63 !important;
         }
     </style>
 </head>
@@ -55,7 +59,7 @@
         </div>
     </nav>
 
-    <div class="main-class">
+    <div class="main-class1">
         <div class="container py-md-5 py-4">
             <div class="row px-md-5 px-3 align-items-center">
                 <div class="col-lg-8 d-lg-block d-none">
@@ -103,6 +107,7 @@
         </div>
     </div>
 </body>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
 <script>
     $(document).ready(function() {
         @if (Session::has('message'))
@@ -144,5 +149,6 @@
         @endif
     });
 </script>
+
 
 </html>

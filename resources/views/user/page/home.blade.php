@@ -49,7 +49,7 @@
                             @if (empty($cachebox))
                                 <a href="{{ route('home') }}"
                                     class="d-flex flex-column align-items-center w-100 text-decoration-none">
-                                    <img src="https://vn-live-01.slatic.net/p/dbf45cda7d56f7641227a80a5957efdf.jpg"
+                                    <img src="{{ \App\Helpers\ConstCommon::getLinkImageToStorage($cachebox->link_image) }}"
                                         width="60%" height="auto" />
                                     <h4 class="mt-1 text-danger text-center">Sự kiện sẽ được cập nhật trong thời gian gần
                                         nhất</h4>
@@ -57,7 +57,7 @@
                             @else
                                 <a href="{{ route('boxInfo', ['id' => $cachebox->id]) }}"
                                     class="d-flex flex-column align-items-center w-100 text-decoration-none">
-                                    <img src="https://vn-live-01.slatic.net/p/dbf45cda7d56f7641227a80a5957efdf.jpg"
+                                    <img src="{{ \App\Helpers\ConstCommon::getLinkImageToStorage($cachebox->link_image) }}"
                                         width="60%" height="auto" />
                                     <h4 class="mt-1 text-danger text-center">{{ $cachebox->title ?? null }}</h4>
                                 </a>
