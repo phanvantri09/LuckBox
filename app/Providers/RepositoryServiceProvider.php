@@ -37,6 +37,8 @@ use App\Repositories\CartRepository;
 use App\Repositories\BillRepository;
 use App\Repositories\BillRepositoryInterface;
 
+use App\Repositories\InfoUserBillRepository;
+use App\Repositories\InfoUserBillRepositoryInterface;
 
 class RepositoryServiceProvider extends ServiceProvider
 {
@@ -65,7 +67,7 @@ class RepositoryServiceProvider extends ServiceProvider
         // $this->app->bind(ProductRepositoryInterface::class, ProductRepository::class);
 
         $this->app->bind(CartRepositoryInterface::class, CartRepository::class);
-        // $this->app->bind(ProductRepositoryInterface::class, ProductRepository::class);
+        $this->app->bind(InfoUserBillRepositoryInterface::class, InfoUserBillRepository::class);
         $this->app->bind(BillRepositoryInterface::class, BillRepository::class);
 
     }

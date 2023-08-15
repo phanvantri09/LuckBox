@@ -12,7 +12,7 @@ use App\Repositories\TransactionRepositoryInterface;
 use App\Repositories\ProductRepositoryInterface;
 use App\Repositories\CartRepositoryInterface;
 use App\Repositories\CardRepositoryInterface;
-
+use App\Repositories\InfoUserBillRepositoryInterface;
 use Illuminate\Http\Request;
 use App\Helpers\ConstCommon;
 
@@ -23,6 +23,8 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 use Carbon\Carbon;
+
+use App\Http\Requests\InfoUserBill;
 class PageController extends Controller
 {
     protected $pageRepository;
@@ -33,9 +35,10 @@ class PageController extends Controller
     protected $transactionRepository;
     protected $cartRepository;
     protected $cardRepository;
-
+    protected $infoUserBillRepository;
     public function __construct(CardRepositoryInterface $cardRepository, CartRepositoryInterface $cartRepository, PageRepositoryInterface $pageRepository, BoxRepositoryInterface $boxRepository, BoxProductRepositoryInterface $boxProductRepository, BoxEventRepositoryInterface $boxEventRepository,
-    ImageRepositoryInterface $imageRepository, TransactionRepositoryInterface $transactionRepository, ProductRepositoryInterface $productRepository)
+    ImageRepositoryInterface $imageRepository, TransactionRepositoryInterface $transactionRepository, ProductRepositoryInterface $productRepository,
+    InfoUserBillRepositoryInterface $infoUserBillRepository)
 
     {
         $this->pageRepository = $pageRepository;
@@ -47,6 +50,7 @@ class PageController extends Controller
         $this->transactionRepository = $transactionRepository;
         $this->cartRepository = $cartRepository;
         $this->cardRepository = $cardRepository;
+        $this->infoUserBillRepository = $infoUserBillRepository;
     }
 
     public function boxInfo($id)
@@ -169,7 +173,7 @@ class PageController extends Controller
     {
         $currentUser =  Auth::user();
         if($request->total > $currentUser->balance ){
-            return back()->with('thongbao', 'Số dư ví không đủ để rút.');
+            return back()->with('error', 'Số dư ví không đủ để rút.');
         }
         $request->merge([
             'id_user' => $currentUser->id,
@@ -262,5 +266,19 @@ class PageController extends Controller
         }
         // Chuyển trạng thái xác nhận đơn hàng là đã mở Hộp
         return response()->json(['success' => true, 'routeShowOrder' => route('showOrder', ['id_cart'=>$id_cart])]);
+    }
+    public function infoUserBill(){
+        $user = Auth::user();
+        return view('user.page.infoUserBill', compact(['user']));
+    }
+
+    public function infoUserBillPost(InfoUserBill $request){
+        $user = Auth::user();
+        $request->merge(['id_user' => $user->id]);
+        if ($this->infoUserBillRepository->create($request->all())) {
+            return redirect()->route('cart')->with('success', 'Thêm thông tin thành công');
+        } else {
+            return back()->with('error', 'Đã xảy ra lỗi vui lòng thử lại');
+        }
     }
 }

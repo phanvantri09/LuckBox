@@ -12,15 +12,13 @@ use App\Repositories\CardRepositoryInterface;
 use App\Repositories\PageRepositoryInterface;
 use App\Repositories\FolowRepositoryInterface;
 use App\Repositories\UserRepositoryInterface;
+use App\Repositories\InfoUserBillRepositoryInterface;
 use Illuminate\Support\Facades\Auth;
 use App\Helpers\ConstCommon;
 use Illuminate\Support\Facades\DB;
 class CartController extends Controller
 {
-    // protected $userRepository;
-    // protected $boxEventRepository;
     protected $boxItemRepository;
-    // protected $boxProductRepository;
     protected $boxRepository;
     protected $cartRepository;
     protected $billRepository;
@@ -29,13 +27,11 @@ class CartController extends Controller
     protected $pageRepository;
     protected $folowRepository;
     protected $userRepository;
-    public function __construct(UserRepositoryInterface $userRepository, FolowRepositoryInterface $folowRepository, PageRepositoryInterface $pageRepository, CardRepositoryInterface $cardRepository, TransactionRepositoryInterface $transactionRepository, BillRepositoryInterface $billRepository , CartRepositoryInterface $cartRepository, BoxItemRepositoryInterface $boxItemRepository, BoxRepositoryInterface $boxRepository)
+    protected $infoUserBillRepository;
+    public function __construct(InfoUserBillRepositoryInterface $infoUserBillRepository, UserRepositoryInterface $userRepository, FolowRepositoryInterface $folowRepository, PageRepositoryInterface $pageRepository, CardRepositoryInterface $cardRepository, TransactionRepositoryInterface $transactionRepository, BillRepositoryInterface $billRepository , CartRepositoryInterface $cartRepository, BoxItemRepositoryInterface $boxItemRepository, BoxRepositoryInterface $boxRepository)
     {
-        // $this->userRepository = $userRepository;
-        // $this->boxEventRepository = $boxEventRepository;
         $this->boxRepository = $boxRepository;
         $this->boxItemRepository = $boxItemRepository;
-        // $this->boxProductRepository = $boxProductRepository;
         $this->cartRepository = $cartRepository;
         $this->billRepository = $billRepository;
         $this->transactionRepository = $transactionRepository;
@@ -43,6 +39,7 @@ class CartController extends Controller
         $this->pageRepository = $pageRepository;
         $this->folowRepository = $folowRepository;
         $this->userRepository = $userRepository;
+        $this->infoUserBillRepository = $infoUserBillRepository;
     }
     public function cartUpdateAmount($id_cart, $type){
 
@@ -127,7 +124,10 @@ class CartController extends Controller
     {
         $user = Auth::user();
         $dataCart = null;
-
+        $inforUserBills = $this->infoUserBillRepository->getByIdUser($user->id);
+        if (count($inforUserBills) <= 0) {
+            return redirect()->route('infoUserBill')->with('info', 'Chưa có thông tin nhận hàng vui lòng thêm ở đây !');
+        }
         if ($request->has('id_cart')) {
             $dataCart = $this->cartRepository->getAllDataByIDCartIDUserAndStatus( $request->id_cart, $user->id, 1);
         } else {
@@ -141,8 +141,7 @@ class CartController extends Controller
         }
         $userInfo = $user->UserInfo()->first();
 
-        // dd($dataCart, count(explode(",", $dataCart->id_folow)), empty($dataCart->id_cart_old));
-        return view('user.page.checkout', compact(['dataCart', 'userInfo']));
+        return view('user.page.checkout', compact(['dataCart', 'userInfo', 'inforUserBills']));
 
     }
     public function checkoutPost(Request $request)

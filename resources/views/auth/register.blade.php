@@ -56,7 +56,7 @@
         <div class="container-lg justify-content-start">
             <a class="navbar-brand text-white col-lg-2 col-md-3 col-5" href="{{ route('home') }}">
                 <img src="{{asset('/dist/img/logo.png')}}" style="width: 100%;" alt="">
-            </a> 
+            </a>
             <h4 class="mb-0">Đăng ký</h4>
         </div>
     </nav>
@@ -141,7 +141,7 @@
                 passwordMatchMessage.style.color = 'red';
             }
         }
-        
+
     };
 
     passwordInput.addEventListener('input', checkPasswordMatch);

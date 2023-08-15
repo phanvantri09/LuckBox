@@ -28,9 +28,9 @@ class CreateBillsTable extends Migration
             // 4 admin duyệt đơn để giao hàng, 5 đã giao thành công. 6 bị từ chối
             $table->bigInteger('amount');
             $table->bigInteger('total');
-            $table->text('name');
-            $table->text('number_phone');
-            $table->text('address');
+            // $table->text('name');
+            // $table->text('number_phone');
+            // $table->text('address');
             $table->timestamps();
         });
     }

@@ -35,8 +35,8 @@
                         <label for="exampleFormControlInput4">Số tiền</label>
                         <input type="number" name="total" class="form-control" id="exampleFormControlInput4"
                             placeholder="2.000.000">
-                            @if (session('thongbao'))
-                                <div class="alert alert-danger">{{ session('thongbao') }}</div>
+                            @if (session('error'))
+                                <div class="alert alert-danger">{{ session('error') }}</div>
                             @endif
                     </div>
                     <button class="btn bg-orange text-white d-flex mx-auto">Gửi yêu cầu</button>
