@@ -12,9 +12,17 @@ use App\Helpers\ConstCommon;
 use App\Http\Requests\Auth\LoginRequest;
 use App\Http\Requests\Auth\RegisterRequest;
 use Laravel\Socialite\Facades\Socialite;
+use Illuminate\Support\Str;
+use App\Repositories\UserRepositoryInterface;
 
 class AuthController extends Controller
 {
+    protected $userRepository;
+
+    public function __construct(UserRepositoryInterface $userRepository)
+    {
+        $this->userRepository = $userRepository;
+    }
     //
     public function showLoginForm()
     {
@@ -25,10 +33,22 @@ class AuthController extends Controller
     public function login(LoginRequest $request)
     {
         $intendedUrl = session('url.intended');
+
+        // $credentials = [
+        //     'email' => $request->email,
+        //     'password' => $request->password,
+        // ];
+
         $credentials = [
-            'email' => $request->email,
-            'password' => $request->password,
+            'password' => $request->input('password')
         ];
+        
+        $emailOrPhone = $request->input('email');
+        if (filter_var($emailOrPhone, FILTER_VALIDATE_EMAIL)) {
+            $credentials['email'] = $emailOrPhone;
+        } else {
+            $credentials['number_phone'] = $emailOrPhone;
+        }
         if (Auth::attempt($credentials)) {
             $request->session()->regenerate();
             if(Auth::user()->type != ConstCommon::TypeUser){
@@ -53,7 +73,25 @@ class AuthController extends Controller
     }
     public function register(RegisterRequest $request)
     {
+        $userGT = $id_user_GT = null;
+        if ($request->has('code') && $request->code != null ) {
+            $userGT = $this->userRepository->findUserByCode($request->code);
+        }
+        if (!empty($userGT)) {
+            $id_user_GT = $userGT->id;
+        }
         $request->merge(['password' => Hash::make($request->password)]);
+        $code = Str::random(8); 
+
+        while (User::where('code', $code)->exists()) {
+            $code = Str::random(8);
+        }
+
+        $request->merge([
+            'name' => $request->name ?? null,
+            'code' => $code,
+            'id_user_referral' => $id_user_GT
+        ]);
         if (User::create($request->all())) {
             return redirect()->route('login')->with('message',"Đăng ký thành công, hãy đăng nhập ngay.");
         } else {

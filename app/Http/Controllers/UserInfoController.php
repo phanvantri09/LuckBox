@@ -46,10 +46,19 @@ class UserInfoController extends Controller
 
     public function createPost(InfoUserRequest $request)
     {
-
-        $idUser = Auth::user()->id;
+        // dd($request->all());
+        $imageName = null;
+        $User = Auth::user();
+        $idUser = $User->id;
         $checkInfoUser = $this->userInfoRepository->checkInfoUser($idUser);
-
+        if ($request->has('name')) {
+            $User->name = $request->name;
+            $User->save();
+        }
+        if ($request->has('number_phone')) {
+            $User->number_phone = $request->number_phone;
+            $User->save();
+        }
         if(empty($checkInfoUser)){
             if($request->link_image){
                 //thời gian upload
@@ -106,6 +115,7 @@ class UserInfoController extends Controller
                 'country' => $request->country,
             ];
             $this->userInfoRepository->updateInfoUser($data, $idUser);
+
             return back()->with('success', 'Cập nhập thông tin thành công');
         }
 

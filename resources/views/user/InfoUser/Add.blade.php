@@ -16,7 +16,7 @@
                             <img src="{{ empty($getInfoUser->link_image) ? asset('/dist/img/noavt.jpg') : \App\Helpers\ConstCommon::getLinkImageToStorage($getInfoUser->link_image) }}"
                                 width="50%" height="160" class="pr-1" alt="">
                             <span>Chào mừng bạn,
-                                <br><b>{{ empty($getInfoUser->name) ? '' : $getInfoUser->name }}</b>
+                                <br><b>{{ Auth::user()->name ?? null }}</b>
                             </span>
                         </div>
                     </div>
@@ -30,13 +30,16 @@
                                 <label for="exampleFormControlInput1">Họ và tên</label>
                                 <input type="text" name="name" class="form-control" id="exampleFormControlInput1"
                                     placeholder="Nguyễn Văn A"
-                                    value="{{ empty($getInfoUser->name) ? '' : $getInfoUser->name }}">
+                                    value="{{ Auth::user()->name ?? null }}">
                             </div>
                             <div class="form-group">
                                 <label for="exampleFormControlInput2">Số điện thoại</label>
-                                <input type="tel" name="number_phone" class="form-control" id="exampleFormControlInput2"
+                                <input type="tel" name="number_phone" pattern="((\+84|0)[3|5|7|8|9])+([0-9]{8})" oninput="this.value = this.value.replace(/[^0-9]/g, '');" required class="form-control" id="exampleFormControlInput2"
                                     placeholder="Số điện thoại"
                                     value="{{ empty($getInfoUser->number_phone) ? '' : $getInfoUser->number_phone }}">
+                                    @error('number_phone')
+                                        <div class="text-danger">{{ $message }}</div>
+                                    @enderror
                             </div>
                             <div class="form-group">
                                 <label for="exampleFormControlInput3">Ngày sinh</label>
@@ -60,7 +63,17 @@
                                 <textarea type="text" name="content" class="form-control" id="exampleFormControlInput4"
                                     placeholder="Giới thiệu bản thân...">{{ empty($getInfoUser->content) ? '' : $getInfoUser->content }}</textarea>
                             </div>
-                            <div class="row">
+                            <div class="form-group">
+                                <label for="exampleFormControlInput5">Địa chỉ</label>
+
+                                <textarea type="text" name="house_number_street" class="form-control" id="exampleFormControlInput4"
+                                    placeholder="Địa chỉ của bạn">{{ empty($getInfoUser->house_number_street) ? '' : $getInfoUser->house_number_street }}</textarea>
+
+                                {{-- <input name="house_number_street" type="text" class="form-control"
+                                    id="exampleFormControlInput5" placeholder="Số nhà..."
+                                    value="{{ empty($getInfoUser->house_number_street) ? '' : $getInfoUser->house_number_street }}"> --}}
+                            </div>
+                            {{-- <div class="row">
                                 <input type="hidden" name="country" value="Việt Nam">
                                 <div class="form-group col-lg-4 col-md-6">
                                     <label for="city">Tỉnh/Thành phố</label>
@@ -80,13 +93,8 @@
                                         <option value="" selected>Chọn phường xã</option>
                                     </select>
                                 </div>
-                            </div>
-                            <div class="form-group">
-                                <label for="exampleFormControlInput5">Số nhà/đường</label>
-                                <input name="house_number_street" type="text" class="form-control"
-                                    id="exampleFormControlInput5" placeholder="Số nhà..."
-                                    value="{{ empty($getInfoUser->house_number_street) ? '' : $getInfoUser->house_number_street }}">
-                            </div>
+                            </div> --}}
+                            
                             <button type="submit" class="btn bg-orange text-white font-weight-bold">Lưu</button>
                         </form>
                     </div>

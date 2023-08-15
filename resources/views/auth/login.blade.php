@@ -69,8 +69,8 @@
                 @csrf
                 <h5>Đăng nhập</h5>
                 <div class="form-group">
-                    <label for="uname">Email</label>
-                    <input type="email" placeholder="Enter Username" class="form-control" name="email"
+                    <label for="uname">Email hoặc số điện thoại</label>
+                    <input type="text" placeholder="Nhập Email hoặc số điện thoại" class="form-control" name="email"
                         value="{{ old('email') }}" required>
                     @error('email')
                         <div class="text-danger">{{ $message }}</div>

@@ -32,7 +32,7 @@
                     </span>
                     <input type="number" id="quantity" name="amount" readonly class="form-control input-number text-center"
                         value="1" min="1"  max="{{ $dataCart->amount }}"
-                        title="Phải là số nguyên và mọi người chỉ được mua nhiều nhất {{ $dataCart->amount }} họp."
+                        title="Phải là số nguyên và mọi người chỉ được mua nhiều nhất {{ $dataCart->amount }} Hộp."
                         required />
                     <input type="hidden" name="id_cart" value="{{ $dataCart->id ?? null }}">
 

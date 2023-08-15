@@ -20,10 +20,10 @@ class CartAdminController extends Controller
         $this->productRepository = $productRepository;
         $this->billRepository = $billRepository;
     }
-            //  1 vừa thêm vào và chưa thanh toán, 2 đã thanh toán chưa mở họp,
+            //  1 vừa thêm vào và chưa thanh toán, 2 đã thanh toán chưa mở Hộp,
             // 10 đăng bán lại
             // 11 f 30
-            // 3 đã mở họp,
+            // 3 đã mở Hộp,
             // 4 admin duyệt đơn để giao hàng, 5 đã giao thành công. 6 bị từ chối
     public function index(Request $request){
         $title = "Đơn hàng";

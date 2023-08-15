@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Lucky Box</title>
-    <link rel="icon" type="image/x-icon" href="{{asset('/dist/img/logo.png')}}">
+    <link rel="icon" type="image/x-icon" href="{{ asset('/dist/img/logo.png') }}">
     <base href="{{ URL::asset('/') }}" target="_top">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
@@ -20,7 +20,9 @@
         href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha512-SfTiTlX6kk+qitfevl/7LibUOeJWlt9rbyDn92a1DqWOw9vWG2MFoays0sgObmWazO5BQPiFucnnEAjpAB+/Sw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+        integrity="sha512-SfTiTlX6kk+qitfevl/7LibUOeJWlt9rbyDn92a1DqWOw9vWG2MFoays0sgObmWazO5BQPiFucnnEAjpAB+/Sw=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="./css/style.css" />
     <link href="css/app.css" rel="stylesheet">
     @yield('css')
@@ -43,7 +45,7 @@
             <div id="chatContent" class="card">
                 <div class="card-header d-flex justify-content-between align-items-center p-3"
                     style="border-top: 4px solid #ffa900;">
-                    <h5 class="mb-0">Đoạn chat</h5>
+                    <h5 class="mb-0">Chat với admin</h5>
                     <i id="minimizeChat" class="fa fa-minus" aria-hidden="true"></i>
                 </div>
                 <div class="card-body" data-mdb-perfect-scrollbar="true"
@@ -157,6 +159,16 @@
         window.getSelection().removeAllRanges();
         document.body.removeChild(tempElement);
         alert("Đã sao chép link!");
+    }
+
+    function copyTextttt(idName) {
+        var textToCopy = $(idName).text();
+        var $tempInput = $("<input>");
+        $("body").append($tempInput);
+        $tempInput.val(textToCopy).select();
+        document.execCommand("copy");
+        $tempInput.remove();
+        alert('Đã sao chép mã giới thiệu');
     }
 </script>
 

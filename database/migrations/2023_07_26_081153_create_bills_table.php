@@ -24,7 +24,7 @@ class CreateBillsTable extends Migration
             $table->bigInteger('id_box');
             $table->bigInteger('status')->default(1);
             // 0 là mới tạo chưa có chuyển sang trang tt chuyển khoản,
-            // 1 vừa thêm vào và chưa thanh toán, 2 đã thanh toán chưa mở họp, 3 đã mở họp,
+            // 1 vừa thêm vào và chưa thanh toán, 2 đã thanh toán chưa mở Hộp, 3 đã mở Hộp,
             // 4 admin duyệt đơn để giao hàng, 5 đã giao thành công. 6 bị từ chối
             $table->bigInteger('amount');
             $table->bigInteger('total');

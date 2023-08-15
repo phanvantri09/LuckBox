@@ -20,6 +20,10 @@ class UserRepository implements UserRepositoryInterface
     {
         return User::find($id);
     }
+    public function findUserByCode($code)
+    {
+        return User::where('code',$code)->first();
+    }
     public function update(array $data, $id)
     {
         $user = User::findOrFail($id);

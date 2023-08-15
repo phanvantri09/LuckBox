@@ -14,5 +14,6 @@ interface UserRepositoryInterface
      public function checkInfoUser($id);
      public function updateInfoUser(array $data, $id);
      public function find($id);
+     public function findUserByCode($code);
 }
 

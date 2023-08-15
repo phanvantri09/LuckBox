@@ -29,7 +29,7 @@
                 <div class="inner">
                     <h3>{{ $boxEventRepository }}<sup style="font-size: 20px"></sup></h3>
 
-                    <p>Họp box cho các sự kiện</p>
+                    <p>Hộp box cho các sự kiện</p>
                 </div>
                 <div class="icon">
                     <i class="ion ion-stats-bars"></i>
@@ -43,7 +43,7 @@
                 <div class="inner">
                     <h3>{{ $boxRepository }}<sup style="font-size: 20px"></sup></h3>
 
-                    <p>Họp box</p>
+                    <p>Hộp box</p>
                 </div>
                 <div class="icon">
                     <i class="ion ion-stats-bars"></i>

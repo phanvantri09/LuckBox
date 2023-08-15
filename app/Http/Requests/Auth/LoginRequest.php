@@ -24,7 +24,7 @@ class LoginRequest extends FormRequest
     public function rules()
     {
         return [
-            'email' => 'required|email',
+            'email' => 'required',
             'password' =>  [
                 'required',
                 'min:8',
@@ -36,7 +36,7 @@ class LoginRequest extends FormRequest
     {
         return [
             'email.required' => 'Vui lòng nhập địa chỉ email',
-            'email.email' => 'Địa chỉ email không hợp lệ',
+            // 'email.email' => 'Địa chỉ email không hợp lệ',
             'password.required' => 'Mật khẩu không được để trống',
             'password.min' => 'Mật khẩu phải có độ dài tối thiểu là 8 ký tự',
             'password.regex' => 'Mật khẩu phải chứa ít nhất một ký tự đặc biệt'

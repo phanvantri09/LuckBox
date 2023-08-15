@@ -68,7 +68,7 @@ class CartController extends Controller
         $request->merge(['status' => 1, 'id_user_create' => $user->id, 'id_admin_update'=> $user->id, 'price_cart'=>$box->price, 'order_number'=>1]);
         // get box - item  để kiểm tra số lượng
         if ($this->cartRepository->findAndUpdate($request->all())) {
-            return redirect()->back()->with('success', "Thêm vào giỏ thành công");
+            return redirect()->route('cart')->with('success', "Thêm vào giỏ thành công");
         }
         $boxItem = $this->boxItemRepository->show($request->id_box_item);
         //check còn đủ 19 thì add, ngược lại thì thông báo là k thể đặt nhiều hơn
@@ -79,10 +79,10 @@ class CartController extends Controller
         if ( $numberAmountOke > $request->amount) {
             // oke
             $this->cartRepository->create($request->all());
-            return redirect()->back()->with('success', "Thêm vào giỏ thành công");
+            return redirect()->route('cart')->with('success', "Thêm vào giỏ thành công");
         } else {
             //no oke
-            return redirect()->back()->with('error', "Bạn nên đặt ít hơn ".$numberAmountOke." họp"  );
+            return redirect()->back()->with('error', "Bạn nên đặt ít hơn ".$numberAmountOke." Hộp"  );
         }
     }
     public function addToCartOld($id_cart_old){
@@ -391,7 +391,7 @@ class CartController extends Controller
         $transactions = $this->transactionRepository->getByIDCart($arrayCart ,$dataCart->id_user_create);
         // dd($transactions);
         if(empty($folows->last()->id_cart)){
-            return redirect()->back()->with('warning','Chưa có giao dịch nào diễn ra ở họp gửi bán này');
+            return redirect()->back()->with('warning','Chưa có giao dịch nào diễn ra ở Hộp gửi bán này');
         }
         $dataCartLast = $this->cartRepository->show($folows->last()->id_cart);
         $number_order = $dataCartLast->order_number;

@@ -176,7 +176,6 @@
 @section('scripts')
     <script>
         function copyText(idName) {
-            console.log(123213);
             var textToCopy = $(idName).text();
             var $tempInput = $("<input>");
             $("body").append($tempInput);

@@ -53,8 +53,8 @@
                             <div class="form-group">
                                 <label for="exampleFormControlInput1">Họ tên</label>
 
-                                <input type="text"  name="name" class="form-control" id="exampleFormControlInput1"
-                                    placeholder="Nguyễn Văn A..." value="{{ $userInfo->name ?? null }}" required />
+                                <input type="text" name="name" class="form-control" id="exampleFormControlInput1"
+                                    placeholder="Nguyễn Văn A..." value="{{ Auth::user()->name ?? null }}" required />
                             </div>
                             <div class="form-group">
                                 <label for="exampleFormControlInput2">Số điện thoại</label>

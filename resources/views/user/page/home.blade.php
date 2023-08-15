@@ -49,7 +49,7 @@
                             @if (empty($cachebox))
                                 <a href="{{ route('home') }}"
                                     class="d-flex flex-column align-items-center w-100 text-decoration-none">
-                                    <img src="{{ \App\Helpers\ConstCommon::getLinkImageToStorage($cachebox->link_image) }}"
+                                    <img src="/dist/img/imageBox.jpg"
                                         width="60%" height="auto" />
                                     <h4 class="mt-1 text-danger text-center">Sự kiện sẽ được cập nhật trong thời gian gần
                                         nhất</h4>
@@ -80,7 +80,7 @@
 
                                 <input type="number" id="quantity" name="amount" readonly
                                     class="form-control input-number text-center" value="1" min="1"
-                                    max="100" title="Phải là số nguyên và mọi người chỉ được mua nhiều nhất 100 họp."
+                                    max="100" title="Phải là số nguyên và mọi người chỉ được mua nhiều nhất 100 Hộp."
                                     required />
                                 <span class="input-group-btn">
                                     <button type="button" class="quantity-right-plus btn btn-warning btn-number"

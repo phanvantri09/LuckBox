@@ -211,7 +211,7 @@ class PageController extends Controller
         if ($cart->status == 2 || $cart->status == 11) {
             return view('user.page.box.opennew', compact(['cart', 'allProduct', 'productChoese', 'productChoeseImage']));
         } else {
-            return redirect()->route('home')->with('error',"Họp này không thể mở");
+            return redirect()->route('home')->with('error',"Hộp này không thể mở");
         }
     }
     public function openBoxPost($id_cart, $id_product){
@@ -222,7 +222,7 @@ class PageController extends Controller
             if ($cart->status == 2 || $cart->status == 11) {
 
                 if ($cart->amount > 1 ) {
-                    // nếu nhỏ hơn thì tạo cart mới để giao hàng vì mỗi lần chỉ mở 1 họp
+                    // nếu nhỏ hơn thì tạo cart mới để giao hàng vì mỗi lần chỉ mở 1 Hộp
                     $data = [
                         'id_user_create' => $user->id,
                         'id_admin_update' => null,
@@ -260,7 +260,7 @@ class PageController extends Controller
                         'message' => 'CSRF token mismatch. Please refresh the page and try again.'
                     ], 400);
         }
-        // Chuyển trạng thái xác nhận đơn hàng là đã mở họp
+        // Chuyển trạng thái xác nhận đơn hàng là đã mở Hộp
         return response()->json(['success' => true, 'routeShowOrder' => route('showOrder', ['id_cart'=>$id_cart])]);
     }
 }
