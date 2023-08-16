@@ -55,8 +55,8 @@
                                     ;
                                 ">{{ \App\Helpers\ConstCommon::TypeTransaction[$item->type] }}</td>
                                     </td>
-                                    <td>{{ $item->User->email }}</td>
-                                    <td>{{ number_format($item->total) }}đ</td>
+                                    <td>{{ $item->User->email ?? $item->User->number_phone ?? null }}</td>
+                                    <td>{{ number_format($item->total) }}VNĐ</td>
                                     <td>{{ $item->card_name }}</td>
                                     <td>{{ $item->card_number }}</td>
                                     <td>{{ $item->bank }}</td>

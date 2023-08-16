@@ -12,10 +12,9 @@
         <div class="container my-lg-2 my-0 bg-white py-4">
             <div class="row content-page p-lg-5">
                 <div class="col-lg-12 col-md-12 col-sm-12 col-12 px-lg-5">
-                    <div class="title text-danger pt-sm-2">Thanh toán</div>
+                    <div class="title text-danger pt-sm-2">Tạo thông tin nhận hàng</div>
                     <form action="{{ route('infoUserBillPost') }}" class="border p-3 mt-2 rounded" method="post">
                         @csrf
-                        <div>Tạo thông tin nhận hàng</div>
                         <div class="form-group">
                             <div class="form-group">
                                 <label for="exampleFormControlInput1">Họ tên</label>

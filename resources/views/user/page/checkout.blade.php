@@ -49,10 +49,10 @@
                             value="{{ empty($dataCart->id_cart_old) ? $dataCart->amount : 1 }}">
                         <input type="hidden" name="total" value="{{ $dataCart->price_cart * $dataCart->amount }}">
                         {{-- <input type="" name="amount" value="{{$dataCart->amount}}"> --}}
-                        <div>Bạn vui lòng nhập đầy đủ thông tin trước khi thanh toán</div>
+                        {{-- <div>Bạn vui lòng nhập đầy đủ thông tin trước khi thanh toán</div> --}}
                         <div class="form-group">
                             <div class="form-group">
-                                <label for="exampleFormControlInput1">Thông tin nhận hàng</label>
+                                <label for="exampleFormControlInput1">Chọn thông tin nhận hàng</label>
                                 <select name="id_info_user_bill" class="form-group">
                                     @foreach ($inforUserBills as $inforUserBill)
                                         <option  value="{{ $inforUserBill->id }}">
@@ -86,7 +86,7 @@
                                 </div>
                             </div> --}}
                         </div>
-                        <button type="submit" class="btn bg-orange text-white">Thanh toán</button>
+                        <button type="submit" class="btn bg-orange text-white">Xác nhận thanh toán</button>
                     </form>
                 </div>
             </div>

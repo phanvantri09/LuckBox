@@ -199,4 +199,11 @@ class CartRepository implements CartRepositoryInterface
         // return Folow::where('id_user', 'REGEXP', '^['.$id.']')->where('id_box_event', $id_box_event)->where('id_box_item',$id_box_item)->where('id_box',$id_box)->get();
     }
 
+    public function checkAddToCart($id_user, $id_cart_old){
+        return  Cart::where('id_user_create', $id_user)
+        ->where('status', 1)
+        ->where('id_cart_old', $id_cart_old)
+        ->first();
+    }
+
 }

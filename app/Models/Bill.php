@@ -22,6 +22,7 @@ class Bill extends Model
         'total',
         'name',
         'number_phone',
-        'address'
+        'address',
+        'id_info_user_bill'
     ];
 }

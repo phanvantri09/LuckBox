@@ -31,6 +31,7 @@ class CreateBillsTable extends Migration
             // $table->text('name');
             // $table->text('number_phone');
             // $table->text('address');
+            $table->bigInteger('id_info_user_bill');
             $table->timestamps();
         });
     }

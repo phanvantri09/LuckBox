@@ -60,7 +60,6 @@ class CartController extends Controller
 
     public function addToCart(Request $request){
         $user = Auth::user();
-        // dd($request->all());
         $box = $this->boxRepository->show($request->id_box);
         $request->merge(['status' => 1, 'id_user_create' => $user->id, 'id_admin_update'=> $user->id, 'price_cart'=>$box->price, 'order_number'=>1]);
         // get box - item  để kiểm tra số lượng
@@ -88,6 +87,12 @@ class CartController extends Controller
             return redirect()->back()->with('error', "Không thể thực hiện được");
         }
 
+        $data = $this->cartRepository->checkAddToCart($user->id, $id_cart_old);
+        if (!empty($data)) {
+            if( $this->cartRepository->update(['amount' => $data->amount + 1 ], $data->id) ){
+                return redirect()->route('cart')->with('success',"Thêm vào giỏ thành công");
+            }
+        }
         $cartOld = $this->cartRepository->show($id_cart_old);
 
         if ($cartOld == null) {
@@ -146,6 +151,17 @@ class CartController extends Controller
     }
     public function checkoutPost(Request $request)
     {
+        // dd($request->all());
+        // 1 lưu bill
+        // 2 trừ tiền user
+        // 3 lưu giao dịch
+        // case có old_id là mua lại trên chợ
+        // 1 lưu bill
+        // 2 trừ tiền user
+        // 3 lưu giao dịch
+        // 4 cộng tiền cho user f 1 234
+        // 5 cộng tiền cho người bán
+        // 6 
         $user = Auth::user();
 
         $request->merge([
@@ -154,10 +170,16 @@ class CartController extends Controller
             'id_admin_update' => $user->id,
             'status' => 2
         ]);
+        $cart = $this->cartRepository->show($request->id_cart);
+
+        // kiểm tra không đủ tiền thì chuyển qua nạp tiền
+        if ($cart->amount * $cart->price_cart > $user->balance) {
+            return redirect()->route('infoCardPay')->with('error', 'Số tài khoản trong ví không đủ để thực hiện, vui lòng nạp thêm tiền để thực hiện giao dịch này.');
+        }
+
         DB::beginTransaction();
         try {
-            session(['transaction_bill' => $request->all()]);
-            $cart = $this->cartRepository->show($request->id_cart);
+            // session(['transaction_bill' => $request->all()]);
             $dataTransaction = [
                 'id_user' => $user->id,
                 'id_admin_accept' => null,
@@ -179,8 +201,10 @@ class CartController extends Controller
             if (!empty($cart->id_cart_old)) {
                 // trừ amount cart của cart old
                 $cartOld = $this->cartRepository->show($cart->id_cart_old);
-                $cartOld->amount = $cartOld->amount - 1;
-                $cartOld->save();
+                // Trừ số lượng đã đã mua
+                $this->cartRepository->update(['amount' => $cartOld->amount - $cart->amount], $cart->id_cart_old);
+
+                // folow
                 $folowOld = $this->folowRepository->show($cart->id_folow);
                 $dataFolow = [
                     'id_user' => $folowOld->id_user.','.$user->id,
@@ -190,7 +214,7 @@ class CartController extends Controller
                     'id_cart' => $request->id_cart,
                 ];
                 // cộng tiền khi user mua hàng từ maket
-                 // x 1.8 trực tiếp cho người bán , O 0.22 gián tiếp cho tất cả
+                // x 1.8 trực tiếp cho người bán , O 0.22 gián tiếp cho tất cả
                 $moneyX = ( $cart->price_cart * $request->amount ) * 1.8 / 100;
                 $moneyO = ( $cart->price_cart * $request->amount ) * 0.22 / 100;
                 // cộng tiền cho người bán
@@ -202,7 +226,7 @@ class CartController extends Controller
                     'id_user' => $cartOld->id_user_create,
                     'id_admin_accept' => null,
                     'type' => 4,
-                    'total'=> $cartOld->price_cart,
+                    'total'=> $cartOld->price_cart * $cart->amount,
                     'status'=> 2
                     , 'card_name'=> null
                     , 'bank'=> null
@@ -215,7 +239,7 @@ class CartController extends Controller
                     'id_user' => $cartOld->id_user_create,
                     'id_admin_accept' => null,
                     'type' => 5,
-                    'total'=> $moneyX,
+                    'total'=> $moneyX * $cart->amount,
                     'status'=> 2
                     , 'card_name'=> null
                     , 'bank'=> null
@@ -228,19 +252,20 @@ class CartController extends Controller
 
                 $this->transactionRepository->create($dataTransactionPlusUser2);
 
-                $userPlusMoneyBox->balance = $userPlusMoneyBox->balance + $cartOld->price_cart + $moneyX;
+                $userPlusMoneyBox->balance = $userPlusMoneyBox->balance + (($cartOld->price_cart + $moneyX) * $cart->amount);
                 $userPlusMoneyBox->save();
 
                 foreach (explode(',', $folowOld->id_user) as $key => $id_us) {
                     // kiểm tra khác user bán
-                    if ($id_us != $cartOld->id_user_create) {
+                    // if ($id_us != $cartOld->id_user_create) {
+                    if ($key != 0) {
                         $userPlusMoney = $this->userRepository->find($id_us);
 
                         $dataTransactionPlus = [
                             'id_user' => $id_us,
                             'id_admin_accept' => null,
                             'type' => 5,
-                            'total'=> $moneyO,
+                            'total'=> $moneyO * $cart->amount,
                             'status'=> 2
                             , 'card_name'=> null
                             , 'bank'=> null
@@ -250,7 +275,7 @@ class CartController extends Controller
                         ];
 
                         $this->transactionRepository->create($dataTransactionPlus);
-                        $userPlusMoney->balance = $userPlusMoney->balance + $moneyO;
+                        $userPlusMoney->balance = $userPlusMoney->balance + ($moneyO * $cart->amount);
                         $userPlusMoney->save();
                     }
                 }
@@ -270,16 +295,33 @@ class CartController extends Controller
             } else {
                 $this->cartRepository->update(['id_folow' => $folow->id, 'status' => 2 ], $request->id_cart);
             }
-            $user->balance = $user->balance - $request->total;
+
+            // Tạo giao dịch trừ tiền người mua
+            $dataTransactionTruTienNguoiMua  = [
+                'id_user' => $user->id,
+                'id_admin_accept' => null,
+                'type' => 3,
+                'total'=> ($cart->cart_price * $cart->amount) * 0.2 / 100,
+                'status'=> 2
+                , 'card_name'=> null
+                , 'bank'=> null
+                , 'card_number'=> null
+                , 'transaction_content'=> null,
+                'id_cart' =>$request->id_cart
+            ];
+            $this->transactionRepository->create($dataTransactionTruTienNguoiMua);
+            $user->balance = $user->balance - ($cart->cart_price * $cart->amount);
             $user->save();
+
+            // cộng tiền cho người gt tạo tk
             if (!empty($user->id_user_referral)) {
                 $userReferral = $this->userRepository->find($user->id_user_referral);
-                $moneyUserReferral = $userReferral->balance + ($request->total * 0.2 / 100);
+                $moneyUserReferral = $userReferral->balance + (($cart->cart_price * $cart->amount) * 0.2 / 100);
                 $dataTransactionPlusUserreferral  = [
                     'id_user' => $user->id_user_referral,
                     'id_admin_accept' => null,
                     'type' => 6,
-                    'total'=> $request->total * 0.2 / 100,
+                    'total'=> ($cart->cart_price * $cart->amount) * 0.2 / 100,
                     'status'=> 2
                     , 'card_name'=> null
                     , 'bank'=> null
@@ -293,7 +335,7 @@ class CartController extends Controller
             DB::commit();
         } catch (\Exception $e){
             report($e);
-            // dd($e);
+            dd($e);
             DB::rollBack();
             return redirect()->back()->with('error', 'Đã xảy ra lỗi');
         }

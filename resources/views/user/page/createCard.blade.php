@@ -17,7 +17,7 @@
                         <label for="nganhang">Tên ngân hàng</label>
                         <select name="bank" class="form-control" id="nganhang">
                             @foreach ($dataBank as $key => $item)
-                                <option value="{{ $key }}" selected>{{ $item['name'] }}</option>
+                                <option value="{{ $key }}">{{ $item['name'] }}</option>
                             @endforeach
                         </select>
                         @error('bank')
@@ -27,7 +27,7 @@
                     <div class="form-group">
                         <label for="exampleFormControlInput1">Chi nhánh</label>
                         <input type="text" name="card_branch" class="form-control" id="exampleFormControlInput1"
-                            placeholder="Đà Nẵng">
+                            placeholder="Nhập chi nhánh mà bạn đăng ký thẻ">
                         @error('card_branch')
                             <div class="alert alert-danger">{{ $errors->first('card_branch') }}</div>
                         @enderror
@@ -35,7 +35,7 @@
                     <div class="form-group">
                         <label for="exampleFormControlInput1">Tên chủ thẻ</label>
                         <input type="text" name="card_name" class="form-control" id="exampleFormControlInput1"
-                            placeholder="Nguyễn Văn A">
+                            placeholder="Nhập tên chủ thẻ">
                         @error('card_name')
                             <div class="alert alert-danger">{{ $errors->first('card_name') }}</div>
                         @enderror
@@ -43,7 +43,7 @@
                     <div class="form-group">
                         <label for="exampleFormControlInput2">Số thẻ/Số tài khoản</label>
                         <input type="number" name="card_number" class="form-control" id="exampleFormControlInput2"
-                            placeholder="Nguyễn Văn A">
+                            placeholder="Nhập số thẻ/số tài khoản">
                         @error('card_number')
                             <div class="alert alert-danger">{{ $errors->first('card_number') }}</div>
                         @enderror
