@@ -8,7 +8,7 @@
         <span class="navbar-toggler-icon"></span>
       </button> -->
         <div class="collapse navbar-collapse justify-content-center" id="collapsibleNavbar">
-            <ul class="navbar-nav" style="font-weight: bold; font-size: 22px">
+            <ul class="navbar-nav" style="font-weight: 500; text-transform: uppercase">
                 <li class="nav-item">
                     <a class="nav-link text-white" href="{{ route('home') }}">Trang chủ</a>
                 </li>
@@ -82,7 +82,7 @@
                 if (Auth::user()) {
                     $userId = Auth::user()->id;
                     $dataToEncode = [$userId];
-                
+
                     $hashids = new \Hashids\Hashids('share');
                     $encodedData = $hashids->encode($dataToEncode);
                     $sharedLink = url('shared/' . $encodedData);
