@@ -7,7 +7,7 @@
             <p>LuckyBox | Sự kiện box</p>
         </div>
     </div>
-    <div class="content-container py-4">
+    <div class="content-container py-md-4 py-3">
         <!-- desktop -->
         <div class="container d-lg-block d-none">
             <div class="row bg-white my-lg-2 my-0 py-2 align-items-center">

@@ -7,7 +7,7 @@
             <p>LuckyBox | Đơn hàng sắp nhận</p>
         </div>
     </div>
-    <div class="content-container py-4">
+    <div class="content-container py-md-4 py-3">
         <div class="container my-lg-2 my-0">
             @if (empty($dataCart))
                 <h1>Giỏ của bạn không có gì</h1>
