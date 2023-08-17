@@ -15,7 +15,7 @@
     @php
         use Carbon\Carbon;
     @endphp
-    <div class="content-container py-4">
+    {{-- <div class="content-container py-4">
         <div class="container my-lg-2 my-0">
             <div class="row py-3 mb-2 border sort-market">
                 <div class="px-2 d-md-block d-none">Sắp xếp theo</div>
@@ -144,11 +144,11 @@
             </div>
             <!-- end mobile -->
         </div>
-    </div>
+    </div> --}}
     <div class="content-container py-4">
         <div class="container my-lg-2 my-0">
             <div class="d-flex justify-content-between">
-                <h5>Tổng: {{$dataCarts->total()}} box</h5>
+                <h5>Tổng: {{$dataCarts->total()}}</h5>
                 <form class="form-group col-md-2 col-sm-6 col-7" method="GET">
                     <select class="form-control" id="exampleFormControlSelect1"  onchange="window.location.href=this.options[this.selectedIndex].value;">
                         <option value="{{ route('market', ['type' => 1]) }}">Mới nhất</option>
@@ -161,34 +161,56 @@
                 @foreach ($dataCarts as $dataCart)
                 @php
                     $chenhlech = ($dataCart->price_cart * 6) / 100 + $dataCart->price_cart;
+                    $createdAt = Carbon::parse($dataCart->created_at);
                 @endphp
-                <div class="col-lg-3 col-md-4 col-sm-6 col-12 p-2">
+                <div class="col-lg-3 col-md-4 col-sm-6 col-12 p-2 border">
                     <div class="bg-white p-2 market-content">
                         <a href="{{ route('boxInfo', ['id' => $dataCart->id]) }}" class="text-decoration-none text-dark">
                             <img src="{{ \App\Helpers\ConstCommon::getLinkImageToStorage($dataCart->link_image) ?? '/dist/img/imageBox.jpg'}} "/>
-                            <h4 class="title-box">{{ $dataCart->title }}</h4>
-                            <h5>Đơn giá: <span class="font-weight-bold text-danger">{{ number_format($chenhlech) }}</span>VNĐ</h5>
-                            <div class="d-flex justify-content-between">
-                                <div>F29</div>
-                                <div>Tên người bán</div>
+                            <h4 class="title-box pt-2">{{ $dataCart->title }}</h4>
+                            <h5>Đơn giá: <span class="font-weight-bold text-danger">{{ number_format($chenhlech) }}</span> VNĐ</h5>
+                            <div class="d-flex justify-content-between border-top border-bottom p-2">
+                                <b>F{{$dataCart->order_number + 1}}</b>
+                                <b>{{empty($dataCart->name) ? (empty($dataCart->email) ? $dataCart->number_phone : $dataCart->email) : $dataCart->name }}</b>
                             </div>
-                            <div>Còn lại: <span class="font-weight-bold text-danger">10</span></div>
-                            <div class="box-new bg-danger text-white px-1 label-status">
-                                Mới
-                            </div>
+                            <div>Còn lại: <span class="font-weight-bold text-danger">{{$dataCart->amount}}</span></div>
+                            @if($createdAt->gt($threeDaysAgo))
+                                <div class="box-new bg-danger text-white px-1 label-status">
+                                    Mới
+                                </div>
+                            @endif
                         </a>
                         <div class="d-flex justify-content-between py-2">
-                            <button class="btn bg-orange text-white" data-toggle="modal" data-target="#exampleModal{{$dataCart->id}}">Thanh
-                                toán
-                                ngay</button>
+                            @auth
+                                @if ($dataCart->id_user_create != Auth::user()->id)
+                                    <button class="btn bg-orange text-white" data-toggle="modal" data-target="#exampleModal{{$dataCart->id}}">
+                                        Mua ngay
+                                    </button>
+                                    {{-- <a href="{{ route('addToCartOld', ['id_cart_old' => $dataCart->id]) }}"
+                                        class="w-100 px-lg-0">
+                                        <button class="btn bg-orange text-white">Mua ngay</button>
+                                    </a> --}}
+                                @else
+                                    <a href="{{ route('stopMarket', ['id_cart' => $dataCart->id]) }}">
+                                        <button class="btn bg-warning">Hủy bán</button>
+                                    </a>
+                                @endif
+                            @else
+                                <a href="{{ route('login') }}">
+                                    <button class="btn bg-orange text-white">Mua ngay</button>
+                                </a>
+                            @endauth
+                            {{-- <button class="btn bg-orange text-white" data-toggle="modal" data-target="#exampleModal{{$dataCart->id}}">
+                                Thanh toán ngay
+                            </button>
                             <a href="">
                                 <button class="btn bg-warning">Hủy bán</button>
-                            </a>
+                            </a> --}}
                         </div>
                         <form method="post" action="{{ route('checkoutPost') }}" class="modal fade" id="exampleModal{{$dataCart->id}}" tabindex="-1" role="dialog"
                             aria-labelledby="exampleModalLabel" aria-hidden="true">
                             @csrf
-                            {{-- phải tọa ra bill trước rồi mới  --}}
+                            {{-- phải tọa ra bill trước rồi mới thanh toán dc --}}
                             <input type="hidden" name="market_pay" value="true">
                             <input type="hidden" name="id_cart" value="{{ $dataCart->id }}">
                             <input type="hidden" name="id_box_item" value="{{ $dataCart->id_box_item }}">

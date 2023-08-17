@@ -9,6 +9,31 @@
         </div>
     </div>
     <div class="container bg-warning d-flex flex-column justify-content-center">
+        <div class="giftcontainer-content d-flex flex-column justify-content-between align-items-center">
+            <h4 class="text-center">Sau khi ấn vào nắp hộp, bạn sẽ nhận được 1 trong 10 sản phẩm phía trên</h4>
+            <div class="giftcontainer">
+                <div class="gift">
+                    <input type="checkbox" id="click">
+                    <label id="openBox" for="click" class="click"></label>
+                    <a id="showOrder" href="{{ route('listOrder') }}" target="_blank" class="giftopen p-2">
+                        <div class="opacity-75 d-flex flex-column align-items-center">
+                            <img src="{{\App\Helpers\ConstCommon::getLinkImageToStorage($productChoeseImage->link_image)}}"
+                                class="rounded-bottom">
+                            <p class="mb-0 product-card-title text-danger font-weight-bold text-center">{{ $productChoese->title }}</p>
+
+                            <div>
+                                <span class="fa fa-star checked "></span>
+                                <span class="fa fa-star checked"></span>
+                                <span class="fa fa-star checked"></span>
+                                <span class="fa fa-star checked"></span>
+                                <span class="fa fa-star checked"></span>
+                            </div>
+
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </div>
         <div class="giftboxs" aria-hidden="true">
             <div class="giftbox">🎁</div>
             <div class="giftbox">🎈</div>
@@ -49,31 +74,7 @@
             @endforeach
 
         </div>
-        <div class="giftcontainer-content d-flex flex-column justify-content-between align-items-center">
-            <h4 class="text-center">Sau khi ấn vào nắp hộp, bạn sẽ nhận được 1 trong 10 sản phẩm phía trên</h4>
-            <div class="giftcontainer">
-                <div class="gift">
-                    <input type="checkbox" id="click">
-                    <label id="openBox" for="click" class="click"></label>
-                    <a id="showOrder" href="#" target="_blank" class="giftopen p-2">
-                        <div class="opacity-75 d-flex flex-column align-items-center">
-                            <img src="{{\App\Helpers\ConstCommon::getLinkImageToStorage($productChoeseImage->link_image)}}"
-                                class="rounded-bottom">
-                            <p class="mb-0 product-card-title text-danger font-weight-bold text-center">{{ $productChoese->title }}</p>
-
-                            <div>
-                                <span class="fa fa-star checked "></span>
-                                <span class="fa fa-star checked"></span>
-                                <span class="fa fa-star checked"></span>
-                                <span class="fa fa-star checked"></span>
-                                <span class="fa fa-star checked"></span>
-                            </div>
-
-                        </div>
-                    </a>
-                </div>
-            </div>
-        </div>
+        
     </div>
     </div>
 @endsection

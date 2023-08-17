@@ -10,4 +10,5 @@ interface BillRepositoryInterface
      public function show($id);
      public function getAllByType($type);
      public function showByIdCart($id_cart);
+     public function updateByIDCart(array $data, $id_cart);
 }

@@ -38,4 +38,11 @@ class BillRepository implements BillRepositoryInterface
     public function showByIdCart($id_cart){
         return Bill::where('id_cart', $id_cart)->first();
     }
+    public function updateByIDCart(array $data, $id_cart)
+    {
+        $user = Bill::where('id_cart', $id_cart)->first();
+        $user->update($data);
+        return $user;
+    }
+    
 }

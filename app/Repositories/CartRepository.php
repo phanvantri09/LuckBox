@@ -154,36 +154,40 @@ class CartRepository implements CartRepositoryInterface
     public function getAllByStatusmartket($type = null){
         if ($type != null) {
             if ($type == 1) {
-                return DB::table('carts')->select('carts.*', 'box.title', 'box.link_image', 'box.price', 'folows.id_user as id_user_folow')
+                return DB::table('carts')->select('carts.*', 'box.title', 'box.link_image', 'box.price', 'folows.id_user as id_user_folow', 'users.email', 'users.name', 'users.number_phone')
                 ->leftJoin('box', 'carts.id_box', '=', 'box.id')
                 ->leftJoin('folows', 'carts.id_folow', '=', 'folows.id')
+                ->leftJoin('users', 'carts.id_user_create', '=', 'users.id')
                 ->where('carts.amount', '>', 0)
                 ->where('carts.status', 10)
                 ->orderBy('carts.created_at', 'desc')
                 ->paginate(20);
             }
             if ($type == 2) {
-                return DB::table('carts')->select('carts.*', 'box.title', 'box.link_image', 'box.price', 'folows.id_user as id_user_folow')
+                return DB::table('carts')->select('carts.*', 'box.title', 'box.link_image', 'box.price', 'folows.id_user as id_user_folow', 'users.email', 'users.name', 'users.number_phone')
                 ->leftJoin('box', 'carts.id_box', '=', 'box.id')
                 ->leftJoin('folows', 'carts.id_folow', '=', 'folows.id')
+                ->leftJoin('users', 'carts.id_user_create', '=', 'users.id')
                 ->where('carts.amount', '>', 0)
                 ->where('carts.status', 10)
                 ->orderBy('carts.price_cart', 'desc')
                 ->paginate(20);
             }
             if ($type == 3) {
-                return DB::table('carts')->select('carts.*', 'box.title', 'box.link_image', 'box.price', 'folows.id_user as id_user_folow')
+                return DB::table('carts')->select('carts.*', 'box.title', 'box.link_image', 'box.price', 'folows.id_user as id_user_folow', 'users.email', 'users.name', 'users.number_phone')
                 ->leftJoin('box', 'carts.id_box', '=', 'box.id')
                 ->leftJoin('folows', 'carts.id_folow', '=', 'folows.id')
+                ->leftJoin('users', 'carts.id_user_create', '=', 'users.id')
                 ->where('carts.amount', '>', 0)
                 ->where('carts.status', 10)
                 ->orderBy('carts.price_cart', 'asc')
                 ->paginate(20);
             }
         } else {
-            return DB::table('carts')->select('carts.*', 'box.title', 'box.link_image', 'box.price', 'folows.id_user as id_user_folow')
+            return DB::table('carts')->select('carts.*', 'box.title', 'box.link_image', 'box.price', 'folows.id_user as id_user_folow', 'users.email', 'users.name', 'users.number_phone')
             ->leftJoin('box', 'carts.id_box', '=', 'box.id')
             ->leftJoin('folows', 'carts.id_folow', '=', 'folows.id')
+            ->leftJoin('users', 'carts.id_user_create', '=', 'users.id')
             ->where('carts.amount', '>', 0)
             ->where('carts.status', 10)
             ->paginate(20);
