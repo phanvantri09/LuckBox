@@ -373,7 +373,7 @@ class CartController extends Controller
             // return view('user.page.infoCardPay', compact(['infoCard','getCardDefault','total']));
         } catch (\Exception $e){
             report($e);
-            dd($e);
+            // dd($e);
             DB::rollBack();
             return redirect()->back()->with('error', 'Đã xảy ra lỗi');
         }

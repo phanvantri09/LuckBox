@@ -8,7 +8,7 @@
         </div>
     </div>
 
-    <div class="content-container py-4">
+    <div class="content-container py-md-4 py-3">
         <div class="container my-lg-2 my-0 bg-white py-4">
             <div class="row content-page p-lg-5">
                 <div class="col-lg-12 col-md-12 col-sm-12 col-12 px-lg-5">

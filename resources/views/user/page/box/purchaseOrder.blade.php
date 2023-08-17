@@ -7,7 +7,7 @@
             <p>LuckyBox | Box đã mua</p>
         </div>
     </div>
-    <div class="content-container py-4">
+    <div class="content-container py-md-4 py-3">
         <div class="container my-lg-2 my-0">
             <!-- desktop -->
             <div class="d-lg-block d-none">

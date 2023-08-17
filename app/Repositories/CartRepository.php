@@ -45,6 +45,7 @@ class CartRepository implements CartRepositoryInterface
     {
           $user = Cart::findOrFail($id);
           $user->delete();
+          return true;
     }
     public function getSumAllByStatusNoCheckout(){
         return Cart::whereNotIn('status', [1])->sum('amount');

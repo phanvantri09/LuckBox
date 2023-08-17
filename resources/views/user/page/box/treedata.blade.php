@@ -7,7 +7,7 @@
             <p>LuckyBox | Hoa hồng từ bán box</p>
         </div>
     </div>
-    <div class="content-container py-4">
+    <div class="content-container py-md-4 py-3">
         <div class="container my-lg-2 my-0 bg-white py-4">
             <div class="text-center pb-2">(Đây là danh sách dữ liệu doanh thu của box này)</div>
             <table class="table table-bordered table-hover">

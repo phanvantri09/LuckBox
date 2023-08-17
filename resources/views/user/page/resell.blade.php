@@ -7,7 +7,7 @@
             <p>LuckyBox | Gửi bán box</p>
         </div>
     </div>
-    <div class="content-container py-4">
+    <div class="content-container py-md-4 py-3">
         <div class="container my-lg-2 my-0 d-flex justify-content-center">
             <form action="{{ route('sendToMarketPost') }}" class="bg-white py-4 rounded mb-2 px-4 w-md-50" method="post">
                 @csrf

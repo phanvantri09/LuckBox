@@ -47,6 +47,10 @@
   width: 100%;
   height: 200px;
 }
+.changeaddress .modal-dialog{
+  top: 15%;
+  transform: translateY(-50%);
+}
 .modal-dialog{
   top: 25%;
   transform: translateY(-50%);
@@ -54,6 +58,9 @@
 .market-content img{
   width: 100%;
   height: 280px;
+}
+.changeaddress .modal-body{
+  height: 500px;
 }
 .product-card-title {
     font-size: 20px;
@@ -178,9 +185,16 @@
   .product-card {
     font-size: 12px;
   }
+  .changeaddress .modal-dialog{
+    top: unset;
+    transform: translateY(-50%);
+  }
   .market-content img{
     width: 100%;
     height: 230px;
+  }
+  .changeaddress .modal-body{
+    height: 350px;
   }
   .product-card img {
     width: 100%;
@@ -199,6 +213,22 @@
   body main {
     margin-top: 80px !important;
  }
+}
+.icon-card, .icon-gif{
+  position: relative;
+}
+.numbercart, .numbergif{
+  position: absolute;
+    top: -5px;
+    right: 2%;
+    border: 1px solid;
+    /* width: 10px; */
+    font-size: 10px;
+    width: 15px;
+    text-align: center;
+    padding: 0 1px;
+    border-radius: 50%;
+    background-color: #ff0000;
 }
 .content-container {
   background-color: #f5f5f5;
