@@ -35,7 +35,7 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="exampleFormControlTextarea1">Example textarea</label>
+                        <label for="exampleFormControlTextarea1">Nội dung liên hệ/thắc mắc</label>
                         <textarea class="form-control" id="exampleFormControlTextarea1" placeholder="Đừng ngại khi nói về thắc mắc của bạn!"
                             rows="5"></textarea>
                     </div>

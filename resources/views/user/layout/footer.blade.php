@@ -14,7 +14,7 @@
                 <a href="{{ route('market') }}">Chợ</a>
             </p>
             <p class="mb-0">
-                <a href="#footter">Liên hệ</a>
+                <a href="{{ route('Contact') }}">Liên hệ</a>
             </p>
         </div>
         <div class="col-lg-4 col-sm-6 col-6 py-1">

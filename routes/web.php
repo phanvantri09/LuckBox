@@ -108,6 +108,7 @@ Route::group(['prefix' => '/'], function () {
             Route::get('/danh-sach-don-hang','listOrder')->name('listOrder');
             Route::get('/thong-tin-don-hang/{id_cart}','showOrder')->name('showOrder');
             Route::get('/ngung-ban/{id_cart}','stopMarket')->name('stopMarket');
+            Route::get('/ngung-mua/{id_cart}','stopcart')->name('stopcart');
         });
     });
 

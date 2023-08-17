@@ -41,12 +41,12 @@
                                         <div class="text-danger">{{ $message }}</div>
                                     @enderror
                             </div>
-                            <div class="form-group">
+                            {{-- <div class="form-group">
                                 <label for="exampleFormControlInput3">Ngày sinh</label>
                                 <input type="date" name="birthdate" class="form-control" id="exampleFormControlInput3"
                                     placeholder="Nguyễn Văn A"
                                     value="{{ empty($getInfoUser->birthdate) ? '' : $getInfoUser->birthdate }}">
-                            </div>
+                            </div> --}}
                             <div class="form-group">
                                 <label class="form-label" for="customFile">Hình ảnh</label>
                                 <input type="file" name="link_image" class="form-control-file border rounded px-1 py-1" id="image-input" accept="image/*">

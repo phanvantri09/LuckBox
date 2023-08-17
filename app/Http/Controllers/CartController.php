@@ -162,17 +162,44 @@ class CartController extends Controller
         // 4 cộng tiền cho user f 1 234
         // 5 cộng tiền cho người bán
         // 6
+        
         DB::beginTransaction();
         try {
             $user = Auth::user();
 
+
+
+            if($request->has('market_pay')){
+                $cartOLD = $this->cartRepository->show($request->id_cart);
+                $data = [
+                    'id_user_create' => $user->id,
+                    'id_admin_update' => null,
+                    'id_box_event' => $cartOLD->id_box_event ,
+                    'id_folow' => $cartOLD->id_folow , // sau khi checkout mới cập nhật cái này
+                    'id_cart_old' => $request->id_cart ,
+                    'id_box' => $cartOLD->id_box,
+                    'id_box_item' => $cartOLD->id_box_item ,
+                    'status' => 3 ,
+                    'amount' => 1,
+                    // 'price_cart' => $cartOld->price_cart ,
+                    // 'order_number' => $cartOld->order_number,
+                    'price_cart' => $cartOld->price_cart + ( 6 *($cartOld->price_cart / 100)),
+                    'order_number' => $cartOld->order_number + 1,
+                ];
+                $cartNew = $this->cartRepository->create($data);
+                $cart = $cartNew;
+            } else {
+                $cart = $this->cartRepository->show($request->id_cart);
+            }
+
+
+            
             $request->merge([
                 'id_user' => $user->id,
                 'id_user_create' => $user->id,
                 'id_admin_update' => $user->id,
                 'status' => 2
             ]);
-            $cart = $this->cartRepository->show($request->id_cart);
 
             // kiểm tra không đủ tiền thì chuyển qua nạp tiền
             if ($cart->amount * $cart->price_cart > $user->balance) {
@@ -525,5 +552,12 @@ class CartController extends Controller
             return redirect()->back()->with('error', "Không thành công, vui lòng thử lại.");
         }
     }
-
+    
+    public function stopcart($id_cart){
+        if ($this->cartRepository->delete($id_cart)) {
+            return redirect()->back()->with('message', "Hủy đơn thành công");
+        } else {
+            return redirect()->back()->with('error', "Không thành công, vui lòng thử lại.");
+        }
+    }
 }

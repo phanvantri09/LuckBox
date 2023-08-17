@@ -16,7 +16,7 @@
                     <a class="nav-link text-white" href="{{ route('market') }}">Chợ</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link text-white" href="#footter">Liên hệ</a>
+                    <a class="nav-link text-white" href="{{ route('Contact') }}">Liên hệ</a>
                 </li>
                 {{-- <li class="nav-item">
                     <a class="nav-link text-white" href="{{ route('market') }}">Chợ</a>

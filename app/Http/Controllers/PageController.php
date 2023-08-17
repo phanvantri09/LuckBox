@@ -93,6 +93,14 @@ class PageController extends Controller
     }
     public function market(Request $request)
     {
+        $user = Auth::user();
+        $inforUserBills = '';
+        if ($user) {
+            $inforUserBills = $this->infoUserBillRepository->getByIdUser($user->id);
+            if (count($inforUserBills) <= 0) {
+                return redirect()->route('infoUserBill')->with('info', 'Chưa có thông tin nhận hàng vui lòng thêm ở đây !');
+            }
+        }
         if ($request->has('type')) {
             $dataCarts = $this->cartRepository->getAllByStatusmartket($request->type);
         } else {
@@ -104,7 +112,7 @@ class PageController extends Controller
         $currentDateTime2 = Carbon::now();
         $threeDaysAgo = $currentDateTime2->subDays(3);
         $sevenDaysAgo = $currentDateTime3->subDays(7);
-        return view('user.page.market', compact(['dataCarts','currentDateTime','threeDaysAgo', 'sevenDaysAgo']));
+        return view('user.page.market', compact(['dataCarts','currentDateTime','threeDaysAgo', 'sevenDaysAgo','inforUserBills']));
     }
     public function infoCardPay()
     {
