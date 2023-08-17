@@ -1,10 +1,10 @@
 @extends('user.layout.index')
 @section('css')
-<style>
-     .select-wrap {
-        white-space: pre-wrap;
-    }
-</style>
+    <style>
+        .select-wrap {
+            white-space: pre-wrap;
+        }
+    </style>
 @endsection
 @section('content')
     <div class="bg-white text-orange title-page">
@@ -87,7 +87,7 @@
                         @php
                             $createdAt = Carbon::parse($dataCart->created_at);
                         @endphp
-                        @if($createdAt->gt($threeDaysAgo))
+                        @if ($createdAt->gt($threeDaysAgo))
                             <div class="box-new bg-danger text-white px-1 label-status">
                                 Mới
                             </div>
@@ -133,7 +133,7 @@
                         @php
                             $createdAt = Carbon::parse($dataCart->created_at);
                         @endphp
-                        @if($createdAt->gt($threeDaysAgo))
+                        @if ($createdAt->gt($threeDaysAgo))
                             <div class="box-new bg-danger text-white px-1">
                                 Mới
                             </div>
@@ -148,9 +148,10 @@
     <div class="content-container py-4">
         <div class="container my-lg-2 my-0">
             <div class="d-flex justify-content-between">
-                <h5>Tổng: {{$dataCarts->total()}}</h5>
+                <h5>Tổng: {{ $dataCarts->total() }}</h5>
                 <form class="form-group col-md-2 col-sm-6 col-7" method="GET">
-                    <select class="form-control" id="exampleFormControlSelect1"  onchange="window.location.href=this.options[this.selectedIndex].value;">
+                    <select class="form-control" id="exampleFormControlSelect1"
+                        onchange="window.location.href=this.options[this.selectedIndex].value;">
                         <option value="{{ route('market', ['type' => 1]) }}">Mới nhất</option>
                         <option value="{{ route('market', ['type' => 2]) }}">Giá thấp đến cao </option>
                         <option value="{{ route('market', ['type' => 3]) }}">Giá cao đến thấp</option>
@@ -159,126 +160,142 @@
             </div>
             <div class="row">
                 @foreach ($dataCarts as $dataCart)
-                @php
-                    $chenhlech = ($dataCart->price_cart * 6) / 100 + $dataCart->price_cart;
-                    $createdAt = Carbon::parse($dataCart->created_at);
-                @endphp
-                <div class="col-lg-3 col-md-4 col-sm-6 col-12 p-2 border">
-                    <div class="bg-white p-2 market-content">
-                        <a href="{{ route('boxInfo', ['id' => $dataCart->id]) }}" class="text-decoration-none text-dark">
-                            <img src="{{ \App\Helpers\ConstCommon::getLinkImageToStorage($dataCart->link_image) ?? '/dist/img/imageBox.jpg'}} "/>
-                            <h4 class="title-box pt-2">{{ $dataCart->title }}</h4>
-                            <h5>Đơn giá: <span class="font-weight-bold text-danger">{{ number_format($chenhlech) }}</span> VNĐ</h5>
-                            <div class="d-flex justify-content-between border-top border-bottom p-2">
-                                <b>F{{$dataCart->order_number + 1}}</b>
-                                <b>{{empty($dataCart->name) ? (empty($dataCart->email) ? $dataCart->number_phone : $dataCart->email) : $dataCart->name }}</b>
-                            </div>
-                            <div>Còn lại: <span class="font-weight-bold text-danger">{{$dataCart->amount}}</span></div>
-                            @if($createdAt->gt($threeDaysAgo))
-                                <div class="box-new bg-danger text-white px-1 label-status">
-                                    Mới
+                    @php
+                        $chenhlech = ($dataCart->price_cart * 6) / 100 + $dataCart->price_cart;
+                        $createdAt = Carbon::parse($dataCart->created_at);
+                    @endphp
+                    <div class="col-lg-3 col-md-4 col-sm-6 col-12 p-2 ">
+                        <div class="bg-white p-2 market-content">
+                            <a href="{{ route('boxInfo', ['id' => $dataCart->id]) }}"
+                                class="text-decoration-none text-dark">
+                                <img
+                                    src="{{ \App\Helpers\ConstCommon::getLinkImageToStorage($dataCart->link_image) ?? '/dist/img/imageBox.jpg' }} " />
+                                <div class="d-flex justify-content-between border-bottom p-2">
+                                    <b>F{{ $dataCart->order_number + 1 }}</b>
+                                    <b>{{ empty($dataCart->name) ? (empty($dataCart->email) ? $dataCart->number_phone : $dataCart->email) : $dataCart->name }}</b>
                                 </div>
-                            @endif
-                        </a>
-                        <div class="d-flex justify-content-between py-2">
-                            @auth
-                                @if ($dataCart->id_user_create != Auth::user()->id)
-                                    <button class="btn bg-orange text-white" data-toggle="modal" data-target="#exampleModal{{$dataCart->id}}">
-                                        Mua ngay
-                                    </button>
-                                    {{-- <a href="{{ route('addToCartOld', ['id_cart_old' => $dataCart->id]) }}"
+                                <h4 class="title-box pt-2">{{ $dataCart->title }}</h4>
+                                <h5>Đơn giá: <span
+                                        class="font-weight-bold text-danger">{{ number_format($chenhlech) }}</span> VNĐ</h5>
+
+                                <div>Còn lại: <span class="font-weight-bold text-danger">{{ $dataCart->amount }}</span>
+                                </div>
+                                @if ($createdAt->gt($threeDaysAgo))
+                                    <div class="box-new bg-danger text-white px-1 label-status">
+                                        Mới
+                                    </div>
+                                @endif
+                            </a>
+                            <div class="d-flex justify-content-between py-2">
+                                @auth
+                                    @if ($dataCart->id_user_create != Auth::user()->id)
+                                        <button class="btn bg-orange text-white" data-toggle="modal"
+                                            data-target="#exampleModal{{ $dataCart->id }}">
+                                            Mua ngay
+                                        </button>
+                                        {{-- <a href="{{ route('addToCartOld', ['id_cart_old' => $dataCart->id]) }}"
                                         class="w-100 px-lg-0">
                                         <button class="btn bg-orange text-white">Mua ngay</button>
                                     </a> --}}
+                                    @else
+                                        <a href="{{ route('stopMarket', ['id_cart' => $dataCart->id]) }}">
+                                            <button class="btn bg-warning">Hủy bán</button>
+                                        </a>
+                                    @endif
                                 @else
-                                    <a href="{{ route('stopMarket', ['id_cart' => $dataCart->id]) }}">
-                                        <button class="btn bg-warning">Hủy bán</button>
+                                    <a href="{{ route('login') }}">
+                                        <button class="btn bg-orange text-white">Mua ngay</button>
                                     </a>
-                                @endif
-                            @else
-                                <a href="{{ route('login') }}">
-                                    <button class="btn bg-orange text-white">Mua ngay</button>
-                                </a>
-                            @endauth
-                            {{-- <button class="btn bg-orange text-white" data-toggle="modal" data-target="#exampleModal{{$dataCart->id}}">
+                                @endauth
+                                {{-- <button class="btn bg-orange text-white" data-toggle="modal" data-target="#exampleModal{{$dataCart->id}}">
                                 Thanh toán ngay
                             </button>
                             <a href="">
                                 <button class="btn bg-warning">Hủy bán</button>
                             </a> --}}
-                        </div>
-                        <form method="post" action="{{ route('checkoutPost') }}" class="modal fade" id="exampleModal{{$dataCart->id}}" tabindex="-1" role="dialog"
-                            aria-labelledby="exampleModalLabel" aria-hidden="true">
-                            @csrf
-                            {{-- phải tọa ra bill trước rồi mới thanh toán dc --}}
-                            <input type="hidden" name="market_pay" value="true">
-                            <input type="hidden" name="id_cart" value="{{ $dataCart->id }}">
-                            <input type="hidden" name="id_box_item" value="{{ $dataCart->id_box_item }}">
-                            <input type="hidden" name="id_box_event" value="{{ $dataCart->id_box_event }}">
-                            <input type="hidden" name="id_box" value="{{ $dataCart->id_box }}">
-                            <input type="hidden" name="price" value="{{ $dataCart->price }}">
-                            <input type="hidden" name="amount"
-                                value="{{ empty($dataCart->id_cart_old) ? $dataCart->amount : 1 }}">
-                            <input type="hidden" name="total" value="{{ $dataCart->price_cart * $dataCart->amount }}">
-                            
-                            
+                            </div>
+                            <form method="post" action="{{ route('checkoutPost') }}" class="modal fade"
+                                id="exampleModal{{ $dataCart->id }}" tabindex="-1" role="dialog"
+                                aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                @csrf
+                                {{-- phải tọa ra bill trước rồi mới thanh toán dc --}}
+                                <input type="hidden" name="market_pay" value="true">
+                                <input type="hidden" name="id_cart" value="{{ $dataCart->id }}">
+                                <input type="hidden" name="id_box_item" value="{{ $dataCart->id_box_item }}">
+                                <input type="hidden" name="id_box_event" value="{{ $dataCart->id_box_event }}">
+                                <input type="hidden" name="id_box" value="{{ $dataCart->id_box }}">
+                                <input type="hidden" name="price" value="{{ $dataCart->price }}">
+                                <input type="hidden" name="amount"
+                                    value="{{ empty($dataCart->id_cart_old) ? $dataCart->amount : 1 }}">
+                                <input type="hidden" name="total"
+                                    value="{{ $dataCart->price_cart * $dataCart->amount }}">
 
-                            <div class="modal-dialog" role="document">
-                                <div class="modal-content">
-                                    <div class="p-2 modal-header bg-orange text-white">
-                                        <h5 class="modal-title" id="exampleModalLabel">Xác nhận thanh toán</h5>
-                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                            <span aria-hidden="true">&times;</span>
-                                        </button>
-                                    </div>
-                                    <div class="modal-body">
-                                        {{-- <span>Bạn có chắc chắn mua?</span> --}}
-                                        <div class="col-lg-6 col-10 mx-auto py-2">
-                                            <img src="{{ \App\Helpers\ConstCommon::getLinkImageToStorage($dataCart->link_image) ?? '/dist/img/imageBox.jpg'}}" alt="" style="width: 100%; height: auto;">
+
+
+                                <div class="modal-dialog" role="document">
+                                    <div class="modal-content">
+                                        <div class="p-2 modal-header bg-orange text-white">
+                                            <h5 class="modal-title" id="exampleModalLabel">Xác nhận thanh toán</h5>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
                                         </div>
-                                        <h6 class="text-center">{{ $dataCart->title }}</h6>
-                                        <div class="text-center">Đơn giá: <span class="font-weight-bold text-danger">{{ number_format($chenhlech) }}</span>VNĐ</div>
-    
-                                        <div class="form-group">
-                                            <label for="exampleFormControlInput1">Chọn thông tin nhận hàng</label>
-                                            <select style="width: 100%" id="mySelect"  name="id_info_user_bill" class="form-select" aria-label="Default select example">
-                                                @foreach ($inforUserBills as $inforUserBill)
-                                                    <option value="{{ $inforUserBill->id }}" {{ $inforUserBill->status == 1 ? "selected" : '' }}>
-                                                        <div> {{ $inforUserBill->name }} - </div>
-                                                        <div> {{ $inforUserBill->number_phone }} - </div>
-                                                        <div> {{ $inforUserBill->address }} - </div>
-                                                    </option>
-                                                @endforeach
-                                            </select >
-                                        </div>                                    
-                                    </div>
-                                    
-                                    <div class="p-1 modal-footer">
-                                        <button type="cancel" class="btn btn-secondary" data-dismiss="modal">Hủy</button>
-                                        <button type="submit" class="btn bg-success text-white">Thanh toán</button>
+                                        <div class="modal-body">
+                                            {{-- <span>Bạn có chắc chắn mua?</span> --}}
+                                            <div class="col-lg-6 col-10 mx-auto py-2">
+                                                <img src="{{ \App\Helpers\ConstCommon::getLinkImageToStorage($dataCart->link_image) ?? '/dist/img/imageBox.jpg' }}"
+                                                    alt="" style="width: 100%; height: auto;">
+                                            </div>
+                                            <h6 class="text-center">{{ $dataCart->title }}</h6>
+                                            <div class="text-center">Đơn giá: <span
+                                                    class="font-weight-bold text-danger">{{ number_format($chenhlech) }}</span>VNĐ
+                                            </div>
+                                            @auth
+                                                <div class="form-group">
+                                                    <label for="exampleFormControlInput1">Chọn thông tin nhận hàng</label>
+                                                    <select style="width: 100%" id="mySelect" name="id_info_user_bill"
+                                                        class="form-select" aria-label="Default select example">
+                                                        @foreach ($inforUserBills as $inforUserBill)
+                                                            <option value="{{ $inforUserBill->id }}"
+                                                                {{ $inforUserBill->status == 1 ? 'selected' : '' }}>
+                                                                <div> {{ $inforUserBill->name }} - </div>
+                                                                <div> {{ $inforUserBill->number_phone }} - </div>
+                                                                <div> {{ $inforUserBill->address }} - </div>
+                                                            </option>
+                                                        @endforeach
+                                                    </select>
+                                                </div>
+                                            @endauth
+
+                                        </div>
+
+                                        <div class="p-1 modal-footer">
+                                            <button type="cancel" class="btn btn-secondary"
+                                                data-dismiss="modal">Hủy</button>
+                                            <button type="submit" class="btn bg-success text-white">Thanh toán</button>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                        </form>
+                            </form>
+                        </div>
                     </div>
-                </div>
                 @endforeach
             </div>
         </div>
     </div>
 @endsection
 @section('scripts')
-<script>
-    var select = document.getElementById("mySelect");
+    <script>
+        var select = document.getElementById("mySelect");
 
-    for (var i = 0; i < select.options.length; i++) {
-        var option = select.options[i];
-        var text = option.textContent;
+        for (var i = 0; i < select.options.length; i++) {
+            var option = select.options[i];
+            var text = option.textContent;
 
-        if (text.includes("-")) {
-            var parts = text.split(" - ");
-            option.textContent = parts.join('\n');
+            if (text.includes("-")) {
+                var parts = text.split(" - ");
+                option.textContent = parts.join('\n');
+            }
         }
-    }
-</script>
+    </script>
 @endsection
