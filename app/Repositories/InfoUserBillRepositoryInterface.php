@@ -10,4 +10,5 @@ interface InfoUserBillRepositoryInterface
      public function show($id);
      public function getByIdUser($id_user);
     //  public function getAllByType($type);
+    public function updateByIdUser($id_user);
 }

@@ -9,6 +9,8 @@ use Carbon\Carbon;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\SendMail;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Auth;
+use App\Models\Cart;
 class ConstCommon {
      const ListTypeUser = ['user'=>111, 'admin'=>222, 'super_admin'=>333];
      const TypeUser = 111;
@@ -97,5 +99,13 @@ class ConstCommon {
      public static function sendMail($email, $content){
         $mail = new SendMail($content);
         Mail::to($email)->queue($mail);
+    }
+    public static function getCartCurent(){
+        $user = Auth::user();
+        return Cart::where('id_user_create', $user->id)->where('status', 1)->get()->count();
+    }
+    public static function getBoxCurent(){
+        $user = Auth::user();
+        return Cart::where('id_user_create', $user->id)->where('status', 2)->get()->count();
     }
 }

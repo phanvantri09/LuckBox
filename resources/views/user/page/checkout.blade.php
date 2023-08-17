@@ -62,9 +62,11 @@
                         <div class="row">
                             <div class="col-md-10 col-12 py-1">
                                 @foreach ($inforUserBills as $inforUserBill)
-                                    <p class="mb-0">Họ và tên: {{ $inforUserBill->name }} </p>
-                                    <p class="mb-0">Số điện thoại: {{ $inforUserBill->number_phone }}</p>
-                                    <p class="mb-0">Địa chỉ: {{ $inforUserBill->address }}</p>
+                                    @if ($inforUserBill->status == 1)
+                                        <p class="mb-0">Họ và tên: {{ $inforUserBill->name }} </p>
+                                        <p class="mb-0">Số điện thoại: {{ $inforUserBill->number_phone }}</p>
+                                        <p class="mb-0">Địa chỉ: {{ $inforUserBill->address }}</p>
+                                    @endif
                                 @endforeach
                             </div>
                             <div class="col-md-2 col-12 py-1">
@@ -83,17 +85,11 @@
                                         </button>
                                     </div>
                                     <div class="modal-body overflow-auto">
-                                        <div class="form-check py-2 border-bottom">
-                                            <input class="form-check-input" type="radio" name="gridRadios"
-                                                id="gridRadios1" value="option1" checked>
-                                            <label class="form-check-label" for="gridRadios1">
-                                                First radio
-                                            </label>
-                                        </div>
                                         @foreach ($inforUserBills as $inforUserBill)
                                             <div class="form-check py-2 border-bottom">
-                                                <input class="form-check-input" type="radio" name="gridRadios"
-                                                    id="gridRadios2" value="option2">
+                                                <input class="form-check-input" type="radio" name="id_info_user_bill"
+                                                    id="gridRadios2" value="{{ $inforUserBill->id }}"
+                                                    {{ $inforUserBill->status == 1 ? 'checked' : '' }}>
                                                 <label class="form-check-label" for="gridRadios2">
                                                     Họ và tên: {{ $inforUserBill->name }} <br>
                                                     Số điện thoại: {{ $inforUserBill->number_phone }} <br>
@@ -101,28 +97,7 @@
                                                 </label>
                                             </div>
                                         @endforeach
-                                        <div class="form-check py-2 border-bottom">
-                                            <input class="form-check-input" type="radio" name="gridRadios"
-                                                id="gridRadios3" value="option3">
-                                            <label class="form-check-label" for="gridRadios3">
-                                                Third disabled radio
-                                            </label>
-                                        </div>
-                                        <div class="form-check py-2 border-bottom">
-                                            <input class="form-check-input" type="radio" name="gridRadios"
-                                                id="gridRadios3" value="option3">
-                                            <label class="form-check-label" for="gridRadios3">
-                                                Third disabled radio
-                                            </label>
-                                        </div>
-                                        <div class="form-check py-2 border-bottom">
-                                            <input class="form-check-input" type="radio" name="gridRadios"
-                                                id="gridRadios3" value="option3">
-                                            <label class="form-check-label" for="gridRadios3">
-                                                Third disabled radio
-                                            </label>
-                                        </div>
-                                        <a href="" class="text-decoration-none" target="_blank">
+                                        <a href="{{ route('infoUserBill') }}" class="text-decoration-none" target="_blank">
                                             <button type="button"
                                                 class="btn bg-white text-dark border rounded d-flex align-items-center my-2">
                                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
@@ -137,7 +112,7 @@
                                     <div class="p-1 modal-footer">
                                         <button type="button" class="btn btn-secondary"
                                             data-dismiss="modal">Hủy</button>
-                                        <button type="button" class="btn bg-orange text-white">Thay đổi</button>
+                                        <button type="button" class="btn bg-orange text-white">Thay đổi địa chỉ</button>
                                     </div>
                                 </div>
                             </div>
@@ -196,4 +171,42 @@
 @section('scripts')
     <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"></script>
     <script src="./js/address.js"></script>
+    <script>
+        $(document).ready(function() {
+            $('input[type=radio][name=id_info_user_bill]').change(function() {
+                var selectedValue = $(this).val();
+
+                $.ajax({
+                    url: "{{ route('infoUserBillUpdate') }}",
+                    method: "POST",
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
+                    data: {
+                        id: selectedValue
+                    },
+                    success: function(response) {
+
+                        toastr.options = {
+                            "closeButton": true,
+                            "progressBar": true
+                        }
+                        toastr.success("Đổi địa chỉ nhận hàng thành công");
+
+                        // Xử lý kết quả trả về từ server (nếu cần)
+                        // Load lại trang hoặc cập nhật các phần tử trên trang
+                        window.location.reload(); // Ví dụ: Load lại trang
+                    },
+                    error: function(xhr, status, error) {
+                        // Xử lý lỗi (nếu có)
+                        toastr.options = {
+                            "closeButton": true,
+                            "progressBar": true
+                        }
+                        toastr.error("Đổi địa chỉ nhận hàng không thành công");
+                    }
+                });
+            });
+        });
+    </script>
 @endsection

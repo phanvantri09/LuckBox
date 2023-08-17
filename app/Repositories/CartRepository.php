@@ -74,18 +74,20 @@ class CartRepository implements CartRepositoryInterface
     }
     public function getInforOder($status){
         return DB::table('carts')->select('carts.*', 'box.title', 'box.link_image', 'box.price',
-                'bills.amount as bills_amount', 'bills.total as bills_total', 'bills.name', 'bills.number_phone', 'bills.address', 'users.email')
+                'bills.amount as bills_amount', 'bills.total as bills_total', 'info_user_bills.name', 'info_user_bills.number_phone', 'info_user_bills.address', 'users.email')
                 ->leftJoin('box', 'carts.id_box', '=', 'box.id')
                 ->leftJoin('users', 'carts.id_user_create', '=', 'users.id')
                 ->leftJoin('bills', 'carts.id', '=', 'bills.id_cart')
+                ->leftJoin('info_user_bills', 'bills.id_info_user_bill', '=', 'info_user_bills.id')
                 ->where('carts.status', $status)->get();
     }
     public function getInforOderUser($id_user, $status){
         return DB::table('carts')->select('carts.*', 'box.title', 'box.link_image', 'box.price',
-                'bills.amount as bills_amount', 'bills.total as bills_total', 'bills.name', 'bills.number_phone', 'bills.address', 'users.email')
+                'bills.amount as bills_amount', 'bills.total as bills_total', 'info_user_bills.name', 'info_user_bills.number_phone', 'info_user_bills.address', 'users.email')
                 ->leftJoin('box', 'carts.id_box', '=', 'box.id')
                 ->leftJoin('users', 'carts.id_user_create', '=', 'users.id')
                 ->leftJoin('bills', 'carts.id', '=', 'bills.id_cart')
+                ->leftJoin('info_user_bills', 'bills.id_info_user_bill', '=', 'info_user_bills.id')
                 ->where('carts.id_user_create', $id_user)
                 ->whereIn('carts.status', $status)
                 ->orderBy('carts.status', 'desc')
@@ -93,14 +95,15 @@ class CartRepository implements CartRepositoryInterface
     }
     public function getInforBillOderUser($id_user, $id_cart){
         return DB::table('carts')->select('carts.*', 'box.title', 'box.link_image', 'box.price',
-            'bills.amount as bills_amount', 'bills.total as bills_total', 'bills.name',
-            'bills.number_phone', 'bills.address', 'users.email',
+            'bills.amount as bills_amount', 'bills.total as bills_total', 'info_user_bills.name',
+            'info_user_bills.number_phone', 'info_user_bills.address', 'users.email',
             'products.title as product_title' , 'products.id as id_product'  , 'images.link_image as product_link_image' )
             ->leftJoin('box', 'carts.id_box', '=', 'box.id')
             ->leftJoin('bills', 'carts.id', '=', 'bills.id_cart')
             ->leftJoin('users', 'carts.id_user_create', '=', 'users.id')
             ->leftJoin('products', 'carts.id_product_choese', '=', 'products.id')
             ->leftJoin('images', 'carts.id_product_choese', '=', 'images.id_product')
+            ->leftJoin('info_user_bills', 'bills.id_info_user_bill', '=', 'info_user_bills.id')
             ->where('carts.id', $id_cart)
             ->where('carts.id_user_create', $id_user)
             ->where('images.type','=', 1)

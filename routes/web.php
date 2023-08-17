@@ -64,6 +64,8 @@ Route::group(['prefix' => '/'], function () {
         Route::controller(PageController::class)->group(function () {
             Route::get('/them-thong-tin-nhan-hang','infoUserBill')->name('infoUserBill');
             Route::post('/them-thong-tin-nhan-hang','infoUserBillPost')->name('infoUserBillPost');
+            Route::post('/them-thong-tin-nhan-hang/change', 'infoUserBillUpdate')->name('infoUserBillUpdate');
+
             // Route::get('/gio-hang','cart')->name('cart');
             // Route::get('/thanh-toan','chekout')->name('chekout');
             Route::get('/hop-mu','purchaseOrder')->name('purchaseOrder');

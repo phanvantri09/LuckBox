@@ -19,7 +19,7 @@ class InfoUserBillRepository implements InfoUserBillRepositoryInterface
     {
         $user = infoUserBill::findOrFail($id);
         $user->update($data);
-        return $user;
+        return true;
     }
 
     public function delete($id)
@@ -36,6 +36,11 @@ class InfoUserBillRepository implements InfoUserBillRepositoryInterface
     public function getByIdUser($id_user)
     {
         return infoUserBill::where('id_user', $id_user)->get();
+    }
+
+    public function updateByIdUser($id_user)
+    {
+        return infoUserBill::where('id_user', $id_user)->update(['status'=> 0]);
     }
     // public function getAllByType($type){
     //     return infoUserBill::where('type', $type)->get();

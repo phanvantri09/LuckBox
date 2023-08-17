@@ -151,7 +151,7 @@ class CartController extends Controller
     }
     public function checkoutPost(Request $request)
     {
-        
+        // dd($request->all());
         DB::beginTransaction();
         try {
             $user = Auth::user();
@@ -189,7 +189,7 @@ class CartController extends Controller
                 'id_box_event' => $cart->id_box_event,
                 'id_box' => $cart->id_box,
                 'total' => $cart->amount * $cart->price_cart,
-                // 'id_info_user_bill'=> $request->id_info_user_bill
+                'id_info_user_bill'=> $request->id_info_user_bill
             ]);
 
             // kiểm tra không đủ tiền thì chuyển qua nạp tiền
@@ -369,7 +369,7 @@ class CartController extends Controller
         return redirect()->route('purchaseOrder')->with('success', 'Mua hàng thành công');
 
     }
-   
+
     public function purchaseOrder(){
         $user = Auth::user();
         $carts = $this->cartRepository->getAllDataByIDUserAndArrayStatus($user->id, [2, 11]);
@@ -484,7 +484,7 @@ class CartController extends Controller
             return redirect()->back()->with('error', "Không thành công, vui lòng thử lại.");
         }
     }
-    
+
     public function stopcart($id_cart){
         if ($this->cartRepository->delete($id_cart)) {
             return redirect()->back()->with('message', "Hủy đơn thành công");

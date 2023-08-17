@@ -13,6 +13,7 @@ use App\Repositories\ProductRepositoryInterface;
 use App\Repositories\CartRepositoryInterface;
 use App\Repositories\CardRepositoryInterface;
 use App\Repositories\InfoUserBillRepositoryInterface;
+use App\Repositories\BillRepositoryInterface;
 use Illuminate\Http\Request;
 use App\Helpers\ConstCommon;
 
@@ -36,10 +37,10 @@ class PageController extends Controller
     protected $cartRepository;
     protected $cardRepository;
     protected $infoUserBillRepository;
-    public function __construct(CardRepositoryInterface $cardRepository, CartRepositoryInterface $cartRepository, PageRepositoryInterface $pageRepository, BoxRepositoryInterface $boxRepository, BoxProductRepositoryInterface $boxProductRepository, BoxEventRepositoryInterface $boxEventRepository,
+    protected $billRepository;
+    public function __construct(BillRepositoryInterface $billRepository,CardRepositoryInterface $cardRepository, CartRepositoryInterface $cartRepository, PageRepositoryInterface $pageRepository, BoxRepositoryInterface $boxRepository, BoxProductRepositoryInterface $boxProductRepository, BoxEventRepositoryInterface $boxEventRepository,
     ImageRepositoryInterface $imageRepository, TransactionRepositoryInterface $transactionRepository, ProductRepositoryInterface $productRepository,
     InfoUserBillRepositoryInterface $infoUserBillRepository)
-
     {
         $this->pageRepository = $pageRepository;
         $this->productRepository = $productRepository;
@@ -51,6 +52,7 @@ class PageController extends Controller
         $this->cartRepository = $cartRepository;
         $this->cardRepository = $cardRepository;
         $this->infoUserBillRepository = $infoUserBillRepository;
+        $this->billRepository = $billRepository;
     }
 
     public function boxInfo($id)
@@ -239,6 +241,7 @@ class PageController extends Controller
         DB::beginTransaction();
         try {
             $cart = $this->cartRepository->show($id_cart);
+            $bill = $this->billRepository->showByIdCart($cart->id);
             if ($cart->status == 2 || $cart->status == 11) {
 
                 if ($cart->amount > 1 ) {
@@ -257,12 +260,31 @@ class PageController extends Controller
                         'order_number' => $cart->order_number,
                         'id_product_choese' => $id_product,
                     ];
+
                     $cartNew = $this->cartRepository->create($data);
+
+                    $dataBill = [
+                        'id_info_user_bill'=> $bill->id_info_user_bill,
+                        'id_user_create' => $user->id,
+                        'id_admin_update' => null,
+                        'id_cart' => $cartNew->id,
+                        'id_transaction' => $bill->id_transaction,
+                        'id_box_event' => $cart->id_box_event ,
+                        'id_box' => $cart->id_box,
+                        'id_box_item' => $cart->id_box_item ,
+                        'status' => 3,
+                        'amount' => 1,
+                        'price_cart' => $cart->price_cart ,
+                        'total' => $cart->price_cart,
+                    ];
+                    $billNew = $this->billRepository->create($dataBill);
                     $id_cart = $cartNew->id;
                     $this->cartRepository->update(['amount'=> $cart->amount - 1], $cart->id);
+                    $this->billRepository->update(['amount' => $bill->amount - 1, 'total' => $cart->price_cart * ($bill->amount - 1)], $bill->id);
                 } else {
-                    // nếu = 1 thì chuyển trạng thía thôi
+                    // nếu = 1 thì chuyển trạng thái thôi
                     $this->cartRepository->update(['status'=> 3, 'id_product_choese' => $id_product], $cart->id);
+                    $this->billRepository->update(['status'=> 3, 'amount' => 1, 'total' => $cart->price_cart * $cart->amount], $bill->id);
                 }
             } else {
                 return response()->json([
@@ -281,7 +303,7 @@ class PageController extends Controller
                     ], 400);
         }
         // Chuyển trạng thái xác nhận đơn hàng là đã mở Hộp
-        return response()->json(['success' => true, 'routeShowOrder' => route('showOrder', ['id_cart'=>$id_cart])]);
+        return response()->json(['success' => true, 'routeShowOrder' => route('showOrder', ['id_cart'=>$id_cart])], 200);
     }
     public function infoUserBill(){
         $user = Auth::user();
@@ -290,11 +312,28 @@ class PageController extends Controller
 
     public function infoUserBillPost(InfoUserBill $request){
         $user = Auth::user();
-        $request->merge(['id_user' => $user->id]);
+        $this->infoUserBillRepository->updateByIdUser($user->id);
+        $request->merge(['id_user' => $user->id, 'status' => 1]);
         if ($this->infoUserBillRepository->create($request->all())) {
             return redirect()->route('cart')->with('success', 'Thêm thông tin thành công');
         } else {
             return back()->with('error', 'Đã xảy ra lỗi vui lòng thử lại');
+        }
+    }
+
+    public function infoUserBillUpdate(Request $request){
+        $user = Auth::user();
+        $this->infoUserBillRepository->updateByIdUser($user->id);
+        if ($this->infoUserBillRepository->update(['status' => 1], $request->id)) {
+            return response()->json([
+                'success' => true,
+                'message' => 'CSRF token mismatch. Please refresh the page and try again.'
+            ], 200);
+        } else {
+            return response()->json([
+                'success' => false,
+                'message' => 'CSRF token mismatch. Please refresh the page and try again.'
+            ], 400);
         }
     }
 }
