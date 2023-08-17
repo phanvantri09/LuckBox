@@ -1,5 +1,10 @@
 @extends('user.layout.index')
 @section('css')
+    <style>
+        .custom-file-input:lang(en)~.custom-file-label::after {
+            content: "Chọn file";
+        }
+    </style>
 @endsection
 @section('content')
     <div class="bg-white text-orange title-page">
@@ -32,7 +37,7 @@
                     <div class="row justify-content-between align-items-start pt-1">
                         <span class="col-5 text-secondary">Họ và tên</span>
                         <div class="col-6 text-right" id="hoten">
-                            {{$getCardAdmin->card_name}}
+                            {{ $getCardAdmin->card_name }}
                         </div>
                         <button class="border-0 bg-white col-1 px-0 clickcopy" onclick="copyText('#hoten')">
                             <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 448 512">
@@ -44,7 +49,7 @@
                     <div class="row justify-content-between align-items-start pt-1">
                         <span class="col-5 text-secondary">Tên ngân hàng</span>
                         <div class="col-6 text-right" id="tenNH">
-                            {{$getCardAdmin->bank}}
+                            {{ $getCardAdmin->bank }}
                         </div>
                         <button class="border-0 bg-white col-1 px-0 clickcopy" onclick="copyText('#tenNH')">
                             <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 448 512">
@@ -56,7 +61,7 @@
                     <div class="row justify-content-between align-items-start pt-1">
                         <span class="col-5 text-secondary">Số tài khoản/Số thẻ</span>
                         <div class="col-6 text-right" id="numberCard">
-                            {{$getCardAdmin->card_number}}
+                            {{ $getCardAdmin->card_number }}
                         </div>
                         <button class="border-0 bg-white col-1 px-0 clickcopy" onclick="copyText('#numberCard')">
                             <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 448 512">
@@ -116,7 +121,7 @@
                         Sau khi chuyển, vui lòng nhập thông tin vào form bên dưới.
                     </span>
                 </div>
-                <form action="{{ route('infoCardPay') }}" method="Post">
+                <form action="{{ route('infoCardPay') }}" method="Post" enctype="multipart/form-data">
                     @csrf
                     <div class="form-group">
                         <div class="form-group">
@@ -149,6 +154,25 @@
                                 placeholder="2.000.000">
                             @error('total')
                                 <div class="alert alert-danger">{{ $errors->first('total') }}</div>
+                            @enderror
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleFormControlInput4">Mã giao dịch</label>
+                            <input required type="text" name="code" class="form-control" id="exampleFormControlInput4"
+                                placeholder="Nhập mã giao dịch">
+                            @error('code')
+                                <div class="alert alert-danger">{{ $errors->first('code') }}</div>
+                            @enderror
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleFormControlInput4">Hình ảnh giao dịch</label>
+                            <div class="custom-file">
+                                <input type="file" name="link_image" class="custom-file-input"
+                                    id="validatedCustomFile" required>
+                                <label class="custom-file-label" for="validatedCustomFile">Chọn file.....</label>
+                            </div>
+                            @error('link_image')
+                                <div class="alert alert-danger">{{ $errors->first('link_image') }}</div>
                             @enderror
                         </div>
                         <input type="hidden" name="transaction_content" class="form-control"

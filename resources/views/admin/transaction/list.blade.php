@@ -30,6 +30,10 @@
                                 <th>Chủ tài khoản </th>
                                 <th>Số tài khoản</th>
                                 <th>Ngân hàng</th>
+                                @if (($_GET['type'] == 2))
+                                    <th>Mã giao dịch</th>
+                                    <th>Hình ảnh</th>
+                                @endif
                                 <th>Trạng thái</th>
                             </tr>
                         </thead>
@@ -46,8 +50,8 @@
                                     <td style="
                                     border-radius: 3px;
                                     color: #fff;
-                                    background-color: {{ ($item->type == 1 ) ? ' red' : '' }} 
-                                    {{ ($item->type == 2 ) ? 'green' : '' }} 
+                                    background-color: {{ ($item->type == 1 ) ? ' red' : '' }}
+                                    {{ ($item->type == 2 ) ? 'green' : '' }}
                                     {{ ($item->type == 3 ) ? 'blue' : '' }}
                                     {{ ($item->type == 4 ) ? 'black' : '' }}
                                     {{ ($item->type == 5 ) ? 'orange' : '' }}
@@ -60,6 +64,8 @@
                                     <td>{{ $item->card_name }}</td>
                                     <td>{{ $item->card_number }}</td>
                                     <td>{{ $item->bank }}</td>
+                                    <td><b>{{ $item->code ?? '' }}</b></td>
+                                    <td><img style="max-height: 200px; width: auto;"  src="{{\App\Helpers\ConstCommon::getLinkImageToStorage($item->link_image) }}" alt=""></td>
                                     <td>
                                         <form class="status-form"
                                             action="{{route('transaction.changeStatus', ['id' => $item->id,'id_user' => $item->id_user,'type' => $item->type])}}"

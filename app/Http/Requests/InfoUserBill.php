@@ -43,7 +43,7 @@ class InfoUserBill extends FormRequest
             'address.min' => 'Địa chỉ này chưa được cụ thể bạn có thể điền thêm thông tin!',
             'number_phone.required' => 'Vui lòng nhập số điện thoại của bạn',
             'number_phone.unique' => 'Số điện thoại này đã được sử dụng',
-            'number_phone.digits_between' => 'Số điện thoại phỉa từ 10 đến 11',
+            'number_phone.digits_between' => 'Số điện thoại phải từ 10 đến 11',
             'number_phone.regex' => 'Không đúng định dạng',
         ];
     }

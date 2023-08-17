@@ -130,11 +130,23 @@ class PageController extends Controller
     public function infoCardPayPost(TransactionRequest $request)
     {
         $currentUser =  Auth::user();
+        $imageName = '';
+        if($request->link_image){
+            $current_time = time();
+            $time_string = date('d-m-Y-H-i-s', $current_time);
+            $file = $request->link_image ;
+            $ext = $file->extension();
+            $imageName =  'Transaction-'.$currentUser->id.'-'. $time_string.'.'.$ext;
+            ConstCommon::addImageToStorage($file,$imageName);
+        }
+
         $request->merge([
             'id_user' => $currentUser->id,
             'type' => 2,
         ]);
+
         $data = $request->all();
+        $data['link_image'] = $imageName;
         $this->transactionRepository->create($data);
         return redirect()->route('walet')->with('message','Gửi yêu cầu thành công');
     }

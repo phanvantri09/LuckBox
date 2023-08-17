@@ -27,7 +27,8 @@ class TransactionRequest extends FormRequest
             'card_name' =>'required',
             'card_number' => 'required',
             'bank' => 'required',
-            'total' => 'required'
+            'total' => 'required',
+            'code' => 'required'
         ];
     }
     public function messages()
@@ -37,6 +38,7 @@ class TransactionRequest extends FormRequest
             'card_number.required' => 'Không được để trống.',
             'bank.required' => 'Không được để trống.',
             'total.required' => 'Không được để trống.',
+            'code.required' => 'Không được để trống.',
         ];
     }
 }

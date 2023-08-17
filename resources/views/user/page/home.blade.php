@@ -182,7 +182,7 @@
                 <h4>PHẦN THƯỞNG</h4>
                 <span>Gồm có 10 phần thưởng ngẫu nhiên khi mở box</span>
             </div>
-            <div class="row justify-content-center py-2">
+            <div class="row justify-content-center py-2 px-1">
                 <!-- gift -->
                 @if (empty($products))
                     <marquee>
@@ -190,7 +190,7 @@
                     </marquee>
                 @else
                     @foreach ($products as $product)
-                        <div class="col-lg-3 col-md-4 col-sm-6 col-6 py-2">
+                        <div class="col-lg-3 col-md-4 col-sm-6 col-6 py-2 px-0">
                             <a href="{{ route('productDetails', ['id' => $product->id]) }}"
                                 class="text-decoration-none text-dark">
                                 <div class="mx-1 p-2 bg-white product-card rounded">
