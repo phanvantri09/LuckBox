@@ -38,7 +38,7 @@
     @include('user.layout.footer')
     @include('user.layout.panel')
     @if (Auth::user() && Auth::user()->type == \App\Helpers\ConstCommon::TypeUser)
-        <div class="floating-chat me-4 d-md-block d-none">
+        <div class="floating-chat me-4">
             <div id="openChat" class="p-3 bg-warning rounded-circle">
                 <i class="fa fa-commenting-o" aria-hidden="true" style="font-size: 30px; color: white"></i>
             </div>

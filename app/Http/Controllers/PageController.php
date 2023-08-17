@@ -83,6 +83,14 @@ class PageController extends Controller
     {
         return view('user.page.resell');
     }
+    public function Marketnew()
+    {
+        return view('user.page.market_new');
+    }
+    public function Contact()
+    {
+        return view('user.page.contact');
+    }
     public function market(Request $request)
     {
         if ($request->has('type')) {

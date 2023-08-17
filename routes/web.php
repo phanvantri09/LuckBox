@@ -86,6 +86,9 @@ Route::group(['prefix' => '/'], function () {
             Route::get('/trang-thai-don-hang','statusOrder')->name('statusOrder');
             Route::get('/mo-box/{id_cart}','openBox')->name('openBox');
             Route::post('/mo-box/{id_cart}/{id_product}','openBoxPost')->name('openBoxPost');
+
+            Route::get('/cho-new','Marketnew')->name('Marketnew');
+            Route::get('/lien-he','Contact')->name('Contact');
         });
 
         Route::controller(CartController::class)->group(function () {
