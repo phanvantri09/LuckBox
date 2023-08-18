@@ -251,7 +251,7 @@
                                                     class="font-weight-bold text-danger">{{ number_format($chenhlech) }}</span>VNĐ
                                             </div>
                                             @auth
-                                                <div class="form-group">
+                                                <div style="display: none" class="form-group">
                                                     <label for="exampleFormControlInput1">Chọn thông tin nhận hàng</label>
                                                     <select style="width: 100%" id="mySelect" name="id_info_user_bill"
                                                         class="form-select" aria-label="Default select example">

@@ -202,7 +202,7 @@
     }
     .product-card img {
         width: 100%;
-        height: auto;
+        height: 180px;
     }
     .modal-dialog {
         top: 10% !important;
