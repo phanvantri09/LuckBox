@@ -65,12 +65,12 @@ class CartAdminController extends Controller
         $cart = $this->cartRepository->show($id_cart);
         $products = $this->productRepository->showOrder($cart->id_product_choese);
         if (empty($cart->id_cart_old)) {
-            $bill = $this->billRepository->showByIdCart($id_cart);
+            $bill = $this->billRepository->showByIdCartInfo($id_cart);
         } else {
-            $bill = $this->billRepository->showByIdCart($cart->id_cart_old);
+            $bill = $this->billRepository->showByIdCartInfo($cart->id_cart_old);
         }
         
         // dd($bill);
-        return view('admin.cart.infoOrder', compact(['products', 'bill']));
+        return view('admin.cart.infoOrder', compact(['cart','products', 'bill']));
     }
 }

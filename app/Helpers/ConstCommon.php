@@ -108,4 +108,8 @@ class ConstCommon {
         $user = Auth::user();
         return Cart::where('id_user_create', $user->id)->where('status', 2)->get()->count();
     }
+    public static function getBoxMarket(){
+     $user = Auth::user();
+     return Cart::where('id_user_create', $user->id)->where('status', 10)->get()->count();
+ }
 }

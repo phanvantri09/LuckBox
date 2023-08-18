@@ -88,7 +88,7 @@
                     </div>
                     <div class="form-group">
                         <label for="uname"><b class="text-danger">*</b> Số điện thoại </label>
-                        <input type="tel" pattern="((\+84|0)[3|5|7|8|9])+([0-9]{8})" oninput="this.value = this.value.replace(/[^0-9]/g, '');" placeholder="Số điện thoại" required name="number_phone" class="form-control"
+                        <input type="tel" pattern="((\+84|0)[3|5|7|8|9])+([0-9]{8})" oninput="this.value = this.value.replace(/[^0-9]/g, '');" placeholder="Số điện thoại" name="number_phone" class="form-control"
                             value="{{ old('number_phone') }}">
                         @error('number_phone')
                             <div class="text-danger">{{ $message }}</div>

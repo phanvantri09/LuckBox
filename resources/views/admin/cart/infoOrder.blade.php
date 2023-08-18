@@ -33,7 +33,7 @@
                             <tr>
                                 <td>{{ $products->title }}</td>
                                 {{-- <td>{!! $products->description !!}</td> --}}
-                                <td>{{ number_format($products->price) }} vnđ</td>
+                                <td>{{ number_format($cart->price_cart) }} vnđ</td>
                                 <td>
                                     @if (!empty($products->link_image))
                                         <div class="d-flex flex-row">

@@ -235,6 +235,7 @@ class PageController extends Controller
     {
         $user = Auth::user();
         $cart = $this->cartRepository->show($id_cart);
+        // dd($cart);
         $allProductItem = $this->boxProductRepository->getAllProductByBox($cart->id_box)->pluck('id_product');
         $allProduct = $this->productRepository->getByArrayID($allProductItem);
 
