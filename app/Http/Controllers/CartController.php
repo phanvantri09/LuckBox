@@ -44,6 +44,7 @@ class CartController extends Controller
     public function cartUpdateAmount($id_cart, $type){
 
         $data = $this->cartRepository->show($id_cart);
+        $boxItem = $this->boxItemRepository->show($data->id_box_item);
 
         if ($type == 1) {
             if ($data->amount <= 1) {
@@ -52,6 +53,9 @@ class CartController extends Controller
                 $data->amount = $data->amount - 1;
             }
         } else {
+            if ($boxItem->amount < ($data->amount + 1)) {
+                return redirect()->back()->with('error', "vượt quá số lượng hiện có");
+            }
             $data->amount = $data->amount + 1;
         }
         $data->save();
@@ -68,17 +72,18 @@ class CartController extends Controller
         }
         $boxItem = $this->boxItemRepository->show($request->id_box_item);
         //check còn đủ 19 thì add, ngược lại thì thông báo là k thể đặt nhiều hơn
-        $numberAmountOke = $boxItem->amount - $this->cartRepository->getSumAllByStatusNoCheckout();
+        // $numberAmountOke = $boxItem->amount - $this->cartRepository->getSumAllByStatusNoCheckout();
+        // $numberAmountOke = $boxItem->amount - $request->amount;
         if ($boxItem->amount <= 0) {
             return redirect()->back()->with('error', "Hết hàng");
         }
-        if ( $numberAmountOke > $request->amount) {
+        if ( $boxItem->amount > $request->amount) {
             // oke
             $this->cartRepository->create($request->all());
             return redirect()->route('cart')->with('success', "Thêm vào giỏ thành công");
         } else {
             //no oke
-            return redirect()->back()->with('error', "Bạn nên đặt ít hơn ".$numberAmountOke." Hộp"  );
+            return redirect()->back()->with('error', "Bạn nên đặt ít hơn ".$request->amount - $boxItem->amount ." Hộp"  );
         }
     }
     public function addToCartOld($id_cart_old){
