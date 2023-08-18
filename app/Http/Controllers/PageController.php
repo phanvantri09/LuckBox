@@ -246,7 +246,7 @@ class PageController extends Controller
         if ($cart->status == 2 || $cart->status == 11) {
             return view('user.page.box.opennew', compact(['cart', 'allProduct', 'productChoese', 'productChoeseImage']));
         } else {
-            return redirect()->route('home')->with('error',"Hộp này không thể mở");
+            return redirect()->route('home')->with('error',"Hộp đã được mở");
         }
     }
     public function openBoxPost($id_cart, $id_product){

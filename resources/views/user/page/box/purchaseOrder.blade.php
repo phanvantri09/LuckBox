@@ -4,7 +4,7 @@
 @section('content')
     <div class="bg-white text-orange title-page">
         <div class="container">
-            <p>LuckyBox | Box đã mua</p>
+            <p>LuckyBox | Hộp gửi bán</p>
         </div>
     </div>
     <div class="content-container py-md-4 py-3">

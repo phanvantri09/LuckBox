@@ -32,10 +32,8 @@
                 </a>
             </div>
         </div>
-    </div>
-    <div class="content-container py-md-4 py-2">
         <div class="container my-lg-2 my-0 d-flex justify-content-center">
-            <div class="bg-white py-2 rounded mb-2 px-4 w-md-50">               
+            <div class="bg-white py-2 rounded mb-2 px-4 w-md-50">
                 <ul style="height: 250px;
                 overflow: auto;">
                     <li>
@@ -56,7 +54,7 @@
             </div>
         </div>
     </div>
-    
+
 @endsection
 @section('scripts')
 @endsection
