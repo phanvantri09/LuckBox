@@ -12,7 +12,6 @@
             <table class="table table-bordered table-hover">
                 <thead class="bg-orange text-white">
                     <tr>
-                        <th>STT</th>
                         <th>Loại giao dịch</th>
                         <th>Số tiền</th>
                         <th>Thời gian</th>
@@ -21,9 +20,14 @@
                 <tbody>
                     @foreach ($datas as $key => $data)
                     <tr>
-                        <td>{{ $key+1 }}</td>
                         <td>{{ \App\Helpers\ConstCommon::TypeTransaction[$data->type] }}</td>
-                        <td>{{number_format($data->total)}} VNĐ</td>
+                        <td>
+                            @if ($data->type == 1 || ($data->type == 3 && $data->id_cart != null) )
+                            -
+                            @else
+                            +
+                            @endif
+                            {{number_format($data->total)}} VNĐ</td>
                         <td>{{$data->created_at}}</td>
                     </tr>
                     @endforeach

@@ -71,10 +71,10 @@
                         </button>
                     </div>
                     <div class="row justify-content-between align-items-start pt-1">
-                        <span class="col-5 text-secondary">Nội dung chuyển khoản đề xuất</span>
+                        <span class="col-5 text-secondary">Mã giao dịch (Nội dung CK)</span>
                         <div class="col-6 text-right" id="ndckdx">
 
-                            NAP TIEN VAO VI {{ $currentUser->id }}
+                            {{ $codeString ?? null }}
                         </div>
                         <button class="border-0 bg-white col-1 px-0 clickcopy" onclick="copyText('#ndckdx')">
                             <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 448 512">
@@ -159,7 +159,7 @@
                         <div class="form-group">
                             <label for="exampleFormControlInput4">Mã giao dịch</label>
                             <input required type="text" name="code" class="form-control" id="exampleFormControlInput4"
-                                placeholder="Nhập mã giao dịch">
+                                placeholder="Nhập mã giao dịch" value="{{ $codeString ?? null }}">
                             @error('code')
                                 <div class="alert alert-danger">{{ $errors->first('code') }}</div>
                             @enderror
@@ -168,7 +168,7 @@
                             <label for="exampleFormControlInput4">Hình ảnh giao dịch</label>
                             <div class="custom-file">
                                 <input type="file" name="link_image" class="custom-file-input"
-                                    id="validatedCustomFile" required>
+                                    id="validatedCustomFile">
                                 <label class="custom-file-label" for="validatedCustomFile">Chọn file.....</label>
                             </div>
                             @error('link_image')

@@ -84,14 +84,17 @@ class CartRepository implements CartRepositoryInterface
     }
     public function getInforOderUser($id_user, $status){
         return DB::table('carts')->select('carts.*', 'box.title', 'box.link_image', 'box.price',
-                'bills.amount as bills_amount', 'bills.total as bills_total', 'info_user_bills.name', 'info_user_bills.number_phone', 'info_user_bills.address', 'users.email')
+                'bills.amount as bills_amount', 'bills.total as bills_total', 'info_user_bills.name', 'info_user_bills.number_phone', 'info_user_bills.address', 'users.email',
+                'images.link_image as link_image_product')
                 ->leftJoin('box', 'carts.id_box', '=', 'box.id')
                 ->leftJoin('users', 'carts.id_user_create', '=', 'users.id')
                 ->leftJoin('bills', 'carts.id', '=', 'bills.id_cart')
+                ->leftJoin('images', 'carts.id_product_choese', '=', 'images.id_product')
                 ->leftJoin('info_user_bills', 'bills.id_info_user_bill', '=', 'info_user_bills.id')
                 ->where('carts.id_user_create', $id_user)
+                ->where('images.type', 1)
                 ->whereIn('carts.status', $status)
-                ->orderBy('carts.status', 'desc')
+                ->orderBy('carts.created_at', 'desc')
                 ->get();
     }
     public function getInforBillOderUser($id_user, $id_cart){
@@ -116,7 +119,7 @@ class CartRepository implements CartRepositoryInterface
             ->leftJoin('box', 'carts.id_box', '=', 'box.id')
             ->where('carts.id_user_create','=', $id_user)
             ->where('status', $status)
-            ->where('carts.amount','>=', 0)
+            ->where('carts.amount','>', 0)
             ->orderBy('created_at','ASC')->get();
     }
     public function getAllDataByIDUserAndStatus($id_user, $status)

@@ -121,11 +121,12 @@ class PageController extends Controller
         $currentUser =  Auth::user();
         $getCardDefault = $this->pageRepository->showCardDefault($currentUser->id);
         $getCardAdmin = $this->cardRepository->choese();
-        // dd($getCardAdmin);
+        $current_time = time();
+        $codeString = 'NT'.date('dHis', $current_time).$currentUser->id;
         if (empty($getCardDefault)) {
             return redirect()->route('createCard')->with('error','Bạn cần có 1 tài khoản mặt định');
         }
-        return view('user.page.infoCardPay', compact(['getCardAdmin', 'getCardDefault', 'currentUser']));
+        return view('user.page.infoCardPay', compact(['getCardAdmin', 'getCardDefault', 'currentUser','codeString']));
     }
     public function infoCardPayPost(TransactionRequest $request)
     {

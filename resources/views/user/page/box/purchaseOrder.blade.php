@@ -40,6 +40,12 @@
                                 <a href="{{ route('treeData', ['id' => $dataCart->id]) }}" class="w-100 col-lg-2 px-lg-0">
                                     <button class="btn bg-orange text-white">Xem doanh thu box</button>
                                 </a>
+                                @auth
+                                    @if ( Auth::user()->id == $dataCart->id_user_create )
+                                    @endif<a href="{{ route('stopMarket', ['id_cart' => $dataCart->id]) }}">
+                                        <button class="btn bg-warning">Hủy bán</button>
+                                    </a>
+                                @endauth
                             @endif
                         @else
                             <a href="{{ route('openBox', ['id_cart' => $dataCart->id]) }}" class="w-100 col-lg-2 px-lg-0">
@@ -84,6 +90,12 @@
                                         <a href="{{ route('treeData', ['id' => $dataCart->id]) }}">
                                             <button class="btn bg-orange text-white">Doanh thu</button>
                                         </a>
+                                        @auth
+                                            @if ( Auth::user()->id == $dataCart->id_user_create )
+                                            @endif<a href="{{ route('stopMarket', ['id_cart' => $dataCart->id]) }}">
+                                                <button class="btn bg-warning">Hủy bán</button>
+                                            </a>
+                                        @endauth
                                     @endif
                                 @else
                                     <a href="{{ route('openBox', ['id_cart' => $dataCart->id]) }}">

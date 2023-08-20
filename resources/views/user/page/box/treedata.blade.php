@@ -23,11 +23,17 @@
                     @foreach ($transactions as $key => $transaction)
                         <tr>
                             <td>{{number_format($transaction->total)}}</td>
-                            <td>{{$transaction->total == 4 ? "Trừ tiền" : "Cộng tiền"}}</td>
+                            <td>
+                                @if ($transaction->type == 1 || ($transaction->type == 3 && $transaction->id_cart != null) )
+                                Trừ tiền
+                                @else
+                                Cộng tiền
+                                @endif
+                                </td>
                             <td>{{$transaction->created_at}}</td>
                         </tr>
                     @endforeach
-                    
+
                 </tbody>
             </table>
         </div>

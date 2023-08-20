@@ -42,7 +42,7 @@
                     </div>
                     <div class="form-group">
                         <label for="exampleFormControlInput2">Số thẻ/Số tài khoản</label>
-                        <input type="tel" name="card_number" oninput="this.value = this.value.replace(/[^0-9]/g, '');" class="form-control" id="exampleFormControlInput2"
+                        <input type="text" name="card_number" oninput="this.value = this.value.replace(/[^0-9]/g, '');" class="form-control" id="exampleFormControlInput2"
                             placeholder="Nhập số thẻ/số tài khoản">
                         @error('card_number')
                             <div class="alert alert-danger">{{ $errors->first('card_number') }}</div>
