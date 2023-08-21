@@ -10,7 +10,7 @@
     <div class="content-container">
         <div class="container-lg bg-warning py-2 my-2">
             <div class="px-2 py-3">
-                <div class="row bg-white align-items-center">
+                <div class="row bg-white align-items-center py-2">
                     <div class="col-sm-6 d-flex flex-column align-items-center justify-content-center">
                         <a href="" class="d-flex flex-column align-items-center w-100 text-decoration-none">
                             <img src="{{ \App\Helpers\ConstCommon::getLinkImageToStorage($data->link_image) }}"
@@ -18,7 +18,7 @@
                             {{-- <h4 class="mt-1 text-dark">Event.....</h4> --}}
                         </a>
 
-                        <div class="py-2">
+                        <div class="pt-2">
                             <h4 class="mb-0 text-danger">{{ number_format($data->price) }}VNĐ</h4>
                         </div>
 

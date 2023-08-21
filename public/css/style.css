@@ -60,7 +60,7 @@
 }
 .market-content img {
     width: 100%;
-    height: 280px;
+    height: auto;
 }
 .changeaddress .modal-body {
     height: 500px;
@@ -194,8 +194,10 @@
         transform: translateY(-50%);
     }
     .market-content img {
-        width: 100%;
-        height: 230px;
+        width: 75%;
+        height: auto;
+        display: flex;
+        margin: auto;
     }
     .changeaddress .modal-body {
         height: 350px;
