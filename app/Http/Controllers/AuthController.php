@@ -57,7 +57,7 @@ class AuthController extends Controller
                 // }
                 // return redirect()->intended($intendedUrl)->with('message',"Đăng nhập thành công");
             } else {
-                if (!$intendedUrl || $intendedUrl == route('login') || $intendedUrl == route('register')) {
+                if (!$intendedUrl || $intendedUrl == route('login') || $intendedUrl == route('register') || $intendedUrl == route('registerShare') || $intendedUrl == route('registerShareB')) {
                     return redirect()->route('home')->with('message',"Đăng nhập thành công");
                 }
                 return redirect()->intended($intendedUrl)->with('message',"Đăng nhập thành công");
@@ -119,12 +119,26 @@ class AuthController extends Controller
         return view('auth.registerShare', compact('userId'));
     }
 
-    public function registerShare(CreateRequestUser $request, $id)
+    public function registerShare(RegisterRequest $request, $id)
     {
+        $code = Str::random(8); 
+
+        while (User::where('code', $code)->exists()) {
+            $code = Str::random(8);
+        }
+
         $request->merge([
+            'name' => $request->name ?? null,
+            'code' => $code,
             'password' => Hash::make($request->password),
             'id_user_referral' => $id
         ]);
+        if (User::create($request->all())) {
+            return redirect()->route('login')->with('message',"Đăng ký thành công, hãy đăng nhập ngay.");
+        } else {
+            return redirect()->back()->with('error', "Đã có 1 lỗi xảy ra vui lòng đăng ký lại!");
+        }
+
         if (User::create($request->all())) {
             return redirect()->route('login');
         } else {

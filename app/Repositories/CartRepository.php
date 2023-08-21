@@ -99,7 +99,8 @@ class CartRepository implements CartRepositoryInterface
     }
     public function getInforBillOderUser($id_user, $id_cart){
         return DB::table('carts')->select('carts.*', 'box.title', 'box.link_image', 'box.price',
-            'bills.amount as bills_amount', 'bills.total as bills_total', 'info_user_bills.name',
+            'bills.id as id_bill', 'bills.id_info_user_bill as id_info_user_bill','bills.amount as bills_amount', 
+            'bills.total as bills_total', 'info_user_bills.name',
             'info_user_bills.number_phone', 'info_user_bills.address', 'users.email',
             'products.title as product_title' , 'products.id as id_product'  , 'images.link_image as product_link_image' )
             ->leftJoin('box', 'carts.id_box', '=', 'box.id')
@@ -178,7 +179,7 @@ class CartRepository implements CartRepositoryInterface
                 ->leftJoin('users', 'carts.id_user_create', '=', 'users.id')
                 ->where('carts.amount', '>', 0)
                 ->where('carts.status', 10)
-                ->orderBy('carts.price_cart', 'desc')
+                ->orderBy('carts.price_cart', 'asc')
                 ->paginate(20);
             }
             if ($type == 3) {
@@ -188,7 +189,7 @@ class CartRepository implements CartRepositoryInterface
                 ->leftJoin('users', 'carts.id_user_create', '=', 'users.id')
                 ->where('carts.amount', '>', 0)
                 ->where('carts.status', 10)
-                ->orderBy('carts.price_cart', 'asc')
+                ->orderBy('carts.price_cart', 'desc')
                 ->paginate(20);
             }
         } else {
@@ -198,6 +199,7 @@ class CartRepository implements CartRepositoryInterface
             ->leftJoin('users', 'carts.id_user_create', '=', 'users.id')
             ->where('carts.amount', '>', 0)
             ->where('carts.status', 10)
+            ->orderBy('carts.created_at', 'desc')
             ->paginate(20);
         }
 

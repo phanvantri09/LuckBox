@@ -156,7 +156,6 @@ class CartController extends Controller
     }
     public function checkoutPost(Request $request)
     {
-        // dd($request->all());
         DB::beginTransaction();
         try {
             $user = Auth::user();
@@ -173,7 +172,7 @@ class CartController extends Controller
                     'id_box' => $cartOLD->id_box,
                     'id_box_item' => $cartOLD->id_box_item ,
                     'status' => 3 ,
-                    'amount' => 1,
+                    'amount' => $request->amount,
                     'price_cart' => $cartOLD->price_cart + ( 6 *($cartOLD->price_cart / 100)),
                     'order_number' => $cartOLD->order_number + 1,
                 ];
@@ -202,8 +201,6 @@ class CartController extends Controller
                 return redirect()->route('infoCardPay')->with('error', 'Số tài khoản trong ví không đủ để thực hiện, vui lòng nạp thêm tiền để thực hiện giao dịch này.');
             }
 
-
-            // session(['transaction_bill' => $request->all()]);
             $dataTransaction = [
                 'id_user' => $user->id,
                 'id_admin_accept' => null,
@@ -477,7 +474,12 @@ class CartController extends Controller
     public function showOrder($id_cart){
         $user = Auth::user();
         $dataCart = $this->cartRepository->getInforBillOderUser($user->id, $id_cart);
-        return view('user.page.showOrder', compact(['dataCart']));
+        // dd($dataCart);
+        // id_info_user_bill
+        // dd($dataCart);
+        $inforUserBills = $this->infoUserBillRepository->getByIdUser($user->id);
+
+        return view('user.page.showOrder', compact(['dataCart', 'inforUserBills']));
     }
     public function stopMarket($id_cart){
         if ($this->cartRepository->update(['status' => 2], $id_cart)) {
@@ -495,6 +497,20 @@ class CartController extends Controller
             return redirect()->back()->with('message', "Hủy đơn thành công");
         } else {
             return redirect()->back()->with('error', "Không thành công, vui lòng thử lại.");
+        }
+    }
+    public function changeinfoUserBillUpdate(Request $request){
+
+        if ($this->billRepository->update(['id_info_user_bill' => $request->value], $request->id_bill)) {
+            return response()->json([
+                'success' => true, 
+                'message' => 'CSRF token mismatch. Please refresh the page and try again.'
+            ], 200);
+        } else {
+            return response()->json([
+                'success' => false,
+                'message' => 'CSRF token mismatch. Please refresh the page and try again.'
+            ], 400);
         }
     }
 }

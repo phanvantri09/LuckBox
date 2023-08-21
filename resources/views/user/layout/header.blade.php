@@ -111,20 +111,22 @@
                 </a>
 
                 <div class="dropdown-menu">
+                    <a class="dropdown-item text-white" href="{{ route('walet') }}">Ví của bạn</a>
+                    <a class="dropdown-item text-white" href="{{ route('boxUserMarket') }}">Đang bán</a>
+                    <a class="dropdown-item text-white" href="{{ route('listOrder') }}">Đã mở</a>
                     <a class="dropdown-item text-white" href="{{ route('updateInfo') }}">Thông tin cá nhân</a>
-                    {{-- <a class="dropdown-item text-white" href="{{ route('walet') }}">Ví của bạn</a> --}}
+                    
                     {{-- <a class="dropdown-item text-white" href="{{ route('cart') }}">Giỏ</a> --}}
                     {{-- <a class="dropdown-item text-white" href="{{ route('purchaseOrder') }}">Hộp đã mua</a> --}}
-                    <a class="dropdown-item text-white" href="{{ route('boxUserMarket') }}">Hộp đang bán</a>
-                    <a class="dropdown-item text-white" href="{{ route('listOrder') }}">Đơn sắp nhận</a>
+                    
                     <a class="dropdown-item text-white" href="{{ route('historyTransaction') }}">Lịch sử giao dịch</a>
                     {{-- <a class="dropdown-item text-white" href="{{ route('market') }}">Chợ</a> --}}
                     <div style="display: none" id="ma_gt">
                         {{Auth::user()->code ?? null}}
                     </div>
                     <a  id="linkToCopy" onclick="copyHrefToClipboard(event)" class="dropdown-item text-white"
-                        href="{{ $sharedLink ?? '#' }}">Link thiệu bạn bè</a>
-                    <a class="dropdown-item text-white" id="linkToCopy" onclick="copyTextttt('#ma_gt')">Mã giới thiệu bạn bè</a>
+                        href="{{ $sharedLink ?? '#' }}">Link giới thiệu</a>
+                    <a class="dropdown-item text-white" id="linkToCopy" onclick="copyTextttt('#ma_gt')">Mã giới thiệu</a>
                     <a href="{{ route('logout') }}" class="dropdown-item text-white">Đăng xuất</a>
                 </div>
             </div>

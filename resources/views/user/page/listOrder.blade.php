@@ -13,8 +13,8 @@
                 <h1>Giỏ của bạn không có gì</h1>
             @else
                 <!-- desktop -->
-                <h4>Đang xử lí</h4>
                 <div class="d-lg-block d-none">
+                <h4>Đang xử lí</h4>
                     @foreach ($dataCart as $cart)
                         @if ($cart->status == 3)
                             <div class="row align-items-center bg-orange-white py-2 rounded mb-2 px-2">
@@ -46,8 +46,8 @@
                         @endif
                     @endforeach
                 </div>
-                <h4 class="border-top">Sắp tới</h4>
                 <div class="d-lg-block d-none">
+                <h4 class="border-top">Sắp tới</h4>
                     @foreach ($dataCart as $cart)
                         @if ($cart->status == 4)
                             <div class="row align-items-center bg-orange-white py-2 rounded mb-2 px-2">
@@ -80,8 +80,8 @@
                         @endif
                     @endforeach
                 </div>
-                <h4 class="border-top">Đã nhận</h4>
                 <div class="d-lg-block d-none">
+                <h4 class="border-top">Đã nhận</h4>
                     @foreach ($dataCart as $cart)
                         @if ($cart->status == 5)
                             <div class="row align-items-center bg-orange-white py-2 rounded mb-2 px-2">
@@ -122,7 +122,7 @@
                         @if ($cart->status == 3)
                             <div class="row bg-orange-white py-2 rounded mb-2 px-2">
                                 <div class="col-md-3 col-sm-3 col-4 px-1">
-                                    <img src="{{ \App\Helpers\ConstCommon::getLinkImageToStorage($cart->link_image) }}"
+                                    <img src="{{ \App\Helpers\ConstCommon::getLinkImageToStorage($cart->link_image_product) }}"
                                         width="100%" height="auto" />
                                 </div>
                                 <div class="col-md-9 col-sm-9 col-8">
@@ -149,7 +149,7 @@
                         @if ($cart->status == 4)
                             <div class="row bg-orange-white py-2 rounded mb-2 px-2">
                                 <div class="col-md-3 col-sm-3 col-4 px-1">
-                                    <img src="{{ \App\Helpers\ConstCommon::getLinkImageToStorage($cart->link_image) }}"
+                                    <img src="{{ \App\Helpers\ConstCommon::getLinkImageToStorage($cart->link_image_product) }}"
                                         width="100%" height="auto" />
                                 </div>
                                 <div class="col-md-9 col-sm-9 col-8">
@@ -176,7 +176,7 @@
                         @if ($cart->status == 5)
                             <div class="row bg-orange-white py-2 rounded mb-2 px-2">
                                 <div class="col-md-3 col-sm-3 col-4 px-1">
-                                    <img src="{{ \App\Helpers\ConstCommon::getLinkImageToStorage($cart->link_image) }}"
+                                    <img src="{{ \App\Helpers\ConstCommon::getLinkImageToStorage($cart->link_image_product) }}"
                                         width="100%" height="auto" />
                                 </div>
                                 <div class="col-md-9 col-sm-9 col-8">

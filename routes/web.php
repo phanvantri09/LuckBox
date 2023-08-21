@@ -33,7 +33,7 @@ Route::group(['prefix' => '/'], function () {
         Route::get('/register', 'showRegistrationForm')->name('register');
         Route::post('/register', 'register');
 
-        Route::get('/shared/{token}','updateShare');
+        Route::get('/shared/{token}','updateShare')->name('registerShareB');
         Route::post('/register/{id}', 'registerShare')->name('registerShare');
 
         Route::get('/mang-xa-hoi/dang-nhap','redirectToGoogle')->name('loginMail');
@@ -111,6 +111,8 @@ Route::group(['prefix' => '/'], function () {
             Route::get('/thong-tin-don-hang/{id_cart}','showOrder')->name('showOrder');
             Route::get('/ngung-ban/{id_cart}','stopMarket')->name('stopMarket');
             Route::get('/ngung-mua/{id_cart}','stopcart')->name('stopcart');
+            
+            Route::post('/changeinfoUserBillUpdate','changeinfoUserBillUpdate')->name('changeinfoUserBillUpdate');
         });
     });
 

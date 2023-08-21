@@ -152,9 +152,19 @@
                 <form class="form-group col-md-2 col-sm-6 col-7" method="GET">
                     <select class="form-control" id="exampleFormControlSelect1"
                         onchange="window.location.href=this.options[this.selectedIndex].value;">
-                        <option value="{{ route('market', ['type' => 1]) }}">Mới nhất</option>
-                        <option value="{{ route('market', ['type' => 2]) }}">Giá thấp đến cao </option>
-                        <option value="{{ route('market', ['type' => 3]) }}">Giá cao đến thấp</option>
+                        @if (isset($_GET['type']))
+                            <option {{ $_GET['type'] == 1 ? 'selected' : '' }} value="{{ route('market', ['type' => 1]) }}">
+                                Mới nhất</option>
+                            <option {{ $_GET['type'] == 2 ? 'selected' : '' }} value="{{ route('market', ['type' => 2]) }}">
+                                Giá thấp đến cao </option>
+                            <option {{ $_GET['type'] == 3 ? 'selected' : '' }} value="{{ route('market', ['type' => 3]) }}">
+                                Giá cao đến thấp</option>
+                        @else
+                            <option value="{{ route('market', ['type' => 1]) }}">Mới nhất</option>
+                            <option value="{{ route('market', ['type' => 2]) }}">Giá thấp đến cao </option>
+                            <option value="{{ route('market', ['type' => 3]) }}">Giá cao đến thấp</option>
+                        @endif
+
                     </select>
                 </form>
             </div>
@@ -176,7 +186,8 @@
                                 </div>
                                 <h4 class="title-box pt-2">{{ $dataCart->title }}</h4>
                                 <h5>Đơn giá: <span
-                                        class="font-weight-bold text-danger">{{ number_format($chenhlech) }}</span> VNĐ</h5>
+                                        class="font-weight-bold text-danger">{{ number_format($chenhlech) }}</span> VNĐ
+                                </h5>
 
                                 <div>Còn lại: <span class="font-weight-bold text-danger">{{ $dataCart->amount }}</span>
                                 </div>
@@ -225,8 +236,6 @@
                                 <input type="hidden" name="id_box_event" value="{{ $dataCart->id_box_event }}">
                                 <input type="hidden" name="id_box" value="{{ $dataCart->id_box }}">
                                 <input type="hidden" name="price" value="{{ $dataCart->price }}">
-                                <input type="hidden" name="amount"
-                                    value="{{ empty($dataCart->id_cart_old) ? $dataCart->amount : 1 }}">
                                 <input type="hidden" name="total"
                                     value="{{ $dataCart->price_cart * $dataCart->amount }}">
 
@@ -266,7 +275,44 @@
                                                     </select>
                                                 </div>
                                             @endauth
+                                            <div>
+                                                <h6 class="text-center pt-2">Số lượng</h6>
+                                                <div class="input-group py-2">
+                                                    <span class="input-group-btn">
+                                                        <button type="button"
+                                                            class="quantity-left-minus btn btn-warning btn-number"
+                                                            onclick="CheckAmount(1, {{ $dataCart->id }}, {{ $dataCart->amount }})"
+                                                            data-type="minus" data-field="">
+                                                            <svg xmlns="http://www.w3.org/2000/svg" width="16"
+                                                                height="16" fill="currentColor" class="bi bi-dash"
+                                                                viewBox="0 0 16 16">
+                                                                <path
+                                                                    d="M4 8a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7A.5.5 0 0 1 4 8z" />
+                                                            </svg>
+                                                        </button>
+                                                    </span>
 
+                                                    <input type="number" id="quantity{{ $dataCart->id }}"
+                                                        name="amount" readonly
+                                                        class="form-control input-number text-center" value="1"
+                                                        min="1" max="{{ $dataCart->amount }}"
+                                                        title="Phải là số nguyên và mọi người chỉ được mua nhiều nhất 100 Hộp."
+                                                        required />
+                                                    <span class="input-group-btn">
+                                                        <button type="button"
+                                                            class="quantity-right-plus btn btn-warning btn-number"
+                                                            onclick="CheckAmount(2, {{ $dataCart->id }}, {{ $dataCart->amount }})"
+                                                            data-type="plus" data-field="">
+                                                            <svg xmlns="http://www.w3.org/2000/svg" width="16"
+                                                                height="16" fill="currentColor" class="bi bi-plus"
+                                                                viewBox="0 0 16 16">
+                                                                <path
+                                                                    d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z" />
+                                                            </svg>
+                                                        </button>
+                                                    </span>
+                                                </div>
+                                            </div>
                                         </div>
 
                                         <div class="p-1 modal-footer">
@@ -295,6 +341,24 @@
             if (text.includes("-")) {
                 var parts = text.split(" - ");
                 option.textContent = parts.join('\n');
+            }
+        }
+
+        function CheckAmount(type, id, amountID) {
+            var quantity = parseInt($("#quantity" + id).val());
+            if (type == 1) {
+                // -
+                if (quantity > 1) {
+                    $("#quantity" + id).val(quantity + 1);
+                }
+            }
+            if (type == 2) {
+                // +
+                if (quantity < amountID) {
+                    $("#quantity" + id).val(quantity + 1);
+                } else {
+                    alert("Vượt quá số lượng hiện có");
+                }
             }
         }
     </script>

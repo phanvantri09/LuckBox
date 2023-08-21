@@ -70,7 +70,6 @@ class CartAdminController extends Controller
             $bill = $this->billRepository->showByIdCartInfo($cart->id_cart_old);
         }
         
-        // dd($bill);
         return view('admin.cart.infoOrder', compact(['cart','products', 'bill']));
     }
 }
