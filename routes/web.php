@@ -33,7 +33,7 @@ Route::group(['prefix' => '/'], function () {
         Route::get('/register', 'showRegistrationForm')->name('register');
         Route::post('/register', 'register');
 
-        Route::get('/shared/{token}','updateShare')->name('registerShareB');
+        Route::get('/shared/{token}','updateShare')->name('registerShare');
         Route::post('/register/{id}', 'registerShare')->name('registerShare');
 
         Route::get('/mang-xa-hoi/dang-nhap','redirectToGoogle')->name('loginMail');

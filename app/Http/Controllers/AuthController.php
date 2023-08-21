@@ -57,10 +57,9 @@ class AuthController extends Controller
                 // }
                 // return redirect()->intended($intendedUrl)->with('message',"Đăng nhập thành công");
             } else {
-                if (!$intendedUrl || $intendedUrl == route('login') || $intendedUrl == route('register') || $intendedUrl == route('registerShare') || $intendedUrl == route('registerShareB')) {
+                if (!$intendedUrl || $intendedUrl == route('login') || $intendedUrl == route('register')) {
                     return redirect()->route('home')->with('message',"Đăng nhập thành công");
                 }
-                return redirect()->intended($intendedUrl)->with('message',"Đăng nhập thành công");
             }
             return redirect()->intended('login')->with('error', "Đã có 1 lỗi xảy ra vui lòng đăng nhập lại!");
         } else {
