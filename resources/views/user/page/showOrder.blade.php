@@ -13,17 +13,22 @@
                 <div class="w-100 px-lg-0 d-flex pb-2 flex-column justify-content-center">
                     <h4 class="text-center">Trạng thái đơn hàng</h4>
                     <button type="submit"
-                        class="btn bg-orange text-white p-2 font-weight-bold">{{ $dataCart->status == 3 ? "Đợi admin duyệt giao hàng" : ($dataCart->status == 4 ? "Đang giao hàng" : ($dataCart->status == 5 ? "Đã nhận Hàng" : "Bị từ chối"))  }}</button>
+                        class="btn bg-orange text-white p-2 font-weight-bold">
+                        {{ $dataCart->status == 3 ? "Đang đợi xác nhận" : ($dataCart->status == 4 ? "Đang giao hàng" : ($dataCart->status == 5 ? "Đã nhận Hàng" : ($dataCart->status == 7 ? "Đang được admin xử lí" : "Bị từ chối")))  }}
+                    </button>
                 </div>
-                <div class="d-flex justify-content-center">
-                    <img src="{{ \App\Helpers\ConstCommon::getLinkImageToStorage($dataCart->link_image) }}" width="40%"
-                        height="auto" />
+                <div class="w-100 bg-gray">
+                    <div class="text-center">
+                        <a href="{{ route('boxInfo', ['id' => $dataCart->id_box]) }}" class="text-decoration-none">
+                            <h4 class="text-dark">{{ $dataCart->title }}</h4>
+                        </a>
+                    </div>
+                    <div class="d-flex justify-content-center mb-2">
+                        <img src="{{ \App\Helpers\ConstCommon::getLinkImageToStorage($dataCart->link_image) }}" width="100%"
+                            height="auto" />
+                    </div>
                 </div>
-                <div class="text-center">
-                    <a href="{{ route('boxInfo', ['id' => $dataCart->id]) }}" class="text-decoration-none">
-                        <h4 class="text-dark">{{ $dataCart->title }}</h4>
-                    </a>
-                </div>
+                
 
                 <div class="d-flex flex-column justify-content-between w-100 bg-gray px-2 py-2 rounded">
                     <h4 class="text-center">Thông tin mua hàng</h4>
@@ -35,8 +40,9 @@
                 <div class=" my-2 d-flex flex-column  align-items-center  justify-content-between w-100 bg-gray px-2 py-2 rounded">
                     <h4 class="text-center">Thông tin sản phẩm</h4>
                     <h5><span class="text-danger">{{$dataCart->product_title}}</span></h5>
-                    <img src="{{ \App\Helpers\ConstCommon::getLinkImageToStorage($dataCart->product_link_image) }}" width="40%"
+                    <img src="{{ \App\Helpers\ConstCommon::getLinkImageToStorage($dataCart->product_link_image) }}" width="100%"
                     height="auto" alt="">
+                    <h5><span class="text-danger">{{number_format($dataCart->price_product)}} VNĐ</span></h5>
                 </div>
 
                 <div class="my-2 bg-gray px-2 py-2 rounded">
@@ -46,12 +52,21 @@
                     <p>Tên: <span class="text-danger">{{ $dataCart->name }}</span></p>
                     <p>Địa chỉ: <span class="text-danger">{{ $dataCart->address }}</span></p>
                     {{-- inforUserBills --}}
-                    <div class="py-1 d-flex justify-content-center">
-                        <button type="button" class="btn bg-info text-white" data-toggle="modal"
-                            data-target="#changeaddress">Thay đổi</button>
-                    </div>
+                    
                 </div>
-
+                <div class="d-flex justify-content-center">
+                    @if ($dataCart->status == 7 || $dataCart->status == 3)
+                        <div class="py-1 d-flex justify-content-center mr-2">
+                            <button type="button" class="btn bg-info text-white" data-toggle="modal"
+                                data-target="#changeaddress">Thay đổi thông tin</button>
+                        </div>
+                    @endif
+                    @if ($dataCart->status == 3)
+                        <div class="py-1 d-flex justify-content-center">
+                            <a type="button" class="btn bg-success text-white" href="{{ route('changeStatusCart', ['id_cart'=>$dataCart->id, 'status' => 7]) }}">Xác nhận giao hàng</a>
+                        </div>
+                    @endif
+                </div>
                 
             </div>
             <div class="modal fade changeaddress" id="changeaddress" tabindex="-1" role="dialog"

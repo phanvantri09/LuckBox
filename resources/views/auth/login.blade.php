@@ -88,20 +88,20 @@
                     <input type="checkbox" name="remember"> Lưu tài khoản
                 </div>
                 <button type="submit" class="btn bg-orange text-white w-100 my-1">ĐĂNG NHẬP</button>
-                <div class="pt-1">Quên <a href="#">Mật Khẩu?</a> </div>
+                {{-- <div class="pt-1">Quên <a href="#">Mật Khẩu?</a> </div> --}}
                 <div class="d-flex align-items-center justify-content-between py-1">
                     <div class="lines"></div>
                     <span class="text-lines">Hoặc</span>
                     <div class="lines"></div>
                 </div>
                 
-                <a href="{{ route('loginMail') }}"  class="btn bg-white border w-100 d-flex align-items-center justify-content-center">
+                <a href="{{ route('register') }}"  class="btn bg-white border w-100 d-flex align-items-center justify-content-center">
                     <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/53/Google_%22G%22_Logo.svg/2008px-Google_%22G%22_Logo.svg.png" width="20" height="20" alt="">
                     &nbsp;Google
                 </a>
                 
                 <div class="text-center pt-2">Bạn chưa có tài khoản <a
-                    href="{{ route('register') }}">Đăng ký ngay!</a></div>
+                    href="{{ route('register', ['type'=>'number_phone']) }}">Đăng ký ngay!</a></div>
             </form>
             </div>
         </div>

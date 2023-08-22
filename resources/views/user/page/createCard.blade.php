@@ -34,16 +34,17 @@
                     </div>
                     <div class="form-group">
                         <label for="exampleFormControlInput1">Tên chủ thẻ</label>
-                        <input type="text" name="card_name" class="form-control" id="exampleFormControlInput1"
+                        <input type="text" name="card_name" class="form-control card_name" id="exampleFormControlInput1 "
                             placeholder="Nhập tên chủ thẻ">
+                        <div id="error-message"></div>
                         @error('card_name')
                             <div class="alert alert-danger">{{ $errors->first('card_name') }}</div>
                         @enderror
                     </div>
                     <div class="form-group">
                         <label for="exampleFormControlInput2">Số thẻ/Số tài khoản</label>
-                        <input type="text" name="card_number" oninput="this.value = this.value.replace(/[^0-9]/g, '');" class="form-control" id="exampleFormControlInput2"
-                            placeholder="Nhập số thẻ/số tài khoản">
+                        <input type="text" name="card_number" oninput="this.value = this.value.replace(/[^0-9]/g, '');"
+                            class="form-control" id="exampleFormControlInput2" placeholder="Nhập số thẻ/số tài khoản">
                         @error('card_number')
                             <div class="alert alert-danger">{{ $errors->first('card_number') }}</div>
                         @enderror
@@ -55,6 +56,21 @@
             </div>
         </div>
     </div>
+    
 @endsection
 @section('scripts')
+<script>
+    $(document).ready(function() {
+        $('.card_name').on('change', function() {
+            var inputValue = $(this).val();
+            console.log(inputValue);
+            var regex = /^[^\d]+$/u;
+
+            if (!regex.test(inputValue)) {
+                $(this).val('');
+                alert('Vui lòng chỉ nhập văn bản và không nhập số!');
+            }
+        });
+    });
+</script>
 @endsection

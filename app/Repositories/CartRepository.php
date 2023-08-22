@@ -102,7 +102,7 @@ class CartRepository implements CartRepositoryInterface
             'bills.id as id_bill', 'bills.id_info_user_bill as id_info_user_bill','bills.amount as bills_amount', 
             'bills.total as bills_total', 'info_user_bills.name',
             'info_user_bills.number_phone', 'info_user_bills.address', 'users.email',
-            'products.title as product_title' , 'products.id as id_product'  , 'images.link_image as product_link_image' )
+            'products.title as product_title' , 'products.id as id_product'  , 'images.link_image as product_link_image', 'products.price as price_product' )
             ->leftJoin('box', 'carts.id_box', '=', 'box.id')
             ->leftJoin('bills', 'carts.id', '=', 'bills.id_cart')
             ->leftJoin('users', 'carts.id_user_create', '=', 'users.id')

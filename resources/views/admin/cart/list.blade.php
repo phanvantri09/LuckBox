@@ -62,7 +62,7 @@
                                                 </a>
                                             @endif
                                             
-                                            @if ($item->status == 3)
+                                            @if ($item->status == 7)
                                                 <a href="{{ route('cart.changeStatus', ['id_cart' => $item->id, 'status' => 4]) }}"
                                                     class="btn btn-app">
                                                     <i class="fas fa-check-square"></i> Duyệt đơn và giao hàng
@@ -79,10 +79,12 @@
                                                     <i class="fas fa-donate"></i> Xác nhận đã giao thành công
                                                 </a>
                                             @endif
-                                            <a href="{{ route('cart.productOrder', ['id_cart' => $item->id]) }}"
-                                                class="btn btn-app">
-                                                <i class="fas fa-cart-plus"></i> 4 phẩm admin chọn
-                                            </a>
+                                            @if ($item->status == 2)
+                                                <a href="{{ route('cart.productOrder', ['id_cart' => $item->id]) }}"
+                                                    class="btn btn-app">
+                                                    <i class="fas fa-cart-plus"></i> 4 phẩm admin chọn
+                                                </a>
+                                            @endif
                                         </td>
                                     @endif
                                 </tr>

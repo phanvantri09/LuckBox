@@ -73,14 +73,14 @@
                             <div class="text-danger">{{ $message }}</div>
                         @enderror
                     </div>
-                    <div class="form-group">
+                    {{-- <div class="form-group">
                         <label for="uname"><b class="text-info">*</b> Email </label>
                         <input type="email" placeholder="Nhập email của bạn" name="email" class="form-control"
                             value="{{ old('email') }}">
                         @error('email')
                             <div class="text-danger">{{ $message }}</div>
                         @enderror
-                    </div>
+                    </div> --}}
                     <div class="form-group">
                         <label for="uname"><b class="text-danger">*</b> Số điện thoại </label>
                         <input type="tel" pattern="((\+84|0)[3|5|7|8|9])+([0-9]{8})" oninput="this.value = this.value.replace(/[^0-9]/g, '');" placeholder="Số điện thoại" name="number_phone" class="form-control"

@@ -26,7 +26,7 @@ class CreateCartsTable extends Migration
             //  1 vừa thêm vào và chưa thanh toán, 2 đã thanh toán chưa mở Hộp,
             // 10 đăng bán lại
             // 11 f 30
-            // 3 đã mở Hộp,
+            // 3 đã mở Hộp chưa được user xác nhận, 7 đã xác nhận giao hàng
             // 4 admin duyệt đơn để giao hàng, 5 đã giao thành công. 6 bị từ chối
             $table->bigInteger('amount');
             $table->bigInteger('price_cart')->nullable();

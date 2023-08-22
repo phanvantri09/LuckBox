@@ -2,7 +2,7 @@
     <!-- Left navbar links -->
     <ul class="navbar-nav">
         <li class="nav-item">
-            <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
+            <a class="nav-link" data-widget="pushmenu"   role="button"><i class="fas fa-bars"></i></a>
         </li>
     </ul>
 
@@ -34,7 +34,7 @@
                 <img src="dist/img/avatar.png" class="img-circle elevation-2" alt="User Image">
             </div>
             <div class="info">
-                <a href="#" class="d-block">{{ Auth::user()->email }}</a>
+                <a   class="d-block">{{ Auth::user()->email }}</a>
             </div>
         </div>
 
@@ -80,7 +80,7 @@
                     </ul>
                 </li>
                 <li class="nav-item">
-                    <a href="#" class="nav-link bg-warning">
+                    <a   class="nav-link bg-warning">
                         <i class="fas fa-money-bill-alt"></i>
                         <p>
                             Giao dịch
@@ -134,7 +134,7 @@
                     </ul>
                 </li>
                 <li class="nav-item">
-                    <a href="#" class="nav-link bg-success">
+                    <a   class="nav-link bg-success">
                         <i class="fas fa-shopping-cart"></i>
                         <p>
                             Đơn Hàng
@@ -151,7 +151,13 @@
                         <li class="nav-item ">
                             <a href="{{ route('cart.index', ['type'=>3]) }}" class="nav-link">
                                 <i class="far fa-circle nav-icon"></i>
-                                <p>Đợi xác nhận đơn</p>
+                                <p>Đã mở box chưa xác nhận giao</p>
+                            </a>
+                        </li>
+                        <li class="nav-item ">
+                            <a href="{{ route('cart.index', ['type'=>7]) }}" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Đã mở xác nhận giao</p>
                             </a>
                         </li>
                         <li class="nav-item ">
@@ -183,7 +189,7 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="#" class="nav-link">
+                    <a   class="nav-link">
                         <i class="fas fa-users"></i>
                         <p>
                             Người dùng
@@ -198,7 +204,7 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="#" class="nav-link">
+                            <a   class="nav-link">
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>Danh sách</p>
                             </a>
@@ -220,7 +226,7 @@
                 </li>
                 
                 <li class="nav-item">
-                    <a href="#" class="nav-link">
+                    <a   class="nav-link">
                         <i class="fas fa-credit-card"></i>
                         <p>
                             Thẻ user
@@ -243,7 +249,7 @@
                     </ul>
                 </li>
                 <li class="nav-item border-bottom">
-                    <a href="#" class="nav-link">
+                    <a   class="nav-link">
                         <i class="fas fa-credit-card"></i>
                         <p>
                             Thẻ admin
@@ -266,7 +272,7 @@
                     </ul>
                 </li>
                 <li class="nav-item">
-                    <a href="#" class="nav-link">
+                    <a   class="nav-link">
                         <i class="fas fa-boxes"></i>
                         <p>
                             Loại event, box, product
@@ -289,7 +295,7 @@
                     </ul>
                 </li>
                 <li class="nav-item">
-                    <a href="#" class="nav-link">
+                    <a   class="nav-link">
                         <i class="fas fa-glass-whiskey"></i>
                         <p>
                             Sản phẩm
@@ -312,7 +318,7 @@
                     </ul>
                 </li>
                 <li class="nav-item">
-                    <a href="#" class="nav-link">
+                    <a   class="nav-link">
                         <i class="fas fa-box-open"></i>
                         <p>
                             Box ( Hộp box )
@@ -335,7 +341,7 @@
                     </ul>
                 </li>
                 <li class="nav-item">
-                    <a href="#" class="nav-link">
+                    <a   class="nav-link">
                         <i class="fas fa-calendar-alt"></i>
                         <p>
                             Event ( sự kiện )

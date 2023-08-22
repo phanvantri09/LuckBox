@@ -8,7 +8,7 @@
         </div>
     </div>
     <div class="content-container py-md-4 py-2">
-        <div class="container my-lg-2 my-0 d-flex justify-content-center">
+        <div class="container my-lg-2 my-0 d-flex justify-content-center border-top">
             <div class="bg-white py-2 rounded mb-2 px-4 w-md-50">
                 <h5 class="text-center">Thông tin ví</h5>
                 <div class="d-sm-flex align-items-center justify-content-between">
@@ -27,12 +27,12 @@
                 <p>Chi nhánh: {{$showCardDefault->card_branch}}</p>
                 <p>Số tài khoản/Số thẻ: {{$showCardDefault->card_number}}</p>
                 <p>Chủ tài khoản: {{$showCardDefault->card_name}}</p>
-                <a href="{{ route('createCard') }}" class="d-flex justify-content-center text-decoration-none">
+                <a href="{{ route('createCard') }}" class="d-flex justify-content-start text-decoration-none">
                     <button class="btn bg-orange text-white">Thêm tài khoản</button>
                 </a>
             </div>
         </div>
-        <div class="container my-lg-2 my-0 d-flex justify-content-center">
+        <div class="container my-lg-2 my-0 d-flex justify-content-center border-top border-bottom">
             <div class="bg-white py-2 rounded mb-2 px-4 w-md-50">
                 <ul style="height: 250px;
                 overflow: auto;">
@@ -43,7 +43,7 @@
                             <p>Chi nhánh: {{$item->card_branch}}</p>
                             <p>Số tài khoản/Số thẻ: {{$item->card_number}}</p>
                             <p>Chủ tài khoản: {{$item->card_name}}</p>
-                            <a href="{{ route('changeStatus', ['id' => $item->id]) }}" class="d-flex justify-content-center text-decoration-none">
+                            <a href="{{ route('changeStatus', ['id' => $item->id]) }}" class="d-flex justify-content-start text-decoration-none">
                                 <button class="btn bg-orange text-white" style="
                                 background: green;
                             ">Chọn làm thẻ mặc định</button>

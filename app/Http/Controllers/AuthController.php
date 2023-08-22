@@ -68,6 +68,10 @@ class AuthController extends Controller
     }
     public function showRegistrationForm(Request $request)
     {
+        if ($request->has('type')){
+            $type = $request->type;
+            return view('auth.register', compact(['type']));
+        }
         return view('auth.register');
     }
     public function register(RegisterRequest $request)

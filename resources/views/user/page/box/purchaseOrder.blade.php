@@ -18,19 +18,24 @@
                                 width="80%" height="auto" />
                         </div>
                         <div class="col-lg-2">
-                            <a href="{{ route('boxInfo', ['id'=> $dataCart->id]) }}" class="text-decoration-none">
+                            <a href="{{ route('boxInfo', ['id' => $dataCart->id]) }}" class="text-decoration-none">
                                 <h4 class="text-dark">{{ $dataCart->title }}</h4>
                             </a>
                         </div>
                         <div class="col-lg-2">
-                            <h6>Giá mua: <br> {{ number_format($dataCart->price_cart) }} VNĐ/hộp</h6>
-                            @if (($dataCart->status != 10))
+                            <h6>Giá mua: <br> {{ number_format($dataCart->amount * $dataCart->price_cart) }} VNĐ/hộp</h6>
+                            @if ($dataCart->status != 10)
                                 <h5>Tổng tiền: <br><span class="font-weight-bold text-danger">
-                                {{ number_format($dataCart->amount * $dataCart->price_cart) }} VNĐ</span></h5>
+                                        {{ number_format($dataCart->amount * $dataCart->price_cart) }} VNĐ</span></h5>
+                            @endif
+                            @if ($dataCart->status == 10)
+                                <h5>Giá bán: <br><span class="font-weight-bold text-danger">
+                                        {{ number_format($dataCart->amount * $dataCart->price_cart + ($dataCart->amount * $dataCart->price_cart * 6) / 100) }}
+                                        VNĐ</span></h5>
                             @endif
                         </div>
                         <div class="col-lg-2">
-                            <span>Số lượng: {{ $dataCart->amount }}</span>
+                            <span>Số lượng: {{ $dataCart->amount }} <br><b> F{{$dataCart->order_number + 1}}</b></span>
                         </div>
                         @if ($dataCart->status == 10)
                             {{-- <a href="{{ route('openBox', ['id_cart' => $dataCart->id]) }}" class="w-100 col-lg-2 px-lg-0">
@@ -41,8 +46,9 @@
                                     <button class="btn bg-orange text-white">Xem doanh thu box</button>
                                 </a>
                                 @auth
-                                    @if ( Auth::user()->id == $dataCart->id_user_create )
-                                    @endif<a href="{{ route('stopMarket', ['id_cart' => $dataCart->id]) }}">
+                                    @if (Auth::user()->id == $dataCart->id_user_create)
+                                    @endif
+                                    <a href="{{ route('stopMarket', ['id_cart' => $dataCart->id]) }}">
                                         <button class="btn bg-warning">Hủy bán</button>
                                     </a>
                                 @endauth
@@ -73,14 +79,21 @@
                                 width="100%" height="auto" />
                         </div>
                         <div class="col-md-9 col-sm-9 col-8">
-                            <a href="{{ route('boxInfo', ['id'=> $dataCart->id]) }}" class="text-decoration-none">
+                            <a href="{{ route('boxInfo', ['id' => $dataCart->id]) }}" class="text-decoration-none">
                                 <p class="mb-0 font-weight-bold text-white-space text-dark">{{ $dataCart->title }}</p>
                             </a>
-                            <p class="mb-0">Số lượng: {{ $dataCart->amount }}</p>
-                            <p class="mb-0">Giá mua: {{ number_format($dataCart->price) }} VNĐ</p>
-                            <p class="mb-0">Tổng tiền: <span
-                                    class="text-danger font-weight-bold">{{ number_format($dataCart->amount * $dataCart->price) }}
-                                    VNĐ</span></p>
+                            <p class="mb-0">Số lượng: {{ $dataCart->amount }} | <b>F{{$dataCart->order_number + 1}}</b> </p>
+                            <p class="mb-0">Giá mua: {{ number_format($dataCart->amount * $dataCart->price) }} VNĐ</p>
+                            @if ($dataCart->status != 10)
+                                <p class="mb-0">Tổng tiền: <span
+                                        class="text-danger font-weight-bold">{{ number_format($dataCart->amount * $dataCart->price) }}
+                                        VNĐ</span></p>
+                            @endif
+                            @if ($dataCart->status == 10)
+                                <p class="mb-0">Giá bán: <span
+                                        class="text-danger font-weight-bold">{{ number_format($dataCart->amount * $dataCart->price_cart + ($dataCart->amount * $dataCart->price_cart * 6) / 100) }}
+                                        VNĐ</span></p>
+                            @endif
                             <div class="d-flex justify-content-between pt-1">
                                 @if ($dataCart->status == 10)
                                     {{-- <a href="{{ route('openBox', ['id_cart' => $dataCart->id]) }}">
@@ -91,8 +104,9 @@
                                             <button class="btn bg-orange text-white">Doanh thu</button>
                                         </a>
                                         @auth
-                                            @if ( Auth::user()->id == $dataCart->id_user_create )
-                                            @endif<a href="{{ route('stopMarket', ['id_cart' => $dataCart->id]) }}">
+                                            @if (Auth::user()->id == $dataCart->id_user_create)
+                                            @endif
+                                            <a href="{{ route('stopMarket', ['id_cart' => $dataCart->id]) }}">
                                                 <button class="btn bg-warning">Hủy bán</button>
                                             </a>
                                         @endauth

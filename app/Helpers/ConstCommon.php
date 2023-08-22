@@ -110,6 +110,6 @@ class ConstCommon {
     }
     public static function getBoxMarket(){
      $user = Auth::user();
-     return Cart::where('id_user_create', $user->id)->where('status', 10)->get()->count();
+     return Cart::where('id_user_create', $user->id)->where('status', 10)->where('amount', '>', 0)->get()->count();
  }
 }

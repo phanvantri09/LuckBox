@@ -468,7 +468,7 @@ class CartController extends Controller
     }
     public function listOrder(){
         $user = Auth::user();
-        $dataCart = $this->cartRepository->getInforOderUser($user->id, [3, 4, 5]);
+        $dataCart = $this->cartRepository->getInforOderUser($user->id, [3, 4, 5, 7]);
         return view('user.page.listOrder', compact(['dataCart']));
     }
     public function showOrder($id_cart){
@@ -511,6 +511,14 @@ class CartController extends Controller
                 'success' => false,
                 'message' => 'CSRF token mismatch. Please refresh the page and try again.'
             ], 400);
+        }
+    }
+    
+    public function changeStatusCart($id_cart, $status){
+        if ($this->cartRepository->update(['status'=>$status], $id_cart)) {
+            return redirect()->back()->with('message', "Thành công");
+        } else {
+            return redirect()->back()->with('error', "Không thành công, vui lòng thử lại.");
         }
     }
 }

@@ -4,6 +4,27 @@
         .custom-file-input:lang(en)~.custom-file-label::after {
             content: "Chọn file";
         }
+
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0, 0, 0, 0.5);
+        }
+
+        .modal-content {
+            text-align: center;
+            background-color: #caf1ee;
+            margin: 20% auto;
+            padding: 20px 10px;
+            border: 1px solid #dc600d;
+            width: 300px;
+        }
     </style>
 @endsection
 @section('content')
@@ -121,13 +142,13 @@
                         Sau khi chuyển, vui lòng nhập thông tin vào form bên dưới.
                     </span>
                 </div>
-                <form action="{{ route('infoCardPay') }}" method="Post" enctype="multipart/form-data">
+                <form action="{{ route('infoCardPay') }}" method="Post" id="myForm" enctype="multipart/form-data">
                     @csrf
                     <div class="form-group">
                         <div class="form-group">
                             <label for="exampleFormControlInput1">Tên chủ tài khoản</label>
-                            <input type="text" name="card_name" value="{{ $getCardDefault->card_name }}"
-                                class="form-control" id="exampleFormControlInput1" placeholder="Nguyễn Văn A">
+                            <input type="text" name="card_name" value="{{ $getCardDefault->card_name }}" required
+                                class="form-control card_name" id="exampleFormControlInput1" placeholder="Nguyễn Văn A">
                             @error('card_name')
                                 <div class="alert alert-danger">{{ $errors->first('card_name') }}</div>
                             @enderror
@@ -135,7 +156,7 @@
                         <div class="form-group">
                             <label for="exampleFormControlInput2">Tên ngân hàng</label>
                             <input type="text" name="bank" value="{{ $getCardDefault->bank }}" class="form-control"
-                                id="exampleFormControlInput2" placeholder="Agribank">
+                                required id="exampleFormControlInput2" placeholder="Agribank">
                             @error('bank')
                                 <div class="alert alert-danger">{{ $errors->first('bank') }}</div>
                             @enderror
@@ -143,7 +164,8 @@
                         <div class="form-group">
                             <label for="exampleFormControlInput3">Số tài khoản/Số thẻ</label>
                             <input type="text" name="card_number" value="{{ $getCardDefault->card_number }}"
-                                class="form-control" id="exampleFormControlInput3" placeholder="2356....">
+                                oninput="this.value = this.value.replace(/[^0-9]/g, '');" required class="form-control"
+                                id="exampleFormControlInput3" placeholder="nhập số tài khoản thẻ">
                             @error('card_number')
                                 <div class="alert alert-danger">{{ $errors->first('card_number') }}</div>
                             @enderror
@@ -151,15 +173,16 @@
                         <div class="form-group">
                             <label for="exampleFormControlInput4">Số tiền nạp vào ví</label>
                             <input type="number" name="total" class="form-control" id="exampleFormControlInput4"
-                                placeholder="2.000.000">
+                                required placeholder="Nhập số tiền bạn đã nạp vào">
                             @error('total')
                                 <div class="alert alert-danger">{{ $errors->first('total') }}</div>
                             @enderror
                         </div>
                         <div class="form-group">
                             <label for="exampleFormControlInput4">Mã giao dịch</label>
-                            <input required type="text" name="code" class="form-control" id="exampleFormControlInput4"
-                                placeholder="Nhập mã giao dịch" value="{{ $codeString ?? null }}">
+                            <input required type="text" name="code" class="form-control"
+                                id="exampleFormControlInput4" required placeholder="Nhập mã giao dịch"
+                                value="{{ $codeString ?? null }}">
                             @error('code')
                                 <div class="alert alert-danger">{{ $errors->first('code') }}</div>
                             @enderror
@@ -168,12 +191,14 @@
                             <label for="exampleFormControlInput4">Hình ảnh giao dịch</label>
                             <div class="custom-file">
                                 <input type="file" name="link_image" class="custom-file-input"
-                                    id="validatedCustomFile">
+                                    id="validatedCustomFile" accept="image/*">
                                 <label class="custom-file-label" for="validatedCustomFile">Chọn file.....</label>
                             </div>
                             @error('link_image')
                                 <div class="alert alert-danger">{{ $errors->first('link_image') }}</div>
                             @enderror
+                            <img id="preview-image" src="" alt="Preview"
+                                style="display: none; width: 100%; height:auto;">
                         </div>
                         <input type="hidden" name="transaction_content" class="form-control"
                             id="exampleFormControlInput5" value="noidungck">
@@ -195,6 +220,12 @@
                 </form>
             </div>
         </div>
+        <div id="myModal" class="modal">
+            <div class="modal-content">
+                <p>Bạn vừa thực hiện lệnh nạp tiền vào ví <br> Số tiền sẽ được ghi nhận sau vài phút vui lòng đợi
+                    giây lát!</p>
+            </div>
+        </div>
     </div>
 @endsection
 @section('scripts')
@@ -208,5 +239,48 @@
             $tempInput.remove();
             alert('Đã sao chép nội dung!');
         }
+        $(document).ready(function() {
+            $('.card_name').on('change', function() {
+                var inputValue = $(this).val();
+                console.log(inputValue);
+                var regex = /^[^\d]+$/u;
+
+                if (!regex.test(inputValue)) {
+                    $(this).val('');
+                    alert('Vui lòng chỉ nhập văn bản và không nhập số!');
+                }
+            });
+            document.getElementById('myForm').addEventListener('submit', function(event) {
+                event.preventDefault(); // Ngăn chặn hành động mặc định của form
+
+                // Hiển thị thông báo popup trong 5 giây
+                var modal = document.getElementById('myModal');
+                modal.style.display = 'block';
+                setTimeout(function() {
+                    modal.style.display = 'none';
+                    document.getElementById('myForm').submit();
+                }, 3000);
+            });
+
+
+            // review ảnh
+            document.getElementById('validatedCustomFile').addEventListener('change', function(event) {
+                var input = event.target;
+
+                if (input.files && input.files[0]) {
+                    var reader = new FileReader();
+
+                    reader.onload = function(e) {
+                        var previewImage = document.getElementById('preview-image');
+
+                        // Hiển thị hình ảnh xem trước
+                        previewImage.src = e.target.result;
+                        previewImage.style.display = 'block';
+                    };
+
+                    reader.readAsDataURL(input.files[0]);
+                }
+            });
+        });
     </script>
 @endsection

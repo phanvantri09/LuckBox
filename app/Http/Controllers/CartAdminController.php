@@ -31,7 +31,10 @@ class CartAdminController extends Controller
             $title = "Đơn chưa mở box";
         }
         if ($request->type == 3) {
-            $title = "Đơn đã mở box chờ giao hàng";
+            $title = "Đơn đã mở box chưa xác nhận giao hàng";
+        }
+        if ($request->type == 7) {
+            $title = "Đơn đã mở box đã xác nhận giao hàng";
         }
         if ($request->type == 4) {
             $title = "Đơn hàng đang giao";

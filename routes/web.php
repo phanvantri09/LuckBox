@@ -113,6 +113,8 @@ Route::group(['prefix' => '/'], function () {
             Route::get('/ngung-mua/{id_cart}','stopcart')->name('stopcart');
             
             Route::post('/changeinfoUserBillUpdate','changeinfoUserBillUpdate')->name('changeinfoUserBillUpdate');
+
+            Route::get('trang-thai/{id_cart}/{status}','changeStatusCart')->name('changeStatusCart');
         });
     });
 
