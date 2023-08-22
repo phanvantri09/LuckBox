@@ -57,7 +57,7 @@ class AuthController extends Controller
                 // }
                 // return redirect()->intended($intendedUrl)->with('message',"Đăng nhập thành công");
             } else {
-                if (!$intendedUrl || $intendedUrl == route('login') || $intendedUrl == route('register')) {
+                if (!$intendedUrl || $intendedUrl == route('login') || $intendedUrl == route('register') || $intendedUrl == route('register', ['type'=>'number_phone'])) {
                     return redirect()->route('home')->with('message',"Đăng nhập thành công");
                 }
             }
