@@ -42,7 +42,7 @@ class AuthController extends Controller
         $credentials = [
             'password' => $request->input('password')
         ];
-        
+
         $emailOrPhone = $request->input('email');
         if (filter_var($emailOrPhone, FILTER_VALIDATE_EMAIL)) {
             $credentials['email'] = $emailOrPhone;
@@ -80,7 +80,7 @@ class AuthController extends Controller
             $id_user_GT = $userGT->id;
         }
         $request->merge(['password' => Hash::make($request->password)]);
-        $code = Str::random(8); 
+        $code = Str::random(8);
 
         while (User::where('code', $code)->exists()) {
             $code = Str::random(8);
@@ -112,7 +112,7 @@ class AuthController extends Controller
 
     public function updateShare($token)
     {
-        $hashids = new Hashids('share');
+        $hashids = new Hashids('share', 12);
         $decodedData = $hashids->decode($token);
         $userId = $decodedData[0];
         return view('auth.registerShare', compact('userId'));
@@ -120,7 +120,7 @@ class AuthController extends Controller
 
     public function registerShare(RegisterRequest $request, $id)
     {
-        $code = Str::random(8); 
+        $code = Str::random(8);
 
         while (User::where('code', $code)->exists()) {
             $code = Str::random(8);

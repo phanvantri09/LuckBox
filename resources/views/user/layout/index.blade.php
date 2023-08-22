@@ -162,7 +162,7 @@
     }
 
     function copyTextttt(idName) {
-        var textToCopy = $(idName).text();
+        var textToCopy = $(idName).val();
         var $tempInput = $("<input>");
         $("body").append($tempInput);
         $tempInput.val(textToCopy).select();
