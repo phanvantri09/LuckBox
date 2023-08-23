@@ -159,7 +159,6 @@ class CartController extends Controller
         DB::beginTransaction();
         try {
             $user = Auth::user();
-
             // case ở market thanh toán lun
             if($request->has('market_pay')){
                 $cartOLD = $this->cartRepository->show($request->id_cart);
@@ -243,8 +242,6 @@ class CartController extends Controller
                 // cộng tiền cho người bán
                 $userPlusMoneyBox = $this->userRepository->find($cartOld->id_user_create);
 
-                // $userPlusMoneyBoxTotal = $userPlusMoneyBox->balance + $moneyX + ConstCommon::priceUp(count(explode(',', $folowOld->id_user)), $request->price);
-
                 $dataTransactionPlusUser = [
                     'id_user' => $cartOld->id_user_create,
                     'id_admin_accept' => null,
@@ -262,7 +259,7 @@ class CartController extends Controller
                     'id_user' => $cartOld->id_user_create,
                     'id_admin_accept' => null,
                     'type' => 5,
-                    'total'=> $moneyX * $cart->amount,
+                    'total'=> $moneyX,
                     'status'=> 2
                     , 'card_name'=> null
                     , 'bank'=> null
@@ -275,7 +272,7 @@ class CartController extends Controller
 
                 $this->transactionRepository->create($dataTransactionPlusUser2);
 
-                $userPlusMoneyBox->balance = $userPlusMoneyBox->balance + (($cartOld->price_cart + $moneyX) * $cart->amount);
+                $userPlusMoneyBox->balance = $userPlusMoneyBox->balance + $moneyX + ($cartOld->price_cart * $cart->amount);
                 $userPlusMoneyBox->save();
                 $arrayFolow = explode(',', $folowOld->id_user);
                 $arrayFolowConut = count($arrayFolow);
@@ -289,7 +286,7 @@ class CartController extends Controller
                             'id_user' => $id_us,
                             'id_admin_accept' => null,
                             'type' => 5,
-                            'total'=> $moneyO * $cart->amount,
+                            'total'=> $moneyO,
                             'status'=> 2
                             , 'card_name'=> null
                             , 'bank'=> null
@@ -299,7 +296,7 @@ class CartController extends Controller
                         ];
 
                         $this->transactionRepository->create($dataTransactionPlus);
-                        $this->userRepository->update(['balance' => $userPlusMoney->balance + ($moneyO * $cart->amount)], $userPlusMoney->id);
+                        $this->userRepository->update(['balance' => $userPlusMoney->balance + ($moneyO)], $userPlusMoney->id);
                     }
                 }
 
@@ -318,24 +315,6 @@ class CartController extends Controller
             } else {
                 $this->cartRepository->update(['id_folow' => $folow->id, 'status' => 2 ], $cart->id);
             }
-
-            // Tạo giao dịch trừ tiền người mua
-            // $dataTransactionTruTienNguoiMua  = [
-            //     'id_user' => $user->id,
-            //     'id_admin_accept' => null,
-            //     'type' => 3,
-            //     'total'=> $cart->price_cart * $cart->amount,
-            //     'status'=> 2
-            //     , 'card_name'=> null
-            //     , 'bank'=> null
-            //     , 'card_number'=> null
-            //     , 'transaction_content'=> null,
-            //     'id_cart' =>$request->id_cart
-            // ];
-            // $this->transactionRepository->create($dataTransactionTruTienNguoiMua);
-            // $this->userRepository->update(['balance' => $user->balance - ($cart->price_cart * $cart->amount)], $user->id);
-            // $user->balance = $user->balance - ($cart->price_cart * $cart->amount);
-            // $user->save();
 
             // cộng tiền cho người gt tạo tk
             if (!empty($user->id_user_referral)) {
@@ -356,12 +335,7 @@ class CartController extends Controller
                 $this->transactionRepository->create($dataTransactionPlusUserreferral);
                 $this->userRepository->update(['balance' => $moneyUserReferral], $user->id_user_referral);
             }
-            // $infoCard = $this->cardRepository->choese();
-            // $getCardDefault = $this->pageRepository->showCardDefault($user->id);
-            // $total = $request->total;
-            // ConstCommon::sendMail($user->email, ['email' => $user->email,'type'=>'mua hàng','status'=> "Thành công", "balance"=>$request->total, 'link'=>route('listOrder')]);
             DB::commit();
-            // return view('user.page.infoCardPay', compact(['infoCard','getCardDefault','total']));
         } catch (\Exception $e){
             report($e);
             // dd($e);
@@ -375,7 +349,6 @@ class CartController extends Controller
     public function purchaseOrder(){
         $user = Auth::user();
         $carts = $this->cartRepository->getAllDataByIDUserAndArrayStatus($user->id, [2, 11]);
-        // dd($carts);
         return view('user.page.box.purchaseOrder', compact(['carts']));
     }
     public function boxUserMarket(){
@@ -503,7 +476,7 @@ class CartController extends Controller
 
         if ($this->billRepository->update(['id_info_user_bill' => $request->value], $request->id_bill)) {
             return response()->json([
-                'success' => true, 
+                'success' => true,
                 'message' => 'CSRF token mismatch. Please refresh the page and try again.'
             ], 200);
         } else {
@@ -513,7 +486,7 @@ class CartController extends Controller
             ], 400);
         }
     }
-    
+
     public function changeStatusCart($id_cart, $status){
         if ($this->cartRepository->update(['status'=>$status], $id_cart)) {
             return redirect()->back()->with('message', "Thành công");

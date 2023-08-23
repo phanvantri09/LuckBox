@@ -163,11 +163,11 @@
                                                     </span>
 
                                                     <input type="number" id="quantity{{ $dataCart->id }}"
-                                                        name="amount" readonly
+                                                        name="amount"
                                                         class="form-control input-number text-center" value="1"
                                                         min="1" max="{{ $dataCart->amount }}"
                                                         title="Phải là số nguyên và mọi người chỉ được mua nhiều nhất 100 Hộp."
-                                                        required />
+                                                         />
                                                     <span class="input-group-btn">
                                                         <button type="button"
                                                             class="quantity-right-plus btn btn-warning btn-number"
@@ -182,11 +182,13 @@
                                                         </button>
                                                     </span>
                                                 </div>
+                                                <span class="text-danger" id="message"></span>
                                             </div>
                                         </div>
 
                                         <div class="p-1 modal-footer d-flex justify-content-center">
                                             <button type="cancel" class="btn btn-secondary"
+                                            onclick="cancelCheckout({{ $dataCart->id }})"
                                                 data-dismiss="modal">Hủy</button>
                                             <button type="submit" class="btn bg-success text-white">Thanh toán</button>
                                         </div>
@@ -202,6 +204,31 @@
 @endsection
 @section('scripts')
     <script>
+        // alert('{{$dataCarts}}');
+        // var arrayV = <?php echo $dataCarts ?>;
+        // $(document).ready(function() {
+            console.log('{{$dataCarts}}');
+            console.log(arrayV);
+            arrayV.forEach(ele => {
+                console.log(ele['id']);
+                $('#quantity'+ele['id']).change(function() {
+                    var inputValue = $(this).val();
+
+                    if (inputValue === '') {
+                        $('#message'+ele['id']).text('Vui lòng nhập giá trị!');
+                    } else {
+                        inputValue = parseInt(inputValue);
+
+                        if (inputValue > ele['amount']) {
+                            $('#message'+ele['id']).text('Giá trị phải nhỏ hơn hoặc bằng 10!');
+                            $(this).val(1);
+                        } else {
+                            $('#message'+ele['id']).text('');
+                        }
+                    }
+                });
+            });
+        // });
         var select = document.getElementById("mySelect");
 
         for (var i = 0; i < select.options.length; i++) {
@@ -219,7 +246,7 @@
             if (type == 1) {
                 // -
                 if (quantity > 1) {
-                    $("#quantity" + id).val(quantity + 1);
+                    $("#quantity" + id).val(quantity - 1);
                 }
             }
             if (type == 2) {
@@ -230,6 +257,9 @@
                     alert("Vượt quá số lượng hiện có");
                 }
             }
+        }
+        function cancelCheckout(id_cart){
+            $("#quantity" + id_cart).val(1);
         }
     </script>
 @endsection
