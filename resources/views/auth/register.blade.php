@@ -48,6 +48,22 @@
         .text-lines {
             color: rgb(119, 119, 119);
         }
+
+        #show_eye {
+            display: block;
+        }
+
+        #hide_eye {
+            display: none;
+        }
+
+        #show_eye1 {
+            display: block;
+        }
+
+        #hide_eye1 {
+            display: none;
+        }
     </style>
 </head>
 
@@ -70,6 +86,13 @@
                     class="col-lg-4 col-md-12 col-12 bg-white p-4 shadow rounded">
                     @csrf
                     <h5>Đăng ký {{ isset($type) ? ' với số điện thoại' : ' với email' }}</h5>
+                    @if (isset($type))
+                        <div class="pt-2 pb-2">Đăng ký với email <a href="{{ route('register') }}">Đăng ký</a>
+                        </div>
+                    @else
+                        <div class="pt-2 pb-2">Đăng ký với số điện thoại <a
+                                href="{{ route('register', ['type' => 'number_phone']) }}">Đăng ký</a></div>
+                    @endif
                     <div class="form-group">
                         <label for="uname"><b class="text-info">*</b> Tên của bạn </label>
                         <input type="text" placeholder="Nhập email của bạn" name="name" class="form-control"
@@ -98,22 +121,76 @@
                             @enderror
                         </div>
                     @endif
-
-
                     <div class="form-group">
+                        <label for="psw"><b class="text-danger">*</b> Mật khẩu </label>
+                        <div class="input-group mb-3">
+                            <input id="password" type="password" placeholder="Nhập mật khẩu" class="form-control"
+                                id="password" name="password" required="true" aria-label="password"
+                                aria-describedby="basic-addon1" />
+                            <div class="input-group-append">
+                                <span class="input-group-text" onclick="password_show_hide();">
+                                    <svg xmlns="http://www.w3.org/2000/svg" id="show_eye" width="16" height="16"
+                                        fill="currentColor" class="bi bi-eye-fill" viewBox="0 0 16 16">
+                                        <path d="M10.5 8a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0z" />
+                                        <path
+                                            d="M0 8s3-5.5 8-5.5S16 8 16 8s-3 5.5-8 5.5S0 8 0 8zm8 3.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7z" />
+                                    </svg>
+                                    <svg xmlns="http://www.w3.org/2000/svg" id="hide_eye" width="16" height="16"
+                                        fill="currentColor" class="bi bi-eye-slash-fill" viewBox="0 0 16 16">
+                                        <path
+                                            d="m10.79 12.912-1.614-1.615a3.5 3.5 0 0 1-4.474-4.474l-2.06-2.06C.938 6.278 0 8 0 8s3 5.5 8 5.5a7.029 7.029 0 0 0 2.79-.588zM5.21 3.088A7.028 7.028 0 0 1 8 2.5c5 0 8 5.5 8 5.5s-.939 1.721-2.641 3.238l-2.062-2.062a3.5 3.5 0 0 0-4.474-4.474L5.21 3.089z" />
+                                        <path
+                                            d="M5.525 7.646a2.5 2.5 0 0 0 2.829 2.829l-2.83-2.829zm4.95.708-2.829-2.83a2.5 2.5 0 0 1 2.829 2.829zm3.171 6-12-12 .708-.708 12 12-.708.708z" />
+                                    </svg>
+                                </span>
+                            </div>
+                            @error('password')
+                                <div class="text-danger">{{ $message }}</div>
+                            @enderror
+                        </div>
+                    </div>
+                    {{-- <div class="form-group">
                         <label for="psw"><b class="text-danger">*</b> Mật khẩu </label>
                         <input id="password" type="password" placeholder="Nhập mật khẩu" class="form-control"
                             name="password" required>
                         @error('password')
                             <div class="text-danger">{{ $message }}</div>
                         @enderror
-                    </div>
+                    </div> --}}
                     <div class="form-group">
+                        <label for="psw"><b class="text-danger">*</b> Nhập lại mật khẩu </label>
+                        <div class="input-group mb-3">
+                            <input type="password" placeholder="Nhập lại mật khẩu" class=" form-control"
+                                id="confirm-password" required="true"
+                                aria-label="password" aria-describedby="basic-addon1" />
+                            {{-- <div class="input-group-append">
+                                <span class="input-group-text" onclick="password_show_hide1();">
+                                    <svg xmlns="http://www.w3.org/2000/svg" id="show_eye1" width="16"
+                                        height="16" fill="currentColor" class="bi bi-eye-fill"
+                                        viewBox="0 0 16 16">
+                                        <path d="M10.5 8a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0z" />
+                                        <path
+                                            d="M0 8s3-5.5 8-5.5S16 8 16 8s-3 5.5-8 5.5S0 8 0 8zm8 3.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7z" />
+                                    </svg>
+                                    <svg xmlns="http://www.w3.org/2000/svg" id="hide_eye1" width="16"
+                                        height="16" fill="currentColor" class="bi bi-eye-slash-fill"
+                                        viewBox="0 0 16 16">
+                                        <path
+                                            d="m10.79 12.912-1.614-1.615a3.5 3.5 0 0 1-4.474-4.474l-2.06-2.06C.938 6.278 0 8 0 8s3 5.5 8 5.5a7.029 7.029 0 0 0 2.79-.588zM5.21 3.088A7.028 7.028 0 0 1 8 2.5c5 0 8 5.5 8 5.5s-.939 1.721-2.641 3.238l-2.062-2.062a3.5 3.5 0 0 0-4.474-4.474L5.21 3.089z" />
+                                        <path
+                                            d="M5.525 7.646a2.5 2.5 0 0 0 2.829 2.829l-2.83-2.829zm4.95.708-2.829-2.83a2.5 2.5 0 0 1 2.829 2.829zm3.171 6-12-12 .708-.708 12 12-.708.708z" />
+                                    </svg>
+                                </span>
+                            </div> --}}
+                        </div>
+                        <span id="password-match"></span>
+                    </div>
+                    {{-- <div class="form-group">
                         <label for="psw"><b class="text-danger">*</b> Nhập lại mật khẩu </label>
                         <input id="confirm-password" type="password" placeholder="Nhập lại mật khẩu"
                             class="form-control" required>
                         <span id="password-match"></span>
-                    </div>
+                    </div> --}}
                     <div class="form-group">
                         <label for="uname"><b class="text-info">*</b> Mã người giới thiệu</label>
                         <input type="text" placeholder="Nhập số điện thoại của bạn" name="code"
@@ -124,20 +201,12 @@
                     </div>
                     <button type="submit" class="btn bg-success text-white w-100 my-1">ĐĂNG KÝ</button>
 
-                    @if (isset($type))
-                        <div class="text-center pt-2">Đăng ký với email <a href="{{ route('register') }}">Đăng ký</a>
-                        </div>
-                    @else
-                        <div class="text-center pt-2">Đăng ký với số điện thoại <a
-                                href="{{ route('register', ['type' => 'number_phone']) }}">Đăng ký</a></div>
-                    @endif
                     <div class="text-center pt-2">Bạn đã có tài khoản? <a href="{{ route('login') }}">Đăng Nhập</a>
                     </div>
                 </form>
             </div>
         </div>
     </div>
-
 </body>
 <script>
     const passwordInput = document.getElementById('password');
@@ -161,6 +230,23 @@
 
     passwordInput.addEventListener('input', checkPasswordMatch);
     confirmPasswordInput.addEventListener('input', checkPasswordMatch);
+
+    function password_show_hide() {
+        var x = document.getElementById("password");
+        var show_eye = document.getElementById("show_eye");
+        var hide_eye = document.getElementById("hide_eye");
+        hide_eye.classList.remove("d-none");
+        if (x.type === "password") {
+            x.type = "text";
+            show_eye.style.display = "none";
+            hide_eye.style.display = "block";
+        } else {
+            x.type = "password";
+            show_eye.style.display = "block";
+            hide_eye.style.display = "none";
+        }
+    }
+
 </script>
 
 </html>
