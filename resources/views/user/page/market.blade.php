@@ -204,31 +204,6 @@
 @endsection
 @section('scripts')
     <script>
-        // alert('{{$dataCarts}}');
-        // var arrayV = <?php echo $dataCarts ?>;
-        // $(document).ready(function() {
-            console.log('{{$dataCarts}}');
-            console.log(arrayV);
-            arrayV.forEach(ele => {
-                console.log(ele['id']);
-                $('#quantity'+ele['id']).change(function() {
-                    var inputValue = $(this).val();
-
-                    if (inputValue === '') {
-                        $('#message'+ele['id']).text('Vui lòng nhập giá trị!');
-                    } else {
-                        inputValue = parseInt(inputValue);
-
-                        if (inputValue > ele['amount']) {
-                            $('#message'+ele['id']).text('Giá trị phải nhỏ hơn hoặc bằng 10!');
-                            $(this).val(1);
-                        } else {
-                            $('#message'+ele['id']).text('');
-                        }
-                    }
-                });
-            });
-        // });
         var select = document.getElementById("mySelect");
 
         for (var i = 0; i < select.options.length; i++) {

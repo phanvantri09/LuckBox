@@ -26,6 +26,9 @@ class AuthController extends Controller
     //
     public function showLoginForm()
     {
+        if (Auth::check()) {
+            return redirect()->route('home')->with('info','Bạn đã đăng nhập rồi');
+        }
         session(['url.intended' => url()->previous()]);
         return view('auth.login');
     }
@@ -33,11 +36,6 @@ class AuthController extends Controller
     public function login(LoginRequest $request)
     {
         $intendedUrl = session('url.intended');
-
-        // $credentials = [
-        //     'email' => $request->email,
-        //     'password' => $request->password,
-        // ];
 
         $credentials = [
             'password' => $request->input('password')
@@ -59,15 +57,20 @@ class AuthController extends Controller
             } else {
                 if (!$intendedUrl || $intendedUrl == route('login') || $intendedUrl == route('register') || $intendedUrl == route('register', ['type'=>'number_phone'])) {
                     return redirect()->route('home')->with('message',"Đăng nhập thành công");
+                } else {
+                    return redirect()->intended($intendedUrl)->with('message',"Đăng nhập thành công");
                 }
+                // return redirect()->route('login')->with('error', "Đã có 1 lỗi xảy ra vui lòng đăng nhập lại!");
             }
-            return redirect()->intended('login')->with('error', "Đã có 1 lỗi xảy ra vui lòng đăng nhập lại!");
         } else {
             return redirect()->back()->with('error',"Sai thông tin đăng nhập, vui lòng nhập lại");
         }
     }
     public function showRegistrationForm(Request $request)
     {
+        if (Auth::check()) {
+            return redirect()->route('home')->with('info','Bạn đã đăng nhập rồi');
+        }
         if ($request->has('type')){
             $type = $request->type;
             return view('auth.register', compact(['type']));
