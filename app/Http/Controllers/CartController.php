@@ -354,17 +354,18 @@ class CartController extends Controller
     public function boxUserMarket(){
         $user = Auth::user();
         $carts = $this->cartRepository->getAllDataByIDUserAndStatusTreeData($user->id, 10);
-        return view('user.page.box.purchaseOrder', compact(['carts']));
+        $listCart = implode(',', $carts->pluck('id')->toArray());
+        return view('user.page.box.purchaseOrder', compact(['carts','listCart']));
+    }
+    public function treeDataAll($listCart){
+        $user = Auth::user();
+        $transactions = $this->transactionRepository->getAll($user->id);
+        return view('user.page.box.treedata', compact(['transactions']));
     }
     public function treeData($id){
-        // return back()->with("error", ' Chức năng này chưa được cập nhật!');
-
         $dataCart = $this->cartRepository->show($id);
         $folows = $this->cartRepository->treedataCart($dataCart->id_user_create, $dataCart->id_box_item, $dataCart->id_box_event, $dataCart->id_box);
-        // dựa vào id cart để phân biệt
-        // từ last cart láy được idcarr chhuaws numberorder
-        // dd($folows->pluck('id_cart')->toArray());
-        // dd($folows);
+
         $arrayCart = $folows->pluck('id_cart')->toArray();
         // dd($arrayCart);
         $transactions = $this->transactionRepository->getByIDCart($arrayCart ,$dataCart->id_user_create);
@@ -376,9 +377,7 @@ class CartController extends Controller
         $number_order = $dataCartLast->order_number;
         $box = $this->boxRepository->show($dataCart->id_box);
 
-        // dd($dataCartLast);
-        // dd($dataCart);
-        // $this->folowRepository
+
         return view('user.page.box.treedata', compact(['box', 'number_order', 'dataCart', 'folows', 'transactions']));
     }
     public function sendToMarket($id_cart){
@@ -492,6 +491,19 @@ class CartController extends Controller
             return redirect()->back()->with('message', "Thành công");
         } else {
             return redirect()->back()->with('error', "Không thành công, vui lòng thử lại.");
+        }
+    }
+    public function updateCartAmount(Request $request){
+        if ($this->cartRepository->update(['amount' => $request->amount], $request->id_cart)) {
+            return response()->json([
+                'success' => true,
+                'message' => 'CSRF token mismatch. Please refresh the page and try again.'
+            ], 200);
+        } else {
+            return response()->json([
+                'success' => false,
+                'message' => 'CSRF token mismatch. Please refresh the page and try again.'
+            ], 400);
         }
     }
 }

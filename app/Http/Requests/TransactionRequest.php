@@ -27,7 +27,7 @@ class TransactionRequest extends FormRequest
             'card_name' =>'required',
             'card_number' => 'required',
             'bank' => 'required',
-            'total' => 'required',
+            'total' => 'required|numeric',
             'code' => 'required'
         ];
     }
@@ -38,6 +38,7 @@ class TransactionRequest extends FormRequest
             'card_number.required' => 'Không được để trống.',
             'bank.required' => 'Không được để trống.',
             'total.required' => 'Không được để trống.',
+            'total.numeric' => 'Phải là số.',
             'code.required' => 'Không được để trống.',
         ];
     }

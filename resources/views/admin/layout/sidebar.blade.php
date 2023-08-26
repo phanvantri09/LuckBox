@@ -55,9 +55,9 @@
         <nav class="mt-2">
             <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu"
                 data-accordion="false">
-                
+
                 <li class="nav-item menu-open">
-                    
+
                     <ul class="nav nav-treeview">
                         <li class="nav-item bg-orange ">
                             <a href="{{ route('home') }}" class="nav-link" target="_blank">
@@ -87,7 +87,7 @@
                             <i class="right fas fa-angle-left"></i>
                         </p>
                     </a>
-                    {{-- [ 1 => 'Rút tiền', 2 => 'Nạp tiền', 3 => 'Thanh toán box', 4 => "Phí đăng bán lại box", 5 => 'Hoa hồng bán box', 6 => 'Giới thiệu'] --}}
+                    {{-- [ 1 => 'Rút tiền', 2 => 'Nạp tiền', 3 => 'Thanh toán box', 4 => "Doanh thu bán box", 5 => 'Hoa hồng bán box', 6 => 'Giới thiệu'] --}}
                     <ul class="nav nav-treeview">
                         <li class="nav-item">
                             <a href="{{ route('transaction.index') }}" class="nav-link">
@@ -116,7 +116,7 @@
                         <li class="nav-item">
                             <a href="{{ route('transaction.index',['type' => 4]) }}" class="nav-link">
                                 <i class="far fa-circle nav-icon"></i>
-                                <p>Phí đăng bán lại box</p>
+                                <p>Doanh thu bán box</p>
                             </a>
                         </li>
                         <li class="nav-item">
@@ -224,7 +224,7 @@
                     </ul>
                     </ul>
                 </li>
-                
+
                 <li class="nav-item">
                     <a   class="nav-link">
                         <i class="fas fa-credit-card"></i>

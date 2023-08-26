@@ -14,6 +14,7 @@
                     <tr>
                         <th>Loại giao dịch</th>
                         <th>Số tiền</th>
+                        <th>Trạng thái</th>
                         <th>Thời gian</th>
                     </tr>
                 </thead>
@@ -28,7 +29,22 @@
                             +
                             @endif
                             {{number_format($data->total)}} VNĐ</td>
-                        <td>{{$data->created_at}}</td>
+                            @if ($data->status == 1)
+                            <td style="background: rgb(114, 170, 192)">
+                                <span ><b>Đợi duyệt</b></span>
+                            </td>
+                            @endif
+                            @if ($data->status == 2)
+                            <td style="background: rgb(101, 153, 24)">
+                                <span ><b>Thành công</b></span>
+                            </td>
+                            @endif
+                            @if ($data->status == 3)
+                            <td style="background: rgb(255, 47, 47)">
+                                <span ><b>Không thành công</b></span>
+                            </td>
+                            @endif
+                        <td>{{date('H:i:s d-m-Y', strtotime($data->created_at))}}</td>
                     </tr>
                     @endforeach
                 </tbody>

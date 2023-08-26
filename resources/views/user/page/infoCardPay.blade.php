@@ -172,8 +172,8 @@
                         </div>
                         <div class="form-group">
                             <label for="exampleFormControlInput4">Số tiền nạp vào ví</label>
-                            <input type="number" name="total" class="form-control" id="exampleFormControlInput4"
-                                required placeholder="Nhập số tiền bạn đã nạp vào">
+                            <input type="text" name="total" class="form-control" id="price_number" required
+                                placeholder="Nhập số tiền bạn đã nạp vào">
                             @error('total')
                                 <div class="alert alert-danger">{{ $errors->first('total') }}</div>
                             @enderror
@@ -213,9 +213,10 @@
                         <a href="checkout.html" class="col-4 pr-0">
                             {{-- <button class="btn bg-info font-weight-bold content-bank">Trợ giúp</button> --}}
                         </a>
-                        <a href="" class="col-8 text-right">
-                            <button class="btn bg-warning font-weight-bold content-bank">Đã chuyển tiền</button>
-                        </a>
+                        <div class="col-8 text-right">
+                            <button onclick="submitForm()" class="btn bg-warning font-weight-bold content-bank">Đã chuyển
+                                tiền</button>
+                        </div>
                     </div>
                 </form>
             </div>
@@ -229,7 +230,21 @@
     </div>
 @endsection
 @section('scripts')
+    <script src="https://unpkg.com/autonumeric@4.1.0/dist/autoNumeric.min.js"></script>
     <script>
+        var myInput = document.getElementById("price_number");
+        var autoNumeric = new AutoNumeric(myInput, {
+            numeralDecimalScale: 0,
+            numeralThousandsGroupStyle: "thousand",
+            decimalPlaces: 0
+        });
+
+        function submitForm() {
+            var numericValue = autoNumeric.getNumber();
+            $('#price_number').val(numericValue);
+            // Thực hiện các xử lý gửi giá trị lên máy chủ ở đây
+        }
+
         function copyText(idName) {
             var textToCopy = $(idName).text();
             var $tempInput = $("<input>");

@@ -17,7 +17,7 @@
     </div>
     <div class="content-container">
         <div class="container d-flex flex-column justify-content-center py-2">
-            
+
             <div class="giftboxs" aria-hidden="true">
                 <div class="giftbox">🎁</div>
                 <div class="giftbox">🎈</div>

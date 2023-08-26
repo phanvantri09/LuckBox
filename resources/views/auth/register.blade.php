@@ -95,7 +95,7 @@
                     @endif
                     <div class="form-group">
                         <label for="uname"><b class="text-info">*</b> Tên của bạn </label>
-                        <input type="text" placeholder="Nhập email của bạn" name="name" class="form-control"
+                        <input type="text" placeholder="Nhập tên của bạn" name="name" class="form-control"
                             value="{{ old('name') }}">
                         @error('name')
                             <div class="text-danger">{{ $message }}</div>
@@ -163,8 +163,8 @@
                             <input type="password" placeholder="Nhập lại mật khẩu" class=" form-control"
                                 id="confirm-password" required="true"
                                 aria-label="password" aria-describedby="basic-addon1" />
-                            {{-- <div class="input-group-append">
-                                <span class="input-group-text" onclick="password_show_hide1();">
+                            <div class="input-group-append">
+                                <span class="input-group-text" onclick="confirm_password_show_hide();">
                                     <svg xmlns="http://www.w3.org/2000/svg" id="show_eye1" width="16"
                                         height="16" fill="currentColor" class="bi bi-eye-fill"
                                         viewBox="0 0 16 16">
@@ -181,7 +181,7 @@
                                             d="M5.525 7.646a2.5 2.5 0 0 0 2.829 2.829l-2.83-2.829zm4.95.708-2.829-2.83a2.5 2.5 0 0 1 2.829 2.829zm3.171 6-12-12 .708-.708 12 12-.708.708z" />
                                     </svg>
                                 </span>
-                            </div> --}}
+                            </div>
                         </div>
                         <span id="password-match"></span>
                     </div>
@@ -235,6 +235,21 @@
         var x = document.getElementById("password");
         var show_eye = document.getElementById("show_eye");
         var hide_eye = document.getElementById("hide_eye");
+        hide_eye.classList.remove("d-none");
+        if (x.type === "password") {
+            x.type = "text";
+            show_eye.style.display = "none";
+            hide_eye.style.display = "block";
+        } else {
+            x.type = "password";
+            show_eye.style.display = "block";
+            hide_eye.style.display = "none";
+        }
+    }
+    function confirm_password_show_hide() {
+        var x = document.getElementById("confirm-password");
+        var show_eye = document.getElementById("show_eye1");
+        var hide_eye = document.getElementById("hide_eye1");
         hide_eye.classList.remove("d-none");
         if (x.type === "password") {
             x.type = "text";

@@ -136,7 +136,7 @@
     top: -75px;
     border-radius: 10px;
 }
-#click:checked + .click {
+/* #click:checked + .click {
     transform: rotate(-110deg) scale(0.85);
 }
 #click:checked ~ .giftopen {
@@ -144,7 +144,7 @@
     display: block;
     transition: 1s ease-in-out;
     animation: glow 2s infinite;
-}
+} */
 
 @keyframes glow {
     0% {

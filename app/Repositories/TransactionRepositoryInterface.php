@@ -11,4 +11,5 @@ interface TransactionRepositoryInterface
      public function listForUser($id_user);
      public function getByStatus($type);
      public function getByIDCart($id_cart, $id_user);
+     public function getAll($id_cart);
 }

@@ -117,12 +117,19 @@ class AuthController extends Controller
     }
 
 
-    public function updateShare($token)
+    public function updateShare(Request $request, $token)
     {
+        if (Auth::check()) {
+            return redirect()->route('home');
+        }
         $hashids = new Hashids('share', 12);
         $decodedData = $hashids->decode($token);
         $userId = $decodedData[0];
-        return view('auth.registerShare', compact('userId'));
+        if ($request->has('type')){
+            $type = $request->type;
+            return view('auth.register', compact(['type', 'token', 'userId']));
+        }
+        return view('auth.registerShare', compact('userId','token'));
     }
 
     public function registerShare(RegisterRequest $request, $id)

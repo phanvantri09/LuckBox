@@ -70,7 +70,7 @@ class CartRepository implements CartRepositoryInterface
         return DB::table('carts')->select('carts.*', 'box.title', 'box.link_image', 'box.price')
                 ->leftJoin('box', 'carts.id_box', '=', 'box.id')
                 ->where('carts.id_user_create','=', $id_user)
-                ->whereIn('status', $status)->get();
+                ->whereIn('status', $status)->orderBy('created_at', 'desc')->get();
     }
     public function getInforOder($status){
         return DB::table('carts')->select('carts.*', 'box.title', 'box.link_image', 'box.price',
@@ -99,7 +99,7 @@ class CartRepository implements CartRepositoryInterface
     }
     public function getInforBillOderUser($id_user, $id_cart){
         return DB::table('carts')->select('carts.*', 'box.title', 'box.link_image', 'box.price',
-            'bills.id as id_bill', 'bills.id_info_user_bill as id_info_user_bill','bills.amount as bills_amount', 
+            'bills.id as id_bill', 'bills.id_info_user_bill as id_info_user_bill','bills.amount as bills_amount',
             'bills.total as bills_total', 'info_user_bills.name',
             'info_user_bills.number_phone', 'info_user_bills.address', 'users.email',
             'products.title as product_title' , 'products.id as id_product'  , 'images.link_image as product_link_image', 'products.price as price_product' )
@@ -121,7 +121,7 @@ class CartRepository implements CartRepositoryInterface
             ->where('carts.id_user_create','=', $id_user)
             ->where('status', $status)
             ->where('carts.amount','>', 0)
-            ->orderBy('created_at','ASC')->get();
+            ->orderBy('created_at','desc')->get();
     }
     public function getAllDataByIDUserAndStatus($id_user, $status)
     {

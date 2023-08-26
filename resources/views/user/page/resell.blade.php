@@ -16,7 +16,7 @@
                         height="auto" />
                 </div>
                 <div class="text-center">
-                    <a href="{{ route('boxInfo', ['id'=> $dataCart->id]) }}" class="text-decoration-none">
+                    <a href="{{ route('boxInfo', ['id' => $dataCart->id_box]) }}" class="text-decoration-none">
                         <h4 class="text-dark">{{ $dataCart->title }}</h4>
                     </a>
                 </div>
@@ -30,8 +30,9 @@
                             </svg>
                         </button>
                     </span>
-                    <input type="number" id="quantity" name="amount" readonly class="form-control input-number text-center"
-                        value="1" min="1"  max="{{ $dataCart->amount }}"
+                    <input type="number" id="quantity" name="amount" class="form-control input-number text-center"
+                    onblur="validateInput()"
+                        value="1" min="1" max="{{ $dataCart->amount }}"
                         title="Phải là số nguyên và mọi người chỉ được mua nhiều nhất {{ $dataCart->amount }} Hộp."
                         required />
                     <input type="hidden" name="id_cart" value="{{ $dataCart->id ?? null }}">
@@ -78,7 +79,7 @@
 
                 // If is not undefined
 
-                if (quantity < '{{$dataCart->amount}}') {
+                if (quantity < '{{ $dataCart->amount }}') {
                     $("#quantity").val(quantity + 1);
                 } else {
                     alert("Vượt quá số lượng hiện có");
@@ -101,5 +102,16 @@
                 }
             });
         });
+
+        function validateInput() {
+            var input = document.getElementById("quantity").value;
+            var min = parseInt(document.getElementById("quantity").getAttribute("min"));
+            var max = parseInt(document.getElementById("quantity").getAttribute("max"));
+
+            if (input < min || input > max) {
+                alert("Bạn đã nhập một số quá lớn. Vui lòng nhập lại.");
+                $('#quantity').val(1);
+            }
+        }
     </script>
 @endsection

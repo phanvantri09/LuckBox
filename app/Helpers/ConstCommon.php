@@ -11,6 +11,7 @@ use App\Mail\SendMail;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Cart;
+use App\Models\Box_item;
 class ConstCommon {
      const ListTypeUser = ['user'=>111, 'admin'=>222, 'super_admin'=>333];
      const TypeUser = 111;
@@ -66,7 +67,7 @@ class ConstCommon {
           'Woori'=>['name' => ' Woori Bank – Ngân hàng Woori', 'image'=>'dist/img/bank/noimage.jpg'],
 
      ] ;
-    const TypeTransaction = [ 1 => 'Rút tiền', 2 => 'Nạp tiền', 3 => 'Thanh toán box', 4 => "Phí đăng bán lại box", 5 => 'Hoa hồng bán box', 6 => 'Giới thiệu'];
+    const TypeTransaction = [ 1 => 'Rút tiền', 2 => 'Nạp tiền', 3 => 'Thanh toán box', 4 => "Doanh thu bán box", 5 => 'Hoa hồng bán box', 6 => 'Giới thiệu'];
 
 
     public static function getnameByTypeCategory($key){
@@ -111,5 +112,8 @@ class ConstCommon {
     public static function getBoxMarket(){
      $user = Auth::user();
      return Cart::where('id_user_create', $user->id)->where('status', 10)->where('amount', '>', 0)->get()->count();
- }
+    }
+    public static function getAmountBoxItem($id){
+        return Box_item::find($id)->amount;
+    }
 }

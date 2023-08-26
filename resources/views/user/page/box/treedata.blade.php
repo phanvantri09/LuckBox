@@ -13,24 +13,26 @@
             <table class="table table-bordered table-hover">
                 <thead class="bg-orange text-white">
                     <tr>
-                        <th>Số tiền</th>
                         <th>Loại</th>
-                        <th>Ngày mua</th>
+                        <th>Số tiền</th>
+                        <th>Thời gian</th>
                     </tr>
                 </thead>
                 <tbody>
                     {{-- 'box', 'number_order', 'dataCart', 'folows' --}}
                     @foreach ($transactions as $key => $transaction)
                         <tr>
-                            <td>{{number_format($transaction->total)}}</td>
                             <td>
-                                @if ($transaction->type == 1 || ($transaction->type == 3 && $transaction->id_cart != null) )
+                                {{-- @if ($transaction->type == 1 || ($transaction->type == 3 && $transaction->id_cart != null) )
                                 Trừ tiền
                                 @else
                                 Cộng tiền
-                                @endif
+                                @endif --}}
+                                Hoa hồng bán box
                                 </td>
-                            <td>{{$transaction->created_at}}</td>
+                            <td>+{{number_format($transaction->total)}}</td>
+
+                            <td>{{date('H:i:s d-m-Y', strtotime($transaction->created_at))}}</td>
                         </tr>
                     @endforeach
 

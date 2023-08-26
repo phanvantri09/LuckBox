@@ -79,9 +79,10 @@
                                     <input type="hidden" name="id_box_item" value="{{ $cacheBoxItem->id ?? null }}">
                                     <input type="hidden" name="id_box" value="{{ $cachebox->id ?? null }}">
 
-                                    <input type="number" id="quantity" name="amount" readonly
+                                    <input type="number" id="quantity" name="amount"
+                                    onblur="validateInput()"
                                         class="form-control input-number text-center" value="1" min="1"
-                                        max="100"
+                                        max="{{\App\Helpers\ConstCommon::getAmountBoxItem($cacheBoxItem->id) < 100 ? \App\Helpers\ConstCommon::getAmountBoxItem($cacheBoxItem->id): 100}}"
                                         title="Phải là số nguyên và mọi người chỉ được mua nhiều nhất 100 Hộp." required />
                                     <span class="input-group-btn">
                                         <button type="button" class="quantity-right-plus btn btn-warning btn-number"
@@ -411,5 +412,15 @@
                 }
             });
         });
+        function validateInput() {
+            var input = document.getElementById("quantity").value;
+            var min = parseInt(document.getElementById("quantity").getAttribute("min"));
+            var max = parseInt(document.getElementById("quantity").getAttribute("max"));
+
+            if (input < min || input > max) {
+                alert("Bạn đã nhập một số quá lớn. Vui lòng nhập lại.");
+                $('#quantity').val(1);
+            }
+        }
     </script>
 @endsection
