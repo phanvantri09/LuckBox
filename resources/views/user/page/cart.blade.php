@@ -39,6 +39,7 @@
                                         </svg>
                                     </button>
                                 </a>
+                                <input type="hidden" id="quantityOLD{{$cart->id}}" value="{{ $cart->amount }}">
                                 <input type="number" id="quantity{{$cart->id}}" name="quantity"
                                 onblur="validateInput({{$cart->id}})"
                                     class="form-control input-number text-center" value="{{ $cart->amount }}" min="1"
@@ -104,7 +105,8 @@
                                             </svg>
                                         </button>
                                     </a>
-                                    <input type="number" id="quantity" name="quantity" disabled
+                                    <input type="hidden" id="quantityOLD{{$cart->id}}" value="{{ $cart->amount }}">
+                                    <input type="number" id="quantity{{$cart->id}}" name="quantity" disabled
                                         class="form-control input-number text-center" value="{{ $cart->amount }}"
                                         min="1" max="{{\App\Helpers\ConstCommon::getAmountBoxItem($cart->id_box_item) < 100 ? \App\Helpers\ConstCommon::getAmountBoxItem($cart->id_box_item): 100}}" />
                                     <a href="{{ route('cartUpdateAmount', ['id_cart'=>$cart->id, 'type'=>2]) }}" class="input-group-btn">
@@ -163,7 +165,7 @@
 
             if (input < min || input > max) {
                 alert("Bạn đã nhập một số quá lớn. Vui lòng nhập lại.");
-                $('#quantity'+id).val('{{$cart->amount}}');
+                $('#quantity'+id).val($('#quantityOLD'+id).val());
             } else {
                 let amount = $('#quantity'+id).val();
                 $.ajax({

@@ -161,8 +161,9 @@
                                                             </svg>
                                                         </button>
                                                     </span>
-
+                                                    <input type="hidden" id="quantityOLD{{$dataCart->id}}" value="{{ $dataCart->amount }}">
                                                     <input type="number" id="quantity{{ $dataCart->id }}"
+                                                        onblur="validateInput({{$dataCart->id}})"
                                                         name="amount"
                                                         class="form-control input-number text-center" value="1"
                                                         min="1" max="{{ $dataCart->amount }}"
@@ -235,6 +236,16 @@
         }
         function cancelCheckout(id_cart){
             $("#quantity" + id_cart).val(1);
+        }
+        function validateInput(id) {
+            var input = document.getElementById("quantity"+id).value;
+            var min = parseInt(document.getElementById("quantity"+id).getAttribute("min"));
+            var max = parseInt(document.getElementById("quantity"+id).getAttribute("max"));
+
+            if (input < min || input > max) {
+                alert("Bạn đã nhập một số quá lớn. Vui lòng nhập lại.");
+                $('#quantity'+id).val($('#quantityOLD'+id).val());
+            }
         }
     </script>
 @endsection
