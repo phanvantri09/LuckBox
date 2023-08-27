@@ -431,3 +431,6 @@ body main {
 .product-card-gif {
     position: absolute;
 }
+.zoomable {
+    touch-action: manipulation;
+}

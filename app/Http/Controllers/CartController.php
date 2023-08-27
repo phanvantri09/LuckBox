@@ -357,7 +357,7 @@ class CartController extends Controller
         $listCart = implode(',', $carts->pluck('id')->toArray());
         return view('user.page.box.purchaseOrder', compact(['carts','listCart']));
     }
-    public function treeDataAll($listCart){
+    public function treeDataAll(){
         $user = Auth::user();
         $transactions = $this->transactionRepository->getAll($user->id);
         return view('user.page.box.treedata', compact(['transactions']));

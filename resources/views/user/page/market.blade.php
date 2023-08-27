@@ -148,40 +148,35 @@
                                             <div>
                                                 <h6 class="text-center pt-2">Số lượng</h6>
                                                 <div class="input-group py-2">
-                                                    <span class="input-group-btn">
-                                                        <button type="button"
-                                                            class="quantity-left-minus btn btn-warning btn-number"
-                                                            onclick="CheckAmount(1, {{ $dataCart->id }}, {{ $dataCart->amount }})"
-                                                            data-type="minus" data-field="">
-                                                            <svg xmlns="http://www.w3.org/2000/svg" width="16"
-                                                                height="16" fill="currentColor" class="bi bi-dash"
-                                                                viewBox="0 0 16 16">
-                                                                <path
-                                                                    d="M4 8a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7A.5.5 0 0 1 4 8z" />
-                                                            </svg>
-                                                        </button>
-                                                    </span>
-                                                    <input type="hidden" id="quantityOLD{{$dataCart->id}}" value="{{ $dataCart->amount }}">
+                                                    <button type="button"
+                                                        class="quantity-left-minus btn btn-warning btn-number"
+                                                        onclick="CheckAmount(1, {{ $dataCart->id }}, {{ $dataCart->amount }})"
+                                                        data-type="minus" data-field="">
+                                                        <svg xmlns="http://www.w3.org/2000/svg" width="16"
+                                                            height="16" fill="currentColor" class="bi bi-dash"
+                                                            viewBox="0 0 16 16">
+                                                            <path
+                                                                d="M4 8a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7A.5.5 0 0 1 4 8z" />
+                                                        </svg>
+                                                    </button>
+                                                    <input type="hidden" id="quantityOLD{{ $dataCart->id }}"
+                                                        value="{{ $dataCart->amount }}">
                                                     <input type="number" id="quantity{{ $dataCart->id }}"
-                                                        onblur="validateInput({{$dataCart->id}})"
-                                                        name="amount"
+                                                        onblur="validateInput({{ $dataCart->id }})" name="amount"
                                                         class="form-control input-number text-center" value="1"
                                                         min="1" max="{{ $dataCart->amount }}"
-                                                        title="Phải là số nguyên và mọi người chỉ được mua nhiều nhất 100 Hộp."
-                                                         />
-                                                    <span class="input-group-btn">
-                                                        <button type="button"
-                                                            class="quantity-right-plus btn btn-warning btn-number"
-                                                            onclick="CheckAmount(2, {{ $dataCart->id }}, {{ $dataCart->amount }})"
-                                                            data-type="plus" data-field="">
-                                                            <svg xmlns="http://www.w3.org/2000/svg" width="16"
-                                                                height="16" fill="currentColor" class="bi bi-plus"
-                                                                viewBox="0 0 16 16">
-                                                                <path
-                                                                    d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z" />
-                                                            </svg>
-                                                        </button>
-                                                    </span>
+                                                        title="Phải là số nguyên và mọi người chỉ được mua nhiều nhất 100 Hộp." />
+                                                    <button type="button"
+                                                        class="quantity-right-plus btn btn-warning btn-number"
+                                                        onclick="CheckAmount(2, {{ $dataCart->id }}, {{ $dataCart->amount }})"
+                                                        data-type="plus" data-field="">
+                                                        <svg xmlns="http://www.w3.org/2000/svg" width="16"
+                                                            height="16" fill="currentColor" class="bi bi-plus"
+                                                            viewBox="0 0 16 16">
+                                                            <path
+                                                                d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z" />
+                                                        </svg>
+                                                    </button>
                                                 </div>
                                                 <span class="text-danger" id="message"></span>
                                             </div>
@@ -189,7 +184,7 @@
 
                                         <div class="p-1 modal-footer d-flex justify-content-center">
                                             <button type="cancel" class="btn btn-secondary"
-                                            onclick="cancelCheckout({{ $dataCart->id }})"
+                                                onclick="cancelCheckout({{ $dataCart->id }})"
                                                 data-dismiss="modal">Hủy</button>
                                             <button type="submit" class="btn bg-success text-white">Thanh toán</button>
                                         </div>
@@ -234,17 +229,20 @@
                 }
             }
         }
-        function cancelCheckout(id_cart){
+
+        function cancelCheckout(id_cart) {
             $("#quantity" + id_cart).val(1);
         }
+
         function validateInput(id) {
-            var input = document.getElementById("quantity"+id).value;
-            var min = parseInt(document.getElementById("quantity"+id).getAttribute("min"));
-            var max = parseInt(document.getElementById("quantity"+id).getAttribute("max"));
+            var input = document.getElementById("quantity" + id).value;
+            var min = parseInt(document.getElementById("quantity" + id).getAttribute("min"));
+            var max = parseInt(document.getElementById("quantity" + id).getAttribute("max"));
 
             if (input < min || input > max) {
                 alert("Bạn đã nhập một số quá lớn. Vui lòng nhập lại.");
-                $('#quantity'+id).val($('#quantityOLD'+id).val());
+                // $('#quantityOLD' + id).val()
+                $('#quantity' + id).val(1);
             }
         }
     </script>

@@ -29,7 +29,7 @@
 <body>
 
     @include('user.layout.header')
-    <main>
+    <main class="zoomable">
         @yield('content')
     </main>
     @include('user.layout.footer')
@@ -161,6 +161,21 @@
         $tempInput.remove();
         alert('Đã sao chép mã giới thiệu');
     }
+</script>
+<script>
+    var zoomableElement = document.querySelector('.zoomable');
+    var lastTouchEnd = 0;
+
+    zoomableElement.addEventListener('touchend', function(event) {
+        var currentTime = new Date().getTime();
+        var touchEndDiff = currentTime - lastTouchEnd;
+
+        if (touchEndDiff < 300) {
+            event.preventDefault(); // Ngăn chặn hành vi mặc định của trình duyệt
+        }
+
+        lastTouchEnd = currentTime;
+    });
 </script>
 
 

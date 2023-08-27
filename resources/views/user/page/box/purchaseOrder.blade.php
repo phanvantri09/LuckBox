@@ -11,7 +11,7 @@
         <div class="container my-lg-2 my-0">
             <!-- desktop -->
             @if (isset($listCart))
-                <span class="text-center">Tổng doanh thu! <a class="" href="{{ route('treeDataAll', ['listCart'=>$listCart]) }}"><b>Xem ngay </b></a></span>
+                <div class="text-right pb-1">Tổng doanh thu! <a class="text-decoration-none text-danger" href="{{ route('treeDataAll') }}"><b>Xem ngay </b></a></div>
             @endif
             <div class="d-lg-block d-none">
                 @foreach ($carts as $dataCart)
@@ -103,9 +103,9 @@
                                         <button class="btn bg-success text-white">Mở box</button>
                                     </a> --}}
                                     @if ($dataCart->status != 11)
-                                        <a href="{{ route('treeData', ['id' => $dataCart->id]) }}">
+                                        {{-- <a href="{{ route('treeData', ['id' => $dataCart->id]) }}">
                                             <button class="btn bg-orange text-white">Doanh thu</button>
-                                        </a>
+                                        </a> --}}
                                         @auth
                                             @if (Auth::user()->id == $dataCart->id_user_create)
                                             @endif
