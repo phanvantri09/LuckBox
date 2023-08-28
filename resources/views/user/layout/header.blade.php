@@ -1,7 +1,7 @@
 <!-- Menu -->
 <nav class="navbar navbar-expand-md navbar-dark bg-orange text-white menu-fixed">
-    <div class="container-lg">
-        <a class="navbar-brand text-white col-lg-2 col-md-3 col-5" href="{{ route('home') }}">
+    <div class="container-lg px-0">
+        <a class="navbar-brand text-white pt-md-1 pt-0 px-0 mr-0 col-lg-2 col-md-3 col-5" href="{{ route('home') }}">
             <img src="{{ asset('/dist/img/logo.png') }}" style="width: 100%;" alt="">
         </a>
         <!-- <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
@@ -114,16 +114,24 @@
                 }
             @endphp
             <div class="nav-item dropdown menu-info-user">
-                <a class="nav-link dropdown-toggle text-white d-md-flex flex-column justify-content-center align-items-center " href="#" id="navbardrop" data-toggle="dropdown">
+                <a class="nav-link dropdown-toggle text-white pr-0 d-md-flex d-none flex-md-column  justify-content-center  align-items-center " href="#" id="navbardrop" data-toggle="dropdown">
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor"
                         class="bi bi-person-circle" viewBox="0 0 16 16">
                         <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z" />
                         <path fill-rule="evenodd"
                             d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z" />
                     </svg>
-                    <span class="d-none d-md-flex">{{number_format(Auth::user()->balance)}} VNĐ</span>
+                    <span class="d-md-flex d-none">{{number_format(Auth::user()->balance)}} VNĐ</span>
                 </a>
-
+                <a class="nav-link dropdown-toggle text-white pr-0 d-flex d-md-none flex-md-column  justify-content-center  align-items-center " href="#" id="navbardrop" data-toggle="dropdown">
+                    <span class="d-flex d-md-none">{{number_format(Auth::user()->balance)}} VNĐ</span> &ensp;
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor"
+                        class="bi bi-person-circle" viewBox="0 0 16 16">
+                        <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z" />
+                        <path fill-rule="evenodd"
+                            d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z" />
+                    </svg>
+                </a>
                 <div class="dropdown-menu">
                     <a class="dropdown-item text-white" href="{{ route('walet') }}">Ví của bạn</a>
                     <a class="dropdown-item text-white" href="{{ route('boxUserMarket') }}">Đang bán</a>
