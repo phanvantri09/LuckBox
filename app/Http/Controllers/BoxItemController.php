@@ -38,7 +38,17 @@ class BoxItemController extends Controller
             'time_end' => $request->time_end
         ];
 
-        $this->boxItemRepository->create($data);
+        $box = $this->boxRepository->show($request->id_box);
+        if ($box->amount > $request->amount) {
+            if ($this->boxRepository->update(['amount'=>$box->amount-$request->amount], $request->id_box)) {
+                $this->boxItemRepository->create($data);
+                return redirect()->route('box.box_event.index')->with('success','Thành công');
+            } else {
+                return redirect()->back()->with('error', 'Vui lòng thử lại');
+            }
+        } else {
+            return redirect()->back()->with('error', 'Số lượng lớn hơn trong kho hiện có vui lòng nhập số lượng nhỏ hơn'.$box->amount);
+        }
         return redirect()->route('box.box_event.index')->with('success','Thành công');
     }
     public function changeStatus($id, Request $request)

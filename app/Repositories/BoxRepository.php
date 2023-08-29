@@ -37,7 +37,8 @@ class BoxRepository implements BoxRepositoryInterface
         return Box::where('type', $type)->get();
     }
     public function boxItemForEventRepository($id){
-        $dataEvent = Box_event::find($id)->boxItem()->pluck('id_box')->toArray();
-        return Box::whereNotIn('id', $dataEvent)->get();
+        // $dataEvent = Box_event::find($id)->boxItem()->pluck('id_box')->toArray();
+        // return Box::whereNotIn('id', $dataEvent)->get();
+        return Box::all();
     }
 }

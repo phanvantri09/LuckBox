@@ -36,7 +36,7 @@ class CardRepository implements CardRepositoryInterface
     public function delete($id)
     {
         $user = Card::findOrFail($id);
-        $user->delete();
+        return $user->delete();
     }
 
     public function show($id)

@@ -4,7 +4,7 @@
 @section('content')
     <div class="bg-white text-orange title-page">
         <div class="container">
-            <p>LuckyBox | Hộp</p>
+            <p>LuckyBox | {{isset($title) ? $title : 'Hộp'}}</p>
         </div>
     </div>
     <div class="content-container py-md-4 py-3">

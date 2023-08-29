@@ -79,6 +79,8 @@ Route::group(['prefix' => '/'], function () {
             Route::get('/them-tai-khoan-ngan-hang','createCard')->name('createCard');
             Route::post('/them-tai-khoan-ngan-hang','createCardPost')->name('createCard');
 
+            Route::get('/xoa-tai-khoan-ngan-hang','deleteCard')->name('deleteCard');
+
             Route::get('/yeu-cau-rut-tien','cashOut')->name('cashOut');
             Route::post('/yeu-cau-rut-tien','cashOutPost')->name('cashOut');
 

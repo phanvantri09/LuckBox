@@ -14,23 +14,31 @@
                     <div class="col-sm-6">
                         <div class="form-group">
                             <label>Chọn Box</label>
-                            <select name="id_box" class="form-control select2" style="width: 100%;">
-                                <option selected="selected">Chọn Box cho Event này</option>
+                            <select name="id_box" class="form-control">
                                 @foreach ($getBox as $item)
                                     <option value="{{ $item->id }}">{{ $item->title }}</option>
                                 @endforeach
                             </select>
+                            {{-- <select name="id_box" class="form-control select2" style="width: 100%;">
+                                @foreach ($getBox as $item)
+                                    <option value="{{ $item->id }}">{{ $item->title }}</option>
+                                @endforeach
+                            </select> --}}
                         </div>
+                        @error('id_box')
+                            <div class="alert alert-danger">{{ $errors->first('id_box') }}</div>
+                        @enderror
                     </div>
                     <div class="col-sm-6">
                         <div class="form-group">
                             <label for="timeStart">Số lượng box</label>
                             <div class="input-group date">
                                 <input type="number" name="amount" class="form-control" />
-                                @error('amount')
-                                    <div class="alert alert-danger">{{ $errors->first('amount') }}</div>
-                                @enderror
+
                             </div>
+                            @error('amount')
+                                <div class="alert alert-danger">{{ $errors->first('amount') }}</div>
+                            @enderror
                         </div>
                     </div>
                     <div class="col-sm-6">
@@ -42,10 +50,11 @@
                                 <div class="input-group-append" data-target="#datetimepicker7" data-toggle="datetimepicker">
                                     <div class="input-group-text"><i class="fa fa-calendar"></i></div>
                                 </div>
-                                {{-- @error('time_start')
-                                    <div class="alert alert-danger">{{ $errors->first('time_start') }}</div>
-                                @enderror --}}
+
                             </div>
+                            @error('time_start')
+                                <div class="alert alert-danger">{{ $errors->first('time_start') }}</div>
+                            @enderror
                         </div>
 
                         <div class="form-group">
@@ -56,14 +65,15 @@
                                 <div class="input-group-append" data-target="#datetimepicker8" data-toggle="datetimepicker">
                                     <div class="input-group-text"><i class="fa fa-calendar"></i></div>
                                 </div>
-                                {{-- @error('time_end')
-                                    <div class="alert alert-danger">{{ $errors->first('time_end') }}</div>
-                                @enderror --}}
+
                             </div>
+                            @error('time_end')
+                                <div class="alert alert-danger">{{ $errors->first('time_end') }}</div>
+                            @enderror
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-12">
+                        <div class="col-md-6 col-12">
                             <input type="submit" value="Lưu" class="btn btn-success float-right">
                         </div>
                 </form>

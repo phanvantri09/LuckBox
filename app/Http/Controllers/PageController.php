@@ -350,4 +350,17 @@ class PageController extends Controller
             ], 400);
         }
     }
+    public function deleteCard(Request $request){
+        if ($this->cardRepository->delete($request->id)) {
+            return response()->json([
+                'success' => true,
+                'message' => 'CSRF token mismatch. Please refresh the page and try again.'
+            ], 200);
+        } else {
+            return response()->json([
+                'success' => false,
+                'message' => 'CSRF token mismatch. Please refresh the page and try again.'
+            ], 400);
+        }
+    }
 }

@@ -127,7 +127,7 @@ class AuthController extends Controller
         $userId = $decodedData[0];
         if ($request->has('type')){
             $type = $request->type;
-            return view('auth.register', compact(['type', 'token', 'userId']));
+            return view('auth.registerShare', compact(['type', 'token', 'userId']));
         }
         return view('auth.registerShare', compact('userId','token'));
     }

@@ -349,13 +349,15 @@ class CartController extends Controller
     public function purchaseOrder(){
         $user = Auth::user();
         $carts = $this->cartRepository->getAllDataByIDUserAndArrayStatus($user->id, [2, 11]);
-        return view('user.page.box.purchaseOrder', compact(['carts']));
+        $title = "Hộp mù";
+        return view('user.page.box.purchaseOrder', compact(['carts', 'title']));
     }
     public function boxUserMarket(){
+        $title = "Hộp gửi bán";
         $user = Auth::user();
         $carts = $this->cartRepository->getAllDataByIDUserAndStatusTreeData($user->id, 10);
         $listCart = implode(',', $carts->pluck('id')->toArray());
-        return view('user.page.box.purchaseOrder', compact(['carts','listCart']));
+        return view('user.page.box.purchaseOrder', compact(['carts','listCart', 'title']));
     }
     public function treeDataAll(){
         $user = Auth::user();
@@ -367,9 +369,7 @@ class CartController extends Controller
         $folows = $this->cartRepository->treedataCart($dataCart->id_user_create, $dataCart->id_box_item, $dataCart->id_box_event, $dataCart->id_box);
 
         $arrayCart = $folows->pluck('id_cart')->toArray();
-        // dd($arrayCart);
         $transactions = $this->transactionRepository->getByIDCart($arrayCart ,$dataCart->id_user_create);
-        // dd($transactions);
         if(empty($folows->last()->id_cart)){
             return redirect()->back()->with('warning','Chưa có giao dịch nào diễn ra ở Hộp gửi bán này');
         }
