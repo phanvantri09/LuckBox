@@ -78,12 +78,19 @@
                                     <input type="hidden" name="id_box_event" value="{{ $event->id ?? null }}">
                                     <input type="hidden" name="id_box_item" value="{{ $cacheBoxItem->id ?? null }}">
                                     <input type="hidden" name="id_box" value="{{ $cachebox->id ?? null }}">
-
-                                    <input type="number" id="quantity" name="amount"
-                                    onblur="validateInput()"
-                                        class="form-control input-number text-center" value="1" min="1"
-                                        max="{{\App\Helpers\ConstCommon::getAmountBoxItem($cacheBoxItem->id) < 100 ? \App\Helpers\ConstCommon::getAmountBoxItem($cacheBoxItem->id): 100}}"
-                                        title="Phải là số nguyên và mọi người chỉ được mua nhiều nhất 100 Hộp." required />
+                                    @if (empty($cacheBoxItem))
+                                        <input type="number" id="quantity" name="amount"
+                                        onblur="validateInput()"
+                                            class="form-control input-number text-center" value="1" min="1"
+                                            max="100"
+                                            title="Phải là số nguyên và mọi người chỉ được mua nhiều nhất 100 Hộp." required />
+                                    @else
+                                        <input type="number" id="quantity" name="amount"
+                                        onblur="validateInput()"
+                                            class="form-control input-number text-center" value="1" min="1"
+                                            max="{{\App\Helpers\ConstCommon::getAmountBoxItem($cacheBoxItem->id) < 100 ? \App\Helpers\ConstCommon::getAmountBoxItem($cacheBoxItem->id): 100}}"
+                                            title="Phải là số nguyên và mọi người chỉ được mua nhiều nhất 100 Hộp." required />
+                                    @endif
                                     <span class="input-group-btn">
                                         <button type="button" class="quantity-right-plus btn btn-warning btn-number"
                                             data-type="plus" data-field="">
