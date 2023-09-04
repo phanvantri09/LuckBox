@@ -15,5 +15,7 @@ interface UserRepositoryInterface
      public function updateInfoUser(array $data, $id);
      public function find($id);
      public function findUserByCode($code);
+     public function listGT($id);
+     public function getUserByTypeGT();
 }
 

@@ -11,11 +11,11 @@
             <div class="card">
                 <div class="card-header">
                     <h3 class="card-title">
-                        @isset($title)
+                        {{-- @isset($title)
                             {{ $title }}
                         @else
                             Chưa có tiêu đề cho trang này
-                        @endisset
+                        @endisset --}}
                     </h3>
                 </div>
                 <!-- /.card-header -->
@@ -61,7 +61,7 @@
                                                     <i class="fas fa-shopping-basket"></i> Sản phẩm cần giao
                                                 </a>
                                             @endif
-                                            
+
                                             @if ($item->status == 7)
                                                 <a href="{{ route('cart.changeStatus', ['id_cart' => $item->id, 'status' => 4]) }}"
                                                     class="btn btn-app">

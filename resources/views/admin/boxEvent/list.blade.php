@@ -11,11 +11,11 @@
             <div class="card">
                 <div class="card-header">
                     <h3 class="card-title">
-                        @isset($title)
+                        {{-- @isset($title)
                             {{ $title }}
                         @else
                             Chưa có tiêu đề cho trang này
-                        @endisset
+                        @endisset --}}
                     </h3>
                 </div>
                 <!-- /.card-header -->
@@ -25,9 +25,9 @@
                             <tr>
                                 <th>STT</th>
                                 <th>Tiêu đề</th>
-                                <th>Box</th> 
-                                <th>Thời gian</th> 
-                                                            
+                                <th>Box</th>
+                                <th>Thời gian</th>
+
                                 <th>Trạng thái </th>
                                 <th></th>
                             </tr>
@@ -91,7 +91,7 @@
         </div>
         <!-- /.col -->
     </div>
-    
+
 @endsection
 @section('scripts')
 
@@ -155,5 +155,5 @@
             });
         });
     </script>
-    
+
 @endsection

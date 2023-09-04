@@ -57,6 +57,7 @@ Route::group(['prefix' => '/'], function () {
             Route::post('/sendMessageAdmin','sendMessageAdmin');
         });
         Route::controller(UserInfoController::class)->group(function () {
+            Route::get('/danh-sach-nguoi-gioi-thieu','listGT')->name('listGT');
             Route::get('/thong-tin-ca-nhan','create')->name('updateInfo');
             Route::post('/thong-tin-ca-nhan','createPost')->name('updateInfoPost');
 

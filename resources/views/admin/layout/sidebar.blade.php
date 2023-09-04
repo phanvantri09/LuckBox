@@ -216,6 +216,13 @@
                                 </a>
                             </ul>
                             <ul>
+                                <a href="{{ route('user.list', ['type' => 3]) }}"
+                                    class="nav-link">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>User được giới thiệu</p>
+                                </a>
+                            </ul>
+                            <ul>
                                 <a href="{{ route('user.list', ['type' => \App\Helpers\ConstCommon::TypeAdmin]) }}"
                                     class="nav-link">
                                     <i class="far fa-circle nav-icon"></i>

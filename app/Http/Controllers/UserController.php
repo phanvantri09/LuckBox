@@ -14,18 +14,21 @@ class UserController extends Controller
 
     public function __construct(UserRepositoryInterface $userRepository)
     {
-        
+
         $this->userRepository = $userRepository;
 
     }
-    
+
     public function list($type)
     {
-        $users = $this->userRepository->getUserByType($type);
-        //dd($users);
+        if ($type == 3) {
+            $users = $this->userRepository->getUserByTypeGT();
+        } else {
+            $users = $this->userRepository->getUserByType($type);
+        }
         return view('admin.user.list',compact('users'));
     }
-    
+
     /**
      * Show the form for creating a new resource.
      *
@@ -64,7 +67,7 @@ class UserController extends Controller
 
     public function edit($id)
     {
-        
+
         $user = $this->userRepository->edit($id);
         return view('admin.user.edit', compact('user'));
     }
@@ -90,7 +93,7 @@ class UserController extends Controller
                 'type' => $request->type
             ];
         }
-        
+
         $this->userRepository->update($data, $id);
         return back()->with('success', 'Thành công');
     }
@@ -106,5 +109,5 @@ class UserController extends Controller
         $this->userRepository->delete($id);
         return back()->with('success', 'Thành công');
     }
-    
+
 }

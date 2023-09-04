@@ -11,11 +11,11 @@
             <div class="card">
                 <div class="card-header">
                     <h3 class="card-title">
-                        @isset($title)
+                        {{-- @isset($title)
                             {{ $title }}
                         @else
                             Chưa có tiêu đề cho trang này
-                        @endisset
+                        @endisset --}}
                     </h3>
                 </div>
                 <!-- /.card-header -->
@@ -27,6 +27,7 @@
                                 <th>Email</th>
                                 <th>Tên</th>
                                 <th>Số điện thoại </th>
+                                <th>Người giới thiệu </th>
                                 <th>Ngày tạo </th>
                                 <th></th>
                             </tr>
@@ -44,6 +45,23 @@
                                     <td>{{ $item->email }}</td>
                                     <td>{{ $item->name }}</td>
                                     <td>{{ $item->number_phone }}</td>
+                                    <td>
+                                        @php
+                                            $user = null;
+                                            if (!empty($item->id_user_referral)) {
+                                                $user = Auth::user()->find($item->id_user_referral);
+                                            }
+                                        @endphp
+                                        @if (!empty($user->name))
+                                        Tên: {{$user->name}} <br>
+                                        @endif
+                                        @if (!empty($user->email))
+                                        Email: {{$user->email}}<br>
+                                        @endif
+                                        @if (!empty($user->number_phone))
+                                        Số điện thoại: {{$user->number_phone}}
+                                        @endif
+                                    </td>
                                     <td>{{ $item->created_at }}</td>
                                     <td>
                                         @if (!empty($item->id_info_users))

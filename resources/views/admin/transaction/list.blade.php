@@ -11,11 +11,11 @@
             <div class="card">
                 <div class="card-header">
                     <h3 class="card-title">
-                        @isset($title)
+                        {{-- @isset($title)
                             {{ $title }}
                         @else
                             Chưa có tiêu đề cho trang này
-                        @endisset
+                        @endisset --}}
                     </h3>
                 </div>
                 <!-- /.card-header -->

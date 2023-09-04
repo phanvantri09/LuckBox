@@ -121,6 +121,11 @@ class UserInfoController extends Controller
 
     }
 
+    public function listGT(){
+        $user = Auth::user();
+        $datas = $this->userInfoRepository->listGT($user->id);
+        return view('user.page.listGT', compact('datas'));
+    }
     /**
      * Store a newly created resource in storage.
      *

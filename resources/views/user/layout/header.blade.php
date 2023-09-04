@@ -142,6 +142,7 @@
                     {{-- <a class="dropdown-item text-white" href="{{ route('purchaseOrder') }}">Hộp đã mua</a> --}}
 
                     <a class="dropdown-item text-white" href="{{ route('historyTransaction') }}">Lịch sử giao dịch</a>
+                    <a class="dropdown-item text-white" href="{{ route('listGT') }}">Danh sách giới thiệu</a>
                     {{-- <a class="dropdown-item text-white" href="{{ route('market') }}">Chợ</a> --}}
                     <input type="hidden" style="display: none" id="ma_gt" value="{{ Auth::user()->code ?? null }}" />
                     <a id="linkToCopy" onclick="copyHrefToClipboard(event)" class="dropdown-item text-white"
