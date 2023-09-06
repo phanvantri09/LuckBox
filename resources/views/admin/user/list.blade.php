@@ -46,23 +46,26 @@
                                     <td>{{ $item->name }}</td>
                                     <td>{{ $item->number_phone }}</td>
                                     <td>
-                                        @foreach ($userGTs[$key] as $keyss => $user)
-                                        @php
-                                            $lenghtU = count($userGTs[$key]);
-                                        @endphp
-                                        <div class="border-bottom">
-                                            <b>F{{$lenghtU - $keyss}}</b> <br>
-                                            @if (!empty($user->name))
-                                            Tên: {{$user->name}} <br>
-                                            @endif
-                                            @if (!empty($user->email))
-                                            Email: {{$user->email}}<br>
-                                            @endif
-                                            @if (!empty($user->number_phone))
-                                            Số điện thoại: {{$user->number_phone}}
-                                            @endif
-                                        </div>
-                                        @endforeach
+                                        @if (!empty($userGTs))
+                                            @foreach ($userGTs[$key] as $keyss => $user)
+                                            @php
+                                                $lenghtU = count($userGTs[$key]);
+                                            @endphp
+                                            <div class="border-bottom">
+                                                <b>F{{$lenghtU - $keyss}}</b> <br>
+                                                @if (!empty($user->name))
+                                                Tên: {{$user->name}} <br>
+                                                @endif
+                                                @if (!empty($user->email))
+                                                Email: {{$user->email}}<br>
+                                                @endif
+                                                @if (!empty($user->number_phone))
+                                                Số điện thoại: {{$user->number_phone}}
+                                                @endif
+                                            </div>
+                                            @endforeach
+                                        @endif
+
                                         {{-- @php
                                             $user = null;
                                             if (!empty($item->id_user_referral)) {
