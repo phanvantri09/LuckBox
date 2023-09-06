@@ -49,7 +49,7 @@
                                         <input type="checkbox" class="input-switch" name="status"
                                             value="{{ $item->status }}" data-slide-id="{{ $item->id }}"
                                             data-on-text="On" data-off-text="Off"
-                                            {{ $item->status == 1 ? 'checked' : '' }}>
+                                            {{ $item->status == 2 ? 'checked' : '' }}>
                                     </td>
                                     <td>
                                         <a href="{{route('box.box_event.box_item.add', ['id_box_event' => $item->id])}}"
@@ -129,30 +129,30 @@
     </script>
     <script>
         $(document).ready(function() {
-            $('.input-switch').bootstrapSwitch();
-            $('.input-switch').on('switchChange.bootstrapSwitch', function(event, state) {
-                var status = state ? 1 : 2;
-                var slideId = $(this).data('slide-id'); // lấy giá trị slide_id từ thuộc tính data-slide-id
-                $.ajax({
-                    url: "{{ route('box.box_event.changeStatus', ['id' => ':slideId']) }}".replace(':slideId',
-                        slideId), // lấy giá trị thực tế của slideId gán vào id khi người dùng thực hiện yêu cầu ajax
-                    method: "POST",
-                    data: {
-                        _token: "{{ csrf_token() }}",
-                        status: status
-                    },
-                    success: function(response) {
-                        if (response.status == 1) {
-                            $(this).bootstrapSwitch('state', true);
-                        } else {
-                            $(this).bootstrapSwitch('state', false);
-                        }
-                    }.bind(this),
-                    error: function(xhr, status, error) {
-                        console.log(error);
-                    }
-                });
-            });
+            $('.input-switch').bootstrapSwitch('readonly', true);
+            // $('.input-switch').on('switchChange.bootstrapSwitch', function(event, state) {
+            //     var status = state ? 1 : 2;
+            //     var slideId = $(this).data('slide-id'); // lấy giá trị slide_id từ thuộc tính data-slide-id
+            //     $.ajax({
+            //         url: "{{ route('box.box_event.changeStatus', ['id' => ':slideId']) }}".replace(':slideId',
+            //             slideId), // lấy giá trị thực tế của slideId gán vào id khi người dùng thực hiện yêu cầu ajax
+            //         method: "POST",
+            //         data: {
+            //             _token: "{{ csrf_token() }}",
+            //             status: status
+            //         },
+            //         success: function(response) {
+            //             if (response.status == 1) {
+            //                 $(this).bootstrapSwitch('state', true);
+            //             } else {
+            //                 $(this).bootstrapSwitch('state', false);
+            //             }
+            //         }.bind(this),
+            //         error: function(xhr, status, error) {
+            //             console.log(error);
+            //         }
+            //     });
+            // });
         });
     </script>
 

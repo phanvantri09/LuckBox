@@ -14,6 +14,7 @@
                     <tr>
                         <th>Loại giao dịch</th>
                         <th>Số tiền</th>
+                        <th>F</th>
                         <th>Trạng thái</th>
                         <th>Thời gian</th>
                     </tr>
@@ -29,6 +30,7 @@
                             +
                             @endif
                             {{number_format($data->total)}} VNĐ</td>
+                            <td>{{$data->folow !=0 ? $data->folow : ''}}</td>
                             @if ($data->status == 1)
                             <td style="background: rgb(114, 170, 192)">
                                 <span ><b>Đợi duyệt</b></span>

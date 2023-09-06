@@ -7,6 +7,7 @@ use App\Repositories\UserRepositoryInterface;
 use App\Http\Requests\User\CreateRequestUser;
 use Illuminate\Support\Facades\Hash;
 use App\Helpers\ConstCommon;
+use App\Models\User;
 
 class UserController extends Controller
 {
@@ -21,12 +22,24 @@ class UserController extends Controller
 
     public function list($type)
     {
+        $userGTs = [];
         if ($type == 3) {
             $users = $this->userRepository->getUserByTypeGT();
+            $userGTs = [];
+
+            foreach ($users as $key => $user) {
+                if (!empty($user->id_user_referral)) {
+                    $userRef = $user->id_user_referral;
+                    $user = User::find($userRef);
+                    // $referringUsers = $user->getAllReferringUsers();
+                    $userGTs[$key] = $user->getAllReferringUsers();
+                }
+            }
+
         } else {
             $users = $this->userRepository->getUserByType($type);
         }
-        return view('admin.user.list',compact('users'));
+        return view('admin.user.list',compact(['userGTs', 'users']));
     }
 
     /**

@@ -79,7 +79,8 @@ class TransactionRepository implements TransactionRepositoryInterface
         return $user;
     }
     public function listForUser($id_user){
-        return Transaction::where('id_user',$id_user)->orderBy('created_at', 'desc')->get();
+        return Transaction::select('transactions.*', 'carts.order_number as folow')
+        ->leftJoin('carts', 'transactions.id_cart', '=', 'carts.id')->where('id_user',$id_user)->orderBy('updated_at', 'desc')->get();
     }
 
     public function getByIDCart($id_cart, $id_user){
@@ -88,7 +89,7 @@ class TransactionRepository implements TransactionRepositoryInterface
     public function getAll($id_user){
         return Transaction::select('transactions.*', 'carts.order_number as folow')
         ->leftJoin('carts', 'transactions.id_cart', '=', 'carts.id')->
-        where('id_user',$id_user)->whereIn('type', [5])->orderBy('created_at','desc')->get();
+        where('id_user',$id_user)->whereIn('type', [5])->orderBy('updated_at','desc')->get();
     }
 
 }

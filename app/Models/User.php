@@ -61,4 +61,21 @@ class User extends Authenticatable
     public function Transaction(){
         return $this->hasMany(Transaction::class,'id_user','id');
     }
+    public function referredUser()
+    {
+        return $this->belongsTo(User::class, 'id_user_referral', 'id');
+    }
+    public function getAllReferringUsers()
+    {
+        $referringUsers = [];
+
+        $currentUser = $this;
+        while ($currentUser->referredUser) {
+            $referringUsers[] = $currentUser->referredUser;
+            $currentUser = $currentUser->referredUser;
+        }
+
+        return $referringUsers;
+    }
+
 }

@@ -27,10 +27,10 @@
                     </div>
                     <div class="col-sm-6">
                         <div class="form-group">
-                                <label class="form-label" for="customFile">Hình ảnh</label>
-                                <input type="file" name="link_image" class="form-control-file border rounded px-1 py-1" id="image-input" accept="image/*">
-                                <img id="preview-image" 
-                                    src="" alt="Preview" style="display: none; height:100px;">                          
+                            <label class="form-label" for="customFile">Hình ảnh</label>
+                            <input type="file" name="link_image" class="form-control-file border rounded px-1 py-1"
+                                id="image-input" accept="image/*">
+                            <img id="preview-image" src="" alt="Preview" style="display: none; height:100px;">
                             @error('link_image')
                                 <div class="alert alert-danger">{{ $errors->first('link_image') }}</div>
                             @enderror
@@ -42,10 +42,13 @@
                             <div class="input-group" id="" data-target-input="nearest">
                                 <input type="datetime-local" name="time_start" class="form-control "
                                     value="{{ old('time_start') }}" data-target="" />
-                                @error('time_start')
-                                    <div class="alert alert-danger">{{ $errors->first('time_start') }}</div>
-                                @enderror
                             </div>
+                            @error('time_start')
+                                <div class="alert alert-danger">{{ $errors->first('time_start') }}</div>
+                            @enderror
+                            @if ($errors->any())
+                                <div class="alert alert-danger">{{ $errors->first() }}</div>
+                            @endif
                         </div>
                     </div>
                     <div class="col-sm-6">
@@ -54,10 +57,14 @@
                             <div class="input-group " id="" data-target-input="nearest">
                                 <input type="datetime-local" name="time_end" class="form-control"
                                     value="{{ old('time_end') }}" data-target="" />
-                                @error('time_end')
-                                    <div class="alert alert-danger">{{ $errors->first('time_end') }}</div>
-                                @enderror
+
                             </div>
+                            @error('time_end')
+                                <div class="alert alert-danger">{{ $errors->first('time_end') }}</div>
+                            @enderror
+                            @if ($errors->any())
+                                <div class="alert alert-danger">{{ $errors->first() }}</div>
+                            @endif
                         </div>
                     </div>
                     <div class="col-sm-6">
@@ -71,7 +78,7 @@
                             </select>
                         </div>
                     </div>
-                    
+
                     <div class="row">
                         <div class="col-12">
                             <input type="submit" value="Lưu" class="btn btn-success float-right">
@@ -122,6 +129,6 @@
         //             $('#datetimepicker7').datetimepicker('maxDate', e.date);
         //         });
         //     });
-        // 
+        //
     </script>
 @endsection

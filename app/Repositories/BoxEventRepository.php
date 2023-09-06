@@ -83,5 +83,13 @@ class BoxEventRepository implements BoxEventRepositoryInterface
     {
         return Box_event::with('boxItem')->findOrFail($id);
     }
+    public function checkTime($time_start, $time_end){
+
+        $data =  Box_event::where('time_end', '>', $time_start)->orWhere('time_end', '>', $time_end)->get()->count();
+        if ($data == 0) {
+            return false;
+        }
+        return true;
+    }
 
 }

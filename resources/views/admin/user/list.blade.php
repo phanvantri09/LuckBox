@@ -36,7 +36,7 @@
                             @php
                                 $i = 0;
                             @endphp
-                            @foreach ($users as $item)
+                            @foreach ($users as $key => $item)
                                 @php
                                     $i = $i + 1;
                                 @endphp
@@ -46,21 +46,30 @@
                                     <td>{{ $item->name }}</td>
                                     <td>{{ $item->number_phone }}</td>
                                     <td>
+                                        @foreach ($userGTs[$key] as $keyss => $user)
                                         @php
+                                            $lenghtU = count($userGTs[$key]);
+                                        @endphp
+                                        <div class="border-bottom">
+                                            <b>F{{$lenghtU - $keyss}}</b> <br>
+                                            @if (!empty($user->name))
+                                            Tên: {{$user->name}} <br>
+                                            @endif
+                                            @if (!empty($user->email))
+                                            Email: {{$user->email}}<br>
+                                            @endif
+                                            @if (!empty($user->number_phone))
+                                            Số điện thoại: {{$user->number_phone}}
+                                            @endif
+                                        </div>
+                                        @endforeach
+                                        {{-- @php
                                             $user = null;
                                             if (!empty($item->id_user_referral)) {
                                                 $user = Auth::user()->find($item->id_user_referral);
                                             }
-                                        @endphp
-                                        @if (!empty($user->name))
-                                        Tên: {{$user->name}} <br>
-                                        @endif
-                                        @if (!empty($user->email))
-                                        Email: {{$user->email}}<br>
-                                        @endif
-                                        @if (!empty($user->number_phone))
-                                        Số điện thoại: {{$user->number_phone}}
-                                        @endif
+                                        @endphp --}}
+
                                     </td>
                                     <td>{{ $item->created_at }}</td>
                                     <td>

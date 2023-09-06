@@ -28,7 +28,6 @@ class BoxEventController extends Controller
     }
     public function createPost(CreateBoxEvent $request){
         $idUser = Auth::user()->id;
-        //dd($request->all());
         if($request->link_image){
             //thời gian upload
             $current_time = time();
@@ -47,6 +46,11 @@ class BoxEventController extends Controller
         $carbon_start = Carbon::createFromFormat('Y-m-d\TH:i', $time_start);
         $carbon_end = Carbon::createFromFormat('Y-m-d\TH:i', $time_end);
 
+        $time_start = $carbon_start->format('Y-m-d H:i:s');
+        $time_end = $carbon_end->format('Y-m-d H:i:s');
+        if ($this->boxEventRepository->checkTime($time_start, $time_end)) {
+            return back()->withErrors(['error' => "Đã có sự kiện diễn ra trong thời gian (".$time_start." đến ".$time_end."), vui lòng chọn thời gian khác"]);
+        }
         // Định dạng lại chuỗi thời gian theo định dạng Y-m-d H:i:s
         $data = [
             'id_user_create' => $idUser,
@@ -55,10 +59,10 @@ class BoxEventController extends Controller
             'title' => $request->title,
             // 2023-07-17 16:55:44
             'description' => $request->description,
-
+            'status'   => 2,
             'time_start' => $carbon_start->format('Y-m-d H:i:s'),
             'time_end' => $carbon_end->format('Y-m-d H:i:s'),
-            'link_image' => $imageName, 
+            'link_image' => $imageName,
         ];
 
         $this->boxEventRepository->create($data);
@@ -84,7 +88,7 @@ class BoxEventController extends Controller
     }
     public function update(Request $request, $id){
         $idUser = Auth::user()->id;
-        
+
         $time_start = $request->time_start;
         $time_end = $request->time_end;
         // Tạo đối tượng Carbon từ chuỗi thời gian
@@ -108,11 +112,11 @@ class BoxEventController extends Controller
                 'description' => $request->description,
                 'time_start' => $carbon_start->format('Y-m-d H:i:s'),
                 'time_end' => $carbon_end->format('Y-m-d H:i:s'),
-                'link_image' => $imageName, 
+                'link_image' => $imageName,
                 'id_category' => $request->id_category
-                
+
             ];
-            
+
             $this->boxEventRepository->update($data, $id);
             return back()->with('success', 'Cập nhật thành công');
         }
@@ -123,7 +127,7 @@ class BoxEventController extends Controller
             'title' => $request->title,
             'description' => $request->description,
             'time_start' => $carbon_start->format('Y-m-d H:i:s'),
-            'time_end' => $carbon_end->format('Y-m-d H:i:s'), 
+            'time_end' => $carbon_end->format('Y-m-d H:i:s'),
             'id_category' => $request->id_category
         ];
         $this->boxEventRepository->update($data, $id);
