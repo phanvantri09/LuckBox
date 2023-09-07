@@ -61,8 +61,7 @@ class UserRepository implements UserRepositoryInterface
     {
         return User::leftjoin('user_infos', 'users.id', '=', 'user_infos.id_user')
         ->select('user_infos.*','users.*','user_infos.id as id_info_users' )
-        ->where('users.type', 111)
-        ->whereNotNull('users.id_user_referral')
+        ->whereNotNull('id_user_referral')
         ->orderByDesc('users.id')
         ->get();
     }
@@ -81,6 +80,6 @@ class UserRepository implements UserRepositoryInterface
     }
 
     public function listGT($id){
-        return User::where('id_user_referral', $id)->get();
+        return User::where('id_user_referral', $id)->orderBy('updated_at', 'asc')->get();
     }
 }

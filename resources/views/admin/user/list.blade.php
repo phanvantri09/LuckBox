@@ -52,7 +52,7 @@
                                                 $lenghtU = count($userGTs[$key]);
                                             @endphp
                                             <div class="border-bottom">
-                                                <b>F{{$lenghtU - $keyss}}</b> <br>
+                                                <b>F{{$lenghtU - $keyss}} - {{ $user->type == 111 ? "Người dùng" : "admin" }}</b> <br>
                                                 @if (!empty($user->name))
                                                 Tên: {{$user->name}} <br>
                                                 @endif
