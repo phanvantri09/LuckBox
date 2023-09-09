@@ -25,7 +25,7 @@ class CreateUsersTable extends Migration
             $table->integer('status')->default(1)->comment('dùng để xác định trạng thái tài khoản: 1 là được sử dụng, 2 là bị chặn ');
             $table->string('social_id')->nullable()->comment('láy id của nền tảng đăng ký: mail, facebook');
             $table->string('social_type')->nullable()->comment('2 loại là mail và facebook => chỉ cần lưu là google hoặc facebook');
-            $table->string('id_user_referral')->unique()->nullable();
+            $table->bigInteger('id_user_referral')->unique()->nullable();
             $table->rememberToken();
             $table->timestamps();
         });
