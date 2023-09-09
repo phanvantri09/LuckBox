@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
+use Illuminate\Support\Facades\DB;
 
 class User extends Authenticatable
 {
@@ -65,6 +66,10 @@ class User extends Authenticatable
     {
         return $this->belongsTo(User::class, 'id_user_referral', 'id');
     }
+    public function referredUserGT($id_user_referral)
+    {
+        return DB::table('users')->where('id','=', $id_user_referral)->first();
+    }
     public function getAllReferringUsers()
     {
         $referringUsers = [];
@@ -73,6 +78,23 @@ class User extends Authenticatable
         while ($currentUser->referredUser) {
             $referringUsers[] = $currentUser->referredUser;
             $currentUser = $currentUser->referredUser;
+        }
+
+        return $referringUsers;
+    }
+    public function getAllReferringUsersGT()
+    {
+        $referringUsers = [];
+        $i = 1;
+        $currentUser = $this;
+        $referringUsers[0] = $this;
+        while ($currentUser->id_user_referral) {
+            if (!empty($currentUser->id_user_referral)) {
+                $currentUser = self::referredUserGT($currentUser->id_user_referral);
+                $referringUsers[$i] = $currentUser;
+                $i++;
+            }
+
         }
 
         return $referringUsers;

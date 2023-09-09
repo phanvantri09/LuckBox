@@ -31,11 +31,9 @@ class UserController extends Controller
                 if (!empty($user->id_user_referral)) {
                     $userRef = $user->id_user_referral;
                     $user = User::find($userRef);
-                    // $referringUsers = $user->getAllReferringUsers();
-                    $userGTs[$key] = $user->getAllReferringUsers();
+                    $userGTs[$key] = $user->getAllReferringUsersGT();
                 }
             }
-
         } else {
             $users = $this->userRepository->getUserByType($type);
         }
