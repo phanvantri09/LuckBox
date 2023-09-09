@@ -21,8 +21,8 @@ class CreateBoxesTable extends Migration
             $table->string('title');
             $table->string('link_image');
             $table->integer('amount')->comment('số lượng');
-            $table->integer('price')->comment('số tiền của 1 box');
-            $table->string('description')->nullable();
+            $table->bigInteger('price')->comment('số tiền của 1 box');
+            $table->longText('description')->nullable();
             $table->timestamps();
         });
     }

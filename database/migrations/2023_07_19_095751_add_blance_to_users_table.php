@@ -14,7 +14,7 @@ class AddBlanceToUsersTable extends Migration
     public function up()
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->integer('balance')->default(0);
+            $table->bigInteger('balance')->default(0);
         });
     }
 

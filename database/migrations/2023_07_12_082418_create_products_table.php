@@ -20,8 +20,8 @@ class CreateProductsTable extends Migration
             $table->integer('id_user_update');
             $table->string('title');
             $table->string('description');
-            $table->integer('amount');
-            $table->integer('price');
+            $table->bigInteger('amount');
+            $table->bigInteger('price');
             $table->timestamps();
         });
     }

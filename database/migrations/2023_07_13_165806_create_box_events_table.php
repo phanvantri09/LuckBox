@@ -20,7 +20,7 @@ class CreateBoxEventsTable extends Migration
             $table->integer('id_category');
             $table->integer('status')->default(1)->comment('1 chưa lên sàn, 2 là đang hoạt đồng, 3 là hết thời gian lên sàn');
             $table->string('title');
-            $table->string('description');
+            $table->longText('description');
             // $table->integer('price');
             // $table->integer('amount_box');
             $table->string('link_image');
