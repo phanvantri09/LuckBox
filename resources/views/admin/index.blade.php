@@ -95,6 +95,7 @@
             <!-- Control sidebar content goes here -->
         </aside>
         <!-- /.control-sidebar -->
+        <span id="siteseal"><script async type="text/javascript" src="https://seal.godaddy.com/getSeal?sealID=SMWRyYlobi3D8PnFfleDXzvWOouFYmzMGUpkje6nmsmbVp5Cmj8pr5VJVptP"></script></span>
     </div>
     <!-- ./wrapper -->
 
