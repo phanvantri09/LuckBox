@@ -71,12 +71,12 @@
                                 <p>Tổng quang</p>
                             </a>
                         </li>
-                        <li class="nav-item bg-info">
+                        {{-- <li class="nav-item bg-info">
                             <a href="{{ route('docs') }}" class="nav-link " target="_blank">
                                 <i class="fas fa-list-ol"></i>
                                 <p>Qui trình tạo</p>
                             </a>
-                        </li>
+                        </li> --}}
                     </ul>
                 </li>
                 <li class="nav-item">
