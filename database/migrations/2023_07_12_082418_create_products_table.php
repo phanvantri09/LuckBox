@@ -19,7 +19,7 @@ class CreateProductsTable extends Migration
             $table->integer('id_user_create');
             $table->integer('id_user_update');
             $table->string('title');
-            $table->string('description');
+            $table->longText('description');
             $table->bigInteger('amount');
             $table->bigInteger('price');
             $table->timestamps();
