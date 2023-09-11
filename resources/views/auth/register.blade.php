@@ -3,6 +3,7 @@
 
 <head>
     <meta charset="UTF-8">
+    <meta name="google-site-verification" content="rl9JD04KBYYNOg7JDiZBzygfodJw_BPAOMY6cyXUK9o" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Lucky Box</title>
     <link rel="icon" type="image/x-icon" href="{{ asset('/dist/img/logo.png') }}">
@@ -207,6 +208,7 @@
             </div>
         </div>
     </div>
+    <span id="siteseal"><script async type="text/javascript" src="https://seal.godaddy.com/getSeal?sealID=SMWRyYlobi3D8PnFfleDXzvWOouFYmzMGUpkje6nmsmbVp5Cmj8pr5VJVptP"></script></span>
 </body>
 <script>
     const passwordInput = document.getElementById('password');
