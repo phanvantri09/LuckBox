@@ -77,8 +77,8 @@ Route::group(['prefix' => '/'], function () {
             Route::post('/nap-tien-vao-vi','infoCardPayPost')->name('infoCardPay');
 
             Route::get('/vi-cua-ban','walet')->name('walet');
-            Route::get('/them-tai-khoan-ngan-hang','createCard')->name('createCard');
-            Route::post('/them-tai-khoan-ngan-hang','createCardPost')->name('createCard');
+            // Route::get('/them-tai-khoan-ngan-hang','createCard')->name('createCard');
+            // Route::post('/them-tai-khoan-ngan-hang','createCardPost')->name('createCard');
 
             Route::get('/xoa-tai-khoan-ngan-hang','deleteCard')->name('deleteCard');
 

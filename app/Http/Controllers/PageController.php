@@ -123,9 +123,9 @@ class PageController extends Controller
         $getCardAdmin = $this->cardRepository->choese();
         $current_time = time();
         $codeString = 'NT'.date('dHis', $current_time).$currentUser->id;
-        if (empty($getCardDefault)) {
-            return redirect()->route('createCard')->with('error','Bạn cần có 1 tài khoản mặt định');
-        }
+        // if (empty($getCardDefault)) {
+        //     return redirect()->route('createCard')->with('error','Bạn cần có 1 tài khoản mặt định');
+        // }
         return view('user.page.infoCardPay', compact(['getCardAdmin', 'getCardDefault', 'currentUser','codeString']));
     }
     public function infoCardPayPost(TransactionRequest $request)
@@ -174,13 +174,14 @@ class PageController extends Controller
     public function walet()
     {
         $currentUser = Auth::user();
-        $checkCard = $this->pageRepository->checkCard($currentUser->id);
-        if (empty($checkCard)) {
-            return redirect()->route('createCard');
-        };
 
-        $showCardDefault = $this->pageRepository->showCardDefault($currentUser->id); //lấy card ưu tiên
-        $getAllCard = $this->pageRepository->getAllCardNotIn([$showCardDefault->id], $currentUser->id); //lấy ra tất cả card của khác user này
+        // $checkCard = $this->pageRepository->checkCard($currentUser->id);
+        // if (empty($checkCard)) {
+        //     return redirect()->route('createCard');
+        // }; 
+        $showCardDefault = $getAllCard = [];
+        // $showCardDefault = $this->pageRepository->showCardDefault($currentUser->id); //lấy card ưu tiên
+        // $getAllCard = $this->pageRepository->getAllCardNotIn([$showCardDefault->id], $currentUser->id); //lấy ra tất cả card của khác user này
 
 
         return view('user.page.walet', compact('showCardDefault', 'currentUser', 'getAllCard'));

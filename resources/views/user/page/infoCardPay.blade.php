@@ -147,7 +147,7 @@
                     <div class="form-group">
                         <div class="form-group">
                             <label for="exampleFormControlInput1">Tên chủ tài khoản</label>
-                            <input type="text" name="card_name" value="{{ $getCardDefault->card_name }}" required
+                            <input type="text" name="card_name" value="{{ $getCardDefault->card_name ?? null }}" required
                                 class="form-control card_name" id="exampleFormControlInput1" placeholder="Nguyễn Văn A">
                             @error('card_name')
                                 <div class="alert alert-danger">{{ $errors->first('card_name') }}</div>
@@ -155,7 +155,7 @@
                         </div>
                         <div class="form-group">
                             <label for="exampleFormControlInput2">Tên ngân hàng</label>
-                            <input type="text" name="bank" value="{{ $getCardDefault->bank }}" class="form-control"
+                            <input type="text" name="bank" value="{{ $getCardDefault->bank ?? null}}" class="form-control"
                                 required id="exampleFormControlInput2" placeholder="Agribank">
                             @error('bank')
                                 <div class="alert alert-danger">{{ $errors->first('bank') }}</div>
@@ -163,7 +163,7 @@
                         </div>
                         <div class="form-group">
                             <label for="exampleFormControlInput3">Số tài khoản/Số thẻ</label>
-                            <input type="text" name="card_number" value="{{ $getCardDefault->card_number }}"
+                            <input type="text" name="card_number" value="{{ $getCardDefault->card_number ?? null}}"
                                 oninput="this.value = this.value.replace(/[^0-9]/g, '');" required class="form-control"
                                 id="exampleFormControlInput3" placeholder="nhập số tài khoản thẻ">
                             @error('card_number')

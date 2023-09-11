@@ -23,17 +23,17 @@
                         </a>
                     </div>
                 </div>
-                <h5 class="text-center">Tài khoản thanh toán</h5>
+                {{-- <h5 class="text-center">Tài khoản thanh toán</h5>
                 <p>Tên ngân hàng: {{ $showCardDefault->bank }}</p>
                 <p>Chi nhánh: {{ $showCardDefault->card_branch }}</p>
                 <p>Số tài khoản/Số thẻ: {{ $showCardDefault->card_number }}</p>
                 <p>Chủ tài khoản: {{ $showCardDefault->card_name }}</p>
                 <a href="{{ route('createCard') }}" class="d-flex justify-content-start text-decoration-none">
                     <button class="btn bg-orange text-white">Thêm tài khoản</button>
-                </a>
+                </a> --}}
             </div>
         </div>
-        <div class="container">
+        {{-- <div class="container">
             <hr>
         </div>
         <div class="container my-lg-2 my-0 d-flex justify-content-center">
@@ -97,7 +97,7 @@
                     </div>
                 </div>
             </div>
-        @endforeach
+        @endforeach --}}
     </div>
 @endsection
 @section('scripts')
