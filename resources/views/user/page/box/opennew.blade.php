@@ -71,7 +71,7 @@
                     <h3 class="col-12 text-center">Chúc mừng bạn đã nhận được</h3>
                     <div class="bg-card-open">
                         <img class="bg-card-open-img" src="{{ asset('/dist/img/bg-sun.png') }}" alt="">
-                        <a href="{{ route('productDetails', ['id'=>$productChoeseImage->id]) }}" target="_blank" class="text-decoration-none text-dark product-card-gif">
+                        <a href="{{ route('productDetails', ['id'=>$productChoese->id]) }}" target="_blank" class="text-decoration-none text-dark product-card-gif">
                             <div class="mx-1 p-2 bg-white product-card-box rounded product-card-box-open">
                                 <img class="rounded-right"
                                     src="{{ \App\Helpers\ConstCommon::getLinkImageToStorage($productChoeseImage->link_image) }}" />
