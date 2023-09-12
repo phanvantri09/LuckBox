@@ -49,7 +49,7 @@
                             <a href="{{ route('boxInfo', ['id' => $dataCart->id_box]) }}"
                                 class="text-decoration-none text-dark">
                                 <img
-                                    src="{{ \App\Helpers\ConstCommon::getLinkImageToStorage($dataCart->link_image) ?? '/dist/img/imageBox.jpg' }} " />
+                                    src="{{ !empty($dataCart->link_image) ? \App\Helpers\ConstCommon::getLinkImageToStorage($dataCart->link_image) : asset('/dist/img/imageBox.jpg') }} " />
                                 <div class="d-flex justify-content-between border-bottom p-2">
                                     <b>F{{ $dataCart->order_number + 1 }}</b>
                                     <b>{{ empty($dataCart->name) ? (empty($dataCart->email) ? $dataCart->number_phone : $dataCart->email) : $dataCart->name }}</b>
@@ -122,7 +122,7 @@
                                         <div class="modal-body">
                                             {{-- <span>Bạn có chắc chắn mua?</span> --}}
                                             <div class="col-lg-6 col-10 mx-auto py-2">
-                                                <img src="{{ \App\Helpers\ConstCommon::getLinkImageToStorage($dataCart->link_image) ?? '/dist/img/imageBox.jpg' }}"
+                                                <img src="{{ !empty($dataCart->link_image) ? \App\Helpers\ConstCommon::getLinkImageToStorage($dataCart->link_image) : asset('/dist/img/imageBox.jpg') }}"
                                                     alt="" style="width: 100%; height: auto;">
                                             </div>
                                             <h6 class="text-center">{{ $dataCart->title }}</h6>

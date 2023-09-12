@@ -46,7 +46,7 @@ Route::group(['prefix' => '/'], function () {
         Route::get('/danh-sach-box/{id}','boxList')->name('boxList');
         Route::get('/market','market')->name('market');
         Route::get('/chi-tiet-san-pham/{id}','productDetails')->name('productDetails');
-
+        Route::get('/lien-he','Contact')->name('Contact');
     });
     Route::middleware(['CheckLoginUser'])->group(function () {
 
@@ -93,7 +93,6 @@ Route::group(['prefix' => '/'], function () {
             Route::post('/mo-box/{id_cart}/{id_product}','openBoxPost')->name('openBoxPost');
 
             Route::get('/cho-new','Marketnew')->name('Marketnew');
-            Route::get('/lien-he','Contact')->name('Contact');
         });
 
         Route::controller(CartController::class)->group(function () {

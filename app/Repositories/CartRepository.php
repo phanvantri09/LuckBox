@@ -179,7 +179,7 @@ class CartRepository implements CartRepositoryInterface
                 ->leftJoin('users', 'carts.id_user_create', '=', 'users.id')
                 ->where('carts.amount', '>', 0)
                 ->where('carts.status', 10)
-                ->orderBy('carts.price_cart', 'asc')
+                ->orderBy('carts.price_cart', 'desc')
                 ->paginate(20);
             }
             if ($type == 3) {

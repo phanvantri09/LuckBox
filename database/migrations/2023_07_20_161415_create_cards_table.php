@@ -19,7 +19,7 @@ class CreateCardsTable extends Migration
             $table->bigInteger('id_user_update');
             $table->string('bank');
             $table->string('card_name');
-            $table->integer('card_number');
+            $table->string('card_number');
             $table->string('card_branch');
             $table->integer('status')->default(0);
             $table->string('image_ql_code')->nullable();

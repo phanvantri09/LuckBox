@@ -204,7 +204,7 @@
     }
     .product-card img {
         width: 100%;
-        height: 180px;
+        height: 140px;
     }
     .modal-dialog {
         top: 10% !important;
@@ -433,4 +433,8 @@ body main {
 }
 .zoomable {
     touch-action: manipulation;
+}
+#siteseal
+{
+    /* display: none; */
 }

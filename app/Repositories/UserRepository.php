@@ -80,6 +80,6 @@ class UserRepository implements UserRepositoryInterface
     }
 
     public function listGT($id){
-        return User::where('id_user_referral', $id)->orderBy('updated_at', 'asc')->get();
+        return User::where('id_user_referral', $id)->orderBy('updated_at', 'desc')->get();
     }
 }

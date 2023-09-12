@@ -34,7 +34,8 @@
             </div>
 
             <div class="py-2">
-                <div class="giftcontainer-content d-flex flex-column justify-content-between align-items-center" id="boxStart">
+                <div class="giftcontainer-content d-flex flex-column justify-content-between align-items-center"
+                    id="boxStart">
                     <h4 class="text-center">Sau khi nhấn mở hộp, bạn sẽ nhận được 1 trong 10 sản phẩm phía dưới</h4>
                     <div class="giftcontainer">
                         <div class="gift">
@@ -69,8 +70,8 @@
                 <div class="row justify-content-center hideBox" id="productOpen">
                     <h3 class="col-12 text-center">Chúc mừng bạn đã nhận được</h3>
                     <div class="bg-card-open">
-                        <img class="bg-card-open-img" src="{{asset('/dist/img/bg-sun.png')}}" alt="">
-                        <a href="#" class="text-decoration-none text-dark product-card-gif">
+                        <img class="bg-card-open-img" src="{{ asset('/dist/img/bg-sun.png') }}" alt="">
+                        <a href="{{ route('productDetails', ['id'=>$productChoeseImage->id]) }}" target="_blank" class="text-decoration-none text-dark product-card-gif">
                             <div class="mx-1 p-2 bg-white product-card-box rounded product-card-box-open">
                                 <img class="rounded-right"
                                     src="{{ \App\Helpers\ConstCommon::getLinkImageToStorage($productChoeseImage->link_image) }}" />
@@ -113,19 +114,20 @@
                             <div class="product-card-box px-md-2 px-1">
                                 <div class="bg-white rounded p-2">
                                     <div class="opacity-75">
-                                        <img src="{{ \App\Helpers\ConstCommon::getLinkImageToStorage($product->link_image) }}"
-                                            class="mt-3 rounded-bottom">
-                                        <p class="mb-0 product-card-title">{{ $product->title }}</p>
-                                        <p class="text-danger font-weight-bold mb-0">
-                                            {{ number_format($product->price) }} VNĐ</p>
-                                        <div>
-                                            <span class="fa fa-star checked"></span>
-                                            <span class="fa fa-star checked"></span>
-                                            <span class="fa fa-star checked"></span>
-                                            <span class="fa fa-star checked"></span>
-                                            <span class="fa fa-star checked"></span>
-                                        </div>
-
+                                        <a href="{{ route('productDetails', ['id'=>$product->id]) }}" target="_blank" class="text-decoration-none text-dark">
+                                            <img src="{{ \App\Helpers\ConstCommon::getLinkImageToStorage($product->link_image) }}"
+                                                class="mt-3 rounded-bottom">
+                                            <p class="mb-0 product-card-title">{{ $product->title }}</p>
+                                            <p class="text-danger font-weight-bold mb-0">
+                                                {{ number_format($product->price) }} VNĐ</p>
+                                            <div>
+                                                <span class="fa fa-star checked"></span>
+                                                <span class="fa fa-star checked"></span>
+                                                <span class="fa fa-star checked"></span>
+                                                <span class="fa fa-star checked"></span>
+                                                <span class="fa fa-star checked"></span>
+                                            </div>
+                                        </a>
                                     </div>
                                 </div>
                             </div>
@@ -149,7 +151,8 @@
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Hủy</button>
-                            <button type="button" class="btn btn-primary" id="acceptOpenBox" data-dismiss="modal">Xác nhận
+                            <button type="button" class="btn btn-primary" id="acceptOpenBox" data-dismiss="modal">Xác
+                                nhận
                                 mở</button>
                         </div>
                     </div>

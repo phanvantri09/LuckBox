@@ -1,4 +1,8 @@
-
+@media (max-width: 576px){
+    .product-card-box img{
+        height: 140px!important;
+    }
+}
 @media (max-width: 768px){
     .product-card-width{
         width: 50%;

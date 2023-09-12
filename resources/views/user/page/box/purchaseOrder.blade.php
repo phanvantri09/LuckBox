@@ -17,7 +17,7 @@
                 @foreach ($carts as $dataCart)
                     <div class="row align-items-center bg-orange-white py-2 rounded mb-2 px-2">
                         <div class="col-lg-2 px-1">
-                            <img src="{{ \App\Helpers\ConstCommon::getLinkImageToStorage($dataCart->link_image) }}"
+                            <img src="{{ !empty($dataCart->link_image) ? \App\Helpers\ConstCommon::getLinkImageToStorage($dataCart->link_image) : asset('/dist/img/imageBox.jpg') }}"
                                 width="80%" height="auto" />
                         </div>
                         <div class="col-lg-2">
@@ -78,7 +78,7 @@
                 @foreach ($carts as $dataCart)
                     <div class="row bg-orange-white py-2 rounded mb-2 px-2">
                         <div class="col-md-3 col-sm-3 col-4 px-1">
-                            <img src="{{ \App\Helpers\ConstCommon::getLinkImageToStorage($dataCart->link_image) }}"
+                            <img src="{{ !empty($dataCart->link_image) ? \App\Helpers\ConstCommon::getLinkImageToStorage($dataCart->link_image) : asset('/dist/img/imageBox.jpg') }}"
                                 width="100%" height="auto" />
                         </div>
                         <div class="col-md-9 col-sm-9 col-8">

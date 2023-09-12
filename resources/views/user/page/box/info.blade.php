@@ -48,7 +48,7 @@
                 <!-- gift -->
                 @foreach ($product->boxProducts as $key => $item)
                     <div class="col-lg-3 col-md-4 col-sm-6 col-6 py-2 px-md-1 px-0">
-                        <a href="{{ route('productDetails', ['id' => $item->id]) }}" class="text-decoration-none text-dark">
+                        <a href="{{ route('productDetails', ['id' => $item->product->id]) }}" class="text-decoration-none text-dark">
                             <div class="mx-1 p-2 bg-white product-card rounded">
                                 <img class="rounded-right"
                                     src="{{ \App\Helpers\ConstCommon::getLinkImageToStorage(isset($getAllByIDProductMain->getAllByIDProductMain($item->product->id)['link_image']) ? $getAllByIDProductMain->getAllByIDProductMain($item->product->id)['link_image'] : null) }}" />
