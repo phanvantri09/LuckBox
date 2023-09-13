@@ -123,7 +123,7 @@
                                             {{-- <span>Bạn có chắc chắn mua?</span> --}}
                                             <div class="col-lg-6 col-10 mx-auto py-2">
                                                 <img src="{{ !empty($dataCart->link_image) ? \App\Helpers\ConstCommon::getLinkImageToStorage($dataCart->link_image) : asset('/dist/img/imageBox.jpg') }}"
-                                                    alt="" style="width: 100%; height: auto;">
+                                                    alt="" class="modal-body-imgbox">
                                             </div>
                                             <h6 class="text-center">{{ $dataCart->title }}</h6>
                                             <div class="text-center">Đơn giá: <span

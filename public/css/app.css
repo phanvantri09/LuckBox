@@ -6,7 +6,7 @@
         position: fixed;
         bottom: 30px;
         right: 20px;
-        z-index: 9999;
+        z-index: 111;
     }
 }
 @media (max-width: 768px){
@@ -14,7 +14,7 @@
         position: fixed;
         bottom: 70px;
         right: 20px;
-        z-index: 9999;
+        z-index: 111;
     }
 }
 #chat3 .form-control {
