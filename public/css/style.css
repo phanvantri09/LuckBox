@@ -131,6 +131,9 @@
     .w-md-50 {
         width: 100%;
     }
+    .market-content .modal-body-imgbox{
+        width: 70%!important;
+    }
 }
 .width-100 {
     width: 100px;
@@ -215,6 +218,9 @@
     body main {
         margin-top: 80px !important;
     }
+    .market-content .modal-body-imgbox{
+        width: 70%!important;
+    }
 }
 .icon-card,
 .icon-gif {
@@ -241,9 +247,6 @@
 @media (min-width: 768px) {
     .content-container {
         min-height: 50vh;
-    }
-    .modal-body-imgbox{
-        width: 70%!important;
     }
 }
 .text-white-space {
@@ -398,7 +401,7 @@ body main {
   100% { transform: rotate(0); }
 } */
 .modal-dialog {
-    top: 30%;
+    top: 25%;
     transform: translateY(-50%);
     z-index: 1111;
 }
@@ -434,7 +437,7 @@ body main {
 .zoomable {
     touch-action: manipulation;
 }
-.modal-body-imgbox{
+.market-content .modal-body-imgbox{
     width: 100%;
     height: auto;
 }
