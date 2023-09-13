@@ -121,7 +121,7 @@
                                         </div>
                                         <div class="modal-body">
                                             {{-- <span>Bạn có chắc chắn mua?</span> --}}
-                                            <div class="col-lg-6 col-10 mx-auto py-2">
+                                            <div class="col-lg-6 col-10 mx-auto py-2 d-flex justify-content-center">
                                                 <img src="{{ !empty($dataCart->link_image) ? \App\Helpers\ConstCommon::getLinkImageToStorage($dataCart->link_image) : asset('/dist/img/imageBox.jpg') }}"
                                                     alt="" class="modal-body-imgbox">
                                             </div>
