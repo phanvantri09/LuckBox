@@ -93,6 +93,9 @@ class PageController extends Controller
     {
         return view('user.page.contact');
     }
+    public function content(){
+        return view('user.page.content');
+    }
     public function market(Request $request)
     {
         $user = Auth::user();

@@ -51,9 +51,7 @@
                                     <a href="{{ route('home') }}"
                                         class="d-flex flex-column align-items-center w-100 text-decoration-none">
                                         <img src="/dist/img/imageBox.jpg" width="60%" height="auto" />
-                                        <h4 class="mt-1 text-danger text-center">Sự kiện sẽ được cập nhật trong thời gian
-                                            gần
-                                            nhất</h4>
+                                        <h4 class="mt-1 text-danger text-center">Sự kiện sẽ được cập nhật trong thời gian gần nhất</h4>
                                     </a>
                                 @else
                                     <a href="{{ route('boxInfo', ['id' => $cachebox->id]) }}"

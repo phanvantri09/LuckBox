@@ -47,6 +47,7 @@ Route::group(['prefix' => '/'], function () {
         Route::get('/market','market')->name('market');
         Route::get('/chi-tiet-san-pham/{id}','productDetails')->name('productDetails');
         Route::get('/lien-he','Contact')->name('Contact');
+        Route::get('/noi-dung-ve-chung-toi','content')->name('content');
     });
     Route::middleware(['CheckLoginUser'])->group(function () {
 

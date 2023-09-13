@@ -110,6 +110,7 @@ class BoxEventController extends Controller
                 'id_user_update' => $idUser,
                 'title' => $request->title,
                 'description' => $request->description,
+                'status' => $request->status,
                 'time_start' => $carbon_start->format('Y-m-d H:i:s'),
                 'time_end' => $carbon_end->format('Y-m-d H:i:s'),
                 'link_image' => $imageName,
@@ -128,7 +129,8 @@ class BoxEventController extends Controller
             'description' => $request->description,
             'time_start' => $carbon_start->format('Y-m-d H:i:s'),
             'time_end' => $carbon_end->format('Y-m-d H:i:s'),
-            'id_category' => $request->id_category
+            'id_category' => $request->id_category,
+            'status' => $request->status,
         ];
         $this->boxEventRepository->update($data, $id);
         return back()->with('success', 'Cập nhật thành công');

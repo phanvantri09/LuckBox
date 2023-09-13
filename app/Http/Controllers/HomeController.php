@@ -74,14 +74,20 @@ class HomeController extends Controller
         // kiểm tra và đổi trạng thái
         $time = $currentTime->format('Y-m-d H:i:s');
         $this->boxEventRepository->checkAndAutoUpdateStatus($time);
-        
-        $event = $this->boxEventRepository->getInTime($time);
+        // láy statyus 2 thời điểm hiện tại
+        $eventStatus = $this->boxEventRepository->statusNow();
+        if (!empty($eventStatus)) {
+            $event = $eventStatus;
+        } else {
+            $event = $this->boxEventRepository->getInTime($time);
+        }
 
         if (empty($event)) {
 
             // nếu rỗng láy event gần nhất và láy time của box_item time_start gần nhất
             // check trước khi chyển qua event mới thì chuyển trạng thái cho các event đã hết thời gian
             $event = $this->boxEventRepository->getInTimeThan($time);
+            // kiểm tra ở cả 2 trường hợp đều k có
             if (empty($event)) {
                 return view('user.page.home', compact(['event','cacheBoxItem', 'cachebox',
                                                'cacheProduct','time','timeEventInCase',
@@ -95,7 +101,29 @@ class HomeController extends Controller
             $cacheBoxItem = $this->boxItemRepository->getFirstInCaseEventEmpty($event->id);
             $cachebox = empty($cacheBoxItem) ? null :  $cacheBoxItem->box()->first();
             $cacheProduct = empty($cachebox) ? null : $cachebox->boxProducts()->get();
-            $timeEventNotInCase = Carbon::parse($cacheBoxItem->time_start)->format('m/d/Y H:i:s');
+
+            if (!empty($cacheBoxItem)) {
+                $timeEventNotInCase = Carbon::parse($cacheBoxItem->time_start)->format('m/d/Y H:i:s');
+            } else {
+                $timeEventNotInCase = 1000;
+            }
+            if (empty($cacheProduct)) {
+
+                $products = null;
+                $imageSlide = null;
+            } else {
+                $products = $this->productRepository->getByArrayID($cacheProduct->pluck('id_product')->toArray());
+                $imageSlide = $this->productRepository->getImageSlide($products->pluck('id')->toArray())->pluck('link_image');
+            }
+            $countSale = empty($cacheBoxItem) ? 0 : $this->cartRepository->getamountboxItemcartDone($event->id, $cacheBoxItem->id);
+
+            if (empty($event)) {
+                return view('user.page.home', compact(['event','cacheBoxItem', 'cachebox',
+                                               'cacheProduct','time','timeEventInCase',
+                                               'timeEventNotInCase','products','imageSlide',
+                                               'boxItem', 'sharedLink', 'countSale', 
+                                               'timeEventStart', 'timeEventEnd']));
+            }
 
         } else {
             $timeEventEnd = Carbon::parse($event->time_end)->format('m/d/Y H:i:s');

@@ -48,9 +48,7 @@
         <div class="row py-md-4 py-3">
             <div class="col-md-7 col-12">
                 <h4>Công ty cổ phần công nghệ điện tử LUCKBOX</h4>
-                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptatem minus enim nostrum voluptas voluptate
-                    magni impedit sunt. Iure quasi voluptas deleniti culpa! Aliquam vero nostrum, soluta recusandae tenetur
-                    placeat molestias.</p>
+                <p></p>
             </div>
             <div class="col-md-5 col-12">
                 <h4>Liên hệ với chúng tôi</h4>

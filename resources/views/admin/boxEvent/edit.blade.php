@@ -48,6 +48,17 @@
                     <div class="col-sm-6">
                         <!-- select -->
                         <div class="form-group">
+                            <label>Trạng thái</label>
+                            <select name="status" class="form-control">
+                                <option value="1" {{ $getEvent->status == 1 ? "selected" : "" }}> Đang đợi bán</option>
+                                <option value="2" {{ $getEvent->status == 2 ? "selected" : "" }}> Đang bán </option>
+                                <option value="3" {{ $getEvent->status == 3 ? "selected" : "" }}> Hết hạng bán</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <!-- select -->
+                        <div class="form-group">
                             <label>Loại</label>
                             <select name="id_category" class="form-control">
                                 @foreach ($category as $key => $item)

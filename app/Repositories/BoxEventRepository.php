@@ -91,5 +91,8 @@ class BoxEventRepository implements BoxEventRepositoryInterface
         }
         return true;
     }
+    public function statusNow(){
+        return Box_event::where('status', 2)->orderBy('updated_at', 'desc')->first();
+    }
 
 }

@@ -45,12 +45,22 @@
                                     <td>{{ $item->title }}</td>
                                     <td>Đang có: {{count($item->boxItem).' box'}}</td>
                                     <td> <b class="">{{ date(' H:i | d-m-Y ', strtotime($item->time_start)) }}</b> <br> <b>{{ date(' H:i | d-m-Y ', strtotime($item->time_end))}}</b></td>
-                                    <td>
-                                        <input type="checkbox" class="input-switch" name="status"
-                                            value="{{ $item->status }}" data-slide-id="{{ $item->id }}"
-                                            data-on-text="On" data-off-text="Off"
-                                            {{ $item->status == 2 ? 'checked' : '' }}>
+                                    @if ($item->status == 1 )
+                                    <td class="bg-info text-bold">
+                                        Đang đợi lên sàn
                                     </td>
+                                    @endif
+                                    @if ($item->status == 2 )
+                                    <td class="bg-success text-bold">
+                                        Đang bán
+                                    </td>
+                                    @endif
+                                    @if ($item->status == 3 )
+                                    <td class="bg-warning text-bold">
+                                        Kết thúc bán
+                                    </td>
+                                    @endif
+                                    
                                     <td>
                                         <a href="{{route('box.box_event.box_item.add', ['id_box_event' => $item->id])}}"
                                             class="btn btn-app">

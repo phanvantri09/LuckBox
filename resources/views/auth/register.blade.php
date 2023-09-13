@@ -194,7 +194,7 @@
                     </div> --}}
                     <div class="form-group">
                         <label for="uname"><b class="text-info">*</b> Mã người giới thiệu</label>
-                        <input type="text" placeholder="Nhập số điện thoại của bạn" name="code"
+                        <input type="text" placeholder="Nhập mã của người giới thiệu bạn" name="code"
                             class="form-control" value="{{ old('code') }}">
                         @error('code')
                             <div class="text-danger">{{ $message }}</div>

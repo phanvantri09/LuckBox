@@ -11,7 +11,7 @@
                 <a href="{{ route('home') }}">Trang chủ</a>
             </p>
             <p class="mb-0">
-                <a href="{{ route('market') }}">Chợ</a>
+                <a href="{{ route('content') }}">Về chúng tôi</a>
             </p>
             <p class="mb-0">
                 <a href="{{ route('Contact') }}">Liên hệ</a>
