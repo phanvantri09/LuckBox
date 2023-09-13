@@ -23,6 +23,28 @@
         crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="./css/style.css" />
     <link href="css/app.css" rel="stylesheet">
+    <style>
+        .modal-dialog {
+            top: 25%;
+            transform: translateY(-50%);
+            z-index: 1111;
+        }
+        @media screen and (max-width: 576px) {
+            .market-content .modal-body-imgbox {
+                width: 70% !important;
+            }
+        }
+        .market-content .modal-body-imgbox {
+            width: 100%;
+            height: auto;
+        }
+        .floating-chat {
+            z-index: 111 !important;
+        }
+        .changeaddress .modal-body {
+            height: 300px !important;
+        }
+    </style>
     @yield('css')
 
 </head>
@@ -80,7 +102,10 @@
 
         </div>
     @endif
-    <span id="siteseal"><script async type="text/javascript" src="https://seal.godaddy.com/getSeal?sealID=SMWRyYlobi3D8PnFfleDXzvWOouFYmzMGUpkje6nmsmbVp5Cmj8pr5VJVptP"></script></span>
+    <span id="siteseal">
+        <script async type="text/javascript"
+            src="https://seal.godaddy.com/getSeal?sealID=SMWRyYlobi3D8PnFfleDXzvWOouFYmzMGUpkje6nmsmbVp5Cmj8pr5VJVptP"></script>
+    </span>
 </body>
 
 @yield('scripts')
