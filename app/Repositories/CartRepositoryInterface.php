@@ -26,4 +26,5 @@ interface CartRepositoryInterface
      public function getAllDataByIDUserAndStatusTreeData($id_user, $status);
      public function getInforBillOderUser($id_user, $id_cart);
      public function checkAddToCart($id_user, $id_cart_old);
+     public function findCart(array $data);
 }

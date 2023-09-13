@@ -66,6 +66,15 @@ class CartRepository implements CartRepositoryInterface
             return true;
         }
     }
+    public function findCart(array $data){
+        return Cart::where('id_user_create', $data['id_user_create'])
+        ->where('status', 1)
+        ->where('id_box', $data['id_box'])
+        ->where('id_box_item', $data['id_box_item'])
+        ->where('id_box_event', $data['id_box_event'])
+        ->where('id_cart_old', null)
+        ->first();
+    }
     public function getAllDataByIDUserAndArrayStatus($id_user, array $status){
         return DB::table('carts')->select('carts.*', 'box.title', 'box.link_image', 'box.price')
                 ->leftJoin('box', 'carts.id_box', '=', 'box.id')

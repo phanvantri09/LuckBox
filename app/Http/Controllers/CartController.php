@@ -65,12 +65,20 @@ class CartController extends Controller
     public function addToCart(Request $request){
         $user = Auth::user();
         $box = $this->boxRepository->show($request->id_box);
+        $boxItem = $this->boxItemRepository->show($request->id_box_item);
+
         $request->merge(['status' => 1, 'id_user_create' => $user->id, 'id_admin_update'=> $user->id, 'price_cart'=>$box->price, 'order_number'=>0]);
         // get box - item  để kiểm tra số lượng
+        $cartOld = $this->cartRepository->findCart($request->all());
+        if (!empty($cartOld)) {
+            if ($cartOld->amount + $request->amount > $boxItem->amount) {
+                return redirect()->back()
+                ->with('warning', 'Hộp hiện tại chỉ còn '. $boxItem->amount .', vui lòng nhập số lượng ít hơn '. $boxItem->amount - $cartOld->amount .' vì trước đó bạn đã thêm vào giỏ ' .$cartOld->amount. ' hộp này.');
+            }
+        }
         if ($this->cartRepository->findAndUpdate($request->all())) {
             return redirect()->route('cart')->with('success', "Thêm vào giỏ thành công");
         }
-        $boxItem = $this->boxItemRepository->show($request->id_box_item);
         //check còn đủ 19 thì add, ngược lại thì thông báo là k thể đặt nhiều hơn
         // $numberAmountOke = $boxItem->amount - $this->cartRepository->getSumAllByStatusNoCheckout();
         // $numberAmountOke = $boxItem->amount - $request->amount;
@@ -142,6 +150,21 @@ class CartController extends Controller
             $dataCart = $this->cartRepository->getAllDataByIDCartIDUserAndStatus( $request->id_cart, $user->id, 1);
         } else {
             $dataCart = $this->cartRepository->getAllDataByIDUserAndStatus($user->id, 1);
+        }
+        if (!empty($dataCart)) {
+            $boxItem = $this->boxItemRepository->show($dataCart->id_box_item);
+            if (!empty($boxItem)) {
+                if ($boxItem->amount <= 0) {
+                    if ($this->cartRepository->update(['status' => 6], $dataCart->id)) {
+                        return redirect()->back()->with('info', 'Giỏ hàng này không thể thanh toán được vì Hộp ở phiên bán này đã được bán hết, bạn vui lòng đợi phiên mở bán tiếp theo.');
+                    }
+                }
+                if ($boxItem->amount < $dataCart->amount) {
+                    if ($this->cartRepository->update(['amount' => $boxItem->amount], $dataCart->id)) {
+                        return redirect()->back()->with('info', 'Giỏ hàng này chưa thể thanh toán được vì số lượng Hộp trong giỏ của bạn lớn hơn số lượng hiện có, Tôi đã giúp bạn chuyển số lượng về con số có thể thanh toán, vui lòng thanh toán');
+                    }
+                }
+            }
         }
         if (empty($dataCart)) {
             return redirect()->route('home')->with('info', 'Hiện tại chưa có đơn hàng nào để thanh toán');
