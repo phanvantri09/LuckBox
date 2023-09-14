@@ -120,7 +120,7 @@ class ProductController extends Controller
                 }
             }
         }
-        return redirect()->route('product.index');
+        return redirect()->route('product.addImage');
     }
 
     public function addImage2($id){
@@ -177,14 +177,17 @@ class ProductController extends Controller
             $data = $request->all();
             $this->imageRepository->create($data);
         }
-        return redirect()->route('product.index');
+        return redirect()->back()->with('success',"Thành công");
     }
 
     public function destroyImage($id)
     {
         $imageData = $this->imageRepository->show($id);
         Storage::disk('public')->delete('images/' . $imageData->link_image);
-        $this->imageRepository->delete($id);
-        return redirect()->route('product.show', ['id'=>$imageData->id_product])->with('success', 'Xóa thành công');
+        if ($this->imageRepository->delete($id)) {
+            return redirect()->back()->with('success', 'Xóa thành công');
+        } else {
+            return redirect()->back()->with('error', 'Xóa không thành công');
+        }
     }
 }

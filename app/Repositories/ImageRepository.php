@@ -25,7 +25,7 @@ class ImageRepository implements ImageRepositoryInterface
     public function delete($id)
     {
         $user = Image::findOrFail($id);
-        $user->delete();
+        return $user->delete();
     }
 
     public function show($id)

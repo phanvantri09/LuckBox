@@ -25,7 +25,7 @@
                                 <div class="form-group">
                                     <label>Ảnh chính hiển thị</label>
                                     <div class="custom-file">
-                                        <input onchange="readURL(this)" name="imageMain" type="file" class="custom-file-input" id="inputFileImageMain">
+                                        <input onchange="readURL(this)" name="imageMain" type="file" accept="image/*" class="custom-file-input" id="inputFileImageMain">
                                         <label class="custom-file-label" for="inputFileImageMain">Chọn ảnh</label>
                                     </div>
                                     @error('imageMain')
@@ -47,7 +47,7 @@
                                 <div class="form-group">
                                     <label>Ảnh slide</label>
                                     <div class="custom-file">
-                                        <input onchange="readURL2(this)" name="imageSlide" type="file" class="custom-file-input" id="inputFileImageSlide">
+                                        <input onchange="readURL2(this)" name="imageSlide" accept="image/*" type="file" class="custom-file-input" id="inputFileImageSlide">
                                         <label class="custom-file-label" for="inputFileImageSlide">Chọn ảnh</label>
                                     </div>
                                     @error('imageSlide')
@@ -72,7 +72,7 @@
                                 <div class="form-group">
                                     <label>Ảnh thành phần</label>
                                     <div class="custom-file">
-                                        <input onchange="readURL3(this)" multiple="" name="imageItem[]" type="file" class="custom-file-input" id="inputFileImageItem">
+                                        <input onchange="readURL3(this)" multiple="" name="imageItem[]" type="file" class="custom-file-input" id="inputFileImageItem" accept="image/*">
                                         <label class="custom-file-label" for="inputFileImageItem">Chọn ảnh</label>
                                     </div>
                                     @error('imageItem')
@@ -83,8 +83,13 @@
                                     <div class="d-flex flex-row mb-3 mt-3">
                                         @if(count($getAllByIDProductItem))
                                             @foreach ($getAllByIDProductItem as $key => $item)
-                                                <img style="width: 200px;height: 200px; object-fit: cover;" class="rounded mr-3" src="{{\App\Helpers\ConstCommon::getLinkImageToStorage( $item->link_image ?? null)}}">
-                                            @endforeach
+                                                <div class="d-flex flex-column justify-content-center text-center">
+                                                    <img style="width: 200px;height: 200px; object-fit: cover; margin-bottom: 5px;" class="rounded mr-3" src="{{\App\Helpers\ConstCommon::getLinkImageToStorage( $item->link_image ?? null)}}">
+                                                    <a class="text-danger" href="{{ route('product.deleteImage', ['id' => $item->id]) }}">
+                                                        <i class="fas fa-trash-alt">&nbsp; Xóa ảnh</i>   
+                                                    </a>
+                                                </div>                                         
+                                                @endforeach
                                         @endif
                                     </div>
                                 </div>
