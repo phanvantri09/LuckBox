@@ -15,6 +15,9 @@
             background: linear-gradient(-180deg, #f53d2d, #f63);
             border-color: linear-gradient(-180deg, #f53d2d, rgb(10, 2, 0));
         }
+        .zoomable{
+            display: none;
+        }
     </style>
 @endsection
 @section('content')
