@@ -18,6 +18,11 @@
         .zoomable{
             display: none;
         }
+        @media(max-width: 768px){
+        .title-box{
+            font-size: 22px !important;
+        }
+        }
     </style>
 @endsection
 @section('content')
@@ -63,7 +68,7 @@
                             $chenhlech = ($dataCart->price_cart * 6) / 100 + $dataCart->price_cart;
                             $createdAt = Carbon::parse($dataCart->created_at);
                         @endphp
-                        <div class="col-lg-3 col-md-4 col-sm-6 col-12 p-2 ">
+                        <div class="col-lg-3 col-md-4 col-sm-6 col-6 px-md-2 px-1 py-2">
                             <div class="bg-white p-2 market-content">
                                 <a href="{{ route('boxInfo', ['id' => $dataCart->id_box]) }}"
                                     class="text-decoration-none text-dark">

@@ -159,7 +159,7 @@
                                 @if (empty($cacheBoxItem))
                                     <div class="text-left font-weight-normal">Còn lại: 0</div>
                                 @else
-                                    <div class="text-left font-weight-normal">Còn lại: {{ $cacheBoxItem->amount }}</div>
+                                    <div class="text-left font-weight-normal">Còn lại: {{ number_format($cacheBoxItem->amount) }}</div>
                                 @endif
                                 <p>- Mở bán vào khung giờ 12:00 hằng ngày</p>
                                 {{-- <p>- Số lượng: 50.000 hộp/phiên bản</p> --}}
