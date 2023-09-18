@@ -79,15 +79,17 @@
                                         @if (!empty($item->id_info_users))
                                             <a href="{{ route('user.show', ['id' => $item->id_info_users]) }}"
                                                 class="btn btn-app">
-                                                <i class="fas fa-book-open"></i> Xem
+                                                <i class="fas fa-book-open"></i> Xem thông tin
                                             </a>
                                         @else
                                             <a onclick="return alert('User này chưa cập nhật đầy đủ thông tin')"
                                                 class="btn btn-app">
-                                                <i class="fas fa-book-open"></i> Xem
+                                                <i class="fas fa-book-open"></i> Xem thông tin
                                             </a>
                                         @endif
-
+                                        <a href="{{ route('user.transaction', ['id' => $item->id]) }}" class="btn btn-app">
+                                            <i class="fas fa-money-bill-alt"></i> Lịch sử giao dịch
+                                        </a>
                                         <a href="{{ route('user.edit', ['id' => $item->id]) }}" class="btn btn-app">
                                             <i class="fas fa-edit"></i> Sửa
                                         </a>

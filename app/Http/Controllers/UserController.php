@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Repositories\UserRepositoryInterface;
 use App\Http\Requests\User\CreateRequestUser;
+use App\Repositories\TransactionRepositoryInterface;
 use Illuminate\Support\Facades\Hash;
 use App\Helpers\ConstCommon;
 use App\Models\User;
@@ -12,11 +13,12 @@ use App\Models\User;
 class UserController extends Controller
 {
     protected $userRepository;
-
-    public function __construct(UserRepositoryInterface $userRepository)
+    protected $transactionRepository;
+    public function __construct(UserRepositoryInterface $userRepository,TransactionRepositoryInterface $transactionRepository)
     {
 
         $this->userRepository = $userRepository;
+        $this->transactionRepository = $transactionRepository;
 
     }
 
@@ -39,7 +41,11 @@ class UserController extends Controller
         }
         return view('admin.user.list',compact(['userGTs', 'users']));
     }
-
+    public function transaction($id)
+    {
+        $data = $this->transactionRepository->listForUser($id);
+        return view('admin.user.transaction', compact(['id', 'data']));
+    }
     /**
      * Show the form for creating a new resource.
      *

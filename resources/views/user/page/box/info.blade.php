@@ -26,7 +26,7 @@
                     <div class="col-sm-5 border border-right-0 font-weight-bold m-2">
                         <h3 class="text-danger text-center">LƯU Ý</h3>
 
-                        <p>- Mở bán vào khung giờ 12h00 và 22h00 hằng ngày</p>
+                        <p>- Mở bán vào khung giờ 12:00 hằng ngày</p>
                         <p>- Số lượng: 50.000 hộp/phiên bản</p>
                         <p>
                             - Với tiêu chí người đến trước bán trước đến khi hết hộp sẽ đóng

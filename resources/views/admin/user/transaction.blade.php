@@ -25,69 +25,40 @@
                             <tr>
                                 <th>STT</th>
                                 <th>Loại</th>
-                                <th>Email</th>
-                                <th>Số tiền</th>
-                                <th>Chủ tài khoản </th>
-                                <th>Số tài khoản</th>
-                                <th>Ngân hàng</th>
-                                @if (isset($_GET['type']))
-                                    @if (($_GET['type'] == 2))
-                                        <th>Mã giao dịch</th>
-                                        <th>Hình ảnh</th>
-                                    @endif
-                                @endif
                                 <th>Trạng thái</th>
-                                <th>Thời gian tạo</th>
-                                <th>Thời gian cập nhật</th>
+                                <th>Số tiền </th>
+                                <th>Thời gian tạo </th>
+                                <th>Thời gian cập nhật </th>
                             </tr>
                         </thead>
                         <tbody>
                             @php
                                 $i = 0;
                             @endphp
-                            @foreach ($getAllTrans as $item)
-                                @php
-                                    $i = $i + 1;
-                                @endphp
+                            @foreach ($data as $key => $item)
                                 <tr>
-                                    <td>{{ $i }}</td>
-                                    <td style="
-                                    border-radius: 3px;
-                                    color: #fff;
-                                    background-color: {{ ($item->type == 1 ) ? ' red' : '' }}
-                                    {{ ($item->type == 2 ) ? 'green' : '' }}
-                                    {{ ($item->type == 3 ) ? 'blue' : '' }}
-                                    {{ ($item->type == 4 ) ? 'black' : '' }}
-                                    {{ ($item->type == 5 ) ? 'orange' : '' }}
-                                    {{ ($item->type == 6 ) ? 'gray' : '' }}
-                                    ;
-                                ">{{ \App\Helpers\ConstCommon::TypeTransaction[$item->type] }}</td>
-                                    </td>
-                                    <td>{{ $item->User->email ?? $item->User->number_phone ?? null }}</td>
-                                    <td>{{ number_format($item->total) }}VNĐ</td>
-                                    <td>{{ $item->card_name }}</td>
-                                    <td>{{ $item->card_number }}</td>
-                                    <td>{{ $item->bank }}</td>
-                                    @if (isset($_GET['type']))
-                                    @if (($_GET['type'] == 2))
-                                    <td><b>{{ $item->code ?? '' }}</b></td>
-                                    <td><img style="max-height: 200px; width: auto;"  src="{{\App\Helpers\ConstCommon::getLinkImageToStorage($item->link_image) }}" alt=""></td>
+                                    <td>{{$key+1}}</td>
+                                    <td>{{ \App\Helpers\ConstCommon::TypeTransaction[$item->type] }}</td>
+                                    @if ($item->status == 1)
+                                        <td class="bg-info text-center">Đợi xác nhận</td>
                                     @endif
+                                    @if ($item->status == 2)
+                                        <td class="bg-success text-center">Thành công</td>
                                     @endif
+                                    @if ($item->status == 3)
+                                        <td class="bg-danger text-center">Bị từ chối</td>
+                                    @endif
+                                    <td>@if ($item->type == 1 || ($item->type == 3 && $item->id_cart != null) )
+                                        -
+                                        @else
+                                        +
+                                        @endif
+                                        {{number_format($item->total)}}</td>
                                     <td>
-                                        <form class="status-form"
-                                            action="{{route('transaction.changeStatus', ['id' => $item->id,'id_user' => $item->id_user,'type' => $item->type])}}"
-                                            method="POST">
-                                            @csrf
-                                            <select class="status-select form-control" name="status">
-                                                <option {{ $item->status == 1 ? 'selected' : '' }} value="1">Vừa mới tạo</option>
-                                                <option {{ $item->status == 2 ? 'selected' : '' }} value="2">Thành Công</option>
-                                                <option {{ $item->status == 3 ? 'selected' : '' }} value="3">Từ chối</option>
-                                            </select>
-                                        </form>
+                                        {{ date('H:i:s d-m-Y', strtotime($item->created_at)) }}
                                     </td>
-                                    <td>{{ date('H:i:s d-m-Y', strtotime($item->created_at)) }}</td>
                                     <td>{{ date('H:i:s d-m-Y', strtotime($item->updated_at)) }}</td>
+                                   
                                 </tr>
                             @endforeach
                         </tbody>
@@ -139,9 +110,6 @@
                 "info": true,
                 "autoWidth": false,
                 "responsive": true,
-            });
-            $('.status-select').on('change', function() {
-                $(this).closest('form').submit();
             });
         });
     </script>

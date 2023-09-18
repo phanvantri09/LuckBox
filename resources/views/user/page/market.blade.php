@@ -71,7 +71,9 @@
                                         src="{{ !empty($dataCart->link_image) ? \App\Helpers\ConstCommon::getLinkImageToStorage($dataCart->link_image) : asset('/dist/img/imageBox.jpg') }} " />
                                     <div class="d-flex justify-content-between border-bottom p-2">
                                         <b>F{{ $dataCart->order_number + 1 }}</b>
-                                        <b>{{ empty($dataCart->name) ? (empty($dataCart->email) ? $dataCart->number_phone : $dataCart->email) : $dataCart->name }}</b>
+                                        <b>
+                                            {{-- {{ empty($dataCart->name) ? (empty($dataCart->email) ? $dataCart->number_phone : $dataCart->email) : $dataCart->name }} --}}
+                                        </b>
                                     </div>
                                     <h4 class="title-box pt-2">{{ $dataCart->title }}</h4>
                                     <h5>Đơn giá: <span

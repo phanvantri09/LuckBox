@@ -241,7 +241,9 @@
 
         function submitForm() {
             var numericValue = autoNumeric.getNumber();
-            $('#price_number').val(numericValue);
+            if (numericValue != 0 || numericValue != null) {
+                $('#price_number').val(numericValue);
+            }
             // Thực hiện các xử lý gửi giá trị lên máy chủ ở đây
         }
 

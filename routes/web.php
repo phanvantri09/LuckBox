@@ -157,6 +157,9 @@ Route::group(['prefix' => 'admin', 'middleware'=>['CheckAdmin', 'CheckLoginUser'
 
             // hiển thị tất cả
             Route::get('/show/{id}', 'show')->name('show');
+
+            // giao dịch
+            Route::get('/transaction/{id}', 'transaction')->name('transaction');
         });
     });
     Route::group(['prefix' => 'product', 'as' =>'product.'], function () {

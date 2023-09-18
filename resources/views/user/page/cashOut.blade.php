@@ -67,7 +67,7 @@
         </div>
         <div id="myModal" class="modal">
             <div class="modal-content">
-                <p>Bạn vừa thực hiện lệnh rút tiền về tk <br> Số tiền sẽ được ghi nhận sau vài phút vui lòng đợi
+                <p>Bạn vừa thực hiện lệnh rút tiền về tk <br> Số tiền sẽ được ghi nhận sau 24h vui lòng đợi
                     giây lát!</p>
             </div>
         </div>
