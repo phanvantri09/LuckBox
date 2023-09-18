@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Repositories\TransactionRepositoryInterface;
+use App\Models\Transaction;
 
 class TransactionController extends Controller
 {
@@ -24,6 +25,16 @@ class TransactionController extends Controller
     }
     public function changeStatus($id, $idUser,$type, Request $request)
     {
+        if ($request->type == 1) {
+            $trans = Transaction::findOrFail($id);
+            if (!empty($trans)) {
+                if ($request->total > Auth::user()->balance) {
+                    // lỗi ửo đây
+                    // return back()->with('error', 'Lỗi tiến trình');
+                }
+            }
+
+        }
         if ($this->transactionRepository->changeStatus($id, $idUser,$type,$request->status)) {
             return back()->with('message', 'Thành Công');
         } else {

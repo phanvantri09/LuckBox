@@ -172,11 +172,12 @@
                         </div>
                         <div class="form-group">
                             <label for="exampleFormControlInput4">Số tiền nạp vào ví</label>
-                            <input type="text" name="total" class="form-control" id="price_number" required
+                            <input type="text" class="form-control" id="price_number" required
                                 placeholder="Nhập số tiền bạn đã nạp vào">
                             @error('total')
                                 <div class="alert alert-danger">{{ $errors->first('total') }}</div>
                             @enderror
+                            <input type="hidden" name="total" id="total">
                         </div>
                         <div class="form-group">
                             <label for="exampleFormControlInput4">Mã giao dịch</label>
@@ -230,22 +231,19 @@
     </div>
 @endsection
 @section('scripts')
-    <script src="https://unpkg.com/autonumeric@4.1.0/dist/autoNumeric.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/numeral.js/2.0.6/numeral.min.js"
+        integrity="sha512-USPCA7jmJHlCNRSFwUFq3lAm9SaOjwG8TaB8riqx3i/dAJqhaYilVnaf2eVUH5zjq89BU6YguUuAno+jpRvUqA=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script>
-        var myInput = document.getElementById("price_number");
-        var autoNumeric = new AutoNumeric(myInput, {
-            numeralDecimalScale: 0,
-            numeralThousandsGroupStyle: "thousand",
-            decimalPlaces: 0
+        var myInput = document.getElementById('price_number');
+        // Lắng nghe sự kiện input
+        myInput.addEventListener('input', function() {
+            var value = myInput.value;
+            console.log(value);
+            var formattedValue = numeral(value).format('0,0');
+            myInput.value = formattedValue;
+            $('#total').val(numeral(formattedValue).value());
         });
-
-        function submitForm() {
-            var numericValue = autoNumeric.getNumber();
-            if (numericValue != 0 || numericValue != null) {
-                $('#price_number').val(numericValue);
-            }
-            // Thực hiện các xử lý gửi giá trị lên máy chủ ở đây
-        }
 
         function copyText(idName) {
             var textToCopy = $(idName).text();

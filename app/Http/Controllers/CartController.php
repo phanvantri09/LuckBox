@@ -85,7 +85,7 @@ class CartController extends Controller
         if ($boxItem->amount <= 0) {
             return redirect()->back()->with('error', "Hết hàng");
         }
-        if ( $boxItem->amount > $request->amount) {
+        if ( $boxItem->amount >= $request->amount) {
             // oke
             $this->cartRepository->create($request->all());
             return redirect()->route('cart')->with('success', "Thêm vào giỏ thành công");

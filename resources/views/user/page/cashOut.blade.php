@@ -1,7 +1,7 @@
 @extends('user.layout.index')
 @section('css')
-<style>
-    .modal {
+    <style>
+        .modal {
             display: none;
             position: fixed;
             z-index: 1;
@@ -21,7 +21,7 @@
             border: 1px solid #dc600d;
             width: 300px;
         }
-</style>
+    </style>
 @endsection
 @section('content')
     <div class="bg-white text-orange title-page">
@@ -55,11 +55,12 @@
                     </div>
                     <div class="form-group">
                         <label for="exampleFormControlInput4">Số tiền</label>
-                        <input type="text" name="total" class="form-control" id="price_number"
+                        <input type="text" class="form-control" id="price_number"
                             placeholder="Nhập số tiền cần rút">
                         @if (session('error'))
                             <div class="alert alert-danger">{{ session('error') }}</div>
                         @endif
+                        <input type="hidden" name="total" id="total">
                     </div>
                     <button onclick="submitForm()" class="btn bg-orange text-white d-flex mx-auto">Gửi yêu cầu</button>
                 </form>
@@ -74,20 +75,20 @@
     </div>
 @endsection
 @section('scripts')
-    <script src="https://unpkg.com/autonumeric@4.1.0/dist/autoNumeric.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/numeral.js/2.0.6/numeral.min.js"
+        integrity="sha512-USPCA7jmJHlCNRSFwUFq3lAm9SaOjwG8TaB8riqx3i/dAJqhaYilVnaf2eVUH5zjq89BU6YguUuAno+jpRvUqA=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script>
-        var myInput = document.getElementById("price_number");
-        var autoNumeric = new AutoNumeric(myInput, {
-            numeralDecimalScale: 0,
-            numeralThousandsGroupStyle: "thousand",
-            decimalPlaces: 0,
+        var myInput = document.getElementById('price_number');
+        // Lắng nghe sự kiện input
+        myInput.addEventListener('input', function() {
+            var value = myInput.value;
+            console.log(value);
+            var formattedValue = numeral(value).format('0,0');
+            myInput.value = formattedValue;
+            $('#total').val(numeral(formattedValue).value());
         });
 
-        function submitForm() {
-            var numericValue = autoNumeric.getNumber();
-            $('#price_number').val(numericValue);
-            // Thực hiện các xử lý gửi giá trị lên máy chủ ở đây
-        }
         $(document).ready(function() {
             $('.card_name').on('change', function() {
                 var inputValue = $(this).val();

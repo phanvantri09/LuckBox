@@ -206,6 +206,12 @@ class PageController extends Controller
     public function cashOutPost(Request $request)
     {
         $currentUser =  Auth::user();
+        if(empty($request->total)){
+            return back()->with('error', 'Không được để trống');
+        }
+        if($request->total <= 0 ){
+            return back()->with('error', 'Số tiền rút về phải lớn hơn 0');
+        }
         if($request->total > $currentUser->balance ){
             return back()->with('error', 'Số dư ví không đủ để rút.');
         }

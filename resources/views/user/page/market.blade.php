@@ -20,7 +20,7 @@
         }
         @media(max-width: 768px){
         .title-box{
-            font-size: 22px !important;
+            font-size: 20px !important;
         }
         }
     </style>

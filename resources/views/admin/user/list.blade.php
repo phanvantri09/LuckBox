@@ -87,9 +87,11 @@
                                                 <i class="fas fa-book-open"></i> Xem thông tin
                                             </a>
                                         @endif
-                                        <a href="{{ route('user.transaction', ['id' => $item->id]) }}" class="btn btn-app">
-                                            <i class="fas fa-money-bill-alt"></i> Lịch sử giao dịch
-                                        </a>
+                                        @if ($item->type != 222)
+                                            <a href="{{ route('user.transaction', ['id' => $item->id]) }}" class="btn btn-app">
+                                                <i class="fas fa-money-bill-alt"></i> Lịch sử giao dịch
+                                            </a>
+                                        @endif
                                         <a href="{{ route('user.edit', ['id' => $item->id]) }}" class="btn btn-app">
                                             <i class="fas fa-edit"></i> Sửa
                                         </a>
