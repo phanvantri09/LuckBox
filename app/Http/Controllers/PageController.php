@@ -117,7 +117,9 @@ class PageController extends Controller
         $currentDateTime2 = Carbon::now();
         $threeDaysAgo = $currentDateTime2->subDays(3);
         $sevenDaysAgo = $currentDateTime3->subDays(7);
-        return view('user.page.market', compact(['dataCarts','currentDateTime','threeDaysAgo', 'sevenDaysAgo','inforUserBills']));
+        $dataCarts->withPath(route('market'));
+        $elements = $dataCarts;
+        return view('user.page.market', compact(['dataCarts','currentDateTime','threeDaysAgo', 'sevenDaysAgo','inforUserBills', 'elements']));
     }
     public function infoCardPay()
     {
