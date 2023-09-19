@@ -62,6 +62,12 @@ class CartController extends Controller
         return redirect()->back()->with('success', "Thành công");
     }
 
+    public function cartDie(){
+        $user = Auth::user();
+        $dataCart = $this->cartRepository->getAllDataByIDUserAndStatus($user->id, 6);
+        return view('user.page.cartDie', compact(['dataCart']));
+    }
+
     public function addToCart(Request $request){
         $user = Auth::user();
         $box = $this->boxRepository->show($request->id_box);
@@ -156,7 +162,7 @@ class CartController extends Controller
             if (!empty($boxItem)) {
                 if ($boxItem->amount <= 0) {
                     if ($this->cartRepository->update(['status' => 6], $dataCart->id)) {
-                        return redirect()->back()->with('info', 'Giỏ hàng này không thể thanh toán được vì Hộp ở phiên bán này đã được bán hết, bạn vui lòng đợi phiên mở bán tiếp theo.');
+                        return redirect()->route('cartDie')->with('info', 'Giỏ hàng này không thể thanh toán được vì Hộp ở phiên bán này đã được bán hết, bạn vui lòng đợi phiên mở bán tiếp theo.');
                     }
                 }
                 if ($boxItem->amount < $dataCart->amount) {
@@ -202,8 +208,14 @@ class CartController extends Controller
                 $cart = $cartNew;
             } else {
                 $cart = $this->cartRepository->show($request->id_cart);
+                $boxItemCheck = $this->boxItemRepository->showInCart($cart->id_box_item);
+                if (!empty($boxItemCheck)) {
+                    if ($boxItemCheck->amount < $cart->amount) {
+                        return redirect()->back()->with('error', 'Đã xảy ra lỗi');
+                    }
+                }
             }
-
+            
             $request->merge([
                 'id_user' => $user->id,
                 'id_user_create' => $user->id,

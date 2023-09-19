@@ -38,8 +38,7 @@ class CartRepository implements CartRepositoryInterface
     public function update(array $data, $id)
     {
         $user = Cart::findOrFail($id);
-        $user->update($data);
-        return $user;
+        return $user->update($data);
     }
     public function delete($id)
     {
@@ -139,23 +138,23 @@ class CartRepository implements CartRepositoryInterface
             // ->leftJoin('images', 'products.id', '=', 'images.id_product')
             // ->select('products.*', 'images.link_image')
             return DB::table('carts')->select('carts.*', 'box.title', 'box.link_image', 'box.price')
-            ->leftJoin('box', 'carts.id_box', '=', 'box.id')->where('carts.id_user_create', $id_user)->get();
+            ->leftJoin('box', 'carts.id_box', '=', 'box.id')->where('carts.id_user_create', $id_user)->orderBy('updated_at','desc')->get();
         }
         if ($id_user == null && $status != null) {
             return DB::table('carts')->select('carts.*', 'box.title', 'box.link_image', 'box.price')
-            ->leftJoin('box', 'carts.id_box', '=', 'box.id')->where('status', $status)->get();
+            ->leftJoin('box', 'carts.id_box', '=', 'box.id')->where('status', $status)->orderBy('updated_at','desc')->get();
         }
         if ($id_user != null && $status != null) {
             return DB::table('carts')->select('carts.*', 'box.title', 'box.link_image', 'box.price')
-            ->leftJoin('box', 'carts.id_box', '=', 'box.id')->where('carts.id_user_create','=', $id_user)->where('status', $status)->get();
+            ->leftJoin('box', 'carts.id_box', '=', 'box.id')->where('carts.id_user_create','=', $id_user)->where('status', $status)->orderBy('updated_at','desc')->get();
         }
         // dnahf choa admin
         if ($id_user == null && $status == null) {
             return DB::table('carts')->select('carts.*', 'box.title', 'box.link_image', 'box.price')
-            ->leftJoin('box', 'carts.id_box', '=', 'box.id')->get();
+            ->leftJoin('box', 'carts.id_box', '=', 'box.id')->orderBy('updated_at','desc')->get();
         }
         return DB::table('carts')->select('carts.*', 'box.title', 'box.link_image', 'box.price')
-        ->leftJoin('box', 'carts.id_box', '=', 'box.id')->get();
+        ->leftJoin('box', 'carts.id_box', '=', 'box.id')->orderBy('updated_at','desc')->get();
     }
     public function getAllDataByIDCartIDUserAndStatus($id_cart, $id_user, $status){
         // dd($id_cart, $id_user, $status);

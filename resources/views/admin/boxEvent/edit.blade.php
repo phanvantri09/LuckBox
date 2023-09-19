@@ -52,7 +52,7 @@
                             <select name="status" class="form-control">
                                 <option value="1" {{ $getEvent->status == 1 ? "selected" : "" }}> Đang đợi bán</option>
                                 <option value="2" {{ $getEvent->status == 2 ? "selected" : "" }}> Đang bán </option>
-                                <option value="3" {{ $getEvent->status == 3 ? "selected" : "" }}> Hết hạng bán</option>
+                                <option value="3" {{ $getEvent->status == 3 ? "selected" : "" }}> Hết hạn bán</option>
                             </select>
                         </div>
                     </div>

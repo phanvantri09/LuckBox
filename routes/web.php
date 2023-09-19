@@ -122,7 +122,7 @@ Route::group(['prefix' => '/'], function () {
             Route::post('cap-nhat-so-luong','updateCartAmount')->name('updateCartAmount');
 
             Route::get('tong-doanh-thu','treeDataAll')->name('treeDataAll');
-
+            Route::get('gio-het-hang','cartDie')->name('cartDie');
         });
     });
 

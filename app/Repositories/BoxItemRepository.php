@@ -32,6 +32,10 @@ class BoxItemRepository implements BoxItemRepositoryInterface
     {
         return Box_item::findOrFail($id);
     }
+    public function showInCart($id)
+    {
+        return Box_item::where('id',$id)->lockForUpdate()->first();
+    }
     public function getAllByIdEvent($id){
         return Box_item::where('id_box_event', $id)->get();
     }
@@ -96,7 +100,7 @@ class BoxItemRepository implements BoxItemRepositoryInterface
         return Box_item::where('id_box_event', $id)->whereNotIn('status', [1,3])->orderBy('time_start', 'asc')->first();
     }
     public function updateAmount($id, $amount){
-        $Box_item = Box_item::find($id);
+        $Box_item = Box_item::where('id',$id)->lockForUpdate()->first();
         $Box_item->amount = $Box_item->amount - $amount;
         $Box_item->save();
     }

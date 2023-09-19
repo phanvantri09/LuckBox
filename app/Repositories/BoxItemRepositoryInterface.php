@@ -8,6 +8,7 @@ interface BoxItemRepositoryInterface
      public function update(array $data, $id);
      public function delete($id);
      public function show($id);
+     public function showInCart($id);
      // public function getAllByType($type);
      public function getByIDBoxEvent($id, $time);
      public function getAllByIdEvent($id);

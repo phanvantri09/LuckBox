@@ -83,7 +83,6 @@
         // Lắng nghe sự kiện input
         myInput.addEventListener('input', function() {
             var value = myInput.value;
-            console.log(value);
             var formattedValue = numeral(value).format('0,0');
             myInput.value = formattedValue;
             $('#total').val(numeral(formattedValue).value());

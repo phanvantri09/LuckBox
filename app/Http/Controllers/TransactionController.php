@@ -5,7 +5,9 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Repositories\TransactionRepositoryInterface;
 use App\Models\Transaction;
-
+use App\Models\User;
+use Illuminate\Support\Facades\Auth;
+use App\Helpers\ConstCommon;
 class TransactionController extends Controller
 {
     protected $transactionRepository;
@@ -27,10 +29,16 @@ class TransactionController extends Controller
     {
         if ($request->type == 1) {
             $trans = Transaction::findOrFail($id);
+            $user = User::findOrFail($idUser);
             if (!empty($trans)) {
-                if ($request->total > Auth::user()->balance) {
-                    // lỗi ửo đây
-                    // return back()->with('error', 'Lỗi tiến trình');
+                if ($trans->total > $user->balance) {
+                    if($this->transactionRepository->update(['status'=>3], $id)){
+                        ConstCommon::sendMail(
+                            $user->email, 
+                            ['email' => $user->email,'type'=>'Rút tiền','status'=> "Bị từ chối, vì số tiền hiện tại trong Ví ". number_format($user->balance). " là không đủ.", "balance"=>$trans->total, 'link'=>route('walet')]
+                        );
+                        return back()->with('error', 'Đã chuyển sang trạng thái bị từ chối vì số tiền hiện tại trong Ví của khách hàng không đủ');
+                    }
                 }
             }
 
