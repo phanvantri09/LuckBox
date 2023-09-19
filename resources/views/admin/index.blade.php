@@ -9,6 +9,7 @@
     <link rel="icon" type="image/x-icon" href="{{asset('/dist/img/logo.png')}}">
     <base href="{{ URL::asset('/') }}" target="_top">
     <meta name="csrf-token" content="{{ csrf_token() }}">
+    <meta http-equiv="refresh" content="{{ config('session.lifetime') * 60 }}">
     <!-- Google Font: Source Sans Pro -->
     <link rel="stylesheet"
         href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">

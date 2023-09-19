@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta name="google-site-verification" content="rl9JD04KBYYNOg7JDiZBzygfodJw_BPAOMY6cyXUK9o" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="refresh" content="{{ config('session.lifetime') * 60 }}">
     <title>Lucky Box</title>
     <link rel="icon" type="image/x-icon" href="{{ asset('/dist/img/logo.png') }}">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">

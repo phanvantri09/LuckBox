@@ -41,6 +41,11 @@ class Handler extends ExceptionHandler
     }
     public function render($request, Throwable $exception)
     {
+        $this->renderable(function (\Exception $e) {
+            if ($e->getPrevious() instanceof \Illuminate\Session\TokenMismatchException) {
+                return redirect()->route('login');
+            };
+        });
         if ($exception instanceof HttpException) {
             return redirect()->back()->with('error', 'Đã xảy ra lỗi, vui lòng thử lại');
         }
