@@ -154,7 +154,7 @@ class PageController extends Controller
         $data = $request->all();
         $data['link_image'] = $imageName;
         $this->transactionRepository->create($data);
-        return redirect()->route('walet')->with('message','Gửi yêu cầu thành công');
+        return redirect()->route('historyTransaction')->with('message','Gửi yêu cầu thành công, bạn vui lòng đợi admin duyệt yêu cầu nạp thì số tiền sẽ được cộng vào Ví.');
     }
     public function createCard()
     {

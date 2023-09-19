@@ -5,7 +5,7 @@
             content: "Chọn file";
         }
 
-        .modal {
+        .mess .modal {
             display: none;
             position: fixed;
             z-index: 1;
@@ -17,13 +17,26 @@
             background-color: rgba(0, 0, 0, 0.5);
         }
 
-        .modal-content {
+        .mess .modal-content {
             text-align: center;
             background-color: #caf1ee;
             margin: 20% auto;
             padding: 20px 10px;
             border: 1px solid #dc600d;
             width: 300px;
+        }
+        .modal-backdrop.show {
+            opacity: 0;
+        }
+
+        .scrollCheck {
+            height: 500px;
+        }
+
+        @media (max-width: 1080px) {
+            .scrollCheck {
+                height: 300px;
+            }
         }
     </style>
 @endsection
@@ -56,7 +69,7 @@
                 <div class="pl-4 content-bank">
                     <span class="pl-2 border-left border-warning">Chuyển khoản ngân hàng(Việt Nam)</span>
                     <div class="row justify-content-between align-items-start pt-1">
-                        <span class="col-5 text-secondary">Họ và tên</span>
+                        <span class="col-5 text-secondary">Tên chủ tài khoản</span>
                         <div class="col-6 text-right" id="hoten">
                             {{ $getCardAdmin->card_name }}
                         </div>
@@ -155,8 +168,9 @@
                         </div>
                         <div class="form-group">
                             <label for="exampleFormControlInput2">Tên ngân hàng</label>
-                            <input type="text" name="bank" value="{{ $getCardDefault->bank }}" class="form-control"
-                                required id="exampleFormControlInput2" placeholder="Agribank">
+                            <input type="text" name="bank" value="{{ $getCardDefault->bank }}"
+                                class="form-control form_name_bank" required id="exampleFormControlInput2"
+                                placeholder="Agribank">
                             @error('bank')
                                 <div class="alert alert-danger">{{ $errors->first('bank') }}</div>
                             @enderror
@@ -164,8 +178,9 @@
                         <div class="form-group">
                             <label for="exampleFormControlInput3">Số tài khoản/Số thẻ</label>
                             <input type="text" name="card_number" value="{{ $getCardDefault->card_number }}"
-                                oninput="this.value = this.value.replace(/[^0-9]/g, '');" required class="form-control"
-                                id="exampleFormControlInput3" placeholder="nhập số tài khoản thẻ">
+                                oninput="this.value = this.value.replace(/[^0-9]/g, '');" required
+                                class="form-control form_card_number" id="exampleFormControlInput3"
+                                placeholder="nhập số tài khoản thẻ">
                             @error('card_number')
                                 <div class="alert alert-danger">{{ $errors->first('card_number') }}</div>
                             @enderror
@@ -181,7 +196,7 @@
                         </div>
                         <div class="form-group">
                             <label for="exampleFormControlInput4">Mã giao dịch</label>
-                            <input required type="text" name="code" class="form-control"
+                            <input required type="text" name="code" class="form-control form_code"
                                 id="exampleFormControlInput4" required placeholder="Nhập mã giao dịch"
                                 value="{{ $codeString ?? null }}">
                             @error('code')
@@ -207,25 +222,72 @@
                     <div class="d-flex">
                         <span class="bg-warning rounded-circle icon-stt">3</span>
                         <span class="pl-1">
-                            Sau khi nhập đủ thông tin, nhấp vào nút "Đã chuyển tiền".
+                            Sau khi nhập đủ thông tin, nhấp vào nút "Chuyển tiền" để kiểm tra thông tin.
                         </span>
                     </div>
-                    <div class="row align-items-center justify-content-between mt-2">
-                        <a href="checkout.html" class="col-4 pr-0">
-                            {{-- <button class="btn bg-info font-weight-bold content-bank">Trợ giúp</button> --}}
-                        </a>
-                        <div class="col-8 text-right">
-                            <button onclick="submitForm()" class="btn bg-warning font-weight-bold content-bank">Đã chuyển
-                                tiền</button>
+                    <br>
+                    <div class="d-flex">
+                        <span class="bg-warning rounded-circle icon-stt">4</span>
+                        <span class="pl-1">
+                            Sau khi kiểm tra thông tin, nhấp vào nút "Đã chuyển tiền".
+                        </span>
+                    </div>
+                    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog"
+                        aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog  modal-lg modal-dialog-scrollable scrollCheck" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLabel">Thông tin nạp tiền</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <div class="">
+                                        <h5>Thông tin người nhận</h5>
+                                        <div class="form-group">
+                                            Tên chủ tài khoản: {{ $getCardDefault->card_name }}<br>
+                                            Tên ngân hàng: {{ $getCardDefault->bank }}<br>
+                                            Số tài khoản/Số thẻ: {{ $getCardDefault->card_number }}<br>
+                                        </div>
+                                    </div>
+                                    <div class="">
+                                        <h5>Thông tin người nạp</h5>
+                                        <div class="form-group">
+                                            Tên chủ tài khoản: <span class="name_user_bank"></span><br>
+                                            Tên ngân hàng: <span class="name_bank"></span><br>
+                                            Số tài khoản/Số thẻ: <span class="card_number_bank"></span><br>
+                                            Số tiền nạp: <span class="total_bank"></span><br>
+                                            Mã giao dịch: <span class="code_bank"></span><br>
+                                            <img src="" id="image_bank" height="auto" width="100%"
+                                                alt="">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Bỏ qua</button>
+                                    <button onclick="submitForm()" class="btn bg-warning font-weight-bold content-bank">Đã
+                                        chuyển
+                                        tiền</button>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </form>
+                <div class="col-12 text-right">
+                    <button type="button" class="btn bg-info font-weight-bold btn-bank" data-toggle="modal"
+                        data-target="#exampleModal">Chuyển
+                        tiền</button>
+                </div>
             </div>
         </div>
-        <div id="myModal" class="modal">
-            <div class="modal-content">
-                <p>Bạn vừa thực hiện lệnh nạp tiền vào ví <br> Số tiền sẽ được ghi nhận sau vài phút vui lòng đợi
-                    giây lát!</p>
+
+        <div class="mess">
+            <div id="myModal" class="modal">
+                <div class="modal-content">
+                    <p>Bạn vừa thực hiện lệnh nạp tiền vào ví <br> Số tiền sẽ được ghi nhận sau vài phút vui lòng đợi
+                        giây lát!</p>
+                </div>
             </div>
         </div>
     </div>
@@ -256,7 +318,6 @@
         $(document).ready(function() {
             $('.card_name').on('change', function() {
                 var inputValue = $(this).val();
-                console.log(inputValue);
                 var regex = /^[^\d]+$/u;
 
                 if (!regex.test(inputValue)) {
@@ -264,7 +325,16 @@
                     alert('Vui lòng chỉ nhập văn bản và không nhập số!');
                 }
             });
+            $('.btn-bank').on('click', function() {
+                $('.name_bank').text($('.form_name_bank').val());
+                $('.card_number_bank').text($('.form_card_number').val());
+                $('.total_bank').text($('#price_number').val() + ' VNĐ');
+                $('.name_user_bank').text($('.card_name').val());
+                $('.code_bank').text($('.form_code').val());
+            });
             document.getElementById('myForm').addEventListener('submit', function(event) {
+                var modalEX = document.getElementById('exampleModal');
+                modalEX.style.display = 'none';
                 event.preventDefault(); // Ngăn chặn hành động mặc định của form
 
                 // Hiển thị thông báo popup trong 5 giây
@@ -276,7 +346,6 @@
                 }, 3000);
             });
 
-
             // review ảnh
             document.getElementById('validatedCustomFile').addEventListener('change', function(event) {
                 var input = event.target;
@@ -286,10 +355,11 @@
 
                     reader.onload = function(e) {
                         var previewImage = document.getElementById('preview-image');
-
+                        var image_bank = document.getElementById('image_bank');
                         // Hiển thị hình ảnh xem trước
                         previewImage.src = e.target.result;
                         previewImage.style.display = 'block';
+                        image_bank.src = e.target.result;
                     };
 
                     reader.readAsDataURL(input.files[0]);
