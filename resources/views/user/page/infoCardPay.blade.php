@@ -244,11 +244,12 @@
                                 </div>
                                 <div class="modal-body">
                                     <div class="">
-                                        <h5>Thông tin người nhận</h5>
+                                        <h5>Xác nhận bạn đã chuyển tiền vào:</h5>
                                         <div class="form-group">
                                             Tên chủ tài khoản: {{ $getCardDefault->card_name }}<br>
                                             Tên ngân hàng: {{ $getCardDefault->bank }}<br>
                                             Số tài khoản/Số thẻ: {{ $getCardDefault->card_number }}<br>
+                                            Mã giao dịch: <span >{{$codeString ?? null}}</span><br>
                                         </div>
                                     </div>
                                     <div class="">
@@ -275,7 +276,7 @@
                     </div>
                 </form>
                 <div class="col-12 text-right">
-                    <button type="button" class="btn bg-info font-weight-bold btn-bank" data-toggle="modal"
+                    <button type="button" class="btn bg-warning font-weight-bold btn-bank" data-toggle="modal"
                         data-target="#exampleModal">Chuyển
                         tiền</button>
                 </div>
