@@ -246,9 +246,9 @@
                                     <div class="">
                                         <h5>Xác nhận bạn đã chuyển tiền vào:</h5>
                                         <div class="form-group">
-                                            Tên chủ tài khoản: {{ $getCardDefault->card_name }}<br>
-                                            Tên ngân hàng: {{ $getCardDefault->bank }}<br>
-                                            Số tài khoản/Số thẻ: {{ $getCardDefault->card_number }}<br>
+                                            Tên chủ tài khoản: {{ $getCardAdmin->card_name }}<br>
+                                            Tên ngân hàng: {{ $getCardAdmin->bank }}<br>
+                                            Số tài khoản/Số thẻ: {{ $getCardAdmin->card_number }}<br>
                                             Mã giao dịch: <span >{{$codeString ?? null}}</span><br>
                                         </div>
                                     </div>
