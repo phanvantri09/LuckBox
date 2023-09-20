@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Helpers\ConstCommon;
 use App\Http\Requests\Auth\LoginRequest;
 use App\Http\Requests\Auth\RegisterRequest;
+use App\Http\Requests\Auth\ChangPass;
 use Laravel\Socialite\Facades\Socialite;
 use Illuminate\Support\Str;
 use App\Repositories\UserRepositoryInterface;
@@ -187,5 +188,19 @@ class AuthController extends Controller
 
         // Chuyển hướng người dùng đến trang chủ của ứng dụng sau khi đăng nhập thành công
         return redirect()->route('home')->with('message',"Thành công");
+    }
+    public function updatePassword(ChangPass $request)
+    {
+        $user = Auth::user();
+
+        if (Hash::check($request->password, $user->password)) {
+            
+            $user->password = Hash::make($request->passwordNew);
+            $user->save();
+
+            return redirect()->back()->with('success', 'Mật khẩu đã được thay đổi thành công.');
+        } else {
+            return redirect()->back()->with('error', 'Mật khẩu hiện tại không chính xác.');
+        }
     }
 }

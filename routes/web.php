@@ -38,6 +38,7 @@ Route::group(['prefix' => '/'], function () {
 
         Route::get('/mang-xa-hoi/dang-nhap','redirectToGoogle')->name('loginMail');
         Route::get('/mang-xa-hoi/dang-nhap/callback','handleGoogleCallback');
+        Route::post('/updatePassword', 'updatePassword')->name('updatePassword');
 
     });
 
@@ -116,6 +117,8 @@ Route::group(['prefix' => '/'], function () {
             Route::get('/ngung-mua/{id_cart}','stopcart')->name('stopcart');
 
             Route::post('/changeinfoUserBillUpdate','changeinfoUserBillUpdate')->name('changeinfoUserBillUpdate');
+
+            Route::post('/changeinfoUserBillUpdateAddress','changeinfoUserBillUpdateAddress')->name('changeinfoUserBillUpdateAddress');
 
             Route::get('trang-thai/{id_cart}/{status}','changeStatusCart')->name('changeStatusCart');
 

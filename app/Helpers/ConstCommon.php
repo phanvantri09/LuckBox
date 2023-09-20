@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Cart;
 use App\Models\Box_item;
+use App\Models\Transaction;
 class ConstCommon {
      const ListTypeUser = ['user'=>111, 'admin'=>222, 'super_admin'=>333];
      const TypeUser = 111;
@@ -115,5 +116,19 @@ class ConstCommon {
     }
     public static function getAmountBoxItem($id){
         return Box_item::find($id)->amount;
+    }
+    public static function getTotalTransaction($id_transaction, $balance){
+        $transaction =  Transaction::find($id_transaction);
+        $listAffter  = Transaction::where('id_user', $transaction->id_user)->where('status', 2)->where('updated_at', '>', $transaction->created_at)->get();
+        $total = 0;
+        foreach ($listAffter as $key => $listA) {
+            if ($listA->type == 1 || ($listA->type == 3 && $listA->id_cart != null)) {
+                $moeny = - $listA->total;
+            } else {
+                $moeny = $listA->total;
+            }
+            $total = $total + $moeny;
+        }
+        return number_format($balance - $total);
     }
 }

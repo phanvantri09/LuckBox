@@ -29,15 +29,17 @@
                                 <th>Số tiền </th>
                                 <th>Thời gian tạo </th>
                                 <th>Thời gian cập nhật </th>
+                                <th>Số dư </th>
                             </tr>
                         </thead>
                         <tbody>
                             @php
-                                $i = 0;
+                                $total = 0;
+                                $user = Auth::user()->find($id);
                             @endphp
                             @foreach ($data as $key => $item)
                                 <tr>
-                                    <td>{{$key+1}}</td>
+                                    <td>{{ $key + 1 }}</td>
                                     <td>{{ \App\Helpers\ConstCommon::TypeTransaction[$item->type] }}</td>
                                     @if ($item->status == 1)
                                         <td class="bg-info text-center">Đợi xác nhận</td>
@@ -48,17 +50,22 @@
                                     @if ($item->status == 3)
                                         <td class="bg-danger text-center">Bị từ chối</td>
                                     @endif
-                                    <td>@if ($item->type == 1 || ($item->type == 3 && $item->id_cart != null) )
-                                        -
+                                    <td>
+                                        @if ($item->type == 1 || ($item->type == 3 && $item->id_cart != null))
+                                            -
                                         @else
-                                        +
+                                            +
                                         @endif
-                                        {{number_format($item->total)}}</td>
+                                        {{ number_format($item->total) }}
+                                    </td>
                                     <td>
                                         {{ date('H:i:s d-m-Y', strtotime($item->created_at)) }}
                                     </td>
                                     <td>{{ date('H:i:s d-m-Y', strtotime($item->updated_at)) }}</td>
-                                   
+                                    
+                                    <td>
+                                        {{ \App\Helpers\ConstCommon::getTotalTransaction($item->id, $user->balance)}}
+                                    </td>
                                 </tr>
                             @endforeach
                         </tbody>

@@ -37,16 +37,15 @@ class UserInfoController extends Controller
      */
     public function create()
     {
-        $idUser = Auth::user()->id;
-        $getInfoUser = $this->userInfoRepository->checkInfoUser($idUser);
+        $user = Auth::user();
+        $getInfoUser = $this->userInfoRepository->checkInfoUser($user->id);
 
 
-        return view('user.InfoUser.Add', compact('getInfoUser'));
+        return view('user.InfoUser.Add', compact('getInfoUser','user'));
     }
 
     public function createPost(InfoUserRequest $request)
     {
-        // dd($request->all());
         $imageName = null;
         $User = Auth::user();
         $idUser = $User->id;

@@ -481,9 +481,6 @@ class CartController extends Controller
     public function showOrder($id_cart){
         $user = Auth::user();
         $dataCart = $this->cartRepository->getInforBillOderUser($user->id, $id_cart);
-        // dd($dataCart);
-        // id_info_user_bill
-        // dd($dataCart);
         $inforUserBills = $this->infoUserBillRepository->getByIdUser($user->id);
 
         return view('user.page.showOrder', compact(['dataCart', 'inforUserBills']));
