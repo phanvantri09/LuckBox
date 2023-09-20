@@ -11,7 +11,7 @@ class CartRepository implements CartRepositoryInterface
         return Cart::all();
     }
     public function show($id){
-          return Cart::find($id);
+          return Cart::lockForUpdate()->find($id);
     }
     public function getAllByStatus($status)
     {

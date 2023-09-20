@@ -119,7 +119,7 @@ class ConstCommon {
     }
     public static function getTotalTransaction($id_transaction, $balance){
         $transaction =  Transaction::find($id_transaction);
-        $listAffter  = Transaction::where('id_user', $transaction->id_user)->where('status', 2)->where('updated_at', '>', $transaction->created_at)->get();
+        $listAffter  = Transaction::where('id_user', $transaction->id_user)->where('id', '!=', $id_transaction)->where('status', 2)->where('updated_at', '>=', $transaction->created_at)->get();
         $total = 0;
         foreach ($listAffter as $key => $listA) {
             if ($listA->type == 1 || ($listA->type == 3 && $listA->id_cart != null)) {

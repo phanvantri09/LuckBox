@@ -26,6 +26,7 @@
                                 <th>STT</th>
                                 <th>Email</th>
                                 <th>Tên</th>
+                                <th>Số tiền </th>
                                 <th>Số điện thoại </th>
                                 <th>Người giới thiệu </th>
                                 <th>Ngày tạo </th>
@@ -44,6 +45,7 @@
                                     <td>{{ $i }}</td>
                                     <td>{{ $item->email }}</td>
                                     <td>{{ $item->name }}</td>
+                                    <td>{{ number_format($item->balance) }} VNĐ</td>
                                     <td>{{ $item->number_phone }}</td>
                                     <td>
                                         @if (!empty($userGTs))

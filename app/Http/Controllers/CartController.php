@@ -191,6 +191,14 @@ class CartController extends Controller
             // case ở market thanh toán lun
             if($request->has('market_pay')){
                 $cartOLD = $this->cartRepository->show($request->id_cart);
+                if (!empty($cartOLD)) {
+                    if ($cartOLD->amount <= 0) {
+                        return redirect()->back()->with('error', 'Ôi không, đã có người nhanh tay hơn bạn, hộp này đã bị mua hết, bạn vui lòng mua hộp khác');
+                    }
+                    if ($cartOLD->amount < $request->amount) {
+                        return redirect()->back()->with('error', 'Hộp này chỉ còn '.$cartOLD->amount.' hộp nên không thể thực hiện đặt '.$request->amount.' được, Nhanh tay nào vì cũng có rất nhiều người nhắm đến hộp này.');
+                    }
+                }
                 $data = [
                     'id_user_create' => $user->id,
                     'id_admin_update' => null,
