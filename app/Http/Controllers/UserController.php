@@ -56,6 +56,7 @@ class UserController extends Controller
     public function listCartMarket($id){
         $user = User::find($id);
         $cart =  $this->cartRepository->getAllByIDUser($id);
+        dd($cart );
         return view('admin.user.listCartMarket', compact(['cart', 'user']));
     }
     /**
