@@ -24,6 +24,7 @@
                         <thead>
                             <tr>
                                 <th>STT</th>
+                                <th>Người thực hiện</th>
                                 <th>id_cart</th>
                                 <th>Loại</th>
                                 <th>Trạng thái</th>
@@ -41,7 +42,11 @@
                             @endphp
                             @foreach ($data as $key => $item)
                                 <tr>
+                                    @php
+                                        $userT = Auth::user()->find($item->id_user);
+                                    @endphp
                                     <td>{{ $key + 1 }}</td>
+                                    <td>{{ empty($userT->name) ? "" : (empty($userT->email) ? $userT->number_phone : $userT->email) }}</td>
                                     <td>{{ $item->id_cart ?? null }}</td>
                                     <td>{{ \App\Helpers\ConstCommon::TypeTransaction[$item->type] }}</td>
                                     @if ($item->status == 1)

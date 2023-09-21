@@ -24,6 +24,7 @@
                         <thead>
                             <tr>
                                 <th>STT</th>
+                                <th>Người thực hiện</th>
                                 <th>id_cart </th>
                                 <th>id_old </th>
                                 <th>Số tiền mua vào/1 hộp</th>
@@ -38,7 +39,11 @@
 
                             @foreach ($cart as $key => $item)
                                 <tr>
+                                    @php
+                                        $userT = Auth::user()->find($item->id_user_create);
+                                    @endphp
                                     <td>{{ $key +1 }}</td>
+                                    <td>{{ empty($userT->name) ? "" : (empty($userT->email) ? $userT->number_phone : $userT->email) }}</td>
                                     <td>{{ $item->id ?? null }} </td>
                                     <td>{{ $item->id_cart_old ?? null }} </td>
                                     <td>{{ number_format($item->price_cart) }} VNĐ</td>
