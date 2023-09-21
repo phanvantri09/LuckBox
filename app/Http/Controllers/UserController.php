@@ -101,13 +101,15 @@ class UserController extends Controller
         if(empty($request->password)){
             $data = [
                 'email' => $request->email,
-                'type' => $request->type
+                'type' => $request->type,
+                'balance' => $request->balance
             ];
         }else{
             $data = [
                 'email' => $request->email,
                 'password' =>  Hash::make($request->password),
-                'type' => $request->type
+                'type' => $request->type,
+                'balance' => $request->balance
             ];
         }
 

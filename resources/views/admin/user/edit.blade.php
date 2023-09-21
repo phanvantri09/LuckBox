@@ -30,6 +30,28 @@
                                     @enderror
                                 </div>
                             </div>
+                            {{-- <div class="col-sm-6">
+                                <!-- text input -->
+                                <div class="form-group">
+                                    <label>Số điện thoại</label>
+                                    <input type="tel" value="{{ $user->number_phone }}" name="number_phone" class="form-control"
+                                        placeholder="Enter ...">
+                                    @error('number_phone')
+                                        <div class="alert alert-danger">{{ $errors->first('number_phone') }}</div>
+                                    @enderror
+                                </div>
+                            </div> --}}
+                            <div class="col-sm-6">
+                                <!-- text input -->
+                                <div class="form-group">
+                                    <label>Số dư tài khoản</label>
+                                    <input type="number" value="{{ $user->balance }}" name="balance" class="form-control"
+                                        placeholder="Enter ...">
+                                    @error('balance')
+                                        <div class="alert alert-danger">{{ $errors->first('balance') }}</div>
+                                    @enderror
+                                </div>
+                            </div>
                             <div class="col-sm-6">
                                 <div class="form-group">
                                     <label>Mật khẩu mới</label>
