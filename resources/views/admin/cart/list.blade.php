@@ -82,7 +82,7 @@
                                             @if ($item->status == 2)
                                                 <a href="{{ route('cart.productOrder', ['id_cart' => $item->id]) }}"
                                                     class="btn btn-app">
-                                                    <i class="fas fa-cart-plus"></i> 4 phẩm admin chọn
+                                                    <i class="fas fa-cart-plus"></i> 4 sản phẩm admin chọn
                                                 </a>
                                             @endif
                                         </td>
