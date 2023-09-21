@@ -24,11 +24,12 @@
                         <thead>
                             <tr>
                                 <th>STT</th>
-                                <th>Số tiền </th>
+                                <th>Số tiền mua vào/1 hộp</th>
                                 <th>Trạng thái </th>
-                                <th>Số lượng </th>
+                                {{-- <th>Số lượng đã bán</th> --}}
+                                <th>Số lượng còn lại </th>
                                 <th>Thời gian tạo </th>
-                                <th></th>
+                                <th>Thời gian cập nhật</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -47,7 +48,7 @@
                                         đăng bán lại
                                     @endif
                                     @if ($item->status == 11)
-                                        Giới hạng F30
+                                        Giới hạn F30
                                     @endif
                                     @if ($item->status == 3)
                                         đã mở Hộp chưa được user xác nhận giao
@@ -64,8 +65,10 @@
                                     @if ($item->status == 6)
                                         bị từ chối
                                     @endif</td>
+                                    {{-- <td>{{ \App\Helpers\ConstCommon::countCartMarket($item->id) }} </td> --}}
                                     <td>{{ $item->amount }} </td>
                                     <td>{{ $item->created_at }}</td>
+                                    <td>{{ $item->updated_at }}</td>
                                 </tr>
                             @endforeach
                         </tbody>
