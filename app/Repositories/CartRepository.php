@@ -131,14 +131,6 @@ class CartRepository implements CartRepositoryInterface
             ->where('carts.amount','>', 0)
             ->orderBy('created_at','desc')->get();
     }
-    public function getAllDataByIDUserAndStatusTreeDataAdmin($id_user, $status)
-    {
-        return DB::table('carts')->select('carts.*', 'box.title', 'box.link_image', 'box.price')
-            ->leftJoin('box', 'carts.id_box', '=', 'box.id')
-            ->where('carts.id_user_create','=', $id_user)
-            ->where('status', $status)
-            ->orderBy('created_at','desc')->get();
-    }
     public function getAllDataByIDUserAndStatus($id_user, $status)
     {
         if ($status == null && $id_user != null) {

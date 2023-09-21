@@ -79,7 +79,7 @@ class TransactionRepository implements TransactionRepositoryInterface
         return $user;
     }
     public function listForUser($id_user){
-        return Transaction::select('transactions.*', 'carts.order_number as folow', 'carts.id_cart_old as id_cart_old')
+        return Transaction::select('transactions.*', 'carts.order_number as folow')
         ->leftJoin('carts', 'transactions.id_cart', '=', 'carts.id')->where('id_user',$id_user)->orderBy('created_at', 'desc')->get();
     }
 

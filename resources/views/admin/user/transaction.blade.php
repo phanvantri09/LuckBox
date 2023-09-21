@@ -30,7 +30,6 @@
                                 <th>Thời gian tạo </th>
                                 <th>Thời gian cập nhật </th>
                                 <th>Số dư </th>
-                                <th> </th>
                             </tr>
                         </thead>
                         <tbody>
@@ -63,17 +62,9 @@
                                         {{ date('H:i:s d-m-Y', strtotime($item->created_at)) }}
                                     </td>
                                     <td>{{ date('H:i:s d-m-Y', strtotime($item->updated_at)) }}</td>
-
+                                    
                                     <td>
                                         {{ \App\Helpers\ConstCommon::getTotalTransaction($item->id, $user->balance)}}
-                                    </td>
-                                    <td>
-                                        @if (!empty($item->id_cart) && !empty($item->id_cart_old))
-                                        <a href="{{ route('user.transaction.cart', [$item->id_cart, $item->id_cart_old]) }}"
-                                            class="btn btn-app">
-                                            <i class="fas fa-book-open"></i> Thông tin giỏ
-                                        </a>
-                                        @endif
                                     </td>
                                 </tr>
                             @endforeach
