@@ -24,6 +24,7 @@
                         <thead>
                             <tr>
                                 <th>STT</th>
+                                <th>id_cart</th>
                                 <th>Loại</th>
                                 <th>Trạng thái</th>
                                 <th>Số tiền </th>
@@ -41,6 +42,7 @@
                             @foreach ($data as $key => $item)
                                 <tr>
                                     <td>{{ $key + 1 }}</td>
+                                    <td>{{ $item->id_cart ?? null }}</td>
                                     <td>{{ \App\Helpers\ConstCommon::TypeTransaction[$item->type] }}</td>
                                     @if ($item->status == 1)
                                         <td class="bg-info text-center">Đợi xác nhận</td>

@@ -24,6 +24,8 @@
                         <thead>
                             <tr>
                                 <th>STT</th>
+                                <th>id_cart </th>
+                                <th>id_old </th>
                                 <th>Số tiền mua vào/1 hộp</th>
                                 <th>Trạng thái </th>
                                 {{-- <th>Số lượng đã bán</th> --}}
@@ -37,6 +39,8 @@
                             @foreach ($cart as $key => $item)
                                 <tr>
                                     <td>{{ $key +1 }}</td>
+                                    <td>{{ $item->id ?? null }} </td>
+                                    <td>{{ $item->id_cart_old ?? null }} </td>
                                     <td>{{ number_format($item->price_cart) }} VNĐ</td>
                                     <td>@if ($item->status == 1)
                                         vừa thêm vào và chưa thanh toán
