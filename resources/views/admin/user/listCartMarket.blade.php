@@ -24,70 +24,51 @@
                         <thead>
                             <tr>
                                 <th>STT</th>
-                                <th>Loại</th>
-                                <th>Trạng thái</th>
                                 <th>Số tiền </th>
+                                <th>Trạng thái </th>
+                                <th>Số lượng </th>
                                 <th>Thời gian tạo </th>
-                                <th>Thời gian cập nhật </th>
-                                <th>Số dư </th>
-                                <th> </th>
+                                <th></th>
                             </tr>
                         </thead>
                         <tbody>
-                            @php
-                                $total = 0;
-                                $user = Auth::user()->find($id);
-                            @endphp
-                            @foreach ($data as $key => $item)
+
+                            @foreach ($cart as $key => $item)
                                 <tr>
-                                    <td>{{ $key + 1 }}</td>
-                                    <td>{{ \App\Helpers\ConstCommon::TypeTransaction[$item->type] }}</td>
-                                    @if ($item->status == 1)
-                                        <td class="bg-info text-center">Đợi xác nhận</td>
+                                    <td>{{ $key +1 }}</td>
+                                    <td>{{ number_format($item->price_cart) }} VNĐ</td>
+                                    <td>@if ($item->status == 1)
+                                        vừa thêm vào và chưa thanh toán
                                     @endif
                                     @if ($item->status == 2)
-                                        <td class="bg-success text-center">Thành công</td>
+                                        đã thanh toán chưa mở Hộp
+                                    @endif
+                                    @if ($item->status == 10)
+                                        đăng bán lại
+                                    @endif
+                                    @if ($item->status == 11)
+                                        Giới hạng F30
                                     @endif
                                     @if ($item->status == 3)
-                                        <td class="bg-danger text-center">Bị từ chối</td>
+                                        đã mở Hộp chưa được user xác nhận giao
                                     @endif
-                                    <td>
-                                        @if ($item->type == 1 || ($item->type == 3 && $item->id_cart != null))
-                                            -
-                                        @else
-                                            +
-                                        @endif
-                                        {{ number_format($item->total) }}
-                                    </td>
-                                    <td>
-                                        {{ date('H:i:s d-m-Y', strtotime($item->created_at)) }}
-                                    </td>
-                                    <td>{{ date('H:i:s d-m-Y', strtotime($item->updated_at)) }}</td>
-
-                                    <td>
-                                        {{ \App\Helpers\ConstCommon::getTotalTransaction($item->id, $user->balance)}}
-                                    </td>
-                                    <td>
-                                        @if (!empty($item->id_cart) && !empty($item->id_cart_old))
-                                        <a href="{{ route('user.transaction.cart', [$item->id_cart, $item->id_cart_old]) }}"
-                                            class="btn btn-app">
-                                            <i class="fas fa-book-open"></i> Thông tin giỏ
-                                        </a>
-                                        @endif
-                                    </td>
+                                    @if ($item->status == 7)
+                                        đã xác nhận giao hàng
+                                    @endif
+                                    @if ($item->status == 4)
+                                        admin duyệt đơn để giao hàng
+                                    @endif
+                                    @if ($item->status == 5)
+                                        đã giao thành công
+                                    @endif
+                                    @if ($item->status == 6)
+                                        bị từ chối
+                                    @endif</td>
+                                    <td>{{ $item->amount }} </td>
+                                    <td>{{ $item->created_at }}</td>
                                 </tr>
                             @endforeach
                         </tbody>
-                        {{-- <tfoot>
-                            <tr>
-                                <th>Rendering engine</th>
-                                <th>Browser</th>
-                                <th>Platform(s)</th>
-                                <th>Engine version</th>
-                                <th>CSS grade</th>
-                                <th>acttion</th>
-                            </tr>
-                        </tfoot> --}}
                     </table>
                 </div>
                 <!-- /.card-body -->

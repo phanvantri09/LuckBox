@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Repositories\UserRepositoryInterface;
 use App\Http\Requests\User\CreateRequestUser;
 use App\Repositories\TransactionRepositoryInterface;
+use App\Repositories\CartRepositoryInterface;
 use Illuminate\Support\Facades\Hash;
 use App\Helpers\ConstCommon;
 use App\Models\User;
@@ -14,12 +15,13 @@ class UserController extends Controller
 {
     protected $userRepository;
     protected $transactionRepository;
-    public function __construct(UserRepositoryInterface $userRepository,TransactionRepositoryInterface $transactionRepository)
+    protected $cartRepository;
+    public function __construct(UserRepositoryInterface $userRepository,TransactionRepositoryInterface $transactionRepository, CartRepositoryInterface $cartRepository,)
     {
 
         $this->userRepository = $userRepository;
         $this->transactionRepository = $transactionRepository;
-
+        $this->cartRepository = $cartRepository;
     }
 
     public function list($type)
@@ -45,6 +47,16 @@ class UserController extends Controller
     {
         $data = $this->transactionRepository->listForUser($id);
         return view('admin.user.transaction', compact(['id', 'data']));
+    }
+    public function transactionCart($id, $id_cart_old){
+        $cartCurrent = $this->cartRepository->show($id);
+        $cartOld = $this->cartRepository->show($id_cart_old);
+        return view('admin.user.infoCart', compact(['cartCurrent', 'cartOld']));
+    }
+    public function listCartMarket($id){
+        $user = User::find($id);
+        $cart =  $this->cartRepository->getAllDataByIDUserAndStatusTreeDataAdmin($id, 10);
+        return view('admin.user.listCartMarket', compact(['cart', 'user']));
     }
     /**
      * Show the form for creating a new resource.

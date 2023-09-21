@@ -101,6 +101,10 @@
                                             onclick="return confirm('Bạn có chắc chắn xóa không?')" class="btn btn-app">
                                             <i class="fas fa-trash-alt"></i>Xóa
                                         </a>
+                                        <a href="{{ route('user.listCartMarket', ['id' => $item->id]) }}"
+                                            class="btn btn-app"> <i class="fas fa-box-open"></i>
+                                            Các hộp đang bán
+                                        </a>
 
                                     </td>
                                 </tr>
