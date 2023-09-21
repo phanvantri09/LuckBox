@@ -189,9 +189,14 @@ class CartController extends Controller
         try {
             $user = Auth::user();
             // case ở market thanh toán lun
+            $cartOLD = [];
             if($request->has('market_pay')){
                 $cartOLD = $this->cartRepository->show($request->id_cart);
                 if (!empty($cartOLD)) {
+
+                    if (($request->amount * ($cartOLD->price_cart + ( 6 *($cartOLD->price_cart / 100)))) > $user->balance) {
+                        return redirect()->route('infoCardPay')->with('error', 'Số tài khoản trong ví không đủ để thực hiện, vui lòng nạp thêm tiền để thực hiện giao dịch này.');
+                    }
                     if ($cartOLD->amount <= 0) {
                         return redirect()->back()->with('error', 'Ôi không, đã có người nhanh tay hơn bạn, hộp này đã bị mua hết, bạn vui lòng mua hộp khác');
                     }
@@ -223,7 +228,6 @@ class CartController extends Controller
                     }
                 }
             }
-            
             $request->merge([
                 'id_user' => $user->id,
                 'id_user_create' => $user->id,
@@ -263,10 +267,11 @@ class CartController extends Controller
 
             $this->boxItemRepository->updateAmount($cart->id_box_item, $cart->amount);
 
-            if (!empty($cart->id_cart_old)) {
+            if (!empty($cartOLD)) {
                 // trừ amount cart của cart old
-                $cartOld = $this->cartRepository->show($cart->id_cart_old);
+                // $cartOld = $this->cartRepository->show($cart->id_cart_old);
                 // Trừ số lượng đã đã mua
+                $cartOld = $cartOLD;
                 $this->cartRepository->update(['amount' => $cartOld->amount - $cart->amount], $cart->id_cart_old);
 
                 // folow
