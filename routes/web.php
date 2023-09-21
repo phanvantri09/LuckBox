@@ -165,6 +165,7 @@ Route::group(['prefix' => 'admin', 'middleware'=>['CheckAdmin', 'CheckLoginUser'
             Route::get('/transaction/{id}', 'transaction')->name('transaction');
             Route::get('/transactionCart/{id}/{id_cart_old}', 'transactionCart')->name('transaction.cart');
             Route::get('/listCartMarket/{id}', 'listCartMarket')->name('listCartMarket');
+            Route::get('/checkcart/{id}', 'checkcart')->name('checkcart');
 
         });
     });

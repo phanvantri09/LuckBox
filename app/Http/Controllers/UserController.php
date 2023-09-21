@@ -58,6 +58,10 @@ class UserController extends Controller
         $cart =  $this->cartRepository->getAllByIDUser($id);
         return view('admin.user.listCartMarket', compact(['cart', 'user']));
     }
+    public function checkcart($id){
+        $cart =  $this->cartRepository->show($id);
+        dd($cart);
+    }
     /**
      * Show the form for creating a new resource.
      *
