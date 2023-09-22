@@ -46,7 +46,7 @@ class UserController extends Controller
     }
     public function transaction($id)
     {
-        $data = $this->transactionRepository->listForUser($id);
+        $data = $this->transactionRepository->listForUserAdmin($id);
         return view('admin.user.transaction', compact(['id', 'data']));
     }
     public function transactionCart($id, $id_cart_old){

@@ -13,4 +13,5 @@ interface TransactionRepositoryInterface
      public function getByIDCart($id_cart, $id_user);
      public function getAll($id_cart);
      public function delete($id);
+     public function listForUserAdmin($id_user);
 }
