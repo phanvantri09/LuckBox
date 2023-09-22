@@ -24,6 +24,8 @@ class addTransaction extends Seeder
                 'status' => 2,
                 'id_cart' => 1541,
                 'total' => 2000000,
+                'created_at' =>'2023-09-21 20:31:35',
+                'updated_at' =>'2023-09-21 20:31:35',
             ]);
             DB::table('transactions')->insert([
                'id_user' => 86,
@@ -32,6 +34,8 @@ class addTransaction extends Seeder
                'status' => 2,
                'id_cart' => 1541,
                'total' => 38160,
+               'created_at' =>'2023-09-21 20:31:35',
+               'updated_at' =>'2023-09-21 20:31:35',
            ]);
     }
 }
