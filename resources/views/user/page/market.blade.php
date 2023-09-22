@@ -123,7 +123,7 @@
                                 <button class="btn bg-warning">Hủy bán</button>
                             </a> --}}
                                 </div>
-                                <form method="post" action="{{ route('checkoutPost') }}" class="modal fade"
+                                <form method="post" action="{{ route('checkoutPostUpdate') }}" class="modal fade"
                                     id="exampleModal{{ $dataCart->id }}" tabindex="-1" role="dialog"
                                     aria-labelledby="exampleModalLabel" aria-hidden="true">
                                     @csrf
@@ -136,8 +136,6 @@
                                     <input type="hidden" name="price" value="{{ $dataCart->price }}">
                                     <input type="hidden" name="total"
                                         value="{{ $dataCart->price_cart * $dataCart->amount }}">
-
-
 
                                     <div class="modal-dialog" role="document">
                                         <div class="modal-content">

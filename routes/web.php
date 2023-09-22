@@ -104,6 +104,7 @@ Route::group(['prefix' => '/'], function () {
             Route::get('/gio-hang','cart')->name('cart');
             Route::get('/thanh-toan','checkout')->name('checkout');
             Route::post('/thanh-toan-post','checkoutPost')->name('checkoutPost');
+            Route::post('/thanh-toan-post-update-market','checkoutPostUpdate')->name('checkoutPostUpdate');
             // Route::post('/hoan-tat-thanh-toan','infoCardPayPost')->name('infoCardPayPost');
             Route::get('/hop-mu','purchaseOrder')->name('purchaseOrder');
             Route::get('/danh-sach-hop-gui-ban','boxUserMarket')->name('boxUserMarket');

@@ -189,6 +189,105 @@ class CartController extends Controller
         try {
             $user = Auth::user();
             // case ở market thanh toán lun
+
+                $cart = $this->cartRepository->show($request->id_cart);
+                $boxItemCheck = $this->boxItemRepository->showInCart($cart->id_box_item);
+                if (!empty($boxItemCheck)) {
+                    if ($boxItemCheck->amount < $cart->amount) {
+                        return redirect()->route('market')->with('error', 'Đã xảy ra lỗi');
+                    }
+                }
+
+            // kiểm tra không đủ tiền thì chuyển qua nạp tiền
+            if ($cart->amount * $cart->price_cart > $user->balance) {
+                return redirect()->route('infoCardPay')->with('error', 'Số tài khoản trong ví không đủ để thực hiện, vui lòng nạp thêm tiền để thực hiện giao dịch này.');
+            }
+
+            $request->merge([
+                'id_user' => $user->id,
+                'id_user_create' => $user->id,
+                'id_admin_update' => $user->id,
+                'status' => 2,
+                'id_cart' => $cart->id,
+                'amount' => $cart->amount,
+                'id_box_item' => $cart->id_box_item,
+                'id_box_event' => $cart->id_box_event,
+                'id_box' => $cart->id_box,
+                'total' => $cart->amount * $cart->price_cart,
+                'id_info_user_bill'=> $request->id_info_user_bill
+            ]);
+
+            $dataTransaction = [
+                'id_user' => $user->id,
+                'id_admin_accept' => null,
+                'type' => 3,
+                'total'=> $cart->amount * $cart->price_cart,
+                'status'=> 2
+                , 'card_name'=> null
+                , 'bank'=> null
+                , 'card_number'=> null
+                , 'transaction_content'=> null,
+                'id_cart' => $cart->id
+            ];
+            $transaction = $this->transactionRepository->create($dataTransaction);
+            $this->userRepository->update(['balance' => $user->balance - ($cart->price_cart * $cart->amount)], $user->id);
+
+            $request->merge(['id_transaction' => $transaction->id]);
+            $bill = $this->billRepository->create($request->all());
+
+            $this->boxItemRepository->updateAmount($cart->id_box_item, $cart->amount);
+
+
+                $dataFolow = [
+                    'id_user' => $user->id,
+                    'id_box_item' => $cart->id_box_item,
+                    'id_box_event' => $cart->id_box_event,
+                    'id_box' => $cart->id_box,
+                    'id_cart' => $cart->id,
+                ];
+
+            $folow = $this->folowRepository->create($dataFolow);
+            if ($cart->order_number == 29) {
+                $this->cartRepository->update(['id_folow' => $folow->id, 'status'=>11] ,$cart->id);
+            } else {
+                $this->cartRepository->update(['id_folow' => $folow->id, 'status' => 2 ], $cart->id);
+            }
+
+            // cộng tiền cho người gt tạo tk
+            if (!empty($user->id_user_referral)) {
+                $userReferral = $this->userRepository->find($user->id_user_referral);
+                $moneyUserReferral = $userReferral->balance + (($cart->price_cart * $cart->amount) * 0.2 / 100);
+                $dataTransactionPlusUserreferral  = [
+                    'id_user' => $user->id_user_referral,
+                    'id_admin_accept' => null,
+                    'type' => 6,
+                    'total'=> ($cart->price_cart * $cart->amount) * 0.2 / 100,
+                    'status'=> 2
+                    , 'card_name'=> null
+                    , 'bank'=> null
+                    , 'card_number'=> null
+                    , 'transaction_content'=> null,
+                    'id_cart' =>$request->id_cart
+                ];
+                $this->transactionRepository->create($dataTransactionPlusUserreferral);
+                $this->userRepository->update(['balance' => $moneyUserReferral], $user->id_user_referral);
+            }
+            DB::commit();
+        } catch (\Exception $e){
+            report($e);
+            DB::rollBack();
+            return redirect()->route('market')->with('error', 'Đã xảy ra lỗi vui lòng thử lại!');
+        }
+        return redirect()->route('purchaseOrder')->with('success', 'Mua hàng thành công');
+
+    }
+
+    public function checkoutPostUpdate(Request $request)
+    {
+        DB::beginTransaction();
+        try {
+            $user = Auth::user();
+            // case ở market thanh toán lun
             $cartOLD = [];
             if($request->has('market_pay')){
                 $cartOLD = $this->cartRepository->show($request->id_cart);
@@ -393,7 +492,6 @@ class CartController extends Controller
         return redirect()->route('purchaseOrder')->with('success', 'Mua hàng thành công');
 
     }
-
     public function purchaseOrder(){
         $user = Auth::user();
         $carts = $this->cartRepository->getAllDataByIDUserAndArrayStatus($user->id, [2, 11]);
