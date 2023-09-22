@@ -150,6 +150,10 @@ class UserController extends Controller
         $this->cartRepository->delete($id);
         return back()->with('success', 'Thành công');
     }
-    
+    public function deletetransaction($id)
+    {
+        $this->transactionRepository->delete($id);
+        return back()->with('success', 'Thành công');
+    }
 
 }

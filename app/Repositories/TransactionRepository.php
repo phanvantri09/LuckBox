@@ -91,5 +91,10 @@ class TransactionRepository implements TransactionRepositoryInterface
         ->leftJoin('carts', 'transactions.id_cart', '=', 'carts.id')->
         where('id_user',$id_user)->whereIn('type', [5])->orderBy('updated_at','desc')->get();
     }
+    public function delete($id)
+    {
+        $user = Transaction::findOrFail($id);
+        return $user->delete();
+    }
 
 }

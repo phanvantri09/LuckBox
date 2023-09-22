@@ -43,9 +43,16 @@
                             @foreach ($data as $key => $item)
                                 <tr>
                                     @php
-                                        $userT = Auth::user()->find($item->id_user);
+                                        $cart = [];
+                                        if (!empty($item->id_cart)) {
+                                            $cart = \App\Helpers\ConstCommon::cartByID( $item->id_cart );
+                                        }
+                                        $userT = [];
+                                        if (!empty($cart)) {
+                                            $userT = Auth::user()->find($cart->id_user_create);
+                                        }
                                     @endphp
-                                    <td>{{ $key + 1 }}</td>
+                                    <td>{{ $item->id }}</td>
                                     <td>{{ empty($userT->name) ? "" : (empty($userT->email) ? $userT->number_phone : $userT->email) }}</td>
                                     <td>{{ $item->id_cart ?? null }}</td>
                                     <td>{{ \App\Helpers\ConstCommon::TypeTransaction[$item->type] }}</td>

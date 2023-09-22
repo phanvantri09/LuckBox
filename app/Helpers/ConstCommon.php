@@ -131,4 +131,7 @@ class ConstCommon {
         }
         return number_format($balance - $total);
     }
+    public static function cartByID($id){
+        return Cart::find($id);
+    }
 }

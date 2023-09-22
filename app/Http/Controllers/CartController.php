@@ -198,10 +198,10 @@ class CartController extends Controller
                         return redirect()->route('infoCardPay')->with('error', 'Số tài khoản trong ví không đủ để thực hiện, vui lòng nạp thêm tiền để thực hiện giao dịch này.');
                     }
                     if ($cartOLD->amount <= 0) {
-                        return redirect()->back()->with('error', 'Ôi không, đã có người nhanh tay hơn bạn, hộp này đã bị mua hết, bạn vui lòng mua hộp khác');
+                        return redirect()->route('market')->with('error', 'Ôi không, đã có người nhanh tay hơn bạn, hộp này đã bị mua hết, bạn vui lòng mua hộp khác');
                     }
                     if ($cartOLD->amount < $request->amount) {
-                        return redirect()->back()->with('error', 'Hộp này chỉ còn '.$cartOLD->amount.' hộp nên không thể thực hiện đặt '.$request->amount.' được, Nhanh tay nào vì cũng có rất nhiều người nhắm đến hộp này.');
+                        return redirect()->route('market')->with('error', 'Hộp này chỉ còn '.$cartOLD->amount.' hộp nên không thể thực hiện đặt '.$request->amount.' được, Nhanh tay nào vì cũng có rất nhiều người nhắm đến hộp này.');
                     }
                 }
                 $data = [
@@ -224,10 +224,16 @@ class CartController extends Controller
                 $boxItemCheck = $this->boxItemRepository->showInCart($cart->id_box_item);
                 if (!empty($boxItemCheck)) {
                     if ($boxItemCheck->amount < $cart->amount) {
-                        return redirect()->back()->with('error', 'Đã xảy ra lỗi');
+                        return redirect()->route('market')->with('error', 'Đã xảy ra lỗi');
                     }
                 }
             }
+
+            // kiểm tra không đủ tiền thì chuyển qua nạp tiền
+            if ($cart->amount * $cart->price_cart > $user->balance) {
+                return redirect()->route('infoCardPay')->with('error', 'Số tài khoản trong ví không đủ để thực hiện, vui lòng nạp thêm tiền để thực hiện giao dịch này.');
+            }
+
             $request->merge([
                 'id_user' => $user->id,
                 'id_user_create' => $user->id,
@@ -241,11 +247,6 @@ class CartController extends Controller
                 'total' => $cart->amount * $cart->price_cart,
                 'id_info_user_bill'=> $request->id_info_user_bill
             ]);
-
-            // kiểm tra không đủ tiền thì chuyển qua nạp tiền
-            if ($cart->amount * $cart->price_cart > $user->balance) {
-                return redirect()->route('infoCardPay')->with('error', 'Số tài khoản trong ví không đủ để thực hiện, vui lòng nạp thêm tiền để thực hiện giao dịch này.');
-            }
 
             $dataTransaction = [
                 'id_user' => $user->id,
@@ -386,9 +387,8 @@ class CartController extends Controller
             DB::commit();
         } catch (\Exception $e){
             report($e);
-            // dd($e);
             DB::rollBack();
-            return redirect()->back()->with('error', 'Đã xảy ra lỗi');
+            return redirect()->route('market')->with('error', 'Đã xảy ra lỗi vui lòng thử lại!');
         }
         return redirect()->route('purchaseOrder')->with('success', 'Mua hàng thành công');
 
