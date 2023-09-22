@@ -52,7 +52,7 @@
                                             $userT = Auth::user()->find($cart->id_user_create);
                                         }
                                     @endphp
-                                    <td>{{ $item->id }}</td>
+                                    <td>{{ $key + 1 }}</td>
                                     <td>{{ empty($userT->name) ? "" : (empty($userT->email) ? $userT->number_phone : $userT->email) }}</td>
                                     <td>{{ $item->id_cart ?? null }}</td>
                                     <td>{{ \App\Helpers\ConstCommon::TypeTransaction[$item->type] }}</td>
