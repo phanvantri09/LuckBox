@@ -17,9 +17,9 @@
 
                     <p class="text-muted text-center">{{$user->birthdate}}</p>
 
-                    <p class="text-muted text-center">Số dư tài khoản: {{ number_format($user->blance).' VNĐ' }}</p>
+                    <p class="text-muted text-center">Số dư tài khoản: <b class="text-danger">{{ number_format($user->balance).' VNĐ' }}</b></p>
 
-                    <p class="text-muted text-center">Ngày tạo tài khoản:{{ date('d/m/Y', strtotime($user->created_at)) }}</p>
+                    <p class="text-muted text-center">Ngày tạo tài khoản: {{ date('d/m/Y', strtotime($user->created_at)) }}</p>
                     
 
                 </div>
@@ -37,20 +37,23 @@
                     <strong><i class="fas fa-book mr-1"></i> Số điện thoại</strong>
 
                     <p class="text-muted">
-                        {{$user->number_phone}}
+                        {{$user->number_phone ?? 'Chưa có SĐT'}}
                     </p>
 
                     <hr>
+                    <strong><i class="far fa-file-alt mr-1"></i> Email</strong>
 
+                    <p class="text-muted">
+                        {{$user->email ?? 'Chưa có email'}}
+                    </p>
+
+                    <hr>
                     <strong><i class="fas fa-map-marker-alt mr-1"></i> Địa chỉ</strong>
 
-                    <p class="text-muted">{{$user->house_number_street.', '.$user->neighborhood_village.', '.$user->district.', '.$user->province_city.', '.$user->country}}</p>
+                    <p class="text-muted">{{$user->house_number_street ?? 'Chưa cập nhật địa chỉ'}}</p>
 
                     <hr>
 
-                    <strong><i class="far fa-file-alt mr-1"></i> Nội dung</strong>
-
-                    <p class="text-muted">{{$user->content}}</p>
                 </div>
                 <!-- /.card-body -->
             </div>

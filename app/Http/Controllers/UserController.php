@@ -16,7 +16,7 @@ class UserController extends Controller
     protected $userRepository;
     protected $transactionRepository;
     protected $cartRepository;
-    public function __construct(UserRepositoryInterface $userRepository,TransactionRepositoryInterface $transactionRepository, CartRepositoryInterface $cartRepository,)
+    public function __construct(UserRepositoryInterface $userRepository,TransactionRepositoryInterface $transactionRepository, CartRepositoryInterface $cartRepository)
     {
 
         $this->userRepository = $userRepository;
@@ -41,6 +41,8 @@ class UserController extends Controller
         } else {
             $users = $this->userRepository->getUserByType($type);
         }
+    dd($users);
+
         return view('admin.user.list',compact(['userGTs', 'users']));
     }
     public function transaction($id)
@@ -144,5 +146,11 @@ class UserController extends Controller
         $this->userRepository->delete($id);
         return back()->with('success', 'Thành công');
     }
+    public function deletecart($id)
+    {
+        $this->cartRepository->delete($id);
+        return back()->with('success', 'Thành công');
+    }
+    
 
 }
