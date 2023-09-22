@@ -41,7 +41,6 @@ class UserController extends Controller
         } else {
             $users = $this->userRepository->getUserByType($type);
         }
-    dd($users);
 
         return view('admin.user.list',compact(['userGTs', 'users']));
     }
