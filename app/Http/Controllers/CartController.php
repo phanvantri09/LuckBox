@@ -332,6 +332,9 @@ class CartController extends Controller
             if ($cart->amount * $cart->price_cart > $user->balance) {
                 return redirect()->route('infoCardPay')->with('error', 'Số tài khoản trong ví không đủ để thực hiện, vui lòng nạp thêm tiền để thực hiện giao dịch này.');
             }
+            if ($user->id != $cart->id_user_create) {
+                return redirect()->route('home')->with('error', "Bạn không có quyền truy cập trang web này!");
+            }
 
             $request->merge([
                 'id_user' => $user->id,
@@ -527,12 +530,28 @@ class CartController extends Controller
         return view('user.page.box.treedata', compact(['box', 'number_order', 'dataCart', 'folows', 'transactions']));
     }
     public function sendToMarket($id_cart){
+        $user = Auth::user();
+        $cart = $this->cartRepository->show($id_cart);
+        if ($user->id != $cart->id_user_create) {
+            return redirect()->route('home')->with('error', "Bạn không có quyền truy cập trang web này!");
+        }
+        if ($cart->status != 2) {
+            return redirect()->route('cart')->with('error', "Bạn vừa tạo 1 yêu cầu trái phép, yêu cầu của bạn không thành công.");
+        }
         $dataCart =  $this->cartRepository->showAllData($id_cart);
         return view('user.page.resell', compact(['dataCart']));
 
     }
     public function sendToMarketPost(Request $request){
         $user = Auth::user();
+        $cartt = $this->cartRepository->show($request->id_cart);
+        if ($user->id != $cartt->id_user_create) {
+            return redirect()->route('home')->with('error', "Bạn không có quyền truy cập trang web này!");
+        }
+        if ($cartt->status != 2) {
+            return redirect()->route('cart')->with('error', "Bạn vừa tạo 1 yêu cầu trái phép, yêu cầu của bạn không thành công.");
+        }
+
         $cart = $this->cartRepository->show($request->id_cart);
         if ($cart->amount == $request->amount) {
             $this->cartRepository->changeStatus(10, $request->id_cart);
@@ -597,6 +616,10 @@ class CartController extends Controller
         return view('user.page.showOrder', compact(['dataCart', 'inforUserBills']));
     }
     public function stopMarket($id_cart){
+        $cart = $this->cartRepository->show($id_cart);
+        if ($cart->status != 10) {
+            return redirect()->back()->with('error', "Bạn vừa tạo 1 yêu cầu trái phép, yêu cầu của bạn không thành công.");
+        }
         if ($this->cartRepository->update(['status' => 2], $id_cart)) {
             // $cart = $this->cartRepository->show($id_cart);
             // $bill = $this->billRepository->showByIdCart($id_cart);

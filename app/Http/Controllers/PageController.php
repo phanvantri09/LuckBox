@@ -247,7 +247,15 @@ class PageController extends Controller
     {
         $user = Auth::user();
         $cart = $this->cartRepository->show($id_cart);
-        // dd($cart);
+        if ($user->id != $cart->id_user_create) {
+            return redirect()->route('home')->with('error', "Bạn không có quyền truy cập trang web này!");
+        }
+        if ($cart->status != 2) {
+            return redirect()->route('cart')->with('error', "Không thể mở hộp.");
+        }
+        if ($cart->amount <= 0) {
+            return redirect()->route('cart')->with('error', "Số lượng đã hết để mở.");
+        }
         $allProductItem = $this->boxProductRepository->getAllProductByBox($cart->id_box)->pluck('id_product');
         $allProduct = $this->productRepository->getByArrayID($allProductItem);
 
@@ -263,6 +271,28 @@ class PageController extends Controller
     }
     public function openBoxPost($id_cart, $id_product){
         $user = Auth::user();
+        $cartt = $this->cartRepository->show($id_cart);
+        if ($user->id != $cartt->id_user_create) {
+            return response()->json([
+                'success' => false,
+                'message' => 'CSRF token mismatch. Please refresh the page and try again.'
+            ], 400);
+            return redirect()->route('home')->with('error', "Bạn không có quyền truy cập trang web này!");
+        }
+        if ($cartt->status != 2) {
+            return response()->json([
+                'success' => false,
+                'message' => 'CSRF token mismatch. Please refresh the page and try again.'
+            ], 400);
+            return redirect()->route('cart')->with('error', "Không thể mở hộp.");
+        }
+        if ($cartt->amount <= 0) {
+            return response()->json([
+                'success' => false,
+                'message' => 'CSRF token mismatch. Please refresh the page and try again.'
+            ], 400);
+            return redirect()->route('cart')->with('error', "Số lượng đã hết để mở.");
+        }
         DB::beginTransaction();
         try {
             $cart = $this->cartRepository->show($id_cart);
@@ -321,7 +351,6 @@ class PageController extends Controller
         } catch (\Exception $e){
             report($e);
             DB::rollBack();
-            // dd($e);
             return response()->json([
                         'success' => false,
                         'message' => 'CSRF token mismatch. Please refresh the page and try again.'

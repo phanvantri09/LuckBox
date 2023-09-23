@@ -33,15 +33,16 @@ class TransactionController extends Controller
             if (!empty($trans)) {
                 if ($trans->total > $user->balance) {
                     if($this->transactionRepository->update(['status'=>3], $id)){
-                        ConstCommon::sendMail(
-                            $user->email, 
-                            ['email' => $user->email,'type'=>'Rút tiền','status'=> "Bị từ chối, vì số tiền hiện tại trong Ví ". number_format($user->balance). " là không đủ.", "balance"=>$trans->total, 'link'=>route('walet')]
-                        );
+                        // if (!empty($user->email)) {
+                        //     ConstCommon::sendMail(
+                        //         $user->email,
+                        //         ['email' => $user->email,'type'=>'Rút tiền','status'=> "Bị từ chối, vì số tiền hiện tại trong Ví ". number_format($user->balance). " là không đủ.", "balance"=>$trans->total, 'link'=>route('walet')]
+                        //     );
+                        // }
                         return back()->with('error', 'Đã chuyển sang trạng thái bị từ chối vì số tiền hiện tại trong Ví của khách hàng không đủ');
                     }
                 }
             }
-
         }
         if ($this->transactionRepository->changeStatus($id, $idUser,$type,$request->status)) {
             return back()->with('message', 'Thành Công');

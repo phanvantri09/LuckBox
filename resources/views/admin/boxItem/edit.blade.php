@@ -29,7 +29,7 @@
                         <div class="form-group">
                             <label for="timeStart">Số lượng box</label>
                             <div class="input-group date">
-                                <input type="number" name="amount" class="form-control" value="{{ $item->amount ?? null }}" />
+                                <input type="number" name="amount" class="form-control" value="{{ $getBoxItem->amount ?? null }}" />
                                 @error('amount')
                                     <div class="alert alert-danger">{{ $errors->first('amount') }}</div>
                                 @enderror

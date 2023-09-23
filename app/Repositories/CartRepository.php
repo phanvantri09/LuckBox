@@ -88,7 +88,9 @@ class CartRepository implements CartRepositoryInterface
                 ->leftJoin('bills', 'carts.id', '=', 'bills.id_cart')
                 ->leftJoin('info_user_bills', 'bills.id_info_user_bill', '=', 'info_user_bills.id')
                 ->orderBy('carts.created_at', 'desc')
-                ->where('carts.status', $status)->get();
+                ->where('carts.status', $status)
+                ->where('carts.amount', '>', 0)
+                ->get();
     }
     public function getInforOderUser($id_user, $status){
         return DB::table('carts')->select('carts.*', 'box.title', 'box.link_image', 'box.price',
