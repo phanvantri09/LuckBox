@@ -79,7 +79,18 @@ class CartAdminController extends Controller
         $data = $this->cartRepository->listFail([3,4,5,7]);
         dd($data);
     }
+
+    public function deletecartfail(){
+        $this->cartRepository->deletecartfail([3,4,5,7]);
+        $data = $this->cartRepository->listFail([3,4,5,7]);
+        dd($data);
+    }
     public function listbillfail(){
+        $data = $this->billRepository->listBillFail();
+        dd($data);
+    }
+    public function deleteBillfail(){
+        $this->billRepository->deleteBillfail();
         $data = $this->billRepository->listBillFail();
         dd($data);
     }

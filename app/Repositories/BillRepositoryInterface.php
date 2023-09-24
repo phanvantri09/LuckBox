@@ -13,4 +13,5 @@ interface BillRepositoryInterface
      public function updateByIDCart(array $data, $id_cart);
      public function showByIdCartInfo($id_cart);
      public function listBillFail();
+     public function deleteBillfail();
 }

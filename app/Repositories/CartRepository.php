@@ -106,6 +106,11 @@ class CartRepository implements CartRepositoryInterface
                 ->whereIn('carts.status', $status)
                 ->get();
     }
+    public function deletecartfail(array $status){
+        return Cart::where('.amount', '<=', 0)
+                ->whereIn('status', $status)
+                ->update(['status' => 6]);
+    }
     public function getInforOderUser($id_user, $status){
         return DB::table('carts')->select('carts.*', 'box.title', 'box.link_image', 'box.price',
                 'bills.amount as bills_amount', 'bills.total as bills_total', 'info_user_bills.name', 'info_user_bills.number_phone', 'info_user_bills.address', 'users.email',

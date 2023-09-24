@@ -29,4 +29,5 @@ interface CartRepositoryInterface
      public function findCart(array $data);
      public function getAllDataByIDUserAndStatusTreeDataAdmin($id_user, $status);
      public function listFail(array $status);
+     public function deletecartfail(array $status);
 }

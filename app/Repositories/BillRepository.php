@@ -56,4 +56,9 @@ class BillRepository implements BillRepositoryInterface
         $user = Bill::where('amount', '<=', 0)->get();
         return $user;
     }
+    public function deleteBillfail()
+    {
+        // Bill::where('amount', '<=', 0)->delete()
+        return Bill::where('amount', '<=', 0)->update(['status' => 6]);
+    }
 }

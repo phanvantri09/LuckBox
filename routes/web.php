@@ -352,7 +352,11 @@ Route::group(['prefix' => 'admin', 'middleware'=>['CheckAdmin', 'CheckLoginUser'
             Route::get('productOrder/{id_cart}','productOrder')->name('productOrder');
             Route::get('productChoeseOrder/{id_cart}','productChoeseOrder')->name('productChoeseOrder');
             Route::get('listfail','listfail')->name('listfail');
+            // chuyển về 6
+            Route::get('updatecartfail','deletecartfail')->name('deletecartfail');
             Route::get('listbillfail','listbillfail')->name('listbillfail');
+            // chuyển về 6
+            Route::get('updateBillfail','deleteBillfail')->name('deleteBillfail');
         });
     });
 });
