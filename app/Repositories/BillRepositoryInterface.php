@@ -12,4 +12,5 @@ interface BillRepositoryInterface
      public function showByIdCart($id_cart);
      public function updateByIDCart(array $data, $id_cart);
      public function showByIdCartInfo($id_cart);
+     public function listBillFail();
 }

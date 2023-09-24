@@ -92,7 +92,7 @@ class CartRepository implements CartRepositoryInterface
                 ->where('carts.amount', '>', 0)
                 ->get();
     }
-    public function listFail(){
+    public function listFail(array $status){
         return DB::table('carts')->select('carts.*', 'box.title', 'box.link_image', 'box.price',
                 'bills.id as bill_id','bills.amount as bills_amount', 'bills.total as bills_total', 'info_user_bills.name',
                 'info_user_bills.number_phone as info_number_phone', 'info_user_bills.address as info_address',
@@ -103,6 +103,7 @@ class CartRepository implements CartRepositoryInterface
                 ->leftJoin('info_user_bills', 'bills.id_info_user_bill', '=', 'info_user_bills.id')
                 ->orderBy('carts.created_at', 'desc')
                 ->where('carts.amount', '<=', 0)
+                ->whereIn('carts.status', $status)
                 ->get();
     }
     public function getInforOderUser($id_user, $status){

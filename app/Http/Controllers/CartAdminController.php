@@ -76,7 +76,7 @@ class CartAdminController extends Controller
         return view('admin.cart.infoOrder', compact(['cart','products', 'bill']));
     }
     public function listfail(){
-        $data = $this->cartRepository->listFail();
+        $data = $this->cartRepository->listFail([3,4,5,7]);
         dd($data);
     }
     public function listbillfail(){
