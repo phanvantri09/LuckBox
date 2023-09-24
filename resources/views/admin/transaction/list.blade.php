@@ -31,7 +31,7 @@
                                 <th>Số tài khoản</th>
                                 <th>Ngân hàng</th>
                                 @if (isset($_GET['type']))
-                                    @if (($_GET['type'] == 2))
+                                    @if ($_GET['type'] == 2)
                                         <th>Mã giao dịch</th>
                                         <th>Hình ảnh</th>
                                     @endif
@@ -51,40 +51,61 @@
                                 @endphp
                                 <tr>
                                     <td>{{ $i }}</td>
-                                    <td style="
+                                    <td
+                                        style="
                                     border-radius: 3px;
                                     color: #fff;
-                                    background-color: {{ ($item->type == 1 ) ? ' red' : '' }}
-                                    {{ ($item->type == 2 ) ? 'green' : '' }}
-                                    {{ ($item->type == 3 ) ? 'blue' : '' }}
-                                    {{ ($item->type == 4 ) ? 'black' : '' }}
-                                    {{ ($item->type == 5 ) ? 'orange' : '' }}
-                                    {{ ($item->type == 6 ) ? 'gray' : '' }}
+                                    background-color: {{ $item->type == 1 ? ' red' : '' }}
+                                    {{ $item->type == 2 ? 'green' : '' }}
+                                    {{ $item->type == 3 ? 'blue' : '' }}
+                                    {{ $item->type == 4 ? 'black' : '' }}
+                                    {{ $item->type == 5 ? 'orange' : '' }}
+                                    {{ $item->type == 6 ? 'gray' : '' }}
                                     ;
-                                ">{{ \App\Helpers\ConstCommon::TypeTransaction[$item->type] }}</td>
+                                ">
+                                        {{ \App\Helpers\ConstCommon::TypeTransaction[$item->type] }}</td>
                                     </td>
-                                    <td>{{ $item->User->email ?? $item->User->number_phone ?? null }}</td>
+                                    <td>{{ $item->User->email ?? ($item->User->number_phone ?? null) }}</td>
                                     <td>{{ number_format($item->total) }}VNĐ</td>
                                     <td>{{ $item->card_name }}</td>
                                     <td>{{ $item->card_number }}</td>
                                     <td>{{ $item->bank }}</td>
                                     @if (isset($_GET['type']))
-                                    @if (($_GET['type'] == 2))
-                                    <td><b>{{ $item->code ?? '' }}</b></td>
-                                    <td><img style="max-height: 200px; width: auto;"  src="{{\App\Helpers\ConstCommon::getLinkImageToStorage($item->link_image) }}" alt=""></td>
-                                    @endif
+                                        @if ($_GET['type'] == 2)
+                                            <td><b>{{ $item->code ?? '' }}</b></td>
+                                            <td><img style="max-height: 200px; width: auto;"
+                                                    src="{{ \App\Helpers\ConstCommon::getLinkImageToStorage($item->link_image) }}"
+                                                    alt=""></td>
+                                        @endif
                                     @endif
                                     <td>
-                                        <form class="status-form"
-                                            action="{{route('transaction.changeStatus', ['id' => $item->id,'id_user' => $item->id_user,'type' => $item->type])}}"
-                                            method="POST">
-                                            @csrf
-                                            <select class="status-select form-control" name="status">
-                                                <option {{ $item->status == 1 ? 'selected' : '' }} value="1">Vừa mới tạo</option>
-                                                <option {{ $item->status == 2 ? 'selected' : '' }} value="2">Thành Công</option>
-                                                <option {{ $item->status == 3 ? 'selected' : '' }} value="3">Từ chối</option>
-                                            </select>
-                                        </form>
+
+                                        <div class="btn-group">
+                                            <button type="button" class="btn border dropdown-toggle" data-toggle="dropdown"
+                                                aria-haspopup="true" aria-expanded="false">
+                                                @if ($item->status == 1)
+                                                    Vừa tạo
+                                                @endif
+                                                @if ($item->status == 2)
+                                                    Thành Công
+                                                @endif
+                                                @if ($item->status == 3)
+                                                    Từ chối
+                                                @endif
+                                            </button>
+                                            <div class="dropdown-menu">
+                                                <a class="dropdown-item"
+                                                    @if ($item->status != 1) href="{{ route('transaction.changeStatus', ['id' => $item->id, 'id_user' => $item->id_user, 'type' => $item->type, 'status' => 1]) }}" @endif>Vừa
+                                                    tạo</a>
+                                                <a class="dropdown-item"
+                                                    @if ($item->status != 2) href="{{ route('transaction.changeStatus', ['id' => $item->id, 'id_user' => $item->id_user, 'type' => $item->type, 'status' => 2]) }}" @endif>Thành
+                                                    Công</a>
+                                                <a class="dropdown-item"
+                                                    @if ($item->status != 3) href="{{ route('transaction.changeStatus', ['id' => $item->id, 'id_user' => $item->id_user, 'type' => $item->type, 'status' => 3]) }}" @endif>Từ
+                                                    chối</a>
+                                                <div class="dropdown-divider"></div>
+                                            </div>
+                                        </div>
                                     </td>
                                     <td>{{ date('H:i:s d-m-Y', strtotime($item->created_at)) }}</td>
                                     <td>{{ date('H:i:s d-m-Y', strtotime($item->updated_at)) }}</td>
@@ -139,9 +160,6 @@
                 "info": true,
                 "autoWidth": false,
                 "responsive": true,
-            });
-            $('.status-select').on('change', function() {
-                $(this).closest('form').submit();
             });
         });
     </script>

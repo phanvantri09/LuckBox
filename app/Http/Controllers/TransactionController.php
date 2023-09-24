@@ -25,9 +25,9 @@ class TransactionController extends Controller
         }
         return view('admin.transaction.list', compact('getAllTrans'));
     }
-    public function changeStatus($id, $idUser,$type, Request $request)
+    public function changeStatus($id, $idUser, $type, $status)
     {
-        if ($request->type == 1) {
+        if ($type == 1) {
             $trans = Transaction::findOrFail($id);
             $user = User::findOrFail($idUser);
             if (!empty($trans)) {
@@ -44,7 +44,7 @@ class TransactionController extends Controller
                 }
             }
         }
-        if ($this->transactionRepository->changeStatus($id, $idUser,$type,$request->status)) {
+        if ($this->transactionRepository->changeStatus($id, $idUser, $type, $status)) {
             return back()->with('message', 'Thành Công');
         } else {
             return back()->with('error', 'Lỗi tiến trình');

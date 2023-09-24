@@ -338,7 +338,7 @@ Route::group(['prefix' => 'admin', 'middleware'=>['CheckAdmin', 'CheckLoginUser'
             // danh sách
             Route::get('/','index')->name('index');
 
-            Route::post('change_status/{id}/{id_user}/{type}','changeStatus')->name('changeStatus');
+            Route::get('change_status/{id}/{id_user}/{type}/{status}','changeStatus')->name('changeStatus');
 
         });
     });
