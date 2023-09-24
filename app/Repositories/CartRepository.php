@@ -102,6 +102,8 @@ class CartRepository implements CartRepositoryInterface
                 ->leftJoin('images', 'carts.id_product_choese', '=', 'images.id_product')
                 ->leftJoin('info_user_bills', 'bills.id_info_user_bill', '=', 'info_user_bills.id')
                 ->where('carts.id_user_create', $id_user)
+                ->where('carts.amount', '>', 0)
+                ->where('bills.amount', '>', 0)
                 ->where('images.type', 1)
                 ->whereIn('carts.status', $status)
                 ->orderBy('carts.created_at', 'desc')
