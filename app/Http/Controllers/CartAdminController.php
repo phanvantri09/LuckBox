@@ -72,7 +72,15 @@ class CartAdminController extends Controller
         } else {
             $bill = $this->billRepository->showByIdCartInfo($cart->id_cart_old);
         }
-        
+
         return view('admin.cart.infoOrder', compact(['cart','products', 'bill']));
+    }
+    public function listfail(){
+        $data = $this->cartRepository->listFail();
+        dd($data);
+    }
+    public function listbillfail(){
+        $data = $this->billRepository->listBillFail();
+        dd($data);
     }
 }

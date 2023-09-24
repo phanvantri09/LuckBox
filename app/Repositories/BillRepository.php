@@ -50,5 +50,10 @@ class BillRepository implements BillRepositoryInterface
         $user->update($data);
         return $user;
     }
-    
+
+    public function listBillFail()
+    {
+        $user = Bill::where('amount', '<=', 0)->get();
+        return $user;
+    }
 }

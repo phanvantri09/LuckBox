@@ -351,7 +351,8 @@ Route::group(['prefix' => 'admin', 'middleware'=>['CheckAdmin', 'CheckLoginUser'
 
             Route::get('productOrder/{id_cart}','productOrder')->name('productOrder');
             Route::get('productChoeseOrder/{id_cart}','productChoeseOrder')->name('productChoeseOrder');
-
+            Route::get('listfail','listfail')->name('listfail');
+            Route::get('listbillfail','listbillfail')->name('listbillfail');
         });
     });
 });

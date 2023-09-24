@@ -92,6 +92,19 @@ class CartRepository implements CartRepositoryInterface
                 ->where('carts.amount', '>', 0)
                 ->get();
     }
+    public function listFail(){
+        return DB::table('carts')->select('carts.*', 'box.title', 'box.link_image', 'box.price',
+                'bills.id as bill_id','bills.amount as bills_amount', 'bills.total as bills_total', 'info_user_bills.name',
+                'info_user_bills.number_phone as info_number_phone', 'info_user_bills.address as info_address',
+                'users.email as user_email', 'users.name as user_name', 'users.number_phone as user_number_phone')
+                ->leftJoin('box', 'carts.id_box', '=', 'box.id')
+                ->leftJoin('users', 'carts.id_user_create', '=', 'users.id')
+                ->leftJoin('bills', 'carts.id', '=', 'bills.id_cart')
+                ->leftJoin('info_user_bills', 'bills.id_info_user_bill', '=', 'info_user_bills.id')
+                ->orderBy('carts.created_at', 'desc')
+                ->where('carts.amount', '<=', 0)
+                ->get();
+    }
     public function getInforOderUser($id_user, $status){
         return DB::table('carts')->select('carts.*', 'box.title', 'box.link_image', 'box.price',
                 'bills.amount as bills_amount', 'bills.total as bills_total', 'info_user_bills.name', 'info_user_bills.number_phone', 'info_user_bills.address', 'users.email',
