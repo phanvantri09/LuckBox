@@ -33,7 +33,7 @@ class CartRepository implements CartRepositoryInterface
     {
         $user = Cart::findOrFail($id);
         $user->status = $status;
-        $user->save();
+        return $user->save();
     }
     public function update(array $data, $id)
     {

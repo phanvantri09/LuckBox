@@ -544,25 +544,28 @@ class CartController extends Controller
     }
     public function sendToMarketPost(Request $request){
         $user = Auth::user();
-        $cartt = $this->cartRepository->show($request->id_cart);
-        if ($user->id != $cartt->id_user_create) {
+        $cart = $this->cartRepository->show($request->id_cart);
+        if ($user->id != $cart->id_user_create) {
             return redirect()->route('home')->with('error', "Bạn không có quyền truy cập trang web này!");
         }
-        if ($cartt->status != 2) {
+        if ($cart->status != 2) {
             return redirect()->route('cart')->with('error', "Bạn vừa tạo 1 yêu cầu trái phép, yêu cầu của bạn không thành công.");
         }
 
-        $cart = $this->cartRepository->show($request->id_cart);
-        if ($cart->amount == $request->amount) {
-            $this->cartRepository->changeStatus(10, $request->id_cart);
-            return redirect()->route('home')->with('success', 'Đăng bán thành công nhé');
-        }
         if ($cart->amount < $request->amount) {
             return redirect()->back()->with('error', "Số lượng yêu cầu lớn hơn số lượng hiện có");
         }
         DB::beginTransaction();
         try {
-
+            $cart = $this->cartRepository->show($request->id_cart);
+            if ($cart->amount == $request->amount) {
+                if ($this->cartRepository->changeStatus(10, $request->id_cart)) {
+                    DB::commit();
+                    return redirect()->route('home')->with('success', 'Đăng bán thành công');
+                } else {
+                    return redirect()->route('cart')->with('error', 'Đã xảy ra lỗi vui long thử lại.');
+                }
+            }
             $amountUpdate = $cart->amount - $request->amount;
             $this->cartRepository->update(['amount'=>$amountUpdate], $cart->id);
 

@@ -46,9 +46,9 @@ class BillRepository implements BillRepositoryInterface
     }
     public function updateByIDCart(array $data, $id_cart)
     {
-        $user = Bill::where('id_cart', $id_cart)->first();
-        $user->update($data);
-        return $user;
+        // $user = Bill::where('id_cart', $id_cart)update($data);
+        // $user->update($data);
+        return Bill::where('id_cart', $id_cart)->update($data);
     }
 
     public function listBillFail()
