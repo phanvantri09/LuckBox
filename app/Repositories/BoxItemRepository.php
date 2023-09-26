@@ -102,7 +102,7 @@ class BoxItemRepository implements BoxItemRepositoryInterface
     public function updateAmount($id, $amount){
         $Box_item = Box_item::where('id',$id)->lockForUpdate()->first();
         $Box_item->amount = $Box_item->amount - $amount;
-        $Box_item->save();
+        return $Box_item->save();
     }
 
 }

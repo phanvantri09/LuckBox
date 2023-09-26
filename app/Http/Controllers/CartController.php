@@ -237,7 +237,6 @@ class CartController extends Controller
 
             $this->boxItemRepository->updateAmount($cart->id_box_item, $cart->amount);
 
-
                 $dataFolow = [
                     'id_user' => $user->id,
                     'id_box_item' => $cart->id_box_item,
@@ -368,8 +367,6 @@ class CartController extends Controller
             $request->merge(['id_transaction' => $transaction->id]);
             $bill = $this->billRepository->create($request->all());
 
-            $this->boxItemRepository->updateAmount($cart->id_box_item, $cart->amount);
-
             if (!empty($cartOLD)) {
                 // trừ amount cart của cart old
                 // $cartOld = $this->cartRepository->show($cart->id_cart_old);
@@ -452,6 +449,7 @@ class CartController extends Controller
                 }
 
             } else {
+                $this->boxItemRepository->updateAmount($cart->id_box_item, $cart->amount);
                 $dataFolow = [
                     'id_user' => $user->id,
                     'id_box_item' => $cart->id_box_item,

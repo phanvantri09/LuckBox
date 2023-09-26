@@ -65,7 +65,8 @@ class HomeController extends Controller
         } else {
             $sharedLink = '';
         }
-        $boxItem = $event = $cacheBoxItem = $cachebox = $cacheProduct = $products = $imageSlide = $boxItem = $countSale = null;
+        $boxItem = $event = $cacheBoxItem = $cachebox = $cacheProduct = $products = $imageSlide = $boxItem = null;
+        $countSale = 0;
         $currentTime = Carbon::now('Asia/Ho_Chi_Minh');
         $timeEventInCase = $timeEventNotInCase = $timeEventStart = $timeEventEnd = null;
         // $time = $currentTime->format('m/d/Y H:i:s');

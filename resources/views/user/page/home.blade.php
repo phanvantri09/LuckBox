@@ -150,9 +150,16 @@
                                     @if (empty($cacheBoxItem))
                                         <div class="rank-progress" style="width:0%;"></div>
                                     @else
+                                        @if ($cacheBoxItem->amount <= 0)
+                                            <div class="rank-progress"
+                                                style="width: 100%;">
+                                            </div>
+                                        @else
                                         <div class="rank-progress"
-                                            style="width: {{ ($countSale / ($cacheBoxItem->amount + $countSale)) * 100 }}%;">
+                                            style="width: {{ ($countSale != 0) ? (($countSale / ($cacheBoxItem->amount + $countSale)) * 100) : 0 }}%;">
                                         </div>
+                                        @endif
+                                        
                                     @endif
 
                                 </div>
