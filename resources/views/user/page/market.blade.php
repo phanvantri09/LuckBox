@@ -232,7 +232,7 @@
                             <li class="page-item disabled"><a class="page-link"><span>&laquo;</span></a></li>
                         @else
                             <li class="page-item" aria-disabled="true" aria-label="« Previous"><a class="page-link"
-                                    href="{{ $dataCarts->previousPageUrl() }}" rel="prev">&laquo;</a></li>
+                                    href="{{ $dataCarts->appends(Request::all())->previousPageUrl() }}" rel="prev">&laquo;</a></li>
                         @endif
                         @php
                             $currentPage = $dataCarts->currentPage();
@@ -241,29 +241,29 @@
                             @if ($dataCarts->currentPage() > 3)
                                 @if ($currentPage + 2 > $dataCarts->lastPage())
                                     <li class="page-item"><a class="page-link"
-                                            href="{{ $dataCarts->url($currentPage - 4) }}">{{ $currentPage - 4 }}</a>
+                                            href="{{ $dataCarts->appends(Request::all())->url($currentPage - 4) }}">{{ $currentPage - 4 }}</a>
                                     </li>
                                 @endif
                                 @if ($currentPage + 1 > $dataCarts->lastPage())
                                     <li class="page-item"><a class="page-link"
-                                            href="{{ $dataCarts->url($currentPage - 3) }}">{{ $currentPage - 3 }}</a>
+                                            href="{{ $dataCarts->appends(Request::all())->url($currentPage - 3) }}">{{ $currentPage - 3 }}</a>
                                     </li>
                                 @endif
                                 <li class="page-item"><a class="page-link"
-                                        href="{{ $dataCarts->url($currentPage - 2) }}">{{ $currentPage - 2 }}</a></li>
+                                        href="{{ $dataCarts->appends(Request::all())->url($currentPage - 2) }}">{{ $currentPage - 2 }}</a></li>
                                 <li class="page-item"><a class="page-link"
-                                        href="{{ $dataCarts->url($currentPage - 1) }}">{{ $currentPage - 1 }}</a></li>
+                                        href="{{ $dataCarts->appends(Request::all())->url($currentPage - 1) }}">{{ $currentPage - 1 }}</a></li>
                                 <li class="page-item active" aria-current="page"><span
                                         class="page-link">{{ $currentPage }}</span></li>
                                 {{-- $dataCarts->currentPage() --}}
                                 @if ($currentPage + 1 <= $dataCarts->lastPage())
                                     <li class="page-item"><a class="page-link"
-                                            href="{{ $dataCarts->url($currentPage + 1) }}">{{ $currentPage + 1 }}</a>
+                                            href="{{ $dataCarts->appends(Request::all())->url($currentPage + 1) }}">{{ $currentPage + 1 }}</a>
                                     </li>
                                 @endif
                                 @if ($currentPage + 2 <= $dataCarts->lastPage())
                                     <li class="page-item"><a class="page-link"
-                                            href="{{ $dataCarts->url($currentPage + 2) }}">{{ $currentPage + 2 }}</a>
+                                            href="{{ $dataCarts->appends(Request::all())->url($currentPage + 2) }}">{{ $currentPage + 2 }}</a>
                                     </li>
                                 @endif
                             @else
@@ -273,7 +273,7 @@
                                                 class="page-link">{{ $i }}</span></li>
                                     @else
                                         <li class="page-item"><a class="page-link"
-                                                href="{{ $dataCarts->url($i) }}">{{ $i }}</a></li>
+                                                href="{{ $dataCarts->appends(Request::all())->url($i) }}">{{ $i }}</a></li>
                                     @endif
                                 @endfor
                             @endif
@@ -284,13 +284,13 @@
                                             class="page-link">{{ $i }}</span></li>
                                 @else
                                     <li class="page-item"><a class="page-link"
-                                            href="{{ $dataCarts->url($i) }}">{{ $i }}</a></li>
+                                            href="{{ $dataCarts->appends(Request::all())->url($i) }}">{{ $i }}</a></li>
                                 @endif
                             @endfor
                         @endif
 
                         @if ($dataCarts->hasMorePages())
-                            <li class="page-item"><a class="page-link" href="{{ $dataCarts->nextPageUrl() }}"
+                            <li class="page-item"><a class="page-link" href="{{ $dataCarts->appends(Request::all())->nextPageUrl() }}"
                                     rel="next">&raquo;</a></li>
                         @else
                             <li class="page-item disabled"><a class="page-link"><span>&raquo;</span></a></li>

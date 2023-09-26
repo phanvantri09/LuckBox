@@ -208,7 +208,7 @@ class CartRepository implements CartRepositoryInterface
                 ->leftJoin('users', 'carts.id_user_create', '=', 'users.id')
                 ->where('carts.amount', '>', 0)
                 ->where('carts.status', 10)
-                ->orderBy('carts.created_at', 'desc')
+                ->orderBy('carts.updated_at', 'desc')
                 ->paginate(20);
             }
             if ($type == 2) {
@@ -238,7 +238,7 @@ class CartRepository implements CartRepositoryInterface
             ->leftJoin('users', 'carts.id_user_create', '=', 'users.id')
             ->where('carts.amount', '>', 0)
             ->where('carts.status', 10)
-            ->orderBy('carts.created_at', 'desc')
+            ->orderBy('carts.updated_at', 'desc')
             ->paginate(20);
         }
 
