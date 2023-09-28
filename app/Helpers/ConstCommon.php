@@ -8,6 +8,7 @@ use App\Models\Category;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\SendMail;
+use App\Mail\SendLinkMail;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Cart;
@@ -100,7 +101,11 @@ class ConstCommon {
      }
      public static function sendMail($email, $content){
         $mail = new SendMail($content);
-        Mail::to($email)->queue($mail);
+        return Mail::to($email)->queue($mail);
+    }
+    public static function sendMailLinkPass($email, $content){
+        $mail = new SendLinkMail($content);
+        return Mail::to($email)->queue($mail);
     }
     public static function getCartCurent(){
         $user = Auth::user();

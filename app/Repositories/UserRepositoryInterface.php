@@ -17,5 +17,6 @@ interface UserRepositoryInterface
      public function findUserByCode($code);
      public function listGT($id);
      public function getUserByTypeGT();
+     public function checkByEmail($email);
 }
 

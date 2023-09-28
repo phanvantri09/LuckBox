@@ -7,7 +7,7 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 
-class SendMail extends Mailable
+class SendLinkMail extends Mailable
 {
     use Queueable, SerializesModels;
 
@@ -41,8 +41,8 @@ class SendMail extends Mailable
      */
     public function build()
     {
-        return $this->view('mail.sendMail')
-                    ->subject("Thông báo giao dịch")
+        return $this->view('mail.SendLinkMail')
+                    ->subject("Đổi mật khẩu")
                     ->with($this->data);
     }
 }

@@ -6,6 +6,7 @@ use Hashids\Hashids;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use App\Http\Requests\User\CreateRequestUser;
+use App\Http\Requests\Auth\ChangPassOTP;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use App\Helpers\ConstCommon;
@@ -203,4 +204,65 @@ class AuthController extends Controller
             return redirect()->back()->with('error', 'Mật khẩu hiện tại không chính xác.');
         }
     }
+
+    public function showLinkRequestForm()
+    {
+        return view('auth.email');
+    }
+    
+    public function sendResetLinkEmail(ChangPassOTP $request)
+    {
+        // dd($request->all());
+        if (Auth::check()) {
+            return redirect()->route('home');
+        }
+
+        $emailOrPhone = $request->input('email');
+        if (filter_var($emailOrPhone, FILTER_VALIDATE_EMAIL)) {
+            $credentials['email'] = $emailOrPhone;
+            $checkEmail = $this->userRepository->checkByEmail($emailOrPhone);
+            if (!empty($checkEmail)) {
+                $userId = $checkEmail->id;
+                $dataToEncode = [
+                    $userId
+                ];
+    
+                $hashids = new Hashids('share', 16);
+                $encodedData = $hashids->encode($dataToEncode);
+                $sharedLink = route('password.reset', ['id_user'=>$encodedData]);
+               
+                if (ConstCommon::sendMailLinkPass($checkEmail->email, 
+                    ['email' => $checkEmail->email,
+                    'type'=>"Đổi mật khẩu",
+                    'status'=> "Thành công", 
+                    'link'=>$sharedLink ]
+                )) {
+                    return redirect()->back()->with('error', 'Email này chưa được đăng ký!');
+                } else {
+                    return redirect()->back()->with('success', 'Đã gửi liên kết đổi mật khẩu của bạn về mail, vui lòng mở mail để kiểm tra, và nhấn vào link để đổi mật khẩu.');
+                }
+            } else {
+                return redirect()->back()->with('error', 'Email này chưa được đăng ký!');
+            }
+        } else {
+            // code cho số didenj thoại ở đây
+            $credentials['number_phone'] = $emailOrPhone;
+        }
+
+        
+    }
+    public function showResetForm(Request $request, $id_user = null)
+    {
+        return view('auth.reset')->with(
+            ['id_user' => $id_user]
+        );
+    }
+    public function reset(Request $request){
+        if () {
+            # code...
+        }
+            $user->password = Hash::make($request->passwordNew);
+            $user->save();
+    }
+
 }

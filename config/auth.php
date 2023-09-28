@@ -92,6 +92,13 @@ return [
             'table' => 'password_resets',
             'expire' => 60,
             'throttle' => 60,
+            'otp' => [
+                'provider' => 'users',
+                'table' => 'password_resets',
+                'input' => 'otp',
+                'length' => 6,
+                'expire' => 10, // Thời gian tồn tại của OTP (phút)
+            ],
         ],
     ],
 

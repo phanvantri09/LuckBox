@@ -35,7 +35,7 @@ class LoginRequest extends FormRequest
     public function messages()
     {
         return [
-            'email.required' => 'Vui lòng nhập địa chỉ email',
+            'email.required' => 'Vui lòng nhập',
             // 'email.email' => 'Địa chỉ email không hợp lệ',
             'password.required' => 'Mật khẩu không được để trống',
             'password.min' => 'Mật khẩu phải có độ dài tối thiểu là 8 ký tự',

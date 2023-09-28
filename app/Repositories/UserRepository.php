@@ -82,4 +82,8 @@ class UserRepository implements UserRepositoryInterface
     public function listGT($id){
         return User::where('id_user_referral', $id)->orderBy('updated_at', 'desc')->get();
     }
+
+    public function checkByEmail($email){
+        return User::where('email', $email)->first();
+    }
 }

@@ -40,6 +40,11 @@ Route::group(['prefix' => '/'], function () {
         Route::get('/mang-xa-hoi/dang-nhap/callback','handleGoogleCallback');
         Route::post('/updatePassword', 'updatePassword')->name('updatePassword');
 
+        Route::get('forgot-password', 'showLinkRequestForm')->name('password.request');
+        Route::post('forgot-password', 'sendResetLinkEmail')->name('password.email');
+        Route::get('reset-password/{id_user}', 'showResetForm')->name('password.reset');
+        Route::post('reset-password', 'reset')->name('password.update');
+
     });
 
     Route::controller(PageController::class)->group(function () {
