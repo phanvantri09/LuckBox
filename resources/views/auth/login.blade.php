@@ -126,7 +126,6 @@
                     <input type="checkbox" name="remember"> Lưu tài khoản
                 </div>
                 <button type="submit" class="btn bg-orange text-white w-100 my-1">ĐĂNG NHẬP</button>
-                {{-- <div class="pt-1">Quên <a href="#">Mật Khẩu?</a> </div> --}}
                 <div class="d-flex align-items-center justify-content-between py-1">
                     <div class="lines"></div>
                     <span class="text-lines">Hoặc</span>
@@ -138,8 +137,10 @@
                     &nbsp;Google
                 </a>
 
-                <div class="text-center pt-2">Bạn chưa có tài khoản <a
-                    href="{{ route('register', ['type'=>'number_phone']) }}">Đăng ký ngay!</a></div>
+                <div class="text-right pt-2">Bạn chưa có tài khoản <a
+                    href="{{ route('register', ['type'=>'number_phone']) }}">Đăng ký ngay !</a></div>
+                <div class="text-right pt-1">Quên <a href="{{ route('password.request') }}">Mật Khẩu ?</a> </div>
+
             </form>
             </div>
         </div>

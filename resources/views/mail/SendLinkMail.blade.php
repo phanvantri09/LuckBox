@@ -21,6 +21,8 @@
                     <h3 style="color: #333333; text-align: center">Thông báo:{{$type}} </h4>
                     <p style="color: #333333;">Xin chào:   <b>{{$email}}</b> ,</p>
                     <p style="color: #333333;">Chúng tôi xin thông báo rằng yêu cầu {{$type}} của bạn đã {{$status}}.</p>
+                    <br>
+                    <p style="color: #333333;">Vui lòng nhấn liên kết bên dưới phần thông tin để chuyển đến trang đổi mật khẩu.</p>
                     <p style="color: #333333;">Thông tin:</p>
                     <ul style="color: #333333;">
                         <li>Thời gian thực hiện: <b>{{date('H:i:s Y-m-d')}}</b></li>

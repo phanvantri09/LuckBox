@@ -86,4 +86,8 @@ class UserRepository implements UserRepositoryInterface
     public function checkByEmail($email){
         return User::where('email', $email)->first();
     }
+    
+    public function checkByNumberPhone($numberPhone){
+        return User::where('number_phone', $numberPhone)->first();
+    }
 }

@@ -59,7 +59,6 @@
              <a class="navbar-brand text-white col-lg-2 col-md-3 col-5" href="{{ route('home') }}">
                  <img src="{{asset('/dist/img/logo.png')}}" style="width: 100%;" alt="">
              </a>
-             <h4 class="mb-0">Đăng nhập</h4>
          </div>
      </nav>
  
@@ -68,7 +67,7 @@
                  @yield('content')
          </div>
      </div>
-     <span id="siteseal"><script async type="text/javascript" src="https://seal.godaddy.com/getSeal?sealID=SMWRyYlobi3D8PnFfleDXzvWOouFYmzMGUpkje6nmsmbVp5Cmj8pr5VJVptP"></script></span>
+     {{-- <span id="siteseal"><script async type="text/javascript" src="https://seal.godaddy.com/getSeal?sealID=SMWRyYlobi3D8PnFfleDXzvWOouFYmzMGUpkje6nmsmbVp5Cmj8pr5VJVptP"></script></span> --}}
  </body>
 @yield('script')
 <script>

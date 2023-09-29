@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Helpers\ConstCommon;
 use App\Http\Requests\Auth\LoginRequest;
 use App\Http\Requests\Auth\RegisterRequest;
+use App\Http\Requests\Auth\ChangPassOTPDone;
 use App\Http\Requests\Auth\ChangPass;
 use Laravel\Socialite\Facades\Socialite;
 use Illuminate\Support\Str;
@@ -212,7 +213,6 @@ class AuthController extends Controller
     
     public function sendResetLinkEmail(ChangPassOTP $request)
     {
-        // dd($request->all());
         if (Auth::check()) {
             return redirect()->route('home');
         }
@@ -246,23 +246,43 @@ class AuthController extends Controller
             }
         } else {
             // code cho số didenj thoại ở đây
-            $credentials['number_phone'] = $emailOrPhone;
+            $checkNumberPhone = $this->userRepository->checkByNumberPhone($emailOrPhone);
+            if (!empty($checkNumberPhone)) {
+                // ở đây là phải gửi OTP về sđt trước nè xong mới chuyển hướng về DB
+                $otp = mt_srand(6);
+                return view('auth.OTP', compact(['checkNumberPhone','otp']));
+            } else {
+                return redirect()->back()->with('error', ' Số điện thoại này chưa được đăng ký!');
+            }
+            // $credentials['number_phone'] = $emailOrPhone;
         }
 
         
     }
     public function showResetForm(Request $request, $id_user = null)
     {
+        if (Auth::check()) {
+            return redirect()->route('home');
+        }
         return view('auth.reset')->with(
             ['id_user' => $id_user]
         );
     }
-    public function reset(Request $request){
-        if () {
-            # code...
-        }
+    public function reset(ChangPassOTPDone $request){
+        $hashids = new Hashids('share', 16);
+        $decodedData = $hashids->decode($request->id_user);
+        $userId = $decodedData[0];
+
+        $user = User::findOrFail($userId);
+
+        if (!empty($user)) {
             $user->password = Hash::make($request->passwordNew);
-            $user->save();
+            if ($user->save()) {
+                return redirect()->route('login')->with('success','Đổi mật khẩu thành công hãy đăng nhập.');
+            }
+            
+        }
+            
     }
 
 }
