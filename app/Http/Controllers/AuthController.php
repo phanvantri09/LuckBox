@@ -196,7 +196,7 @@ class AuthController extends Controller
         $user = Auth::user();
 
         if (Hash::check($request->password, $user->password)) {
-            
+
             $user->password = Hash::make($request->passwordNew);
             $user->save();
 
@@ -210,7 +210,7 @@ class AuthController extends Controller
     {
         return view('auth.email');
     }
-    
+
     public function sendResetLinkEmail(ChangPassOTP $request)
     {
         if (Auth::check()) {
@@ -226,15 +226,15 @@ class AuthController extends Controller
                 $dataToEncode = [
                     $userId
                 ];
-    
+
                 $hashids = new Hashids('share', 16);
                 $encodedData = $hashids->encode($dataToEncode);
                 $sharedLink = route('password.reset', ['id_user'=>$encodedData]);
-               
-                if (ConstCommon::sendMailLinkPass($checkEmail->email, 
+
+                if (ConstCommon::sendMailLinkPass($checkEmail->email,
                     ['email' => $checkEmail->email,
                     'type'=>"Đổi mật khẩu",
-                    'status'=> "Thành công", 
+                    'status'=> "Thành công",
                     'link'=>$sharedLink ]
                 )) {
                     return redirect()->back()->with('error', 'Email này chưa được đăng ký!');
@@ -245,6 +245,7 @@ class AuthController extends Controller
                 return redirect()->back()->with('error', 'Email này chưa được đăng ký!');
             }
         } else {
+            return redirect()->back()->with('error', ' Chức năng này chưa cập nhật cho Điện thoại. Chúng tôi sẽ cập nhật sớm nhất có thể. Xin lỗi bạn vì sự bất tiện này!');
             // code cho số didenj thoại ở đây
             $checkNumberPhone = $this->userRepository->checkByNumberPhone($emailOrPhone);
             if (!empty($checkNumberPhone)) {
@@ -257,7 +258,7 @@ class AuthController extends Controller
             // $credentials['number_phone'] = $emailOrPhone;
         }
 
-        
+
     }
     public function showResetForm(Request $request, $id_user = null)
     {
@@ -280,9 +281,9 @@ class AuthController extends Controller
             if ($user->save()) {
                 return redirect()->route('login')->with('success','Đổi mật khẩu thành công hãy đăng nhập.');
             }
-            
+
         }
-            
+
     }
 
 }
