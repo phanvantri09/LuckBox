@@ -12,15 +12,15 @@
                         <img class="profile-user-img img-fluid img-circle" src="{{empty($user->link_image)?asset('/dist/img/noavt.jpg'):\App\Helpers\ConstCommon::getLinkImageToStorage($user->link_image)}}"
                             alt="User profile picture">
                     </div>
+                    <h1 class="profile-username text-center">ID: {{$user->id}}_{{$user->code}}</h1>
+                    <h3 class="profile-username text-center">Họ tên: {{$user->name}}</h3>
 
-                    <h3 class="profile-username text-center">{{$user->name}}</h3>
-
-                    <p class="text-muted text-center">{{$user->birthdate}}</p>
+                    {{-- <p class="text-muted text-center">{{$user->birthdate}}</p> --}}
 
                     <p class="text-muted text-center">Số dư tài khoản: <b class="text-danger">{{ number_format($user->balance).' VNĐ' }}</b></p>
 
-                    <p class="text-muted text-center">Ngày tạo tài khoản: {{ date('d/m/Y', strtotime($user->created_at)) }}</p>
-                    
+                    {{-- <p class="text-muted text-center">Ngày tạo tài khoản: {{ date('d/m/Y', strtotime($user->created_at)) }}</p> --}}
+
 
                 </div>
                 <!-- /.card-body -->
@@ -34,23 +34,33 @@
                 </div>
                 <!-- /.card-header -->
                 <div class="card-body">
-                    <strong><i class="fas fa-book mr-1"></i> Số điện thoại</strong>
+                    <strong><i class="fas fa-phone"></i> Số điện thoại</strong>
 
                     <p class="text-muted">
                         {{$user->number_phone ?? 'Chưa có SĐT'}}
                     </p>
 
                     <hr>
-                    <strong><i class="far fa-file-alt mr-1"></i> Email</strong>
+                    <strong><i class="fas fa-envelope"></i></i> Email</strong>
 
                     <p class="text-muted">
                         {{$user->email ?? 'Chưa có email'}}
                     </p>
 
                     <hr>
-                    <strong><i class="fas fa-map-marker-alt mr-1"></i> Địa chỉ</strong>
+                    <strong><i class="fas fa-map-marker-alt"></i> Địa chỉ</strong>
 
-                    <p class="text-muted">{{$user->house_number_street ?? 'Chưa cập nhật địa chỉ'}}</p>
+                    <p class="text-muted">{{$user->house_number_street ?? 'Chưa cập nhật '}}</p>
+
+                    <hr>
+                    <strong><i class="fas fa-calendar-week"></i> Ngày sinh</strong>
+
+                    <p class="text-muted"> {{$user->birthdate ?? 'Chưa cập nhật '}}</p>
+
+                    <hr>
+                    <strong><i class="fas fa-calendar-alt"></i> Ngày tạo tài khoản:</strong>
+
+                    <p class="text-muted">{{ date('d/m/Y', strtotime($user->created_at)) }}</p>
 
                     <hr>
 

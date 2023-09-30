@@ -54,7 +54,7 @@ class UserRepository implements UserRepositoryInterface
         return User::leftjoin('user_infos', 'users.id', '=', 'user_infos.id_user')
         ->select('user_infos.*','users.*','user_infos.id as id_info_users' )
         ->where('users.type', $type)
-        ->orderByDesc('users.id')
+        ->orderByDesc('users.created_at')
         ->get();
     }
     public function getUserByTypeGT()
@@ -62,7 +62,7 @@ class UserRepository implements UserRepositoryInterface
         return User::leftjoin('user_infos', 'users.id', '=', 'user_infos.id_user')
         ->select('user_infos.*','users.*','user_infos.id as id_info_users' )
         ->whereNotNull('id_user_referral')
-        ->orderByDesc('users.id')
+        ->orderByDesc('users.created_at')
         ->get();
     }
     public function checkInfoUser($id){
@@ -86,7 +86,7 @@ class UserRepository implements UserRepositoryInterface
     public function checkByEmail($email){
         return User::where('email', $email)->first();
     }
-    
+
     public function checkByNumberPhone($numberPhone){
         return User::where('number_phone', $numberPhone)->first();
     }
