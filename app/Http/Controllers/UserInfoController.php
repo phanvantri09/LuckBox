@@ -3,7 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\User\InfoUserRequest;
+
 use App\Models\UserInfo;
+
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Repositories\UserRepositoryInterface;
@@ -55,6 +58,17 @@ class UserInfoController extends Controller
             $User->save();
         }
         if ($request->has('number_phone')) {
+
+            $checkUser = User::where('number_phone', $request->number_phone)->where('id', '!=' , $User->id)->get()->count();
+
+            if(empty($checkInfoUser)){
+                $checkUserInfo = UserInfo::where('number_phone', $request->number_phone)->get()->count();
+            } else {
+                $checkUserInfo = UserInfo::where('number_phone', $request->number_phone)->where('id','!=', $checkInfoUser->id)->get()->count();
+            }
+            if ($checkUser >= 1 || $checkUserInfo >= 1) {
+                return redirect()->back()->with('error', 'Số điện thoại này đã được đăng ký rồi vui lòng đăng ký lại bằng số điện thoại khác!');
+            }
             $User->number_phone = $request->number_phone;
             $User->save();
         }

@@ -63,6 +63,11 @@
                     <p class="text-muted">{{ date('d/m/Y', strtotime($user->created_at)) }}</p>
 
                     <hr>
+                    <strong><i class="fas fa-user-check"></i> Giới thiệu bản thân:</strong>
+
+                    <p class="text-muted">{!! $user->content !!}</p>
+
+                    <hr>
 
                 </div>
                 <!-- /.card-body -->
