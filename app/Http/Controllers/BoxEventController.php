@@ -6,6 +6,7 @@ use App\Http\Requests\Box\CreateBoxEvent;
 use Illuminate\Http\Request;
 use App\Repositories\BoxEventRepositoryInterface;
 use App\Repositories\CategoryRepositoryInterface;
+use App\Repositories\BoxItemRepositoryInterface;
 use Illuminate\Support\Facades\Auth;
 use App\Helpers\ConstCommon;
 
@@ -15,10 +16,12 @@ class BoxEventController extends Controller
 {
     protected $boxEventRepository;
     protected $categoryRepository;
-    public function __construct(BoxEventRepositoryInterface $boxEventRepository, CategoryRepositoryInterface $categoryRepository)
+    protected $boxItemRepository;
+    public function __construct(BoxEventRepositoryInterface $boxEventRepository, CategoryRepositoryInterface $categoryRepository, BoxItemRepositoryInterface $boxItemRepository)
     {
         $this->boxEventRepository = $boxEventRepository;
         $this->categoryRepository = $categoryRepository;
+        $this->boxItemRepository = $boxItemRepository;
     }
 
     public function create(){
@@ -138,7 +141,8 @@ class BoxEventController extends Controller
     public function show($id)
     {
         $showEvent = $this->boxEventRepository->show($id);
-        $getBoxItem = $showEvent->boxItem()->get();
+        $getBoxItem = $this->boxItemRepository->getAllBox_itemBYIDEvent($id);
+        // $getBoxItem = $showEvent->boxItem()->get();
         $dataMain = [];
         foreach ($getBoxItem as $key => $boxItem) {
             $dataMain[$key] = [$boxItem, $boxItem->box()->get()];

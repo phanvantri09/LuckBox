@@ -105,4 +105,8 @@ class BoxItemRepository implements BoxItemRepositoryInterface
         return $Box_item->save();
     }
 
+    public function getAllBox_itemBYIDEvent($id){
+        return Box_item::where('id_box_event', $id)->orderBy('created_at', 'desc')->get();
+    }
+
 }

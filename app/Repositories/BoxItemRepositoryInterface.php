@@ -18,5 +18,6 @@ interface BoxItemRepositoryInterface
      public function getFirstInCaseEventEmpty($id);
      public function getFirstInCaseEventHasData($id);
      public function updateAmount($id, $amount);
+     public function getAllBox_itemBYIDEvent($id);
 
 }
