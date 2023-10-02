@@ -33,6 +33,13 @@
                     </p>
 
                     <hr>
+                    <strong><i class="fas fa-map-marker-alt mr-1"></i> Thời gian tạo</strong>
+
+                    <p class="text-muted">
+                        {{ date('H:i - d/m/Y', strtotime($showEvent->created_at)) }}
+                    </p>
+
+                    <hr>
 
                     <strong><i class="far fa-file-alt mr-1"></i> Mô tả</strong>
 
@@ -66,6 +73,7 @@
                                 <th>Tên Box</th>
                                 <th>Ngày bắt đầu</th>
                                 <th>Ngày kết thúc</th>
+                                <th>Thời gian tạo</th>
                                 <th>Trạng thái</th>
                                 <th></th>
                             </tr>
@@ -77,6 +85,7 @@
                                     <td>{{ $item[1][0]->title }}</td>
                                     <td>{{ date('H:i - d/m/Y', strtotime($item[0]->time_start)) }}</td>
                                     <td>{{ date('H:i - d/m/Y', strtotime($item[0]->time_end)) }}</td>
+                                    <td>{{ date('H:i:s - d/m/Y', strtotime($item[0]->created_at)) }}</td>
                                     <td>
                                         <form class="status-form"
                                             action="{{ route('box.box_event.box_item.changeStatus', ['id' => $item[0]->id]) }}"
