@@ -29,6 +29,7 @@
                                 <th>Loại </th>
                                 <th>Số tiền </th>
                                 <th>Số lượng </th>
+                                <th>Thời gian tạo </th>
                                 <th></th>
                             </tr>
                         </thead>
@@ -37,10 +38,11 @@
                                 <tr>
                                     <td>{{ $key + 1 }}</td>
                                     <td>{{$item->title}}</td>
-                                    <td>{!! $item->description !!}</td>
+                                    <td>{{ Illuminate\Support\Str::limit(strip_tags($item->description), 80) }}</td>
                                     <td>{{$item->category->title}}</td>
                                     <td>{{number_format($item->price) }} vnđ</td>
                                     <td>{{number_format($item->amount)}}</td>
+                                    <td> {{ date(' H:i:s - d/m/Y ', strtotime($item->created_at)) }}</td>
                                     <td>
                                         <a href="{{ route('product.addImage', ['id'=>$item->id]) }}" class="btn btn-app">
                                             <i class="fas fa-images"></i> Thêm ảnh

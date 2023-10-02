@@ -8,7 +8,7 @@ class BoxEventRepository implements BoxEventRepositoryInterface
 {
     public function all()
     {
-        return Box_event::with('boxItem')->get();
+        return Box_event::with('boxItem')->orderByDesc('created_at')->get();
     }
 
     public function create(array $data)

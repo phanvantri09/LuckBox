@@ -10,7 +10,7 @@ class ProductRepository implements ProductRepositoryInterface
 {
     public function all()
     {
-        return Product::with('category')->get();
+        return Product::with('category')->orderByDesc('created_at')->get();
     }
 
     public function create(array $data)

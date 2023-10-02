@@ -8,7 +8,7 @@ class CartRepository implements CartRepositoryInterface
 {
     public function all()
     {
-        return Cart::all();
+        return Cart::orderByDesc('created_at')->get();
     }
     public function show($id){
           return Cart::lockForUpdate()->find($id);
