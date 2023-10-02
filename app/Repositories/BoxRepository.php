@@ -8,7 +8,7 @@ class BoxRepository implements BoxRepositoryInterface
 {
     public function all()
     {
-        return Box::with('category')->get();
+        return Box::with('category')->orderByDesc('created_at')->get();
     }
 
     public function create(array $data)

@@ -29,6 +29,7 @@
                                 <th>Loại </th>
                                 <th>Số tiền </th>
                                 <th>Số lượng </th>
+                                <th>Thời gian tạo </th>
                                 <th></th>
                             </tr>
                         </thead>
@@ -41,6 +42,7 @@
                                     <td>{{$item->category->title}}</td>
                                     <td>{{number_format($item->price) }} vnđ</td>
                                     <td>{{number_format($item->amount)}}</td>
+                                    <td>{{ date(' H:i:s - d/m/Y', strtotime($item->created_at))}}</td>
                                     <td>
                                         <a href="{{ route('box.box_product.add', ['id_box'=>$item->id]) }}" class="btn btn-app">
                                             <i class="fa fa-paperclip"></i> Thêm sản phẩm
