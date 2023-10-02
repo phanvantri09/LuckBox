@@ -95,8 +95,9 @@ class UserController extends Controller
      */
     public function show($id)
     {
-        $user = $this->userRepository->show($id);
-        return view('admin.user.show', compact('user'));
+        $data = User::find($id);
+        $user = $this->userRepository->showUpdate($data->id);
+        return view('admin.user.show', compact(['data', 'user']));
     }
 
     public function edit($id)

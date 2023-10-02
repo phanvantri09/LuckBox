@@ -49,6 +49,12 @@ class UserRepository implements UserRepositoryInterface
         ->where('user_infos.id', $id)
         ->first();
     }
+
+    public function showUpdate($id)
+    {
+        return UserInfo::where('id_user',$id)->first();
+    }
+
     public function getUserByType($type)
     {
         return User::leftjoin('user_infos', 'users.id', '=', 'user_infos.id_user')

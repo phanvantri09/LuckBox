@@ -12,12 +12,12 @@
                         <img class="profile-user-img img-fluid img-circle" src="{{empty($user->link_image)?asset('/dist/img/noavt.jpg'):\App\Helpers\ConstCommon::getLinkImageToStorage($user->link_image)}}"
                             alt="User profile picture">
                     </div>
-                    <h1 class="profile-username text-center">ID: {{$user->id}}_{{$user->code}}</h1>
-                    <h3 class="profile-username text-center">Họ tên: {{$user->name}}</h3>
+                    <h1 class="profile-username text-center">ID: {{$data->id}}_{{$data->code}}</h1>
+                    <h3 class="profile-username text-center">Họ tên: {{$data->name ?? $user->name ?? "Chưa cập nhật"}}</h3>
 
                     {{-- <p class="text-muted text-center">{{$user->birthdate}}</p> --}}
 
-                    <p class="text-muted text-center">Số dư tài khoản: <b class="text-danger">{{ number_format($user->balance).' VNĐ' }}</b></p>
+                    <p class="text-muted text-center">Số dư tài khoản: <b class="text-danger">{{ number_format($data->balance).' VNĐ' }}</b></p>
 
                     {{-- <p class="text-muted text-center">Ngày tạo tài khoản: {{ date('d/m/Y', strtotime($user->created_at)) }}</p> --}}
 
@@ -37,14 +37,14 @@
                     <strong><i class="fas fa-phone"></i> Số điện thoại</strong>
 
                     <p class="text-muted">
-                        {{$user->number_phone ?? 'Chưa có SĐT'}}
+                        {{$data->number_phone ?? 'Chưa có SĐT'}}
                     </p>
 
                     <hr>
                     <strong><i class="fas fa-envelope"></i></i> Email</strong>
 
                     <p class="text-muted">
-                        {{$user->email ?? 'Chưa có email'}}
+                        {{$data->email ?? 'Chưa có email'}}
                     </p>
 
                     <hr>
@@ -60,12 +60,12 @@
                     <hr>
                     <strong><i class="fas fa-calendar-alt"></i> Ngày tạo tài khoản:</strong>
 
-                    <p class="text-muted">{{ date('d/m/Y', strtotime($user->created_at)) }}</p>
+                    <p class="text-muted">{{ date('d/m/Y', strtotime($data->created_at)) }}</p>
 
                     <hr>
                     <strong><i class="fas fa-user-check"></i> Giới thiệu bản thân:</strong>
 
-                    <p class="text-muted">{!! $user->content !!}</p>
+                    <p class="text-muted">{!! $user->content ?? "Chưa cập nhật" !!}</p>
 
                     <hr>
 

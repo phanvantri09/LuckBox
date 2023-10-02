@@ -50,21 +50,22 @@
                                     <td>
                                         @if (!empty($userGTs))
                                             @foreach ($userGTs[$key] as $keyss => $user)
-                                            @php
-                                                $lenghtU = count($userGTs[$key]);
-                                            @endphp
-                                            <div class="border-bottom">
-                                                <b>F{{$lenghtU - $keyss}} - {{ $user->type == 111 ? "Người dùng" : "admin" }}</b> <br>
-                                                @if (!empty($user->name))
-                                                Tên: {{$user->name}} <br>
-                                                @endif
-                                                @if (!empty($user->email))
-                                                Email: {{$user->email}}<br>
-                                                @endif
-                                                @if (!empty($user->number_phone))
-                                                Số điện thoại: {{$user->number_phone}}
-                                                @endif
-                                            </div>
+                                                @php
+                                                    $lenghtU = count($userGTs[$key]);
+                                                @endphp
+                                                <div class="border-bottom">
+                                                    <b>F{{ $lenghtU - $keyss }} -
+                                                        {{ $user->type == 111 ? 'Người dùng' : 'admin' }}</b> <br>
+                                                    @if (!empty($user->name))
+                                                        Tên: {{ $user->name }} <br>
+                                                    @endif
+                                                    @if (!empty($user->email))
+                                                        Email: {{ $user->email }}<br>
+                                                    @endif
+                                                    @if (!empty($user->number_phone))
+                                                        Số điện thoại: {{ $user->number_phone }}
+                                                    @endif
+                                                </div>
                                             @endforeach
                                         @endif
 
@@ -78,19 +79,13 @@
                                     </td>
                                     <td>{{ $item->created_at }}</td>
                                     <td>
-                                        @if (!empty($item->id_info_users))
-                                            <a href="{{ route('user.show', ['id' => $item->id_info_users]) }}"
-                                                class="btn btn-app">
-                                                <i class="fas fa-book-open"></i> Xem thông tin
-                                            </a>
-                                        @else
-                                            <a onclick="return alert('User này chưa cập nhật đầy đủ thông tin')"
-                                                class="btn btn-app">
-                                                <i class="fas fa-book-open"></i> Xem thông tin
-                                            </a>
-                                        @endif
+                                        <a href="{{ route('user.show', ['id' => $item->id]) }}" class="btn btn-app">
+                                            <i class="fas fa-book-open"></i> Xem thông tin
+                                        </a>
+
                                         @if ($item->type != 222)
-                                            <a href="{{ route('user.transaction', ['id' => $item->id]) }}" class="btn btn-app">
+                                            <a href="{{ route('user.transaction', ['id' => $item->id]) }}"
+                                                class="btn btn-app">
                                                 <i class="fas fa-money-bill-alt"></i> Lịch sử giao dịch
                                             </a>
                                         @endif

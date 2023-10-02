@@ -19,5 +19,6 @@ interface UserRepositoryInterface
      public function getUserByTypeGT();
      public function checkByEmail($email);
      public function checkByNumberPhone($numberPhone);
+     public function showUpdate($id);
 }
 
