@@ -45,6 +45,8 @@ Route::group(['prefix' => '/'], function () {
         Route::get('reset-password/{id_user}', 'showResetForm')->name('password.reset');
         Route::post('reset-password', 'reset')->name('password.update');
 
+        Route::get('nhan-OTP/{number_phone}/{token}', 'GetOTP')->name('GetOTP');
+
     });
 
     Route::controller(PageController::class)->group(function () {

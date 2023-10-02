@@ -17,6 +17,8 @@ use App\Http\Requests\Auth\ChangPass;
 use Laravel\Socialite\Facades\Socialite;
 use Illuminate\Support\Str;
 use App\Repositories\UserRepositoryInterface;
+use GuzzleHttp\Client;
+use Illuminate\Support\Facades\URL;
 
 class AuthController extends Controller
 {
@@ -250,8 +252,9 @@ class AuthController extends Controller
             $checkNumberPhone = $this->userRepository->checkByNumberPhone($emailOrPhone);
             if (!empty($checkNumberPhone)) {
                 // ở đây là phải gửi OTP về sđt trước nè xong mới chuyển hướng về DB
-                $otp = mt_srand(6);
-                return view('auth.OTP', compact(['checkNumberPhone','otp']));
+                $this->sendOTP($emailOrPhone);
+                // $otp = mt_srand(6);
+                // return view('auth.OTP', compact(['checkNumberPhone','otp']));
             } else {
                 return redirect()->back()->with('error', ' Số điện thoại này chưa được đăng ký!');
             }
@@ -282,6 +285,51 @@ class AuthController extends Controller
                 return redirect()->route('login')->with('success','Đổi mật khẩu thành công hãy đăng nhập.');
             }
 
+        }
+
+    }
+    public function sendOTP($phoneNumber)
+    {
+        $code = [
+            random_int(100000, 999999)
+        ];
+        $hashids = new Hashids('share', 16);
+        $encodedData = $hashids->encode($code);
+        
+        $content = 'Mã của bạn là: '. $encodedData; // Nội dung OTP
+
+        $client = new Client();
+
+        $response = $client->post('https://api.speedsms.vn/index.php/sms/send', [
+            'form_params' => [
+                'to' => $phoneNumber,
+                'content' => $content,
+                'type' => 2, // Loại tin nhắn OTP
+                'brandname' => 'LuckBoxNV', // Tên thương hiệu của bạn
+                'signature' => 'LuckBoxNV', // Chữ ký của bạn
+                'unicode' => 0 // Sử dụng Unicode hay không
+            ],
+            'headers' => [
+                'Authorization' => 'dkPfn5zEAf0iZqgIXiISGLP1tZ9Qdr2K' // Thay 'your-api-key' bằng API key của bạn
+            ]
+        ]);
+
+        $statusCode = $response->getStatusCode();
+
+        if ($statusCode === 200) {
+            // Gửi OTP thành công
+            // URL::temporarySignedRoute('route.name', now()->addSeconds(60), compact('params'));
+            return view('auth.OTP', compact(['checkNumberPhone','otp']));
+        } else {
+            return redirect()->back()->with('error','Không thành công vui lòng thực hiện lại.');
+            // Gửi OTP thất bại
+            // return response()->json(['message' => 'Failed to send OTP'], $statusCode);
+        }
+    }
+
+    public function GetOTP($number_phone, $token){
+        if (!empty($number_phone) || !empty($token)) {
+            return redirect()->back()->with('error','Không thể truy cập liên kết này!');
         }
 
     }
