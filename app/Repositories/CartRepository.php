@@ -19,7 +19,7 @@ class CartRepository implements CartRepositoryInterface
     }
     public function getAllByIDUser($id_user)
     {
-        return Cart::where('id_user_create', $id_user)->get();
+        return Cart::where('id_user_create', $id_user)->orderByDesc('created_at')->get();
     }
     public function getAllByIDUserAndStatus($id_user, $status)
     {
