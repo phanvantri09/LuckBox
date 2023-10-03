@@ -247,11 +247,81 @@ class AuthController extends Controller
                 return redirect()->back()->with('error', 'Email này chưa được đăng ký!');
             }
         } else {
-            return redirect()->back()->with('error', ' Chức năng này chưa cập nhật cho Điện thoại. Chúng tôi sẽ cập nhật sớm nhất có thể. Xin lỗi bạn vì sự bất tiện này!');
+            // return redirect()->back()->with('error', ' Chức năng này chưa cập nhật cho Điện thoại. Chúng tôi sẽ cập nhật sớm nhất có thể. Xin lỗi bạn vì sự bất tiện này!');
             // code cho số didenj thoại ở đây
             $checkNumberPhone = $this->userRepository->checkByNumberPhone($emailOrPhone);
             if (!empty($checkNumberPhone)) {
                 // ở đây là phải gửi OTP về sđt trước nè xong mới chuyển hướng về DB
+
+
+                $APIKey="E380B685A2C342929EC9F4710231FB";
+                $SecretKey="40A94EE4EA5E4C0D663D3AB482577E";
+                $YourPhone="0372868775";
+                $ch = curl_init();
+                // $Content="1133 la ma xac minh dang ky Baotrixemay cua ban
+                // Cam on quy khach da su dung dich vu cua chung toi. Chuc quy khach mot ngay tot lanh!
+                // Trong đó 1133 là biến, quý khách có thể thay đổi";
+                // $brand = "Baotrixemay";
+                // $SendContent=urlencode($Content);
+                // $data="http://rest.esms.vn/MainService.svc/json/SendMultipleMessage_V4_get?Phone=$YourPhone&ApiKey=$APIKey&SecretKey=$SecretKey&Content=$SendContent&Brandname=$brand&SmsType=2";
+                // //De dang ky brandname rieng vui long lien he hotline 0901.888.484 hoac nhan vien kinh Doanh cua ban
+                // $curl = curl_init($data);
+                // curl_setopt($curl, CURLOPT_FAILONERROR, true);
+                // curl_setopt($curl, CURLOPT_FOLLOWLOCATION, true);
+                // curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+                // $result = curl_exec($curl);
+
+                // $obj = json_decode($result,true);
+                // if($obj['CodeResult']==100)
+                // {
+                //     print "<br>";
+                //     print "CodeResult:".$obj['CodeResult'];
+                //     print "<br>";
+                //     print "CountRegenerate:".$obj['CountRegenerate'];
+                //     print "<br>";
+                //     print "SMSID:".$obj['SMSID'];
+                //     print "<br>";
+                //     dd("Thành công");
+                // }
+                // else
+                // {
+                //     dd("ErrorMessage:".$obj['ErrorMessage'], $result);
+                // }
+
+                $SampleXml = "<RQST>"
+                                    . "<APIKEY>". $APIKey ."</APIKEY>"
+                                    . "<SECRETKEY>". $SecretKey ."</SECRETKEY>"
+                                    . "<ISFLASH>0</ISFLASH>"
+                                    . "<SMSTYPE>2</SMSTYPE>"
+                                    . "<CONTENT>". '1234 la ma xac minh dang ky Baotrixemay cua ban' ."</CONTENT>"
+                                    . "<BRANDNAME>Baotrixemay</BRANDNAME>"//De dang ky brandname rieng vui long lien he hotline 0902435340 hoac nhan vien kinh Doanh cua ban
+                                    . "<CONTACTS>"
+                                    . "<CUSTOMER>"
+                                    . "<PHONE>". $YourPhone ."</PHONE>"
+                                    . "</CUSTOMER>"
+                                    . "</CONTACTS>"
+                                    . "</RQST>";
+
+
+                curl_setopt($ch, CURLOPT_URL,            "http://api.esms.vn/MainService.svc/xml/SendMultipleMessage_V4/" );
+                curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1 );
+                curl_setopt($ch, CURLOPT_POST,           1 );
+                curl_setopt($ch, CURLOPT_POSTFIELDS,     $SampleXml );
+                curl_setopt($ch, CURLOPT_HTTPHEADER,     array('Content-Type: text/plain'));
+
+                $result=curl_exec ($ch);
+                $xml = simplexml_load_string($result);
+
+                if ($xml === false) {
+                    dd('Error parsing XML');
+                }
+
+                //now we can loop through the xml structure
+                //Tham khao them ve SMSTYPE de gui tin nhan hien thi ten cong ty hay gui bang dau so 8755... tai day :http://esms.vn/SMSApi/ApiSendSMSNormal
+
+                dd("Ket qua goi API: " . $xml->CodeResult );
+
+
                 $this->sendOTP($emailOrPhone);
                 // $otp = mt_srand(6);
                 // return view('auth.OTP', compact(['checkNumberPhone','otp']));
@@ -293,9 +363,8 @@ class AuthController extends Controller
         $code = [
             random_int(100000, 999999)
         ];
-        $hashids = new Hashids('share', 16);
+        $hashids = new Hashids('share', 32);
         $encodedData = $hashids->encode($code);
-        
         $content = 'Mã của bạn là: '. $encodedData; // Nội dung OTP
 
         $client = new Client();
@@ -305,8 +374,8 @@ class AuthController extends Controller
                 'to' => $phoneNumber,
                 'content' => $content,
                 'type' => 2, // Loại tin nhắn OTP
-                'brandname' => 'LuckBoxNV', // Tên thương hiệu của bạn
-                'signature' => 'LuckBoxNV', // Chữ ký của bạn
+                'brandname' => 'LuckBoxVN', // Tên thương hiệu của bạn
+                'signature' => 'LuckBoxVN', // Chữ ký của bạn
                 'unicode' => 0 // Sử dụng Unicode hay không
             ],
             'headers' => [
