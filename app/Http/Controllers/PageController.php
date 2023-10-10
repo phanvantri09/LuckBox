@@ -201,6 +201,9 @@ class PageController extends Controller
     public function cashOut()
     {
         $currentUser =  Auth::user();
+        if ($this->transactionRepository->checkCashOUT( $currentUser->id )) {
+            return back()->with('info', 'Xin lỗi, không thể thực hiện được hành động này vì lệnh trước đó chưa được chấp nhận. Vui lòng đợi admin hoặc liên hệ qua chatbot để duyệt lệnh trước đó.');
+        }
         $getCardDefault = $this->pageRepository->showCardDefault($currentUser->id);
 
         return view('user.page.cashOut', compact('getCardDefault'));
@@ -208,6 +211,9 @@ class PageController extends Controller
     public function cashOutPost(Request $request)
     {
         $currentUser =  Auth::user();
+        if ($this->transactionRepository->checkCashOUT( $currentUser->id )) {
+            return redirect()->route('walet')->with('info', 'Xin lỗi, không thể thực hiện được hành động này vì lệnh trước đó chưa được chấp nhận. Vui lòng đợi admin hoặc liên hệ qua chatbot để duyệt lệnh trước đó.');
+        }
         if(empty($request->total)){
             return back()->with('error', 'Không được để trống');
         }

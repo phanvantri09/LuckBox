@@ -142,5 +142,14 @@ class TransactionRepository implements TransactionRepositoryInterface
         $user = Transaction::findOrFail($id);
         return $user->delete();
     }
+    public function checkCashOUT($id)
+    {
+        $user = Transaction::where('id_user',$id)->where('type', 1)->where('status', 1)->get()->count();
+        if ($user >=1 ) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 
 }
